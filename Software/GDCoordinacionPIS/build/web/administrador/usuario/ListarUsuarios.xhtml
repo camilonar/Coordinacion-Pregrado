@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <h:form>
+            <p:commandButton id="createButton"  value="Registrar usuario" 
+                             onclick="PF('UsuarioCreateDialog').show()"/>
+        </h:form>
+        <p:separator/>
+        <h:form id="UsuarioListForm">
+            <p:panelGrid columns="2" styleClass="panelgrid">
+                <p:outputLabel style="font-weight: bold;" value="Buscar usuario:" />
+                        <p:inputText  placeholder="Digite nombres, apellidos, nombre de usuario o email" 
+                                      style="width: 350px;"  value="#{usuarioController.datoBusqueda}" >
+                            <p:ajax event="keyup" update="datalist" listener="#{usuarioController.buscarUsuario()}" />                                
+                        </p:inputText>                          
+                    </p:panelGrid>
+            <p:dataTable id="datalist" value="#{usuarioController.items}" var="item"
+                         paginator="true" widgetVar="tablaUsuarios"
+                         rows="10"
+                         rowsPerPageTemplate="10,20"
+                         >
+                <f:facet name="header">
+                    
+                </f:facet>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usunombres}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Apellidos"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuapellidos}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nombre  de usuario"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usunombreusuario}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Email"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuemail}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cargo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.carid.carnombre}"/>
+                </p:column>
+                <p:column width="70" style="text-align: center">
+                    <f:facet name="header">
+                        <h:outputText value="Foto" />
+                    </f:facet>
+                    <p:graphicImage id="imgUsuario" value="#{usuarioController.imagenFlujo}" width="50"  height="50" >
+                        <f:param name="id" value="#{item.usuid}" />
+                    </p:graphicImage>                            
+
+                </p:column> 
+                <p:column style="width: 90px">
+                    <f:facet name="header">
+                        <p:outputLabel value="Acciones"/>
+                    </f:facet>
+                    <p:commandButton id="viewButton" icon="ui-icon-search" action="#{usuarioController.seleccionarUsuarioVer(item)}" update=":UsuarioViewForm, :formfotoView" oncomplete="PF('UsuarioViewDialog').show()" />
+                    <p:commandButton id="editButton" icon="ui-icon-pencil" action="#{usuarioController.seleccionarUsuarioEditar(item)}"  update=":UsuarioEditForm, :formEditarfoto" oncomplete="PF('UsuarioEditDialog').show()" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <ui:include src="RegistrarUsuario.xhtml"/>
+        <ui:include src="EditarUsuario.xhtml"/>
+        <ui:include src="VerInfoUsuario.xhtml"/>
+        <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
+            <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+            <h:form>
+                <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                  onclick="PF('mensajeRegistroExitoso').hide()"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
