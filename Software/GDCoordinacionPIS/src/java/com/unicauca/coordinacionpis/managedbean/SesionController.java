@@ -133,7 +133,7 @@ public class SesionController implements Serializable {
                 } else if (grupo.equalsIgnoreCase("2")) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionCoordinador/Principal.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
+                      
                 } else if (grupo.equalsIgnoreCase("3")) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionJefe/Principal.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();

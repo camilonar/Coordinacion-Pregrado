@@ -7,9 +7,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+   
     <p:dialog resizable="false" widgetVar="dlgRegistroOfertaAcedemica" modal="true" width="900" height="500"  position="260,50"  
               closable="true" header="Registro de oferta académica"> 
-        
+
+
         <h:form id="formMetadatosOfertaAcademica">
             <p:panelGrid styleClass="panelgrid" >
                 <p:row>
@@ -43,13 +45,13 @@
                     <p:column>
                         <p:selectOneMenu style="width: 60px" filter="true" id="anioPeriodoAcademico" required="true" requiredMessage="Campo obligatorio"
                                          value="#{registroOfertaAcademicaController.anioOfertaAcademica}" >
-                            
+
                             <f:selectItems value="#{registroOfertaAcademicaController.aniosDisponibles}" var="fecha" itemLabel="#{fecha}" itemValue="#{fecha}"/>
                         </p:selectOneMenu>                  
                         <p:outputLabel value="-"/>
                         <p:selectOneMenu style="width: 50px" id="periodoAcademico" required="true" requiredMessage="Campo obligatorio"
                                          value="#{registroOfertaAcademicaController.periodoOfertaAcademica}">
-                            
+
                             <f:selectItem itemLabel="I" itemValue="I"/>
                             <f:selectItem itemLabel="II" itemValue="II"/>
                         </p:selectOneMenu>                        
