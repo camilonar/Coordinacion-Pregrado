@@ -1,0 +1,33 @@
+<property-group label="FormatoA" name="okg:FormatoA">
+    <input label="Docente" type="text" name="okp:FormatoA.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoA.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoA.Fecha" />
+	<input label="Primer estudiante" type="text" name="okp:FormatoA.PrimerEstudiante" />
+	<input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
+	<input label="Acta aprobacion" type="text" name="okp:FormatoA.ActaAprobacion" />
+ </property-group>
+    
+ <property-group label="OfertaAcademicaPrematricula" name="okg:OfertaAcademicaPrematricula">
+    <input label="calculo 1 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes"/>
+	<input label="calculo 1 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo1GruposSolicitados"/>
+	<input label="calculo 2 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo2NumEstudiantes"/>
+	<input label="calculo 2 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo2GruposSolicitados"/>
+	<input label="calculo 3 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo3NumEstudiantes"/>
+	<input label="calculo 3 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo3GruposSolicitados"/>
+	<input label="Algebra lineal numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.AlgebraLinealNumEstudiantes"/>
+	<input label="Algebra lineal grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.AlgebraLinealSolicitados"/>
+	<input label="Ecuaciones Dif. numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.ecuacionesNumEstudiantes"/>
+	<input label="Ecuaciones Dif. grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.ecuacionesGruposSolicitados"/>
+	<input label="estadistica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.estadisticaNumEstudiantes"/>
+	<input label="estadistica grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.estadisticaGruposSolicitados"/>
+	<input label="Mecanica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.mecanicaNumEstudiantes"/>
+	<input label="Mecanicoa grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.mecanicaGruposSolicitados"/>
+	<input label="Electromagnetismo numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.electroNumEstudiantes"/>
+	<input label="Electromagnetismo grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.electroGruposSolicitados"/>
+	<input label="Ondas numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.OndasNumEstudiantes"/>
+	<input label="Ondas grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.OndasGruposSolicitados"/>
+	<input label="Lab. mecanica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.LabMecanicaNumEstudiantes"/>
+	<input label="Lab. mecanica grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.LabMecanicaGruposSolicitados"/>
+	<input label="Lab. Electromagnetismo numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.labElectroNumEstudiantes"/>
+	<input label="Lab. Electromagnetismo grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.LabElectroGruposSolicitados"/>
+</property-group>

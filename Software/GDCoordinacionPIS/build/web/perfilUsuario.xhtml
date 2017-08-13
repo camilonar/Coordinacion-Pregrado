@@ -7,85 +7,66 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-    <div style="border-radius:15px; height: 25px; background: #C8CDD6; text-align: center; font-size: 18px; color: black; ">
-                        Datos personales
-                    </div>
-    <h:form id="formularioPerfilDatosPersonales" >
-            
-            <p:panelGrid styleClass="panelgrid" id="panelPerfilDatosPersonales">
-                                
-                <p:row>
-                    <p:column rowspan="5">
-                        <p:graphicImage value="#{sesionController.imagenFlujo}"  
-                                                width="100"  height="100" >
-                                    <f:param name="id" value="#{sesionController.identificacion}" />
-                                </p:graphicImage> 
-                    </p:column>
-                    <p:column>
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Nombre(s): "/>
-                    </p:column>
-                    <p:column style="background: #eff5fa">
-                        <p:outputLabel  value="#{perfilUsuarioController.usuario.usunombres}"/>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column>
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Apellido(s): "/>
-                    </p:column>
-                    <p:column>
-                        <p:outputLabel value="#{perfilUsuarioController.usuario.usuapellidos} "/>
-                    </p:column>
-                </p:row>
-                
-                
-                <p:row>
-                    <p:column>
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Cargo "/>
-                    </p:column>
-                    <p:column>
-                        <p:outputLabel value="#{perfilUsuarioController.usuario.carid.carnombre}"/>
-                    </p:column>
-                </p:row>
-                
-                 
-                           
-               
-               <p:row>
-                    <p:column style="width: 180px;">
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Nombre de Usuario (Login): "/>
-                    </p:column>
-                    <p:column >
-                        <p:outputLabel value="#{perfilUsuarioController.usuario.usunombreusuario}"/>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Contraseña: "/>
-                    </p:column>
-                    <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                        <p:outputLabel style="font-size: 15px; font-style: italic" value="Contraseña:"/>
-                        <p:outputLabel style="font-size: 15px; font-style: italic;color:red;" value="* "/>
-                    </p:column>
-                    <p:column style="background: #eff5fa" rendered="#{perfilUsuarioController.mostrarContrasena}">
-                        <p:outputLabel  value="******************"/>
-                    </p:column>
-                    <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
-                        <p:commandLink style="color: blue;" value="Cambiar" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
-                    </p:column>
-                    <p:column style="background: #eff5fa" rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                        <p:password style="width: 120px;" value="#{perfilUsuarioController.contrasena}"/>  
-                    </p:column>
-                    <p:column rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                        <p:commandLink style="color: blue;" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
-                                       
-                        <p:commandLink style="margin-left: 10px;color: blue;" value="Cancelar" 
-                                       action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
-                                       
-                    </p:column>
-                </p:row>
-               
-               
 
-            </p:panelGrid>
-        </h:form>
+    <h:form  id="formularioPerfilDatosPersonales" >   
+
+        <span style="text-align: center">
+            <div id="infoperfil" style="text-align: center;">
+                <p:panelGrid style="  font-weight: bold" columns="2">
+                    <f:facet name="header">
+                        <p:graphicImage value="#{sesionController.imagenFlujo}"  
+                                        width="120"  height="120" >
+                            <f:param name="id" value="#{sesionController.identificacion}" />
+                        </p:graphicImage> 
+                    </f:facet>
+
+
+                    <p:outputLabel style="" value="Nombre(s): "/>
+                    <p:outputLabel  value="#{perfilUsuarioController.usuario.usunombres}"/>
+
+
+                    <p:outputLabel style="" value="Apellido(s): "/>
+                    <p:outputLabel value="#{perfilUsuarioController.usuario.usuapellidos} "/>
+
+
+                    <p:outputLabel style="" value="Cargo "/>
+                    <p:outputLabel value="#{perfilUsuarioController.usuario.carid.carnombre}"/>
+
+
+
+                    <p:outputLabel style="" value="Nombre de Usuario (Login): "/>
+                    <p:outputLabel value="#{perfilUsuarioController.usuario.usunombreusuario}"/>
+
+                    <p:row>
+                        <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
+                            <p:outputLabel style="" value="Contraseña: "/>
+                        </p:column>
+                        <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                            <p:outputLabel style="" value="Contraseña:"/>
+                            <p:outputLabel style=";color:red;" value="* "/>
+                        </p:column>
+                        <p:column rendered="#{perfilUsuarioController.mostrarContrasena}">
+                            <p:outputLabel  value=" ****************** "/>
+                        </p:column>
+                        <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
+                            <p:commandButton style="color: blue;" value="Cambiar" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
+                        </p:column>
+                        <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                            <p:password style="width: 120px;" value="#{perfilUsuarioController.contrasena}"/>  
+                        </p:column>
+                        <p:column rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                            <p:commandButton style="color: blue;" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
+
+                            <p:commandButton style="margin-left: 10px;color: blue;" value="Cancelar" 
+                                             action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
+
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </div>
+        </span>
+
+    </h:form>
+
 </html>
