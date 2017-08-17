@@ -8,7 +8,7 @@
     <h:body>
         <div id="contenidoMenu">
             <h:form id="formMenu">
-                <p:menubar>
+                <p:menu>
                     <p:submenu label="Materias">
                         <p:menuitem value="Registrar materia" action="#{cargarFormulariosController.cargarRegistrarMateria()}"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
                     </p:submenu>    
@@ -18,7 +18,7 @@
                     <p:submenu label="Usuarios">
                         <p:menuitem value="Gestión de usuarios" action="#{cargarFormulariosController.cargarRegistrarUsuarios()}"  ajax="false"/>
                     </p:submenu>  
-                </p:menubar>
+                </p:menu>
             </h:form>
         </div>
 
