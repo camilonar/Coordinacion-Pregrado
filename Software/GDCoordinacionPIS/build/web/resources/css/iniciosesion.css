@@ -1,10 +1,60 @@
+header{
+display: table !important;
+    margin: 30px auto 5px !important;    
+}
+#descHeader {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding-top: 12px;
+    width: 235px;
+    float: left;
+}
+
+.separador {
+    background: url(../img/barra.png) no-repeat;
+    width: 2px;
+    height: 40px;
+    float: left;
+    margin: 25px 10px 0 0;
+}
+
+#logoU{
+    
+    background: url(../img/logo-unicauca.png) no-repeat;
+    width: 188px;
+    height: 92px;
+    float: left;
+    margin-right: 10px;
+}
+
+#logocoordinacion{
+    background: url(../img/logo.png) no-repeat;
+    width: 101px;
+    height: 101px;
+    margin: 0 auto;
+    
+}
 body {
-    /*background: url(../img/body-bkg.png) repeat-x scroll 0% 0% #C8CDD6;*/
-    background: rgb(9,33,103);
+    background: url(../img/background.png)#18307e  no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     line-height: 1;
     font-size: 12px;
-    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    font-family: "Vegur", "Arial Narrow", Arial, sans-serif !important;
     width: 98.5%;
+    height: auto !important;
+}
+h3{ 
+    font-size: 16px;
+    color: #26467E;
+    align-content: center;
+    font-family: "Vegur", "Arial Narrow", Arial, sans-serif !important;
+    font-weight: normal !important;
+
 }
 #header{
     height: 170px;
@@ -218,13 +268,12 @@ form .help {
 
 }
 form {
-    background: url(../img/back-login.png) no-repeat;
-    font-family: lato;
-    position: relative;
-    color: #333;
-    border-radius: 32px;
-    width: 405px;
-    height: 350px;
+         background: url(../img/back-login.png) no-repeat;
+    padding: 30px 20px 0;
+    width: 330px;
+    display: inline-block;
+    height: 344px;
+    margin-top: 0px;
 }
 form header {
     padding: 45px 15px;
@@ -312,13 +361,13 @@ form .help {
     width: 251px;
 }
 #bandera {
+    background: url(../img/bandera.png) no-repeat;
+    width: 345px;
+    height: 130px;
     position: fixed;
     z-index: -1;
-    background: url(../img/bandera.png) no-repeat;
-    height: 412px;
-    right: 10%;
-    bottom: -179px;
-    width: 1284px;
+    left: 0;
+    bottom: 0;
 }
 
 .ui-button {
