@@ -60,6 +60,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -75,8 +77,8 @@ import org.primefaces.model.UploadedFile;
  *
  * @author ROED26
  */
-@Named(value = "registroFormatoAController")
-@SessionScoped
+@ManagedBean
+@ViewScoped
 public class RegistroFormatoAController implements Serializable {
 
     private MetadatosAntepoyecto metadatosAnteproyectos;

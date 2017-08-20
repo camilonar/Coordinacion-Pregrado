@@ -8,6 +8,8 @@ package com.unicauca.coordinacionpis.managedbean;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.MenuModel;
@@ -16,7 +18,7 @@ import org.primefaces.model.menu.MenuModel;
  *
  * @author edwin
  */
-@Named(value = "addNavegacionController")
+@Named("addNavegacionController")
 @SessionScoped
 public class AddNavegacionController implements Serializable {
 

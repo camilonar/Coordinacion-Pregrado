@@ -9,7 +9,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
-@Named(value = "cargarFormulariosController")
+
+@Named("cargarFormulariosController")
 @SessionScoped
 public class CargarFormularioController implements Serializable {
 

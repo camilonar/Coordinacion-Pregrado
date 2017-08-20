@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ import org.primefaces.model.UploadedFile;
  * Edwin Marulanda
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PerfilUsuarioController implements Serializable {
 
     @EJB

@@ -63,6 +63,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.DefaultStreamedContent;
@@ -72,8 +74,8 @@ import org.primefaces.model.StreamedContent;
  *
  * @author ROED26
  */
-@Named(value = "registroOfertaAcademicaController")
-@SessionScoped
+@ManagedBean
+@ViewScoped
 public class RegistroOfertaAcademicaController implements Serializable {
 
     @EJB
