@@ -30,12 +30,12 @@ public class Utilidades {
             String absoluteDiskPath = (String) servletContext.getRealPath("/");
             if (OS.contains("nux")) {
                 if (tipo.equals("foto")) {
-                    absoluteDiskPath = absoluteDiskPath.replace("build/", "") + "/resources/img/fotoDefecto.jpg";
+                    absoluteDiskPath = absoluteDiskPath.replace("build/", "") + "/resources/img/fotodefecto.png";
                 }
                 
             } else {
                 if (tipo.equals("foto")) {
-                    absoluteDiskPath = absoluteDiskPath.replace("build\\", "") + "resources\\img\\fotoDefecto.jpg";
+                    absoluteDiskPath = absoluteDiskPath.replace("build\\", "") + "resources\\img\\fotodefecto.png";
                 }
 
             }
