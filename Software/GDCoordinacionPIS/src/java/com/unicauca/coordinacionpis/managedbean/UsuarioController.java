@@ -13,6 +13,8 @@ import com.unicauca.coordinacionpis.utilidades.Cifrar;
 import com.unicauca.coordinacionpis.utilidades.RedimensionadorImagenes;
 import com.unicauca.coordinacionpis.utilidades.Utilidades;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.Serializable;
@@ -63,6 +65,11 @@ public class UsuarioController implements Serializable {
     private UploadedFile file;
 
     private SimpleDateFormat formatoFecha;
+    
+    
+    private byte[] imagen;
+    private DefaultStreamedContent miImagen;
+    private UploadedFile uploadedFile;
 
     public UsuarioController() {
         this.usuario = new Usuario();
@@ -220,6 +227,13 @@ public class UsuarioController implements Serializable {
 
     public void seleccionarUsuarioVer(Usuario usuario) {
         this.usuario = usuario;
+        this.imagen = this.usuario.getUsufoto();
+        if(this.imagen ==null)
+        {
+            this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
+            convertirBytesAImagen();
+        }
+        
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
     }
@@ -373,6 +387,7 @@ public class UsuarioController implements Serializable {
         }
 
     }
+    
 
     public void mostraSubirFoto() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -401,6 +416,57 @@ public class UsuarioController implements Serializable {
         this.campoFoto = true;
         this.campoContrasena = true;
         file = null;
+    }
+    
+    public DefaultStreamedContent getMiImagen() {
+        convertirBytesAImagen();
+        /*if(miImagen==null)
+            miImagen = Utilidades.getImagenPorDefecto("foto");*/
+        return miImagen;
+    }
+    public void convertirBytesAImagen()
+    {
+        if(imagen != null)
+        {
+            InputStream is = new ByteArrayInputStream((byte[]) imagen);
+            miImagen = new DefaultStreamedContent(is, "image/png");
+        }
+    }
+    
+    public void convertirImagenABytes(FileUploadEvent event) {
+        try
+        {
+            uploadedFile = event.getFile();
+            InputStream is = event.getFile().getInputstream();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();            
+            byte[] buffer = new byte[0xFFFF];
+
+            for (int len; (len = is.read(buffer)) != -1;)
+            {
+                os.write(buffer, 0, len);
+            }
+
+            os.flush();
+            imagen = os.toByteArray();
+            usuario.setUsufoto(imagen);
+            convertirBytesAImagen();
+        }
+        catch(IOException e)
+        {
+            
+        }
+    }
+    public StreamedContent getImagen(Usuario usuario) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        String id = context.getExternalContext().getRequestParameterMap().get("idUsu");
+        if (usuario.getUsufoto() == null) {
+            return Utilidades.getImagenPorDefecto("foto");
+        } else {
+            return new DefaultStreamedContent(new ByteArrayInputStream(usuario.getUsufoto()));
+        }
+
     }
 
     @FacesConverter(forClass = Usuario.class)
