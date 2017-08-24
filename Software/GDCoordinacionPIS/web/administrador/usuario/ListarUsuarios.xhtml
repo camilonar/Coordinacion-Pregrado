@@ -10,7 +10,9 @@
 
         <h:form>
             <p:commandButton id="createButton"  value="Registrar usuario" 
-                             onclick="PF('UsuarioCreateDialog').show()"/>
+                             onclick="PF('UsuarioCreateDialog').show()">
+                <!--f:actionListener binding="#{usuarioController.limpiarRegistrarUsuario()}"/-->
+            </p:commandButton>
         </h:form>
         <p:separator/>
         <h:form id="UsuarioListForm">

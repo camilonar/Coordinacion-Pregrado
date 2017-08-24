@@ -162,6 +162,7 @@ public class UsuarioController implements Serializable {
 
     public Usuario prepareCreate() {
         usuario = new Usuario();
+        this.limpiarRegistrarUsuario();
         initializeEmbeddableKey();
         return usuario;
     }
@@ -178,6 +179,8 @@ public class UsuarioController implements Serializable {
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
         this.usuario.setUsufoto(inputStreamToByteArray(file));
         usuario.setCarid(cargo);
+        usuario.setUsufoto(imagen);
+        
         ejbUsuario.create(usuario);
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
@@ -468,7 +471,13 @@ public class UsuarioController implements Serializable {
         }
 
     }
-
+    
+    public String limpiarRegistrarUsuario()
+    {
+        this.miImagen = null;
+        this.imagen = null;
+        return "./";
+    }
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 
