@@ -19,7 +19,7 @@ public class ValidarCampoSemestre implements Validator
         
         
        if(texto.length()>4){
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Máximo cuatro caracteres");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo admite máximo 4 caracteres");
            throw new ValidatorException(msg);
         }
         

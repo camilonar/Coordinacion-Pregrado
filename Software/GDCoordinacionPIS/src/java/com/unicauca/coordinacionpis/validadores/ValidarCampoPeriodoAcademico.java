@@ -17,7 +17,7 @@ public class ValidarCampoPeriodoAcademico implements Validator
     {
         String texto = String.valueOf(value);
        if(texto.length()>30){
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Máximo treinta caracteres");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo admite máximo 30 caracteres");
            throw new ValidatorException(msg);
         }
         

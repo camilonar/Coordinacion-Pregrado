@@ -5,13 +5,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
+        
+    <h:head>
+        <h:outputScript library="js" name ="Calendario.js"/>
+    </h:head>  
     <h:body>
 
         <h:form>
             <p:commandButton id="createButton"  value="Registrar usuario" 
                              onclick="PF('UsuarioCreateDialog').show()">
-                <!--f:actionListener binding="#{usuarioController.limpiarRegistrarUsuario()}"/-->
+                
             </p:commandButton>
         </h:form>
         <p:separator/>

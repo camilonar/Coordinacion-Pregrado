@@ -20,7 +20,7 @@ public class ValidarCampo75Caracteres implements Validator
         
         if(texto.length()>75)
         {
-             FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Maximo 75 caracteres.","Maximo 75 caracteres.");
+             FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo admite máximo 75 caracteres");
              throw new ValidatorException(msg);  
         }           
         

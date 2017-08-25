@@ -23,7 +23,7 @@ public class ValidarCampoCreditos implements Validator
             
         }catch(Exception e)
         {
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Campo numérico.","Campo numérico.");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo sólo admite valores numéricos");
            throw new ValidatorException(msg);
         }
         

@@ -22,7 +22,7 @@ public class ValidarCampoSoloLetrasYespacio implements Validator
         Matcher encaja = patron.matcher(texto);        
         if(encaja.find())
         {
-            FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Campo solo letras y espacios.","Campo solo letras y espacios.");
+            FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo solo admite valores alfabéticos o espacios");
             throw new ValidatorException(msg);
         }
     }

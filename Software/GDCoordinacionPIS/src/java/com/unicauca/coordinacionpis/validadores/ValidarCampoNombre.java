@@ -18,7 +18,7 @@ public class ValidarCampoNombre implements Validator
         String texto = String.valueOf(value);
         
        if(texto.length()>70){
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Máximo setenta caracteres");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo admite máximo 70 caracteres");
            throw new ValidatorException(msg);
         }
         

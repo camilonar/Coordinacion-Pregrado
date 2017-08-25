@@ -17,13 +17,13 @@ public class ValidarEdicionUsuarios implements Serializable {
 
     public boolean validarNombres(String nombre) {
         if (nombre.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo Nombre Obligatorio.", "Campo Nombre Obligatorio."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", "El campo es obligatorio"));
             return false;
         } else {
             Pattern patron = Pattern.compile("[^A-Za-z ñÑáéíóú]");
             Matcher encaja = patron.matcher(nombre);
             if (encaja.find()) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo nombre solo letras y espacios.", "Campo nombre solo letras y espacios"));
+                FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo solo admite valores alfabéticos o espacios");
                 return false;
             }
             return true;

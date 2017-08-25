@@ -20,7 +20,7 @@ public class ValidarCamposSeleccionar implements Validator
         
         if(texto.equals("0"))
         {
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Debe seleccionar una opción.","Debe seleccionar una opción.");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","Debe seleccionar una opción");
            throw new ValidatorException(msg);  
         }       
         

@@ -23,7 +23,7 @@ public class ValidarCampoNumeroPlanEstudio implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         int numero = Integer.parseInt(String.valueOf(value));
         if (numero <= 0) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Número mayor que cero", "Número mayor que cero");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", "El campo solo admite valores mayores a 0");
             throw new ValidatorException(msg);
         }
     }

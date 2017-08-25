@@ -29,14 +29,14 @@ public class ValidarCampoCorreoElectronico implements Validator
         Matcher encaja = patron.matcher(texto);        
         if(!encaja.find())
         {
-            FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Formato de correo invalido.","formato de Correo invalido.");
+            FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El formato del correo no es válido. Ej: correo@correo.com");
             throw new ValidatorException(msg);
         }
         else
         {
             if(usuarioEJB.buscarPorEmail(texto))
             {
-                FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Email ya se encuentra registrado.","Email ya se encuentra registrado.");
+                FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El correo electrónico y se encuentra registrado.");
                 throw new ValidatorException(msg);
             }
         }

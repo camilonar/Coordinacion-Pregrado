@@ -23,7 +23,7 @@ public class ValidarCampoNumerico implements Validator
             
         }catch(Exception e)
         {
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Campo numérico.","Campo numérico.");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El campo solo admite valores numéricos");
            throw new ValidatorException(msg);
         }
         

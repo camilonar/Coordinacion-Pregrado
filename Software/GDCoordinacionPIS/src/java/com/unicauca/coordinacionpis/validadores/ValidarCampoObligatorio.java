@@ -20,7 +20,7 @@ public class ValidarCampoObligatorio implements Validator
         
         if(texto.equals(""))
         {
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Campo obligatorio.");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Campo obligatorio");
            throw new ValidatorException(msg);  
         }
         

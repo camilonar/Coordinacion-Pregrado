@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
 
         <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar usuario">
             <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}"/>
@@ -222,10 +222,12 @@
                         </p:row>
                     </p:panelGrid>
                 <p:separator/>
-                <center>  <p:commandButton action="#{usuarioController.registrarUsuario()}"
+                <center>  
+                    <p:commandButton action="#{usuarioController.registrarUsuario()}"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel" 
                                      id="registrar" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
-                                     oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
+                                     oncomplete="handleSubmit(args,'UsuarioCreateDialog');"
+                                     ajax="true"/>
                 </center>
             </h:form>
         </p:dialog>
