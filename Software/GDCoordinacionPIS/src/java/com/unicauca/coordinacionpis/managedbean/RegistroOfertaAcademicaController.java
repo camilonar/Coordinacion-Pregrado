@@ -494,7 +494,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
                 documentosOfertasAcademicas = okm.findByName("");
                 requestContext.update("datalist");
                 requestContext.execute("PF('dlgRegistroOfertaAcedemica').hide()");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La información se registro con exito."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información se registro con exito."));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "El documento para este periodo ya se encuentra registrado"));

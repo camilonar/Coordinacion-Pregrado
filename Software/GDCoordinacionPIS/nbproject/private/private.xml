@@ -3,13 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/sessionbean/DepartamentoFacade.java</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuariogrupoController.java</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/CargarFormularioController.java</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/AddNavegacionController.java</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/sinSesion/index.xhtml</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/SesionController.java</file>
-            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/AddNavegacionController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/jefe/OfertaAcademica/ofertasAcademicas.xhtml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/usuario.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/faces-config.xml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/visitante.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/uploadFile.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/styleerror.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/CargarFormularioController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/CargoController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/PerfilUsuarioController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/SesionController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/GrupoController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/style.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/MateriaController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/DepartamentoController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/ses.css</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/glassfish-web.xml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/ofertasAcademicas.xhtml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/registrarOfertaAcademica.xhtml</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroPlandeEstudioController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroOfertaAcademicaController.java</file>
+            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroFormatoAController.java</file>
         </group>
     </open-files>
 </project-private>
