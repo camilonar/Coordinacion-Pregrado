@@ -174,7 +174,7 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoCreateDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La información se registró con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información se registró con éxito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -185,7 +185,7 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoEditDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La información se actualizó con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información se actualizó con éxito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -211,7 +211,7 @@ public class DepartamentoController implements Serializable {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
                 items = ejbFacade.findAll();
                 requestContext.update("DepartamentoListForm:datalist");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se elimino el departamento con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Se elimino el departamento con éxito"));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");

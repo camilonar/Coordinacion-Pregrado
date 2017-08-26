@@ -200,7 +200,7 @@ public class RegistroFormatoAController implements Serializable {
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
-        FacesMessage message = new FacesMessage("El archivo", event.getFile().getFileName() + " se selecciono con éxito");
+        FacesMessage message = new FacesMessage("", "El archivo" + event.getFile().getFileName() + " se selecciono con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");

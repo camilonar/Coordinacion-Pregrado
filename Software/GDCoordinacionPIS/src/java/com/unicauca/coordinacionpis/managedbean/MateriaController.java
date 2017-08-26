@@ -78,7 +78,7 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Materia registrada con exito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Materia registrada con exito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
     
@@ -90,7 +90,7 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Materia editada con exito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Materia editada con exito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
     public void cancelarEdicion() {
