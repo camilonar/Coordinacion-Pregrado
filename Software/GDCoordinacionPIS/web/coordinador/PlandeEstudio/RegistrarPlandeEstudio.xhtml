@@ -118,7 +118,9 @@ and open the template in the editor.
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column>                        
-                        <p:calendar  value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" id="vigPlanEstudio" onkeypress="return false"  navigator="true" pattern="dd-MM-yyyy" required="true" requiredMessage="Campo Vigencia Plan de Estudio obligatorio" placeholder="dd/mm/aaaa" maxdate="#{registroPlandeEstudioController.fechaActual()}"/>
+                        <p:calendar  value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" id="vigPlanEstudio" onkeypress="return false"  navigator="true" pattern="dd-MM-yyyy" required="true" requiredMessage="Campo Vigencia Plan de Estudio obligatorio" placeholder="dd/mm/aaaa"  maxdate="#{registroPlandeEstudioController.fechaActual()} ">
+                        </p:calendar>
+                        
                     </p:column>                   
                 </p:row>
                 <p:row>
@@ -133,7 +135,7 @@ and open the template in the editor.
                 </p:row>
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update="msg,:formPlanesdeEstudio:lstPlanesEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
+                        <p:commandButton value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
                         <p:spacer width="30%" height="10"/>                                                                      
                     </p:column>
                 </p:row>
