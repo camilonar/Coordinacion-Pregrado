@@ -5,11 +5,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:dialog widgetVar="dlgRegistroFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
-              closable="true" header="Registro FormatoA"> 
+              closable="true" header="Registro Formato A"> 
         <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>
         <h:form id="formSeleccionarArchivoFormatoA">
             <p:outputLabel rendered="#{!registroFormatoAController.exitoSubirArchivo}" 
-                           value="Seleccione el archivo pdf del formatoA" 
+                           value="Seleccione el archivo pdf del Formato A" 
                            style="font-weight: bold; color: #000000"/>
             <p:fileUpload rendered="#{!registroFormatoAController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
@@ -163,7 +163,7 @@
 
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Guardar" update= ":formListaAnteproyectos:datalist"
+                        <p:commandButton value="Actualizar" update= ":formListaAnteproyectos:datalist"
                                          action="#{registroFormatoAController.aceptarFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
                     </p:column>

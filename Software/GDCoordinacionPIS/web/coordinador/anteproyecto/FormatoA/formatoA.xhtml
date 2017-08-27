@@ -10,7 +10,7 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:commandButton value="Agregar formatoA" onclick="PF('dlgRegistroFormatoA').show()"/>
+            <p:commandButton value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
         </h:form>
         <h:form id="formListaAnteproyectos">    
             <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
@@ -21,7 +21,7 @@
             <p:dataTable value="#{registroFormatoAController.listadoAnteproecto}" 
                          id="datalist" paginator="true"
                          rowKey="#{item.id}"
-                         rows="10"
+                         rows="10" emptyMessage="Sin documentos "
                          rowsPerPageTemplate="10,20,30,40,50"
                          var="formatoA">
                 <p:column>

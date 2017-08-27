@@ -686,7 +686,7 @@ public class RegistroPlandeEstudioController implements Serializable {
             okm.deleteDocument(doc.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo se elimino con exito!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo se elimino con exito"));
             requestContext.update("formPlanesdeEstudio:mensajeEliminar");
             listaDocs();
             requestContext.update("lstPlanesEstudio");

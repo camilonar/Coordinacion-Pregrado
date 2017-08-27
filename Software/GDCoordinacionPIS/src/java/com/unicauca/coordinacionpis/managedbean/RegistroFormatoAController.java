@@ -200,7 +200,7 @@ public class RegistroFormatoAController implements Serializable {
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
-        FacesMessage message = new FacesMessage("", "El archivo" + event.getFile().getFileName() + " se selecciono con éxito");
+        FacesMessage message = new FacesMessage("", "El archivo " + event.getFile().getFileName() + " se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");
@@ -633,7 +633,7 @@ public class RegistroFormatoAController implements Serializable {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo se elimino con exito!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo se eliminó con éxito"));
             requestContext.execute("PF('Confirmacion').hide()");
             requestContext.execute("PF('mensajeRegistroExitoso').show()");
             requestContext.update("formListaAnteproyectos");
