@@ -31,7 +31,7 @@ and open the template in the editor.
 
 
         <h:form id="formArchivoSelecionadoPlanEstudio">
-            <p:panelGrid styleClass="panelgrid" 
+            <p:panelGrid  styleClass="panelgrid" 
                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">
                 <p:row>
                     <p:column colspan="4">
@@ -47,7 +47,7 @@ and open the template in the editor.
 
         <h:form id="formMetadatosPlanEstudio">
             <p:growl id="msg" showDetail="true" life="4000"/>
-            <p:panelGrid styleClass="panelgrid" id="panelMetadadosPlanEstudio"
+            <p:panelGrid  styleClass="panelgrid" id="panelMetadadosPlanEstudio"
                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">  
 
                 <p:row>
@@ -103,6 +103,7 @@ and open the template in the editor.
                             <!--Validar el tamaño del dato ingresado en el campo, cada ves que se presione una tecla-->
                             <!--<p:watermark for="acPlanEstudio" value="Acuerdo" id="watermark" />-->
                             <f:ajax event="keyup" render="msgAcPlan"/>
+                            
                             <f:validateLength minimum="5"/>
                         </p:inputText>
                     </p:column>                   
@@ -119,6 +120,7 @@ and open the template in the editor.
                     </p:column>
                     <p:column>                        
                         <p:calendar  value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" id="vigPlanEstudio" onkeypress="return false"  navigator="true" pattern="dd-MM-yyyy" required="true" requiredMessage="Campo Vigencia Plan de Estudio obligatorio" placeholder="dd/mm/aaaa"  maxdate="#{registroPlandeEstudioController.fechaActual()} ">
+                            <f:ajax event="keyup" render="msgVigPlan"/>
                         </p:calendar>
                         
                     </p:column>                   
@@ -135,7 +137,7 @@ and open the template in the editor.
                 </p:row>
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
+                        <p:commandButton value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
                         <p:spacer width="30%" height="10"/>                                                                      
                     </p:column>
                 </p:row>
