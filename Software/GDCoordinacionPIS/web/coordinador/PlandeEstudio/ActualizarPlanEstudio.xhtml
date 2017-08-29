@@ -127,7 +127,7 @@ and open the template in the editor.
                 </p:row>
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Actualizar" action="#{registroPlandeEstudioController.editarPlanEstudio()}" update="msg,:formPlanesdeEstudio:lstPlanesEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
+                        <p:commandButton value="Actualizar" action="#{registroPlandeEstudioController.editarPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
                         <p:spacer width="30%" height="10"/>                                                                      
                     </p:column>
                 </p:row>
