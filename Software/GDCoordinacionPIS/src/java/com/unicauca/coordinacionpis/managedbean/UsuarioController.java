@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -491,6 +492,10 @@ public class UsuarioController implements Serializable {
         this.miImagen = null;
         this.imagen = null;
         return "./";
+    }
+    public Date getFechaHoy()
+    {
+        return new Date();
     }
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {

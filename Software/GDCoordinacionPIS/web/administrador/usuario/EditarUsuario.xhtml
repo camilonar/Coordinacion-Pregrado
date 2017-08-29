@@ -95,7 +95,15 @@
 
                         </p:column>
                         <p:column>
-                            <p:calendar style="width: 165px" id="usufechanacimiento" placeholder="mm/dd/aaaa" pattern="MM/dd/yyyy" value="#{usuarioController.selected.usufechanacimiento}" title="#{bundleAdmin.EditUsuarioTitle_usufechanacimiento}" required="true" requiredMessage="#{bundleAdmin.EditUsuarioRequiredMessage_usufechanacimiento}" showOn="button"/>
+                            <p:calendar style="width: 165px" id="usufechanacimiento" 
+                                        placeholder="mm/dd/aaaa" pattern="MM/dd/yyyy" 
+                                        value="#{usuarioController.selected.usufechanacimiento}" 
+                                        title="#{bundleAdmin.EditUsuarioTitle_usufechanacimiento}" 
+                                        required="true" 
+                                        requiredMessage="#{bundleAdmin.EditUsuarioRequiredMessage_usufechanacimiento}" 
+                                        showOn="button"
+                                        navigator = "true"
+                                        maxdate="#{usuarioController.fechaHoy}"/>
                         </p:column>
 
                     </p:row>
