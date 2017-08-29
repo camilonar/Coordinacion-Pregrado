@@ -178,7 +178,6 @@ public class UsuarioController implements Serializable {
     public void registrarUsuario() 
     {
         
-        
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
         this.usuario.setUsufoto(inputStreamToByteArray(file));
         usuario.setCarid(cargo);
