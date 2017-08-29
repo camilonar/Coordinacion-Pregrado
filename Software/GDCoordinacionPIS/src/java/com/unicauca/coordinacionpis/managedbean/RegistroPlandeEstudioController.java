@@ -192,7 +192,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " se seleccionó con exito");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado exitosamente");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -214,7 +214,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " se seleccionó con exito");
+        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado exitosamente");
         FacesContext.getCurrentInstance().addMessage(null, mensaje);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -269,9 +269,9 @@ public class RegistroPlandeEstudioController implements Serializable {
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
 
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " se registro con exito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + "  fue registrado con éxito");
                 } else {
-                    message = new FacesMessage("Error al registrar el archivo", nombreArchivo);
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "Ocurrió un error registrando el archivo " + nombreArchivo);
                 }
             } else {//Si la carpeta no existe, la crea y dentro de ella crea el documento.
 
@@ -686,7 +686,7 @@ public class RegistroPlandeEstudioController implements Serializable {
             okm.deleteDocument(doc.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo se elimino con exito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo fue eliminado con éxito"));
             requestContext.update("formPlanesdeEstudio:mensajeEliminar");
             listaDocs();
             requestContext.update("lstPlanesEstudio");
