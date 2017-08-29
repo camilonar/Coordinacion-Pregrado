@@ -68,4 +68,8 @@ public abstract class AbstractFacade<T> {
     {
         getEntityManager().refresh(o);
     }
+    public void limpiarCache()
+    {
+        getEntityManager().getEntityManagerFactory().getCache().evictAll();
+    }
 }

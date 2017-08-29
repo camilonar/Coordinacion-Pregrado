@@ -201,7 +201,8 @@ public class UsuarioController implements Serializable {
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('UsuarioCreateDialog').hide()");
-        items.add(usuario);
+        ejbUsuario.limpiarCache();
+        items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La información se registró con éxito."));
