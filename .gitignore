@@ -12,3 +12,5 @@
 Software/GDCoordinacionPIS/nbproject/*.*
 Software/GDCoordinacionPIS/nbproject/private/private.properties
 Software/GDCoordinacionPIS/nbproject/project.properties
+Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroFormatoAController.java
+Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroOfertaAcademicaController.java

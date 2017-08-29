@@ -320,7 +320,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             if (registroInicialOferta) {
                 generarPDFPre();
-                File initialFile = new File("D:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf");
+                File initialFile = new File("Z:\\dfm\\pro2\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
 
                 if (!existeFolder) {
@@ -356,7 +356,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             } else {
                 generarPDFPos();
-                File initialFile = new File("D:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf");
+                File initialFile = new File("Z:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
                 if (!existeFolder) {
                     okm.createFolderSimple("/okm:root/Coordinacion/Oferta academica");
@@ -617,7 +617,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("D:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream("Z:\\dfm\\pro2\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf"));
             // add meta-data to pdf
             document.addAuthor(usuarioDeLaSesion().getUsunombres() + " " + usuarioDeLaSesion().getUsuapellidos());
             document.addCreationDate();
@@ -667,7 +667,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("D:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream("Z:\\dfm\\pro2\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();

@@ -470,7 +470,7 @@ public class RegistroFormatoAController implements Serializable {
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("D:\\aguaabril2016.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream("Z:\\dfm\\pro2\\aguaabril2016.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();
