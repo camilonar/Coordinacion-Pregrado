@@ -2,36 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/AddNavegacionController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/jefe/OfertaAcademica/ofertasAcademicas.xhtml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/usuario.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/faces-config.xml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/visitante.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/uploadFile.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/styleerror.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/CargarFormularioController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/CargoController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/PerfilUsuarioController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/SesionController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/glassfish-resources.xml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/GrupoController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/style.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/MateriaController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/DepartamentoController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/ses.css</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/glassfish-web.xml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/ofertasAcademicas.xhtml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/registrarOfertaAcademica.xhtml</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroPlandeEstudioController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroOfertaAcademicaController.java</file>
-            <file>file:/C:/Users/andre_000/Documents/9%20semestre/Proyecto%202/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroFormatoAController.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/sessionbean/UsuariogrupoFacade.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/sessionbean/AbstractFacade.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/ListarUsuarios.xhtml</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/EditarUsuario.xhtml</file>
         </group>
->>>>>>> e11cf251533dec60da97880966ddde430aee53b4
     </open-files>
 </project-private>
