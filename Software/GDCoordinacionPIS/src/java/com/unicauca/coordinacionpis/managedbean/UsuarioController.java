@@ -175,28 +175,36 @@ public class UsuarioController implements Serializable {
         this.campoFoto = campoFoto;
     }
 
-    public void registrarUsuario() {
+    public void registrarUsuario() 
+    {
+        
+        
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
         this.usuario.setUsufoto(inputStreamToByteArray(file));
         usuario.setCarid(cargo);
-        usuario.setUsufoto(imagen);
-        
         ejbUsuario.create(usuario);
+        
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
 
         usuarioGrupoPK.setGruid(grupo.getGruid());
         usuarioGrupoPK.setUsuid(this.usuario.getUsuid());
         usuarioGrupo.setUsuariogrupoPK(usuarioGrupoPK);
+        usuarioGrupo.setGrupo(grupo);
+        usuarioGrupo.setUsuario(usuario);
         usuarioGrupo.setUsunombreusuario(this.usuario.getUsunombreusuario());
+        
+        List a = new ArrayList();
+        a.add(usuarioGrupo);
+        this.usuario.setUsuariogrupoList(a);
         this.ejbUsuarioGrupo.create(usuarioGrupo);
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('UsuarioCreateDialog').hide()");
-        items = ejbUsuario.findAll();
+        items.add(usuario);
         usuario = new Usuario();
         usuario.setUsugenero('M');
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información se registró con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "La información se registró con éxito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -207,6 +215,7 @@ public class UsuarioController implements Serializable {
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
+        
         usuarioGrupoPK.setGruid(grupo.getGruid());
         usuarioGrupoPK.setUsuid(this.usuario.getUsuid());
         usuarioGrupo.setUsuariogrupoPK(usuarioGrupoPK);
@@ -224,6 +233,12 @@ public class UsuarioController implements Serializable {
 
     public void seleccionarUsuarioEditar(Usuario usuario) {
         this.usuario = usuario;
+        this.imagen = this.usuario.getUsufoto();
+        if(this.imagen ==null)
+        {
+            this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
+            convertirBytesAImagen();
+        }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
     }

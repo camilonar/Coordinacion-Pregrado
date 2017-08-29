@@ -17,9 +17,10 @@
                 <p:panelGrid styleClass="panelgrid" id="panel">
                     <p:row>
                         <p:column  rendered="#{usuarioController.campoFoto}">                                
-                            <p:graphicImage value="#{usuarioController.imagenFlujoEditar}" >
-                                <f:param name="idUsu" value="#{usuarioController.selected.usuid}" />
-                            </p:graphicImage>
+                            <p:graphicImage id="personPicture" rendered="#{usuarioController.miImagen !=null}"
+                                            style="height:100px; width:100px;"
+                                            value="#{usuarioController.miImagen}"
+                                            cache="false"/>
                         </p:column>
                         <p:column rendered="#{usuarioController.campoFoto}">
                             <p:commandLink style="color: blue;" action="#{usuarioController.mostraSubirFoto()}" 
