@@ -180,7 +180,7 @@ public class SesionController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/");
 
         } catch (ServletException e) {
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAILED", "Ocurrió un error cerrando la sesión"));
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error cerrando la sesión"));
         }
 
     }

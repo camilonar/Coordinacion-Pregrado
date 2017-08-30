@@ -205,7 +205,7 @@ public class UsuarioController implements Serializable {
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue registrada con éxito"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -228,7 +228,7 @@ public class UsuarioController implements Serializable {
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue editada con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue editada con éxito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 

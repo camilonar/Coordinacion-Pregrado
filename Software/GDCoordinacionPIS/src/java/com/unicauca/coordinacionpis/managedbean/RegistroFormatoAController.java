@@ -200,7 +200,7 @@ public class RegistroFormatoAController implements Serializable {
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
-        FacesMessage message = new FacesMessage("", "El archivo " + event.getFile().getFileName() + " fue seleccionado con éxito");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo " + event.getFile().getFileName() + " fue seleccionado con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");
@@ -335,7 +335,7 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.update("formArchivoSelecionadoFormatoA");
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue registrada con éxito"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
     
@@ -623,7 +623,7 @@ public class RegistroFormatoAController implements Serializable {
 
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "¿Está seguro que desea eliminar el documento?"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
     }
@@ -633,7 +633,7 @@ public class RegistroFormatoAController implements Serializable {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo fue eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo fue eliminado con éxito"));
             requestContext.execute("PF('Confirmacion').hide()");
             requestContext.execute("PF('mensajeRegistroExitoso').show()");
             requestContext.update("formListaAnteproyectos");

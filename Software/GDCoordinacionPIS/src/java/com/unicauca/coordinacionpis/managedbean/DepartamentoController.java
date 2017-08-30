@@ -174,7 +174,7 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoCreateDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue registrada con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -185,7 +185,7 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoEditDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue editada con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue editada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
@@ -211,11 +211,11 @@ public class DepartamentoController implements Serializable {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
                 items = ejbFacade.findAll();
                 requestContext.update("DepartamentoListForm:datalist");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El departamento fue eliminado con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento fue eliminado con éxito"));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El departamento tiene materias asociadas"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El departamento tiene materias asociadas"));
                 requestContext.execute("PF('mensajeError').show()");
             }
         }
