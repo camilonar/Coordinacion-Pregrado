@@ -192,7 +192,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado exitosamente");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -214,7 +214,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado exitosamente");
+        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"", "El archivo" + nombreArchivo + " fue seleccionado con éxito");
         FacesContext.getCurrentInstance().addMessage(null, mensaje);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -277,7 +277,7 @@ public class RegistroPlandeEstudioController implements Serializable {
 
                 okm.createFolderSimple(rutaPlanesDeEstudio);//Crear carpeta Planes de Estudio en openkm
                 okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento dentro de la carpeta Planes de Estudio en openkm
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo " + nombreArchivo + " se registro con exito");
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo " + nombreArchivo + " fue registrado con exito");
             }
             FacesContext.getCurrentInstance().addMessage(null, message);
             rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
@@ -379,7 +379,7 @@ public class RegistroPlandeEstudioController implements Serializable {
     public void editarPlanEstudio() {
 
         RequestContext rc = RequestContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No registraste ningún cambio");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Ningún cambió ha sido registrado");
 
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
@@ -388,22 +388,22 @@ public class RegistroPlandeEstudioController implements Serializable {
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Confirmación", "Plan de estudio actualizado correctamente");
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El plan de estudio fue editado con éxito");
             } else {
                 if (metadatosPlandeEstudio.getNumero() != auxNumeroPlan) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxNumeroPlan);
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Confirmación", "Plan de estudio actualizado correctamente");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El plan de estudio fue editado con éxito");
                 }
                 if (!metadatosPlandeEstudio.getAcuerdo().equalsIgnoreCase(auxAcuerdoPlan)) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxAcuerdoPlan);
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Confirmación", "Plan de estudio actualizado correctamente");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El plan de estudio fue editado con éxito");
                 }
                 if (metadatosPlandeEstudio.getVigencia().compareTo(auxFechaPlan) != 0) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(auxFechaPlan));
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Confirmación", "Plan de estudio actualizado correctamente");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El plan de estudio fue editado con éxito");
                 }
             }
             FacesContext.getCurrentInstance().addMessage(null, message);

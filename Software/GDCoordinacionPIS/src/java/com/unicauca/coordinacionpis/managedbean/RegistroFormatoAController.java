@@ -200,7 +200,7 @@ public class RegistroFormatoAController implements Serializable {
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
-        FacesMessage message = new FacesMessage("", "El archivo " + event.getFile().getFileName() + " fue seleccionado exitosamente");
+        FacesMessage message = new FacesMessage("", "El archivo " + event.getFile().getFileName() + " fue seleccionado con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");
@@ -623,7 +623,7 @@ public class RegistroFormatoAController implements Serializable {
 
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "¿Desea eliminar el documento?"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
     }
