@@ -208,11 +208,12 @@ public class UsuarioController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
-
+    
     public void editarUsuario() {
 
         usuario.setCarid(cargo);
-
+        if(file!=null)
+            this.usuario.setUsufoto(inputStreamToByteArray(file));
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
@@ -225,6 +226,7 @@ public class UsuarioController implements Serializable {
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('UsuarioEditDialog').hide()");
+        ejbUsuario.limpiarCache();
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
@@ -239,6 +241,7 @@ public class UsuarioController implements Serializable {
         {
             this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
             convertirBytesAImagen();
+            this.file = null;
         }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
@@ -497,6 +500,10 @@ public class UsuarioController implements Serializable {
     public Date getFechaHoy()
     {
         return new Date();
+    }
+    public void limpiarFoto()
+    {
+        System.out.println("Hallo");
     }
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {

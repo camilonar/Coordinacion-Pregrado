@@ -26,12 +26,26 @@
                             <p:commandLink style="color: blue;" action="#{usuarioController.mostraSubirFoto()}" 
                                            value="Cambiar foto de perfil"/>                                                                 
                         </p:column>
-                        <p:column  rendered="#{!usuarioController.campoFoto}">
+                        <p:column rendered="#{!usuarioController.campoFoto}">
+                            <p:graphicImage  rendered="#{usuarioController.miImagen !=null}"
+                                            style="height:100px; width:100px;"
+                                            value="#{usuarioController.miImagen}"
+                                            cache="false"/>
+                        </p:column>
+                        <p:column rendered="#{!usuarioController.campoFoto}">
+                            <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
+                                           allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
+                                           required="true"
+                                           update="@form" multiple="false" label="Subir imagen" styleClass="subirFoto">
+
+                            </p:fileUpload>
+                        </p:column>
+                        <!--p:column  rendered="#{!usuarioController.campoFoto}">
                             <p:fileUpload fileUploadListener="#{usuarioController.actualizarFoto}" mode="advanced"
                                           label="Seleccionar" uploadLabel="Aceptar" update="panel :UsuarioListForm:datalist "
                                           auto="false" allowTypes="/(\.|\/)(jpe?g)$/" 
                                           />
-                        </p:column>
+                        </p:column-->
                     </p:row>
                 </p:panelGrid>
             </h:form>
