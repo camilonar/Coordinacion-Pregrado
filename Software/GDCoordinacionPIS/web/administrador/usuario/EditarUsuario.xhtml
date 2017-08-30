@@ -16,11 +16,15 @@
             <h:form id="formEditarfoto" enctype="multipart/form-data">
                 <p:panelGrid styleClass="panelgrid" id="panel">
                     <p:row>
+                        <p:column >
+                            <p:outputLabel value="Foto de perfil:" style="color: black; font-size: 16px; font-weight: bold;"/>                
+                        </p:column>
                         <p:column  rendered="#{usuarioController.campoFoto}">                                
                             <p:graphicImage id="personPicture" rendered="#{usuarioController.miImagen !=null}"
                                             style="height:100px; width:100px;"
                                             value="#{usuarioController.miImagen}"
                                             cache="false"/>
+
                         </p:column>
                         <p:column rendered="#{usuarioController.campoFoto}">
                             <p:commandLink style="color: blue;" action="#{usuarioController.mostraSubirFoto()}" 
@@ -41,10 +45,17 @@
                             </p:fileUpload>
                         </p:column>
                         <!--p:column  rendered="#{!usuarioController.campoFoto}">
+
+                            <br/>
+                            <p:commandButton rendered="#{usuarioController.campoFoto}" action="#{usuarioController.mostraSubirFoto()}" value="Cambiar foto de perfil"/>   
+                        </p:column>                                                               
+                        <p:column  rendered="#{!usuarioController.campoFoto}">
+
                             <p:fileUpload fileUploadListener="#{usuarioController.actualizarFoto}" mode="advanced"
-                                          label="Seleccionar" uploadLabel="Aceptar" update="panel :UsuarioListForm:datalist "
+                                          label="Seleccionar foto" uploadLabel="Subir foto" update="panel :UsuarioListForm:datalist "
                                           auto="false" allowTypes="/(\.|\/)(jpe?g)$/" 
                                           />
+
                         </p:column-->
                     </p:row>
                 </p:panelGrid>
@@ -53,8 +64,8 @@
                 <p:panelGrid styleClass="panelgrid" id="panel">
                     <p:row>
                         <p:column>
-                            <p:outputLabel value="Nombres" />
-
+                            <p:outputLabel style="font-weight:bold;" value="Nombres:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>
                         <p:column>
                             <p:inputText id="usunombres" value="#{usuarioController.selected.usunombres}"
@@ -66,7 +77,8 @@
 
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="Apellidos" />
+                            <p:outputLabel style="font-weight:bold;" value="Apellidos:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>
                         <p:column>
                             <p:inputText id="usuapellidos" value="#{usuarioController.selected.usuapellidos}"
@@ -94,7 +106,7 @@
                     <p:row>
 
                         <p:column>
-                            <p:outputLabel value="Genero"  />
+                            <p:outputLabel style="font-weight:bold;" value="Genero:"  />
 
                         </p:column>
                         <p:column>
@@ -105,26 +117,38 @@
 
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="Fecha de nacimiento" />
-
+                            <p:outputLabel style="font-weight:bold;" value="Fecha de nacimiento:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>
                         <p:column>
                             <p:calendar style="width: 165px" id="usufechanacimiento" 
-                                        placeholder="mm/dd/aaaa" pattern="MM/dd/yyyy" 
+                                        placeholder="dd/mm/aaaa" pattern="dd/MM/yyyy" 
                                         value="#{usuarioController.selected.usufechanacimiento}" 
                                         title="#{bundleAdmin.EditUsuarioTitle_usufechanacimiento}" 
                                         required="true" 
-                                        requiredMessage="#{bundleAdmin.EditUsuarioRequiredMessage_usufechanacimiento}" 
+                                        requiredMessage="Campo obligatorio" 
                                         showOn="button"
                                         navigator = "true"
-                                        maxdate="#{usuarioController.fechaHoy}"/>
+                                        maxdate="#{usuarioController.fechaHoy}">
+                                <p:ajax event="dateSelect" update="msgUsuFechaNacimiento"/>
+                                <p:ajax event="keyup" update="msgUsuFechaNacimiento"/>
+                            </p:calendar>
                         </p:column>
-
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+                        </p:column>
+                        <p:column>
+                        </p:column>
+                        <p:column>
+                        </p:column>
+                        <p:column>
+                            <p:message id="msgUsuFechaNacimiento" for="usufechanacimiento"/>
+                        </p:column>
                     </p:row>
                     <p:row>
-                        <p:column>
-                            <p:outputLabel value="Email" />
-
+                       <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Email:" />
                         </p:column>
                         <p:column>
                             <p:inputText disabled="true" id="usuemail" value="#{usuarioController.selected.usuemail}"
@@ -136,12 +160,11 @@
 
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="Cargo" />
+                            <p:outputLabel style="font-weight:bold;" value="Cargo:" />
 
                         </p:column>
                         <p:column>
                             <p:selectOneMenu style="width: 176px" id="carid" value="#{usuarioController.cargo.carid}" >
-                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
                                 <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
                                                var="caridItem"
                                                itemValue="#{caridItem.carid}"
@@ -168,11 +191,10 @@
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel value="Tipo de usuario" />
+                            <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
                         </p:column>
                         <p:column>
                             <p:selectOneMenu style="width: 176px" id="grupoId" value="#{usuarioController.grupo.gruid}" >
-                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
                                 <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                                var="grupo"
                                                itemValue="#{grupo.gruid}"
@@ -194,7 +216,7 @@
                     </p:row>
                     <p:row >
                         <p:column>
-                            <p:outputLabel value="Nombre de usuario" />
+                            <p:outputLabel style="font-weight:bold;" value="Nombre de usuario:" />
                         </p:column>
                         <p:column>
                             <p:inputText disabled="true" id="usunombreusuario" value="#{usuarioController.selected.usunombreusuario}" 
@@ -208,7 +230,7 @@
 
                         </p:column>
                         <p:column>
-                            <p:outputLabel value="Contraseña" />
+                            <p:outputLabel style="font-weight:bold;" value="Contraseña:" />
 
                         </p:column>
                         <p:column rendered="#{!usuarioController.campoContrasena}">
@@ -216,19 +238,19 @@
                                         title="#{bundleAdmin.CreateUsuarioTitle_usucontrasena}" 
                                         />        
                         </p:column>
-                        <p:column rendered="#{usuarioController.campoContrasena}" style="background: #eff5fa">
-                            <p:outputLabel value="***********"/>
+                        <p:column rendered="#{usuarioController.campoContrasena}" >
+                            <p:inputText disabled="true" value="***********"/>
                         </p:column>
 
-                        <p:column rendered="#{usuarioController.campoContrasena}" style="background: #eff5fa" colspan="2">
-                            <p:commandLink style="color: blue;" value="Modificar" action="#{usuarioController.mostrarModificarContrasena()}"/>
+                        <p:column rendered="#{usuarioController.campoContrasena}">
+                            <p:commandButton value="Modificar contraseña" action="#{usuarioController.mostrarModificarContrasena()}"/>
                         </p:column>
-                        <p:column rendered="#{!usuarioController.campoContrasena}" style="background: #eff5fa" colspan="2">
-                            <p:commandLink style="color: blue;" value="Aceptar" action="#{usuarioController.actualizarContrasena()}"
-                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
-                            <p:commandLink style="margin-left: 10px;color: blue;" value="Cancelar" 
-                                           action="#{usuarioController.cancelarActualizarContrasena()}"
-                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
+                        <p:column rendered="#{!usuarioController.campoContrasena}">
+                            <p:commandButton value="Aceptar" action="#{usuarioController.actualizarContrasena()}"
+                                             onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
+                            <p:commandButton value="Cancelar" 
+                                             action="#{usuarioController.cancelarActualizarContrasena()}"
+                                             onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                         </p:column>
                     </p:row>
                     <p:row> 
@@ -246,9 +268,11 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-
-                <p:commandButton action="#{usuarioController.editarUsuario()}" value="Guardar cambios" 
-                                 update="panel,:UsuarioListForm:datalist"/>
+                <p:separator/>
+                <center>
+                    <p:commandButton action="#{usuarioController.editarUsuario()}" value="Actualizar" 
+                                     update="panel,:UsuarioListForm:datalist"/>
+                </center>     
 
 
             </h:form>
