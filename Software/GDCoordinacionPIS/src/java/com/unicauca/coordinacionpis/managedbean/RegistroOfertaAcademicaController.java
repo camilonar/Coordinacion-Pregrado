@@ -494,10 +494,10 @@ public class RegistroOfertaAcademicaController implements Serializable {
                 documentosOfertasAcademicas = okm.findByName("");
                 requestContext.update("datalist");
                 requestContext.execute("PF('dlgRegistroOfertaAcedemica').hide()");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La información fue registrada con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "El documento para este periodo ya se encuentra registrado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El documento para este periodo ya se encuentra registrado"));
                 requestContext.execute("PF('mensajeErrorRegistro').show()");
             }
 
@@ -1048,7 +1048,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
                     if (existeFolderPeriodo) {
                         if (comprobarDocumento("/okm:root/Oferta academica/Periodo-" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "/Oferta académica-" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-prematricula.pdf")) {
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El documento para este periodo ya se encuentra registrado"));
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El documento para este periodo ya se encuentra registrado"));
                         }
                     }
 
@@ -1080,7 +1080,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
     }
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "¿Desea eliminar el documento?"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
     }
@@ -1090,7 +1090,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "El archivo fue eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo fue eliminado con éxito"));
             requestContext.execute("PF('Confirmacion').hide()");
             requestContext.execute("PF('mensajeRegistroExitoso').show()");
             requestContext.update("formListaDocumentos");

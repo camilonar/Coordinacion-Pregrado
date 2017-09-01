@@ -179,7 +179,7 @@ public class PerfilUsuarioController implements Serializable {
             this.usuarioEJB.edit(this.usuario);
             
             this.mostrarContrasena = true;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info. Se cambio la contraseña correctamente.", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La contraseña fue editada con éxito"));
 
         }
         requestContext.update("formularioPerfilDatosPersonales");

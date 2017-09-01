@@ -78,7 +78,7 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La materia fue registrada con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
     
@@ -90,7 +90,7 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "La materia fue editada con éxito."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia fue editada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
     public void cancelarEdicion() {
@@ -107,7 +107,7 @@ public class MateriaController implements Serializable {
     
     public void confirmarEliminacion(Materia materia){
         RequestContext context= RequestContext.getCurrentInstance();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "¿Desea eliminar la materia "+materia.getNombreMateria()+" ?"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar la materia "+materia.getNombreMateria()+" ?"));
         context.execute("PF('Confirmacion').show()");
         this.materia = materia;
     }
