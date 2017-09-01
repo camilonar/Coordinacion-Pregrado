@@ -8,17 +8,21 @@ import com.unicauca.coordinacionpis.utilidades.Utilidades;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Enumeration;
 import javax.ejb.EJB;
+import javax.el.ELContext;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -122,19 +126,30 @@ public class SesionController implements Serializable {
             try {
                 req.login(this.nombreDeUsuario, this.contrasenia);
                 req.getServletContext().log("Autenticacion exitosa");
+
                 this.haySesion = true;
                 this.errorSesion = false;
                 Usuariogrupo usuariogrupo = this.ejbUsuarioGrupo.buscarPorNombreUsuarioObj(req.getUserPrincipal().getName());
+                ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+                CargarFormularioController cargarFormularioController = (CargarFormularioController) FacesContext.getCurrentInstance().getApplication()
+                        .getELResolver().getValue(elContext, null, "cargarFormulariosController");
+
                 this.grupo = usuariogrupo.getUsuariogrupoPK().getGruid();
                 if (grupo.equalsIgnoreCase("1")) {
+                   
+                    
+                    
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionAdmin/Principal.xhtml");
+                    cargarFormularioController.cargarRegistrarMateria();
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("2")) {
+                    cargarFormularioController.cargarGestionAnteproyecto();
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionCoordinador/Principal.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("3")) {
+                    cargarFormularioController.cargarListaOfertaAcademica();
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionJefe/Principal.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
