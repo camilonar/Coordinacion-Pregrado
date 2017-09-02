@@ -97,13 +97,16 @@
                             <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>
                         <p:column>
-                            <p:calendar id="usufechanacimiento" placeholder="dd/mm/aaaa" pattern="dd/MM/yyyy" 
+                            <p:calendar id="usufechanacimiento" 
+                                        placeholder="dd/mm/aaaa" pattern="dd/MM/yyyy" 
                                         value="#{usuarioController.selected.usufechanacimiento}" 
                                         title="#{bundleAdmin.EditUsuarioTitle_usufechanacimiento}" 
                                         required="true" 
+                                        readonlyInput="true"
                                         requiredMessage="Campo obligatorio" 
                                         showOn="button"
                                         navigator = "true"
+                                        locale="es"
                                         maxdate="#{usuarioController.fechaHoy}">
                                 <p:ajax event="keyup" update="msgUsuFechaNacimiento"/>
                                 <p:ajax event="dateSelect" update="msgUsuFechaNacimiento"/>   </p:calendar>

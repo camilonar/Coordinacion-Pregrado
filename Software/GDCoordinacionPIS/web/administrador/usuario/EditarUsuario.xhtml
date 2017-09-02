@@ -102,6 +102,8 @@
                                         requiredMessage="Campo obligatorio" 
                                         showOn="button"
                                         navigator = "true"
+                                        locale="es"
+                                        readonlyInput="true"
                                         maxdate="#{usuarioController.fechaHoy}">
                                 <p:ajax event="dateSelect" update="msgUsuFechaNacimiento"/>
                                 <p:ajax event="keyup" update="msgUsuFechaNacimiento"/>
