@@ -6,50 +6,36 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:composition>
+
+
+    <ui:composition>            
         <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar usuario">
+            <h:outputStylesheet name="css/appearUploadFile.css" />
             <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}"/>
-
-            <h:outputStylesheet library="css" name="uploadFile.css"/>
+            <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
             <h:form id="formfoto" enctype="multipart/form-data">
-                <p:panelGrid  id="panel" styleClass="panelgrid">
-                    <p:row>
-                        <p:column >
-                            <p:outputLabel value="Foto de perfil:" style="color: black; font-size: 16px; font-weight: bold;"/>  
-                        </p:column>
-                        <p:column >
-                            <p:graphicImage  rendered="#{usuarioController.miImagen !=null}"
-                                            style="height:100px; width:100px;"
-                                            value="#{usuarioController.miImagen}"
-                                            cache="false"/>
-                        </p:column>
-                        <p:column >
-                            <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
-                                           allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
-                                           required="true"
-                                           update="@form" multiple="false" label="Subir imagen" styleClass="subirFoto">
-
-                            </p:fileUpload>
-                        </p:column>
-                        <p:column/>
-                        <p:column/>
-                        <p:column>
-
-                            <p:commandButton rendered="#{usuarioController.miImagen !=null}" value="Eliminar imágen"
-                                             />
-
-                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
-                            <p:outputLabel value="Campos obligatorios" />
-
-                        </p:column>
-                        <!--p:column>
-                            <p:fileUpload fileUploadListener="#{usuarioController.cargarFoto}" mode="advanced"
-                                          label="Seleccionar" uploadLabel="Cargar imagen"                                   
-                                          auto="false" allowTypes="/(\.|\/)(jpe?g)$/"
-                                          />
-                        </p:column-->
-                    </p:row>
-                </p:panelGrid>
+                <center>
+                    <p:outputLabel style="font-weight:bold;" value="Foto de perfil" />                   
+                </center>
+                <center>    
+                    <br/>
+                    <p:graphicImage  rendered="#{usuarioController.miImagen ==null}"
+                                     style="height:100px; width:100px;"
+                                     value="#{usuarioController.imagenDefecto}"/>
+                    <p:graphicImage  rendered="#{usuarioController.miImagen !=null}"
+                                     style="height:100px; width:100px;"
+                                     value="#{usuarioController.miImagen}"
+                                     cache="false"/>
+                    <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
+                                   allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
+                                   required="true"
+                                   update="@form" multiple="false" label="Subir imagen">
+                    </p:fileUpload> 
+                    <p:commandButton rendered="#{usuarioController.miImagen !=null}" value="Imagen por defecto" icon="ui-icon-cancel"/>
+                </center>
+                <br/>
             </h:form>
             <h:form id="UsuarioCreateForm">
                 <p:panelGrid  styleClass="panelgrid"  id="panel2">
@@ -124,7 +110,7 @@
                         </p:column>
 
                     </p:row>
-                                        <p:row> 
+                    <p:row> 
                         <p:column>
                         </p:column>
                         <p:column>
@@ -136,7 +122,7 @@
                         </p:column>
                     </p:row>
                     <p:row>
-                   <p:column>
+                        <p:column>
                             <p:outputLabel style="font-weight:bold;" value="Email:" />
                             <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>
@@ -149,7 +135,7 @@
                             </p:inputText>
 
                         </p:column>
-                     <p:column>
+                        <p:column>
                             <p:outputLabel style="font-weight:bold;" value="Cargo:" />
                         </p:column>
                         <p:column>
@@ -179,7 +165,7 @@
                         </p:column>
                     </p:row>
                     <p:row>
-                     <p:column>
+                        <p:column>
                             <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
                         </p:column>
                         <p:column>
@@ -222,7 +208,7 @@
 
 
                         </p:column>
-                     <p:column>
+                        <p:column>
                             <p:outputLabel style="font-weight:bold;" value="Contraseña:" />
                             <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                         </p:column>

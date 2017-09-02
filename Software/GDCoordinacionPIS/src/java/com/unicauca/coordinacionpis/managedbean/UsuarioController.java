@@ -381,6 +381,10 @@ public class UsuarioController implements Serializable {
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
+    public StreamedContent getImagenDefecto(){
+        return Utilidades.getImagenPorDefecto("foto");
+    }
 
     public StreamedContent getImagenFlujo() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -453,6 +457,10 @@ public class UsuarioController implements Serializable {
             InputStream is = new ByteArrayInputStream((byte[]) imagen);
             miImagen = new DefaultStreamedContent(is, "image/png");
         }
+    }
+    
+    public void imagenPorDefecto(){
+        imagen=null;
     }
     
     public void convertirImagenABytes(FileUploadEvent event) {

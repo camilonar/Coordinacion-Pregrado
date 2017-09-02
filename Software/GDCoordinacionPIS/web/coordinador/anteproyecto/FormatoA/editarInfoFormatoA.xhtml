@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:dialog widgetVar="dlgEditarFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
-              closable="true" header="Editar información FormatoA"> 
+              closable="true" header="Editar información Formato A"> 
         <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>
         
         <h:form id="formMetadatosEditFormatoA">
@@ -138,7 +138,7 @@
 
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Guardar" update=":formListaAnteproyectos:datalist"
+                        <p:commandButton value="Actualizar" update=":formListaAnteproyectos:datalist"
                                          action="#{registroFormatoAController.actualizarInfoFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
                     </p:column>
