@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/anteproyecto/FormatoA/formatoA.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/sesionAdmin/menu.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/ActualizarPlanEstudio.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/registrarOfertaAcademica.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/RegistrarPlandeEstudio.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/PlandeEstudio.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/ofertasAcademicas.xhtml</file>
-            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/SesionController.java</file>
+            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/PerfilUsuarioController.java</file>
+            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/perfilUsuario.xhtml</file>
+            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/anteproyecto/FormatoA/formatoA.xhtml</file>
+            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/RegistroFormatoAController.java</file>
+            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
         </group>
     </open-files>
 </project-private>

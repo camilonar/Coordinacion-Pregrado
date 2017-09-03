@@ -182,6 +182,10 @@ public class PerfilUsuarioController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La contraseña fue editada con éxito"));
 
         }
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Las contraseñas deben coincidir"));
+        
+        
         requestContext.update("formularioPerfilDatosPersonales");
 
     }

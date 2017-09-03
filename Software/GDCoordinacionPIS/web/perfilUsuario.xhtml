@@ -59,7 +59,17 @@
                                 </p:column>
                                 <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
                                     <p:password style="width: 120px;" value="#{perfilUsuarioController.contrasena}"/>  
+                                </p:column>  
+                            
+                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                                    <p:outputLabel style="" value="  Confirmar contraseña:"/>
+                                    <p:outputLabel style=";color:red;" value="* "/>
                                 </p:column>
+                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                                    <p:password style="width: 120px;" value="#{perfilUsuarioController.confirmarContrasena}"/>  
+                                </p:column>                                  
+                                
+                            </p:row>
                                 <p:column rendered="#{!perfilUsuarioController.mostrarContrasena}">
                                     <p:commandButton style="color: blue;" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
 
@@ -67,8 +77,6 @@
                                                      action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
 
                                 </p:column>
-                            </p:row>
-
                         </p:panelGrid>
                     </div>
                 </span>
