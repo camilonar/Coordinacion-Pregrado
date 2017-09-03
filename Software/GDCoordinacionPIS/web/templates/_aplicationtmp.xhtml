@@ -35,7 +35,7 @@
                         #{sesionController.paraMostrar()}
                     </h:link>
                     <p:menu id="opciones"  overlay="true"  trigger="opcionesusuario" my="right top" at="right bottom" >
-                        <p:menuitem value="Mi Perfil" action="#{cargarFormulariosController.cargarPerfilUsuario()}"
+                        <p:menuitem value="Mi Perfil" outcome="/perfilUsuario.xhtml"
                                     ajax="false"
                                     />
                         <p:separator/>

@@ -2,17 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/E:/Proyectos%20GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/resources/css/uploadFile.css</file>
-            <file>file:/E:/Proyectos%20GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/RegistrarUsuario.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/anteproyecto/FormatoA/formatoA.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/sesionAdmin/menu.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/ActualizarPlanEstudio.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/registrarOfertaAcademica.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/RegistrarPlandeEstudio.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/PlandeEstudio/PlandeEstudio.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/coordinador/OfertaAcademica/ofertasAcademicas.xhtml</file>
+            <file>file:/C:/Users/GILDARDO/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/SesionController.java</file>
         </group>
->>>>>>> a0388a26f759766e6798f71cc3c538d46de1dc35
->>>>>>> 8fa7aecb2095df3a84b327ed8a8922278db3f773
     </open-files>
 </project-private>
