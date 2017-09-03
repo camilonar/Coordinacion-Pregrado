@@ -40,6 +40,7 @@ public class SesionController implements Serializable {
     private String contrasenia;
     private String identificacion;
     private String grupo;
+    private String plantilla;
 
     //bools
     private boolean haySesion;
@@ -50,6 +51,14 @@ public class SesionController implements Serializable {
     public SesionController() {
         opcionesAdministrador = false;
         opcionesCoordinador = true;
+    }
+
+    public String getPlantilla() {
+        return plantilla;
+    }
+
+    public void setPlantilla(String plantilla) {
+        this.plantilla = plantilla;
     }
 
     public String getNombreDeUsuario() {
@@ -136,18 +145,18 @@ public class SesionController implements Serializable {
 
                 this.grupo = usuariogrupo.getUsuariogrupoPK().getGruid();
                 if (grupo.equalsIgnoreCase("1")) {
-                                      
+                    this.plantilla = "/sesionAdmin/_admintmp.xhtml";
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/administrador/usuario/ListarUsuarios.xhtml");
-                   
+
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("2")) {
-                  
+                    this.plantilla = "/sesionCoordinador/_coordinadortmp.xhtml";
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/coordinador/PlandeEstudio/PlandeEstudio.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("3")) {
-                   
+                    this.plantilla = "/sesionJefe/_jefetmp.xhtml";
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/jefe/OfertaAcademica/ofertasAcademicas.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
