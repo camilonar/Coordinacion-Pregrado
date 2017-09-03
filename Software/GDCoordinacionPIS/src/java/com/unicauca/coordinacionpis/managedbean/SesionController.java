@@ -136,21 +136,19 @@ public class SesionController implements Serializable {
 
                 this.grupo = usuariogrupo.getUsuariogrupoPK().getGruid();
                 if (grupo.equalsIgnoreCase("1")) {
+                                      
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/administrador/usuario/ListarUsuarios.xhtml");
                    
-                    
-                    
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionAdmin/Principal.xhtml");
-                    cargarFormularioController.cargarRegistrarMateria();
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("2")) {
-                    cargarFormularioController.cargarGestionAnteproyecto();
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionCoordinador/Principal.xhtml");
+                  
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/coordinador/PlandeEstudio/PlandeEstudio.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 } else if (grupo.equalsIgnoreCase("3")) {
-                    cargarFormularioController.cargarListaOfertaAcademica();
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionJefe/Principal.xhtml");
+                   
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/jefe/OfertaAcademica/ofertasAcademicas.xhtml");
                     identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
 
                 }

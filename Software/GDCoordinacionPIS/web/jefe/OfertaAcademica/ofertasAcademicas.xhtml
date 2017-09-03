@@ -5,8 +5,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+   
+    <ui:composition template="/sesionJefe/_jefetmp.xhtml">
+                
+        <ui:define name="body">
+            
     <h:head>
-        <title>Facelet Title</title>
+        <title>ofertasAcademicas</title>
     </h:head>
     <h:body>
         <br rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}"/>
@@ -71,6 +76,9 @@
             }
         </script>
     </h:body>   
+            
+    </ui:define>
+    </ui:composition>
 
 </html>
 

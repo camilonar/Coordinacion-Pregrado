@@ -7,16 +7,16 @@
 
     <h:body>
         <div id="contenidoMenu">
-            <h:form id="formMenu">
+            <h:form >
                 <p:menu rendered="#{sesionController.opcionesCoordinador}" >
                     <p:submenu label="Oferta académica">
-                        <p:menuitem value="Gestión de ofertas académicas" action="#{cargarFormulariosController.cargarGestionOfertaAcademica()}"  actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
+                        <p:menuitem value="Gestión de ofertas académicas" outcome="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml"  actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
                     </p:submenu>    
                     <p:submenu label="Planes de Estudio">
-                        <p:menuitem value="Gesti&#243;n Planes de Estudio" action="#{cargarFormulariosController.cargarPlanesdeEstudio()}" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
+                        <p:menuitem value="Gesti&#243;n Planes de Estudio" outcome="/coordinador/PlandeEstudio/PlandeEstudio.xhtml" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
                     </p:submenu>  
                     <p:submenu label="Anteproyecto">
-                        <p:menuitem value="Gestión de anteproyectos" action="#{cargarFormulariosController.cargarGestionAnteproyecto()}" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                        <p:menuitem value="Gestión de anteproyectos" outcome="/coordinador/anteproyecto/FormatoA/formatoA.xhtml" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
                     </p:submenu>
                 </p:menu>
                 

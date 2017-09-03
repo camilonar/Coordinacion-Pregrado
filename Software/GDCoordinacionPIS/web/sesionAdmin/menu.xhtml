@@ -6,16 +6,16 @@
       xmlns:p="http://primefaces.org/ui">
     <h:body>
         <div id="contenidoMenu">
-            <h:form id="formMenu">
+            <h:form >
                 <p:menu>
                     <p:submenu label="Materias">
-                        <p:menuitem value="Gestión de  materias" action="#{cargarFormulariosController.cargarRegistrarMateria()}"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
+                        <p:menuitem value="Gestión de  materias" outcome="/administrador/materia/ListarMaterias.xhtml"   actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
                     </p:submenu>    
                     <p:submenu label="Departamentos  y facultades">
-                        <p:menuitem value="Gestión de  departametos " action="#{cargarFormulariosController.cargarRegistrarDepartamento()}" actionListener="#{addNavegacionController.addOfertaAcademicaRegistroDepFac()}" ajax="false"/>
+                        <p:menuitem value="Gestión de  departametos " outcome="/administrador/departamento/listarDepartamento.xhtml"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroDepFac()}" ajax="false"/>
                     </p:submenu>
                     <p:submenu label="Usuarios">
-                        <p:menuitem value="Gestión de usuarios" action="#{cargarFormulariosController.cargarRegistrarUsuarios()}"  ajax="false"/>
+                        <p:menuitem value="Gestión de usuarios" outcome="/administrador/usuario/ListarUsuarios.xhtml" action="#{cargarFormulariosController.cargarRegistrarUsuarios()}"  ajax="false"/>
                     </p:submenu>  
                 </p:menu>
             </h:form>
