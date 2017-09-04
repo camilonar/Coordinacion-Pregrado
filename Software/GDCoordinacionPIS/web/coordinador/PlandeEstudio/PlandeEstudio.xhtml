@@ -24,7 +24,8 @@ and open the template in the editor.
                 <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
                 <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
                 <h:form rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
-                    <p:commandButton value="Agregar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />             
+                    <p:commandButton value="Agregar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />
+                    <p:commandButton value="Editar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />
                 </h:form>
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
                     <!--Llama al método listaDocs para recuperar los planes de estudio contenidos en openkm-->
