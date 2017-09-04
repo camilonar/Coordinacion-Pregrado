@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    
-  
+    <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/> 
     <p:dialog widgetVar="dlgRegistroFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
               closable="true" header="Registro Formato A"> 
         <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>

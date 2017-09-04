@@ -336,7 +336,7 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
-        //requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        requestContext.getCurrentInstance().update("msgRFA");
 
     }
     
