@@ -601,20 +601,26 @@ public class RegistroPlandeEstudioController implements Serializable {
      * @param doc plan de estudio
      */
     public void visualizardePlanEstudio(Document doc) {
+        System.out.println(";; "+doc.getPath());
         InputStream in = null;
         try {
             this.documento = doc;
             in = okm.getContent(doc.getPath());
+            System.out.println("in: "+in.toString());
             streamedContent = new DefaultStreamedContent(in, "application/pdf");
             //-------
             Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
             byte[] b = (byte[]) session.get("reportBytes");
+            System.out.println("ANTeS");
             if (b != null) {
                 streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
             }
+            System.out.println("b: "+b);
+            System.out.println("StreamContent"+streamedContent.getName());
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update(":visualizacionPlanPdf");
             requestContext.execute("PF('visualizarPlanPDF').show()");
+           
         } catch (Exception e) {
             e.printStackTrace();
         }
