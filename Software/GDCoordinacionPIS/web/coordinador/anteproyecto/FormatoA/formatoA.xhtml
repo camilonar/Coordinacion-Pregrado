@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
+     
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
 
 
@@ -14,6 +15,7 @@
                 <title>Facelet Title</title>
             </h:head>
             <h:body>
+                <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
                 <h:form>
                     <p:commandButton value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
                     <p:commandButton value="Editar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
