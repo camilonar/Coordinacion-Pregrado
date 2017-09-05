@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <p:growl id="msgConEx" showDetail="true" life="4000" autoUpdate="true" globalOnly="true"/> 
+   
     <ui:composition template="#{sesionController.plantilla}">
                 
         <ui:define name="body">
@@ -16,7 +16,7 @@
                       
             </h:head>  
             <h:body>   
-            
+            <p:growl id="msgConEx" showDetail="true" life="4000" autoUpdate="true" globalOnly="true"/> 
             <h:form  id="formularioPerfilDatosPersonales" >   
 
                 <span style="text-align: center">
