@@ -190,6 +190,10 @@ public class SesionController implements Serializable {
             }
         }
 
+        if (this.errorSesion) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "Nombre de usuario o contraseña erróneos" ));
+        }
     }
 
     public void logout() throws IOException, ServletException {
