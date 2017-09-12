@@ -114,10 +114,10 @@
                                 <p:outputLabel value="Departamento" />
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento.idDepartamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
+                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
                                     <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                    var="idDepartamentoItem"
-                                                   itemValue="#{idDepartamentoItem.idDepartamento}"
+                                                   itemValue="#{idDepartamentoItem}"
                                                    itemLabel="#{idDepartamentoItem.nombre}"/>
                                 </p:selectOneMenu>  
                             </p:column>

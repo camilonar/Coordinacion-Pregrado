@@ -509,9 +509,11 @@ public class UsuarioController implements Serializable {
     {
         return new Date();
     }
-    public void limpiarFoto()
+    public void establecerFotoPorDefecto()
     {
         System.out.println("Hallo");
+        this.miImagen = null;
+        //this.imagenPorDefecto();
     }
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {

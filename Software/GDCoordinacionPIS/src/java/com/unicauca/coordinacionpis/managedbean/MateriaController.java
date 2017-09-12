@@ -67,7 +67,7 @@ public class MateriaController implements Serializable {
     }
 
     public List<Materia> getListaMaterias(){
-        
+        ejbFacade.limpiarCache();
         return ejbFacade.buscarMateria(datoBusqueda);
     }
     public void registrarMateria(){
@@ -81,12 +81,12 @@ public class MateriaController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
-    
     public void editarMateria(){
         materia.setIdDepartamento(departamento);
         ejbFacade.edit(materia);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('MateriaEditDialog').hide()");
+        ejbFacade.limpiarCache();
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();

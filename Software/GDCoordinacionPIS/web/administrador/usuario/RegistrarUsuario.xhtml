@@ -23,8 +23,10 @@
                     <br/>
                     <p:graphicImage  rendered="#{usuarioController.miImagen ==null}"
                                      style="height:100px; width:100px;"
-                                     value="#{usuarioController.imagenDefecto}"/>
+                                     value="#{usuarioController.imagenDefecto}"
+                                     cache="false"/>
                     <p:graphicImage  rendered="#{usuarioController.miImagen !=null}"
+                                     id="img"
                                      style="height:100px; width:100px;"
                                      value="#{usuarioController.miImagen}"
                                      cache="false"/>
@@ -33,7 +35,14 @@
                                    required="true"
                                    update="@form" multiple="false" label="Subir imagen">
                     </p:fileUpload> 
-                    <p:commandButton rendered="#{usuarioController.miImagen !=null}" value="Imagen por defecto" icon="ui-icon-cancel"/>
+                    <h:commandButton rendered="#{usuarioController.miImagen !=null}" 
+                                     value="Imagen por defecto" 
+                                     actionListener="#{usuarioController.establecerFotoPorDefecto()}"
+                                     immediate="true" type="reset" 
+                                     >
+                        <p:ajax immediate="true" update="@form" event="click"/>
+                        <!--f:ajax execute="@all" render="@form"/-->
+                    </h:commandButton>
                 </center>
                 <br/>
             </h:form>

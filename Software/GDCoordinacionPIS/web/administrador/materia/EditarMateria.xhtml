@@ -120,10 +120,10 @@
                                 <p:outputLabel value="Departamento" />
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento.idDepartamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
+                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
                                     <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                    var="idDepartamentoItem"
-                                                   itemValue="#{idDepartamentoItem.idDepartamento}"
+                                                   itemValue="#{idDepartamentoItem}"
                                                    itemLabel="#{idDepartamentoItem.nombre}"/>
                                 </p:selectOneMenu>  
                             </p:column>
@@ -131,8 +131,8 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton action="#{materiaController.editarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist" oncomplete="handleSubmit(args, 'MateriaEditDialog');"/>
-                    <p:commandButton value="Cancelar" oncomplete="#{materiaController.cancelarEdicion()}" onclick="MateriaEditDialog.hide()"/>
+                    <p:commandButton action="#{materiaController.editarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist" />
+                    <p:commandButton value="Cancelar" action="#{materiaController.cancelarEdicion()}" onclick="MateriaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
