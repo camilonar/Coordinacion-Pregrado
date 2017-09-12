@@ -7,84 +7,205 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-   
+
     <ui:composition template="#{sesionController.plantilla}">
-                
+
         <ui:define name="body">
 
             <h:head>    
-                      
+
             </h:head>  
             <h:body>   
-            <p:growl id="msgConEx" showDetail="true" life="4000" autoUpdate="true" globalOnly="true"/> 
-            <h:form  id="formularioPerfilDatosPersonales" >   
+                <p:growl id="msgConEx" showDetail="true" life="4000" autoUpdate="true" globalOnly="true"/> 
+                <h:form  id="formularioPerfilDatosPersonales" >   
 
-                <span style="text-align: center">
-                    <div id="infoperfil" style="text-align: center;">
-                        <p:panelGrid style="  font-weight: bold" columns="2">
-                            <f:facet name="header">
+                    <span style="text-align: center">
+                        <div id="infoperfil" >
+
+                            <p:panelGrid columns="2" style="margin:  0 auto; width: 95%;">
+
+                                <f:facet name="header" >
+                                    <p:row >
+
+                                        <h2>Perfil de usuario</h2>
+
+                                    </p:row>
+                                </f:facet>
+
                                 <p:graphicImage value="#{sesionController.imagenFlujo}"  
-                                                width="120"  height="120" >
+                                                width="140"  height="140" >
                                     <f:param name="id" value="#{sesionController.identificacion}" />
                                 </p:graphicImage> 
-                            </f:facet>
 
 
-                            <p:outputLabel style="" value="Nombre(s): "/>
-                            <p:outputLabel  value="#{perfilUsuarioController.usuario.usunombres}"/>
+                            </p:panelGrid>
+                            <p:spacer height="20px;"/>
+
+                            <p:panelGrid  style="margin:  0 auto; width: 95%;">
+
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="2">Información personal</p:column>
+                                    </p:row>
 
 
-                            <p:outputLabel style="" value="Apellido(s): "/>
-                            <p:outputLabel value="#{perfilUsuarioController.usuario.usuapellidos} "/>
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column style="width: 50%;">
+                                        <p:outputLabel style="font-weight:bold;" value="Nombre(s): "/>
+
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel  value="#{perfilUsuarioController.usuario.usunombres}"/>
+
+                                    </p:column>
+                                </p:row>
 
 
-                            <p:outputLabel style="" value="Cargo "/>
-                            <p:outputLabel value="#{perfilUsuarioController.usuario.carid.carnombre}"/>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel style="font-weight:bold;" value="Apellido(s): "/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{perfilUsuarioController.usuario.usuapellidos} "/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel style="font-weight:bold;" value="Cargo:"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="#{perfilUsuarioController.usuario.carid.carnombre}"/>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+
+                            <p:spacer height="20px;"/>
 
 
 
-                            <p:outputLabel style="" value="Nombre de Usuario (Login): "/>
-                            <p:outputLabel value="#{perfilUsuarioController.usuario.usunombreusuario}"/>
+                            <p:panelGrid style="margin:  0 auto; width: 95%;">
 
-                            <p:row>
-                                <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
-                                    <p:outputLabel style="" value="Contraseña: "/>
-                                </p:column>
-                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                    <p:outputLabel style="" value="Contraseña:"/>
-                                    <p:outputLabel style=";color:red;" value="* "/>
-                                </p:column>
-                                <p:column rendered="#{perfilUsuarioController.mostrarContrasena}">
-                                    <p:outputLabel  value=" ****************** "/>
-                                </p:column>
-                                <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
-                                    <p:commandButton style="color: blue;" value="Cambiar" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
-                                </p:column>
-                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                    <p:password style="width: 120px;" value="#{perfilUsuarioController.contrasena}"/>  
-                                </p:column>  
-                            
-                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                    <p:outputLabel style="" value="  Confirmar contraseña:"/>
-                                    <p:outputLabel style=";color:red;" value="* "/>
-                                </p:column>
-                                <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                    <p:password style="width: 120px;" value="#{perfilUsuarioController.confirmarContrasena}"/>  
-                                </p:column>                                  
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="2">Credenciales de acceso</p:column>
+                                    </p:row>
+
+
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column  style="width: 50%;">
+                                        <p:outputLabel style="font-weight:bold;" value="Nombre de Usuario: "/>
+                                    </p:column>
+                                    <p:column> 
+                                        <p:outputLabel value="#{perfilUsuarioController.usuario.usunombreusuario}"/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
+                                        <p:outputLabel style="font-weight:bold;" value="Contraseña: "/>
+                                    </p:column>
+
+                                    <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                                        <p:outputLabel style="font-weight:bold;" value="Contraseña:"/>
+                                        <p:outputLabel style=";color:red;" value="* "/>
+                                    </p:column>
+
+
+                                    <p:column  rendered="#{perfilUsuarioController.mostrarContrasena}">
+                                        <p:outputLabel  value=" **********"/>
+                                    </p:column>
+
+                                    <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                                        <p:password  value="#{perfilUsuarioController.contrasena}" style="width:49%;"/>  
+                                    </p:column>
+
+
+
+                                </p:row>
+
+                                <p:row>
+
+
+                                    <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
+                                        <p:outputLabel style="font-weight:bold;" value="  Confirmar contraseña:"/>
+                                        <p:outputLabel style=";color:red;" value="* "/>
+                                    </p:column>
+                                    <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}" >
+                                        <p:password  value="#{perfilUsuarioController.confirmarContrasena}" style="width:49%;"/>  
+                                    </p:column>                                  
+
+                                </p:row>
+
+
+
+
+                            </p:panelGrid>
+
+                            <p:spacer width="20px"/>
+
+                            <p:panelGrid style="margin:  0 auto; width: 95%;">
+
+
+                                <p:row>
+                                    <p:column style="width: 50%;">
+                                        <p:outputLabel rendered="#{perfilUsuarioController.mostrarContrasena}" style="font-weight:bold;" value="Opciones de contraseña:"/>
+                                        <p:outputLabel rendered="#{!perfilUsuarioController.mostrarContrasena}" style="font-weight:bold;" value="¿Guardar cambios?:"/>
+
+                                    </p:column>
+                                    <p:column>
+
+                                        <p:commandButton style="float: none;" rendered="#{perfilUsuarioController.mostrarContrasena}"  value="Cambiar contraseña" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
+
+                                        <p:commandButton rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%;" value="Cancelar" 
+                                                         action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
+                                        <p:commandButton rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
+
+
+                                    </p:column>
+                                </p:row>
+
+
                                 
-                            </p:row>
-                                <p:column rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                    <p:commandButton style="color: blue;" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
+                            </p:panelGrid>
 
-                                    <p:commandButton style="margin-left: 10px;color: blue;" value="Cancelar" 
-                                                     action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
+                            
+                            <p:spacer width="20px"/>
 
-                                </p:column>
-                        </p:panelGrid>
-                    </div>
-                </span>
+                            <p:panelGrid style="margin:  0 auto; width: 95%;">
 
-            </h:form>
+
+ 
+                                <f:facet name="footer">
+
+                                    <p:row>
+                                        <p:column  colspan="2" style="height: 35px;">
+
+                                        </p:column>
+
+                                    </p:row>
+
+
+
+                                </f:facet>
+                            </p:panelGrid>
+
+                            
+                            
+                            
+                            
+                            
+                            <p:spacer width="30px"/>
+
+                        </div>
+                    </span>
+
+                </h:form>
             </h:body>
         </ui:define>
     </ui:composition>

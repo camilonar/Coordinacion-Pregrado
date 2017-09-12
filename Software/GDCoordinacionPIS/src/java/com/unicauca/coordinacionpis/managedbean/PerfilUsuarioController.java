@@ -68,7 +68,9 @@ public class PerfilUsuarioController implements Serializable {
     }
 
     public boolean isMostrarContrasena() {
+       
         return mostrarContrasena;
+        
     }
 
     public void setMostrarContrasena(boolean mostrarContrasena) {
