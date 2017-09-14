@@ -11,13 +11,17 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    
+
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
         <ui:define name="body">
             <h:head>
-                
+
             </h:head>
             <h:body>
+                <f:metadata>
+                    <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
+                </f:metadata>
+                
                 <br rendered="#{!registroPlandeEstudioController.comprobarConexionOpenKM}"/>
                 <br rendered="#{!registroPlandeEstudioController.comprobarConexionOpenKM}"/>
 
@@ -25,7 +29,7 @@ and open the template in the editor.
                 <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
                 <h:form rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
                     <p:commandButton value="Agregar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />
-                    
+
                 </h:form>
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
                     <!--Llama al método listaDocs para recuperar los planes de estudio contenidos en openkm-->
@@ -102,8 +106,8 @@ and open the template in the editor.
 
 
             </h:body>
-            
-            
+
+
         </ui:define>
 
     </ui:composition>
