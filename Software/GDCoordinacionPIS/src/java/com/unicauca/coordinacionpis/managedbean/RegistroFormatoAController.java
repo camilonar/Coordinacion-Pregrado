@@ -634,7 +634,7 @@ public class RegistroFormatoAController implements Serializable {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo fue eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se eliminó con éxito"));
             requestContext.execute("PF('Confirmacion').hide()");
             requestContext.execute("PF('mensajeRegistroExitoso').show()");
             requestContext.update("formListaAnteproyectos");

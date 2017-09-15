@@ -15,7 +15,7 @@
                            style="font-weight: bold; color: #000000"/>
             <p:fileUpload rendered="#{!registroFormatoAController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
-                          dragDropSupport="true" update="messages" uploadLabel="Subir documento" cancelLabel="Cancelar"  
+                          dragDropSupport="true" update="messages" uploadLabel="Subir archivo" cancelLabel="Cancelar"  
                           allowTypes="/(\.|\/)(pdf)$/"  fileUploadListener="#{registroFormatoAController.seleccionarArchivo}"/>
 
             <p:growl id="messages" showDetail="true" />

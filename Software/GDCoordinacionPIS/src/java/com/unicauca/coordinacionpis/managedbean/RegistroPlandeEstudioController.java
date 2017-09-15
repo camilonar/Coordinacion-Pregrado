@@ -192,7 +192,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo" + nombreArchivo + " fue seleccionado con éxito");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo " + nombreArchivo + " se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -388,22 +388,22 @@ public class RegistroPlandeEstudioController implements Serializable {
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
                 okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio fue editado con éxito");
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
             } else {
                 if (metadatosPlandeEstudio.getNumero() != auxNumeroPlan) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxNumeroPlan);
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio fue editado con éxito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
                 if (!metadatosPlandeEstudio.getAcuerdo().equalsIgnoreCase(auxAcuerdoPlan)) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxAcuerdoPlan);
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio fue editado con éxito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
                 if (metadatosPlandeEstudio.getVigencia().compareTo(auxFechaPlan) != 0) {
                     okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(auxFechaPlan));
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio fue editado con éxito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
             }
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -692,7 +692,7 @@ public class RegistroPlandeEstudioController implements Serializable {
             okm.deleteDocument(doc.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo fue eliminado con éxito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se  eliminó con éxito"));
             requestContext.update("formPlanesdeEstudio:mensajeEliminar");
             listaDocs();
             requestContext.update("lstPlanesEstudio");
