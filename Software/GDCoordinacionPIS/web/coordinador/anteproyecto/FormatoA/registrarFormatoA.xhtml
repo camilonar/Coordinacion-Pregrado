@@ -13,11 +13,13 @@
             <p:outputLabel rendered="#{!registroFormatoAController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del Formato A" 
                            style="font-weight: bold; color: #000000"/>
+            
             <p:fileUpload rendered="#{!registroFormatoAController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
-                          dragDropSupport="true" update="messages" uploadLabel="Subir archivo" cancelLabel="Cancelar"  
-                          allowTypes="/(\.|\/)(pdf)$/"  fileUploadListener="#{registroFormatoAController.seleccionarArchivo}"/>
+                          dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
+                          allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoAController.seleccionarArchivo}"/>
 
+            
             <p:growl id="messages" showDetail="true" />
         </h:form>
 
@@ -35,6 +37,7 @@
         </h:form>
 
         <h:form id="formMetadatosFormatoA">
+                        <p:growl id="msg" showDetail="true" life="4000"/>
             <p:panelGrid styleClass="panelgrid" id="panelMetadatos"
                          rendered="#{registroFormatoAController.exitoSubirArchivo}">
 

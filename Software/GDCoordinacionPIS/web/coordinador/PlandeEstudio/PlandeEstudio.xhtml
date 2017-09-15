@@ -68,11 +68,16 @@ and open the template in the editor.
                             <p:commandButton value="Ver" update=":visualizacionPlanPdf" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroPlandeEstudioController.visualizardePlanEstudio(dato)}"
                                              icon="ui-icon-search" title="Ver"/>
-                            <p:commandButton value="Eliminar" 
+                            <!--<p:commandButton value="Eliminar" 
                                              action="#{registroPlandeEstudioController.deleteDocument(dato)}" 
                                              icon="ui-icon-trash" update="lstPlanesEstudio" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()">
                                 <p:confirm header="Confirmación" message="¿Está seguro de eliminar este archivo?" icon="ui-icon-alert" />
                             </p:commandButton>
+                            -->
+                            
+                            <p:commandButton value="Eliminar" update="lstPlanesEstudio" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                             action="#{registroPlandeEstudioController.confirmarEliminacion(dato)}" 
+                                             icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
 
@@ -83,6 +88,24 @@ and open the template in the editor.
                 </h:form>
                 <ui:include src="RegistrarPlandeEstudio.xhtml"/>
                 <ui:include src="ActualizarPlanEstudio.xhtml"/>
+                  <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
+                    <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                    <h:form>
+                        <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                          onclick="PF('mensajeRegistroExitoso').hide()"/>
+                    </h:form>
+                </p:dialog>
+                <p:dialog header="Información" modal="true" position="center" widgetVar="Confirmacion" closable="false">
+                    <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                    <h:form>
+                        <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                          action="#{registroPlandeEstudioController.deleteDocument()}"  />
+                        <p:commandButton  value="Cancelar" style="font-weight: normal;"
+                                          onclick="PF('Confirmacion').hide()"/>
+                    </h:form>
+                </p:dialog>
+                
+                
                 <p:dialog widgetVar="visualizarPlanPDF" modal="true">
                     <h:form id="visualizacionPlanPdf">                
                         <p:media value="#{registroPlandeEstudioController.streamedContent}" width="750" height="560" player="pdf" />

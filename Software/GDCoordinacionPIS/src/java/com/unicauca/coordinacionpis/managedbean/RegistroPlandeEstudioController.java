@@ -86,6 +86,8 @@ public class RegistroPlandeEstudioController implements Serializable {
     private String auxAcuerdoPlan;
     private Date auxFechaPlan;
     private OKMWebservices okm;
+    
+    
 
     /**
      * Constructor encargado de inicializar algunas de los atributos asignados a
@@ -192,7 +194,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo " + nombreArchivo + " se seleccionó con éxito");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -214,7 +216,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo" + nombreArchivo + " fue seleccionado con éxito");
+        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, mensaje);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -269,7 +271,7 @@ public class RegistroPlandeEstudioController implements Serializable {
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
 
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo" + nombreArchivo + "  fue registrado con éxito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "'  se registró con éxito");
                 } else {
                     message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Ocurrió un error registrando el archivo " + nombreArchivo);
                 }
@@ -277,7 +279,7 @@ public class RegistroPlandeEstudioController implements Serializable {
 
                 okm.createFolderSimple(rutaPlanesDeEstudio);//Crear carpeta Planes de Estudio en openkm
                 okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento dentro de la carpeta Planes de Estudio en openkm
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo " + nombreArchivo + " fue registrado con exito");
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
             }
             FacesContext.getCurrentInstance().addMessage(null, message);
             rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
@@ -379,7 +381,7 @@ public class RegistroPlandeEstudioController implements Serializable {
     public void editarPlanEstudio() {
 
         RequestContext rc = RequestContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Ningún cambió ha sido registrado");
+        FacesMessage message=null;
 
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
@@ -406,7 +408,12 @@ public class RegistroPlandeEstudioController implements Serializable {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
             }
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            
+            if(message!=null)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            
+            }
             rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
             rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
 
@@ -678,6 +685,18 @@ public class RegistroPlandeEstudioController implements Serializable {
         return conexion;
     }
 
+    
+    
+    
+    
+    public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
+        System.out.println("Recibí documento: " +documento.getPath());
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
+        context.execute("PF('Confirmacion').show()");
+        this.documento=documento;
+    }
+    
     /**
      * Recibe como parametro un plan de estudio, realiza un llamado a openkm
      * para eliminar el plan de estudio, al realizar este llamado se pasa la
@@ -687,18 +706,48 @@ public class RegistroPlandeEstudioController implements Serializable {
      *
      * @param doc plan de estudio
      */
-    public void deleteDocument(Document doc) {
+    
+    
+    
+//    public void deleteDocument() {
+//        try {
+//            okm.deleteDocument(this.documento.getPath());
+//            okm.purgeTrash();
+//            RequestContext requestContext = RequestContext.getCurrentInstance();
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se  eliminó con éxito"));
+//            
+//            listaDocs();
+//            requestContext.update("lstPlanesEstudio");
+//        } catch (Exception e) {
+//
+//        }
+//    }
+
+    
+    
+   
+
+    public void deleteDocument() {
         try {
-            okm.deleteDocument(doc.getPath());
+            okm.deleteDocument(this.documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se  eliminó con éxito"));
-            requestContext.update("formPlanesdeEstudio:mensajeEliminar");
-            listaDocs();
-            requestContext.update("lstPlanesEstudio");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se eliminó con éxito"));
+            requestContext.execute("PF('Confirmacion').hide()");
+            //requestContext.execute("PF('mensajeRegistroExitoso').show()");
+            requestContext.update(":lstPlanesEstudio");
+             requestContext.update("formPlanesdeEstudio");
         } catch (Exception e) {
 
         }
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

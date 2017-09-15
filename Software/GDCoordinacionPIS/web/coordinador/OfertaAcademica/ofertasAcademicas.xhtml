@@ -22,6 +22,7 @@
                 </h:form>
                 <h:form id="formListaDocumentos" rendered="#{registroOfertaAcademicaController.comprobarConexionOpenKM}">  
                     <br/>
+                                <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
                     <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroOfertaAcademicaController.datos}">

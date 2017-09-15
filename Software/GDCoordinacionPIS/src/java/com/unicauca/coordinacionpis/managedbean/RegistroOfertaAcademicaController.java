@@ -394,94 +394,94 @@ public class RegistroOfertaAcademicaController implements Serializable {
                 for (FormElement fElement : fElements) {
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(0).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(0).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo1GruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(0).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(0).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.AlgebraLinealNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(1).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(1).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.AlgebraLinealSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(1).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(1).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo2NumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(2).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(2).getNumeroEstudiantes());
                     }
 
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo2GruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(2).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(2).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo3NumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(3).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(3).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.calculo3GruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(3).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(3).getGruposSolicitados());
                     }
-                    
+
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.ecuacionesNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(4).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(4).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.ecuacionesGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(4).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(4).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.estadisticaNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(5).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(5).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.estadisticaGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(0).getMateriaList().get(5).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(0).getMateriaList().get(5).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.mecanicaNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(0).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(0).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.mecanicaGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(0).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(0).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.electroNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(1).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(1).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.electroGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(1).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(1).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.LabMecanicaNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(2).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(2).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.LabMecanicaGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(2).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(2).getGruposSolicitados());
                     }
-                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.OndasNumEstudiantes")) {
+                    if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.OndasNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(3).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(3).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.OndasGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(3).getGruposSolicitados());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(3).getGruposSolicitados());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.labElectroNumEstudiantes")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(4).getNumeroEstudiantes());
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(4).getNumeroEstudiantes());
                     }
                     if (fElement.getName().equals("okp:OfertaAcademicaPrematricula.LabElectroGruposSolicitados")) {
                         Input name = (Input) fElement;
-                        name.setValue(""+this.listaDepartamentos.get(1).getMateriaList().get(4).getGruposSolicitados());
-                    }                    
+                        name.setValue("" + this.listaDepartamentos.get(1).getMateriaList().get(4).getGruposSolicitados());
+                    }
                 }
                 okm.setPropertyGroupProperties("/okm:root/Coordinacion/Oferta academica/Periodo-" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "/Oferta académica-" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-prematricula.pdf", "okg:OfertaAcademicaPrematricula", fElements);
 
@@ -494,7 +494,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
                 documentosOfertasAcademicas = okm.findByName("");
                 requestContext.update("datalist");
                 requestContext.execute("PF('dlgRegistroOfertaAcedemica').hide()");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información se registró con éxito"));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El documento para este periodo ya se encuentra registrado"));
@@ -1078,6 +1078,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
         }
         return usuario;
     }
+
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
@@ -1090,9 +1091,14 @@ public class RegistroOfertaAcademicaController implements Serializable {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo fue eliminado con éxito"));
+
             requestContext.execute("PF('Confirmacion').hide()");
-            requestContext.execute("PF('mensajeRegistroExitoso').show()");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se eliminó con éxito");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            // requestContext.execute("PF('mensajeRegistroExitoso').show()");
+            requestContext.update("msg");
+
             requestContext.update("formListaDocumentos");
         } catch (Exception e) {
 

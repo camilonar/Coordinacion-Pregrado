@@ -211,7 +211,7 @@ public class DepartamentoController implements Serializable {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
                 items = ejbFacade.findAll();
                 requestContext.update("DepartamentoListForm:datalist");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento fue eliminado con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento se eliminó con éxito"));
                 requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");

@@ -21,6 +21,7 @@
                     
                 </h:form>
                 <h:form id="formListaAnteproyectos">    
+                    <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
                     <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoAController.datos}">
@@ -60,7 +61,7 @@
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.confirmarEliminacion(formatoA)}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
-
+                            
                         </p:column>
                     </p:dataTable>
                 </h:form>
