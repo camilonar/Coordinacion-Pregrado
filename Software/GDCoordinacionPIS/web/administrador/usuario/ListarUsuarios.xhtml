@@ -26,7 +26,7 @@
                     <p:panelGrid columns="2" styleClass="panelgrid">
                         <p:outputLabel style="font-weight: bold;" value="Buscar usuario:" />
                         <p:inputText  placeholder="Digite nombres, apellidos, nombre de usuario o email" 
-                                      style="width: 350px;"  value="#{usuarioController.datoBusqueda}" >
+                                      style="width: 400px;"  value="#{usuarioController.datoBusqueda}" >
                             <p:ajax event="keyup" update="datalist" listener="#{usuarioController.buscarUsuario()}" />                                
                         </p:inputText>                          
                     </p:panelGrid>
