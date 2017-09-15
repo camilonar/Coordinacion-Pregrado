@@ -10,13 +10,13 @@
             <h:form >
                 <p:menu rendered="#{sesionController.opcionesCoordinador}" >
                     <p:submenu label="Oferta académica">
-                        <p:menuitem value="Gestión de ofertas académicas" outcome="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml"  actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
+                        <p:menuitem value="Gestión de ofertas académicas" action="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
                     </p:submenu>    
                     <p:submenu label="Planes de Estudio">
-                        <p:menuitem value="Gesti&#243;n Planes de Estudio" outcome="/coordinador/PlandeEstudio/PlandeEstudio.xhtml" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
+                        <p:menuitem value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
                     </p:submenu>  
                     <p:submenu label="Anteproyecto">
-                        <p:menuitem value="Gestión de anteproyectos" outcome="/coordinador/anteproyecto/FormatoA/formatoA.xhtml" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                        <p:menuitem value="Gestión de anteproyectos" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
                     </p:submenu>
                 </p:menu>
                 
