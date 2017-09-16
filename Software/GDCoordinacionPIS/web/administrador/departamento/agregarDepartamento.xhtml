@@ -10,6 +10,7 @@
 
         <p:dialog id="DepartamentoCreateDlg" widgetVar="DepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Departamento">
             <h:form id="DepartamentoCreateForm">
+                 <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="display">
                     <p:panelGrid styleClass="panelgrid" columns="2" >
                         <p:outputLabel value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />

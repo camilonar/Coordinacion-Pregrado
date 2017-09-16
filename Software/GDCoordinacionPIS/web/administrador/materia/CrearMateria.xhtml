@@ -10,6 +10,7 @@
 
         <p:dialog id="MateriaCreateDlg" widgetVar="MateriaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registar Materia">
             <h:form id="MateriaCreateForm">
+                 <p:growl id="msg" showDetail="true" life="4000"/>
                 <h:panelGroup id="display">
                     <p:panelGrid  styleClass="panelgrid" rendered="#{materiaController.selected != null}">
                         <p:row>

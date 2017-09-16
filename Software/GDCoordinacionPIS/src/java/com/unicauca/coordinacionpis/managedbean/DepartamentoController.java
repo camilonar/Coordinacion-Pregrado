@@ -174,8 +174,15 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoCreateDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito."));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito."));
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento se registró con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+
+        requestContext.update("DepartamentoCreateForm");
+        requestContext.update("DepartamentoListForm");
+
     }
 
     public void editarDepartamento() {
@@ -185,8 +192,16 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoEditDialog').hide()");
         items = ejbFacade.findAll();
         departamento = new Departamento();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue editada con éxito"));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue editada con éxito"));
+//        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento se editó con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+
+        requestContext.update("DepartamentoEditForm");
+        requestContext.update("DepartamentoListForm");
+
     }
 
     public void cancelarEdicion() {
@@ -194,9 +209,11 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('DepartamentoEditDialog').hide()");
         departamento = new Departamento();
     }
+
     public void cancelarRegistro() {
         departamento = new Departamento();
     }
+
     public void cancelarEliminacion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
@@ -226,6 +243,7 @@ public class DepartamentoController implements Serializable {
     public void mostrarMensajeConfirmarEliminarDepartamento(Departamento departamento) {
         this.departamento = departamento;
         RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el departamento?"));
         requestContext.execute("PF('mensajeConfirmarEliminar').show()");
 
     }
