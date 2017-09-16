@@ -792,16 +792,14 @@ public class RegistroOfertaAcademicaController implements Serializable {
         //cell.setBackgroundColor(BaseColor.GRAY);
         //table.addCell(cell);
         // now we add a cell with rowspan 2
-        if (listadoCursos.get(0).getSemestre() != null) {
-            float[] columnWidths = {2, 5, 7, 5, 5};
-            table = new PdfPTable(columnWidths);
-            table.setWidthPercentage(100);
-            cell = new PdfPCell(new Phrase("Sem"));
-            cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            table.addCell(cell);
-        } else {
-            table = new PdfPTable(4);
-        }
+
+        float[] columnWidths = {2, 5, 7, 5, 5};
+        table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+        cell = new PdfPCell(new Phrase("Sem"));
+        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        table.addCell(cell);
+        
         cell = new PdfPCell(new Phrase("Código materia"));
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
