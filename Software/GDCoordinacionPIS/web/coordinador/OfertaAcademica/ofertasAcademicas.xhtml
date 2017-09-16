@@ -55,7 +55,7 @@
                                 <p:fileDownload value="#{registroOfertaAcademicaController.descargarDocumento(ofertaAcademica)}" />
                             </p:commandButton>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroOfertaAcademicaController.visualizarDocumento(ofertaAcademica)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(ofertaAcademica)}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton value="Eliminar"  
                                              action="#{registroOfertaAcademicaController.confirmarEliminacion(ofertaAcademica)}" 
@@ -67,7 +67,7 @@
                 <ui:include src="registrarOfertaAcademica.xhtml"/> 
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion" >
-                        <p:media value="#{registroOfertaAcademicaController.streamedContent}" width="750" height="560" player="pdf" />
+                        <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
                     </h:form>
 
 

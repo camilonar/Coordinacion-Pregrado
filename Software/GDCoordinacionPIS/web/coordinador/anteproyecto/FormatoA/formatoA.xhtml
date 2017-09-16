@@ -53,7 +53,7 @@
                                 <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA)}" />
                             </p:commandButton>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoAController.visualizarDocumento(formatoA)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
@@ -86,10 +86,8 @@
                 </p:dialog>
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion">
-                        <p:media value="#{registroFormatoAController.streamedContent}" width="750" height="560" player="pdf" />
+                        <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
                     </h:form>
-
-
                 </p:dialog>
 
                 <script type="text/javascript">
