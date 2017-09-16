@@ -19,6 +19,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import static javax.faces.context.FacesContext.getCurrentInstance;
+import javax.faces.context.Flash;
 import javax.faces.event.PhaseId;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -191,8 +193,13 @@ public class SesionController implements Serializable {
         }
 
         if (this.errorSesion) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            Flash flash = getCurrentInstance().getExternalContext().getFlash();
+            flash.setKeepMessages(true);
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Nombre de usuario o contraseña erróneos" ));
+            context.addMessage(null, new FacesMessage("Error", "Nombre de usuario o contraseña erróneos"));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/");
+            
         }
     }
 

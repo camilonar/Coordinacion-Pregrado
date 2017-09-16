@@ -55,15 +55,15 @@
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
                                 <p:fileDownload value="#{registroOfertaAcademicaController.descargarDocumento(ofertaAcademica)}" />
                             </p:commandButton>
-                            <p:commandButton value="Ver" action="#{registroOfertaAcademicaController.visualizarDocumento(ofertaAcademica)}" icon="ui-icon-search" title="Ver"/>
+                            <p:commandButton value="Ver" action="#{visualizarDocumentoBean.visualizarDocumento(ofertaAcademica)}" icon="ui-icon-search" title="Ver"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
 
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion">
-                        <h3>PDF</h3>
-                        <p:media value="#{registroOfertaAcademicaController.streamedContent}" width="750" height="560" player="pdf" />
+                        
+                        <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
                     </h:form>
 
 
