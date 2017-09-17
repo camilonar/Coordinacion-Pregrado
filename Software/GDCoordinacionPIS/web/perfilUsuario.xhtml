@@ -22,22 +22,28 @@
                     <span style="text-align: center">
                         <div id="infoperfil" >
 
-                            <p:panelGrid columns="2" style="margin:  0 auto; width: 95%;">
+                            <p:panelGrid style="margin:  0 auto; width: 95%;">
 
-                                <f:facet name="header" >
-                                    <p:row >
-
-                                        <h2>Perfil de usuario</h2>
-
+                                <f:facet name="header">
+                                       
+                                    <p:row>
+                                        
+                                        <p:column colspan="2" style="height: 19px; font-size: medium;">Perfil de usuario</p:column>
+                                        
                                     </p:row>
+
+
                                 </f:facet>
 
-                                <p:graphicImage value="#{sesionController.imagenFlujo}"  
-                                                width="140"  height="140" >
-                                    <f:param name="id" value="#{sesionController.identificacion}" />
-                                </p:graphicImage> 
 
-
+                                <p:row>
+                                    <p:column>
+                                        <p:graphicImage value="#{sesionController.imagenFlujo}"  
+                                                        width="140"  height="140" >
+                                            <f:param name="id" value="#{sesionController.identificacion}" />
+                                        </p:graphicImage> 
+                                    </p:column>
+                                </p:row>
                             </p:panelGrid>
                             <p:spacer height="20px;"/>
 
@@ -99,7 +105,7 @@
 
                                 <p:row>
                                     <p:column  style="width: 50%;">
-                                        <p:outputLabel style="font-weight:bold;" value="Nombre de Usuario: "/>
+                                        <p:outputLabel style="font-weight:bold;" value="Nombre de usuario: "/>
                                     </p:column>
                                     <p:column> 
                                         <p:outputLabel value="#{perfilUsuarioController.usuario.usunombreusuario}"/>
@@ -122,7 +128,7 @@
                                     </p:column>
 
                                     <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                        <p:password  value="#{perfilUsuarioController.contrasena}" style="width:49%;"/>  
+                                        <p:password  value="#{perfilUsuarioController.contrasena}" style="width:49%; text-align: center; "/>  
                                     </p:column>
 
 
@@ -133,23 +139,14 @@
 
 
                                     <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}">
-                                        <p:outputLabel style="font-weight:bold;" value="  Confirmar contraseña:"/>
+                                        <p:outputLabel style="font-weight:bold;" value="Confirmar contraseña:"/>
                                         <p:outputLabel style=";color:red;" value="* "/>
                                     </p:column>
                                     <p:column  rendered="#{!perfilUsuarioController.mostrarContrasena}" >
-                                        <p:password  value="#{perfilUsuarioController.confirmarContrasena}" style="width:49%;"/>  
+                                        <p:password  value="#{perfilUsuarioController.confirmarContrasena}" style="width:49%; text-align: center;"/>  
                                     </p:column>                                  
 
                                 </p:row>
-
-
-
-
-                            </p:panelGrid>
-
-                            <p:spacer width="20px"/>
-
-                            <p:panelGrid style="margin:  0 auto; width: 95%;">
 
 
                                 <p:row>
@@ -160,47 +157,37 @@
                                     </p:column>
                                     <p:column>
 
-                                        <p:commandButton style="float: none;" rendered="#{perfilUsuarioController.mostrarContrasena}"  value="Cambiar contraseña" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
+                                        <p:commandButton  style="float: none;" rendered="#{perfilUsuarioController.mostrarContrasena}"  value="Editar contraseña" icon="ui-icon-pencil" action="#{perfilUsuarioController.mostrarModificarContrasena()}"/>
 
-                                        <p:commandButton rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%;" value="Cancelar" 
+                                        <p:commandButton icon="ui-icon-trash" rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%;" value="Cancelar" 
                                                          action="#{perfilUsuarioController.cancelarActualizarContrasena()}"/>
-                                        <p:commandButton rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
+                                        <p:commandButton icon="ui-icon-check" rendered="#{!perfilUsuarioController.mostrarContrasena}" style="width: 25%" value="Aceptar" action="#{perfilUsuarioController.cambiarContrasena()}" />
 
 
                                     </p:column>
                                 </p:row>
 
 
-                                
+
                             </p:panelGrid>
 
-                            
                             <p:spacer width="20px"/>
 
                             <p:panelGrid style="margin:  0 auto; width: 95%;">
 
 
- 
-                                <f:facet name="footer">
-
-                                    <p:row>
-                                        <p:column  colspan="2" style="height: 35px;">
-
-                                        </p:column>
-
-                                    </p:row>
 
 
-
-                                </f:facet>
                             </p:panelGrid>
 
-                            
-                            
-                            
-                            
-                            
-                            <p:spacer width="30px"/>
+
+
+
+
+
+
+
+                            <p:spacer width="20px"/>
 
                         </div>
                     </span>

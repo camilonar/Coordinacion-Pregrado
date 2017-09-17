@@ -14,7 +14,7 @@ and open the template in the editor.
 
     <p:dialog widgetVar="dlgRegistroPlandeEstudio" modal="true" width="560" position="425,50" 
               closable="true" showEffect="explode" header="Registro de Plan de Estudio">
-        <p:ajax event="close" listener="#{registroPlandeEstudioController.cancelarRegistroPlanEstudio()}"/>
+       
         <h:outputStylesheet library="css" name="uploadFile.css"/>
 
         <h:form id="formSeleccionarArchivoPlanEstudio">
@@ -23,14 +23,15 @@ and open the template in the editor.
                            style="font-weight: bold; color: #000000"/>
             <p:fileUpload rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
-                          dragDropSupport="true"  uploadLabel="Aceptar" cancelLabel="Cancelar"  
+                          dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
                           allowTypes="/(\.|\/)(pdf)$/"  update="mensaje" fileUploadListener="#{registroPlandeEstudioController.seleccionarArchivo}"/>
 
-            <p:growl id="mensaje" showDetail="true" />
+            <p:growl id="mensaje" showDetail="true" life="4000" globalOnly="true" autoUpdate="false"/>
         </h:form>
 
 
         <h:form id="formArchivoSelecionadoPlanEstudio">
+           
             <p:panelGrid  styleClass="panelgrid" 
                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">
                 <p:row>
@@ -46,7 +47,7 @@ and open the template in the editor.
 
 
         <h:form id="formMetadatosPlanEstudio">
-            <p:growl id="msg" showDetail="true" life="4000"/>
+            <p:growl id="msg" showDetail="true" life="4000" autoUpdate="false" globalOnly="true"/>
             <p:panelGrid  styleClass="panelgrid" id="panelMetadadosPlanEstudio"
                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">  
 

@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/web.xml</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/entidades/Usuario.java</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/utilidades/MyFileUploadRenderer.java</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/WEB-INF/faces-config.xml</file>
             <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/ListarUsuarios.xhtml</file>
             <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/RegistrarUsuario.xhtml</file>
             <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/utilidades/Utilidades.java</file>
+            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/EditarUsuario.xhtml</file>
         </group>
     </open-files>
 </project-private>

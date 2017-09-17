@@ -10,7 +10,7 @@
             <h:form >
                 <p:menu >
                     <p:submenu label="Oferta académica">
-                        <p:menuitem value="Listado de ofertas académicas"  outcome="/jefe/OfertaAcademica/ofertasAcademicas.xhtml"   actionListener="#{addNavegacionController.addOfertaAcademicaLista()}" ajax="false"/>
+                        <p:menuitem value="Listado de ofertas académicas"  action="/jefe/OfertaAcademica/ofertasAcademicas.xhtml?faces-redirect=true"   actionListener="#{addNavegacionController.addOfertaAcademicaLista()}" ajax="false"/>
                     </p:submenu>    
                 </p:menu>
             </h:form>

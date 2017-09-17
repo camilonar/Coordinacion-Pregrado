@@ -5,79 +5,85 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-   
+
     <ui:composition template="/sesionJefe/_jefetmp.xhtml">
-                
+
         <ui:define name="body">
-            
-    <h:head>
-        <title>ofertasAcademicas</title>
-    </h:head>
-    <h:body>
-        <br rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}"/>
-        <br rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}"/>
-        <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
-        <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
-        
-        <h:form id="formListaDocumentos" rendered="#{registroOfertaAcademicaController.comprobarConexionOpenKM}">  
-            <br/>
-            <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
-            <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroOfertaAcademicaController.datos}">
-                <p:ajax update="datalist"  event="keyup" />
-            </p:inputText>  
-            <p:dataTable value="#{registroOfertaAcademicaController.listadoOfertasAcademicas}" 
-                         id="datalist" paginator="true"
-                         rowKey="#{item.id}" paginatorPosition="top"
-                         rows="10" emptyMessage="Sin documentos "
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         var="ofertaAcademica">
-                <p:column>
-                    <f:facet name="header">
-                        <p:outputLabel value="Nombre del documento"/>
-                    </f:facet>
-                    <h:graphicImage width="15" height="20" library="img" name="pdf-icon.png"/>
-                    <p:outputLabel value="  #{registroOfertaAcademicaController.nombreDelArchivo(ofertaAcademica.getPath())}"/>
-                </p:column>
-                <p:column style="width: 360px" >
-                    <f:facet name="header">
-                        Fecha de creación
-                    </f:facet>
-                    <p:outputLabel value="#{registroOfertaAcademicaController.fecha(ofertaAcademica.getCreated())}"/>
-                </p:column>
-                <p:column style="text-align: center; width: 140px">
-                    <f:facet name="header">
-                        Acciones
-                    </f:facet>
-                    <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                        <p:fileDownload value="#{registroOfertaAcademicaController.descargarDocumento(ofertaAcademica)}" />
-                    </p:commandButton>
-                    <p:commandButton value="Ver" action="#{registroOfertaAcademicaController.visualizarDocumento(ofertaAcademica)}" icon="ui-icon-search" title="Ver"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+            <h:head>
+                <title>ofertasAcademicas</title>
+            </h:head>
+            <h:body>
+                <p:separator/>
+                <center><p:outputLabel value="Oferta académica" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <p:separator/>
+                <f:metadata>
+                    <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
+                </f:metadata>
+                <br rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}"/>
+                <br rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}"/>
+                <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
+                <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
 
-        <p:dialog widgetVar="visualizarPDF" modal="true">
-            <h:form id="visualizacion">
-               <h3>PDF</h3>
-            <p:media value="#{registroOfertaAcademicaController.streamedContent}" width="750" height="560" player="pdf" />
-            </h:form>
+                <h:form id="formListaDocumentos" rendered="#{registroOfertaAcademicaController.comprobarConexionOpenKM}">  
+                    <br/>
+                    <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
-            
-        </p:dialog>
+                    <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroOfertaAcademicaController.datos}">
+                        <p:ajax update="datalist"  event="keyup" />
+                    </p:inputText>  
+                    <p:dataTable value="#{registroOfertaAcademicaController.listadoOfertasAcademicas}" 
+                                 id="datalist" paginator="true"
+                                 rowKey="#{item.id}" paginatorPosition="top"
+                                 rows="10" emptyMessage="Sin documentos "
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 var="ofertaAcademica">
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Nombre del documento"/>
+                            </f:facet>
+                            <h:graphicImage width="15" height="20" library="img" name="pdf-icon.png"/>
+                            <p:outputLabel value="  #{registroOfertaAcademicaController.nombreDelArchivo(ofertaAcademica.getPath())}"/>
+                        </p:column>
+                        <p:column style="width: 360px" >
+                            <f:facet name="header">
+                                Fecha de creación
+                            </f:facet>
+                            <p:outputLabel value="#{registroOfertaAcademicaController.fecha(ofertaAcademica.getCreated())}"/>
+                        </p:column>
+                        <p:column style="text-align: center; width: 140px">
+                            <f:facet name="header">
+                                Acciones
+                            </f:facet>
+                            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
+                                <p:fileDownload value="#{registroOfertaAcademicaController.descargarDocumento(ofertaAcademica)}" />
+                            </p:commandButton>
+                            <p:commandButton value="Ver" action="#{visualizarDocumentoBean.visualizarDocumento(ofertaAcademica)}" icon="ui-icon-search" title="Ver"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
 
-        <script type="text/javascript">
-            function start() {
-                PF('cargando').show();
-            }
+                <p:dialog widgetVar="visualizarPDF" modal="true">
+                    <h:form id="visualizacion">
 
-            function stop() {
-                PF('cargando').hide();
-            }
-        </script>
-    </h:body>   
-            
-    </ui:define>
+                        <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
+                    </h:form>
+
+
+                </p:dialog>
+
+                <script type="text/javascript">
+                    function start() {
+                        PF('cargando').show();
+                    }
+
+                    function stop() {
+                        PF('cargando').hide();
+                    }
+                </script>
+            </h:body>   
+
+        </ui:define>
     </ui:composition>
 
 </html>

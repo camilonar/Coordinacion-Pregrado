@@ -78,8 +78,13 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia fue registrada con éxito"));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia se registró con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+         requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+        
+        requestContext.update("MateriaListForm");
+        requestContext.update("MateriaCreateForm");
     }
     public void editarMateria(){
         materia.setIdDepartamento(departamento);
@@ -90,8 +95,19 @@ public class MateriaController implements Serializable {
         items = ejbFacade.findAll();
         departamento = new Departamento();
         materia = new Materia();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia fue editada con éxito"));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia se editó con éxito"));
+//        requestContext.execute("PF('mensajeRegistroExitoso').show()");
+    
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia se editó con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+      
+         requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+        
+        requestContext.update("MateriaListForm");
+        requestContext.update("MateriaCreateForm");
+        
+       
+    
     }
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -115,11 +131,20 @@ public class MateriaController implements Serializable {
     public void eliminarMateria(){
         ejbFacade.remove(materia);
         items = ejbFacade.findAll();
-        RequestContext context= RequestContext.getCurrentInstance();
-        context.update("MateriaListForm:datalist");
-        context.execute("PF('Confirmacion').hide()");
+        RequestContext requestContext= RequestContext.getCurrentInstance();
+        requestContext.update("MateriaListForm:datalist");
+        requestContext.execute("PF('Confirmacion').hide()");
         departamento = new Departamento();
         materia = new Materia();
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia se eliminó con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+      
+         requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+        
+        requestContext.update("MateriaListForm");
+       
+        
+        
        
     }
     

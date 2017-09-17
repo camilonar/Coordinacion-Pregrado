@@ -221,14 +221,20 @@ public class UsuarioController implements Serializable {
         this.ejbUsuarioGrupo.create(usuarioGrupo);
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('UsuarioCreateDialog').hide()");
+        
         ejbUsuario.limpiarCache();
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
-        System.out.println("usu imagen "+this.usuario.getUsufoto());
+
+        requestContext.execute("PF('UsuarioCreateDialog').hide()");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información","El usuario se registró con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null,msg);
+        
+       // requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        requestContext.update("msg");
+        requestContext.update("formfoto");
+
     }
     
     public void editarUsuario() {
@@ -258,9 +264,15 @@ public class UsuarioController implements Serializable {
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue editada con éxito."));
-        requestContext.execute("PF('mensajeRegistroExitoso').show()");
-    }
+      
+         requestContext.execute("PF('UsuarioCreateDialog').hide()");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información","El usuario se editó con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null,msg);
+        
+       // requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        requestContext.update("msg");
+        requestContext.update("formfoto");
+    }  
 
     public void seleccionarUsuarioEditar(Usuario usuario) {
         this.usuario = usuario;
