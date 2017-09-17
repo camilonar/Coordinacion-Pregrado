@@ -227,9 +227,14 @@ public class DepartamentoController implements Serializable {
                 ejbFacade.remove(departamento);
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
                 items = ejbFacade.findAll();
+               
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento se eliminó con éxito");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
+
+                requestContext.update("DepartamentoCreateForm");
+                requestContext.update("DepartamentoListForm");
                 requestContext.update("DepartamentoListForm:datalist");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El departamento se eliminó con éxito"));
-                requestContext.execute("PF('mensajeRegistroExitoso').show()");
             } else {
                 requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El departamento tiene materias asociadas"));

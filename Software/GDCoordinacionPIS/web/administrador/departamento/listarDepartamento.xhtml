@@ -14,7 +14,7 @@
                     <p:commandButton id="createButton" icon="ui-icon-plus" value="Agregar Departamento" onclick="PF('DepartamentoCreateDialog').show()"/>
                 </h:form>
                 <h:form id="DepartamentoListForm">
-
+                     <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:dataTable id="datalist" value="#{departamentoController.items}" var="item"
 
                                  paginator="true"

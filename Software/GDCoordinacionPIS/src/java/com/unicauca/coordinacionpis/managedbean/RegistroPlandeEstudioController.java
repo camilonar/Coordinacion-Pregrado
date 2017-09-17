@@ -179,6 +179,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         rc.update("formSeleccionarArchivoPlanEstudio");
         rc.update("formArchivoSelecionadoPlanEstudio");
         rc.update("formMetadatosPlanEstudio");
+       
 
     }
 
@@ -281,9 +282,10 @@ public class RegistroPlandeEstudioController implements Serializable {
                 okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento dentro de la carpeta Planes de Estudio en openkm
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
             }
+            
+            //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
             FacesContext.getCurrentInstance().addMessage(null, message);
-            rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
-            rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
+            
 
             limpiarVariables();
 
@@ -293,8 +295,17 @@ public class RegistroPlandeEstudioController implements Serializable {
 
             listaDocs();
             rc.update("lstPlanesEstudio");
+            
+           
             rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
-
+             
+            rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
+            
+            rc.update("mensaje2");
+            rc.update("msg");
+            
+             
+            
         } catch (PathNotFoundException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RepositoryException ex) {
@@ -381,7 +392,7 @@ public class RegistroPlandeEstudioController implements Serializable {
     public void editarPlanEstudio() {
 
         RequestContext rc = RequestContext.getCurrentInstance();
-        FacesMessage message=null;
+        FacesMessage message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
 
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
@@ -504,6 +515,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = "";
         archivoPlan = null;
         exitoSubirArchivo = false;
+    
     }
 
     /**
