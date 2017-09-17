@@ -320,7 +320,8 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             if (registroInicialOferta) {
                 generarPDFPre();
-                File initialFile = new File("D:" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf");
+                String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+                File initialFile = new File(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
 
                 if (!existeFolder) {
@@ -618,7 +619,8 @@ public class RegistroOfertaAcademicaController implements Serializable {
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("D:" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf"));
+            String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf"));
             // add meta-data to pdf
             document.addAuthor(usuarioDeLaSesion().getUsunombres() + " " + usuarioDeLaSesion().getUsuapellidos());
             document.addCreationDate();
