@@ -71,6 +71,8 @@ public class UsuarioController implements Serializable {
     private byte[] imagen;
     private DefaultStreamedContent miImagen;
     private UploadedFile uploadedFile;
+    
+    private boolean fotoDefecto;
 
     public UsuarioController() {
         this.usuario = new Usuario();
@@ -80,6 +82,9 @@ public class UsuarioController implements Serializable {
         this.campoFoto = true;
         this.campoContrasena = true;
         this.formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        
+        this.miImagen = (DefaultStreamedContent) this.getImagenDefecto();
+        fotoDefecto = true;
     }
 
     @PostConstruct
@@ -87,6 +92,10 @@ public class UsuarioController implements Serializable {
 
     }
 
+    public boolean isFotoDefecto() {
+        return fotoDefecto;
+    }
+    
     public Usuario getSelected() {
         return usuario;
     }
@@ -180,10 +189,22 @@ public class UsuarioController implements Serializable {
     {
         
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
-        this.usuario.setUsufoto(inputStreamToByteArray(file));
+        System.out.println("Foto defecto: "+fotoDefecto);
+        System.out.println("imagen "+imagen);
+        System.out.println("usu imagen "+this.usuario.getUsufoto());
+                
+        if(!fotoDefecto)
+        {
+            this.usuario.setUsufoto(imagen);
+        }
+        else
+        {
+            this.usuario.setUsufoto(null);
+        }
+        System.out.println("usu imagen "+this.usuario.getUsufoto());
         usuario.setCarid(cargo);
         ejbUsuario.create(usuario);
-        
+        System.out.println("usu imagen "+this.usuario.getUsufoto());
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
 
@@ -207,13 +228,20 @@ public class UsuarioController implements Serializable {
         usuario.setUsugenero('M');
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información fue registrada con éxito"));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        System.out.println("usu imagen "+this.usuario.getUsufoto());
     }
     
     public void editarUsuario() {
 
         usuario.setCarid(cargo);
-        if(file!=null)
-            this.usuario.setUsufoto(inputStreamToByteArray(file));
+        if(!fotoDefecto)
+        {
+            this.usuario.setUsufoto(imagen);
+        }
+        else
+        {
+            this.usuario.setUsufoto(null);
+        }
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
@@ -241,7 +269,12 @@ public class UsuarioController implements Serializable {
         {
             this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
             convertirBytesAImagen();
-            this.file = null;
+            System.out.println("seleccionarUsuarioEditar file = null");
+            this.fotoDefecto = true;
+        }
+        else
+        {
+            this.fotoDefecto = false;
         }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
@@ -428,6 +461,7 @@ public class UsuarioController implements Serializable {
         usuario.setUsufoto(inputStreamToByteArray(file));
         this.ejbUsuario.edit(usuario);
         this.campoFoto = true;
+        System.out.println("Actualizar foto file = null");
         file = null;
         requestContext.update(":formEditarfoto:panel");
         requestContext.update(":UsuarioListForm:datalist");
@@ -441,7 +475,6 @@ public class UsuarioController implements Serializable {
         this.grupo = new Grupo();
         this.campoFoto = true;
         this.campoContrasena = true;
-        file = null;
     }
     
     public DefaultStreamedContent getMiImagen() {
@@ -466,6 +499,7 @@ public class UsuarioController implements Serializable {
     public void convertirImagenABytes(FileUploadEvent event) {
         try
         {
+            fotoDefecto = false;
             uploadedFile = event.getFile();
             InputStream is = event.getFile().getInputstream();
             ByteArrayOutputStream os = new ByteArrayOutputStream();            
@@ -499,11 +533,11 @@ public class UsuarioController implements Serializable {
 
     }
     
-    public String limpiarRegistrarUsuario()
+    public void limpiarRegistrarUsuario()
     {
         this.miImagen = null;
         this.imagen = null;
-        return "./";
+        this.fotoDefecto = true;
     }
     public Date getFechaHoy()
     {
@@ -511,9 +545,7 @@ public class UsuarioController implements Serializable {
     }
     public void establecerFotoPorDefecto()
     {
-        System.out.println("Hallo");
-        this.miImagen = null;
-        //this.imagenPorDefecto();
+        this.fotoDefecto = true;
     }
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {

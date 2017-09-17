@@ -4,45 +4,52 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
 
     <ui:composition>            
-        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar usuario">
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" 
+                  appendTo="@(body)" header="Registrar usuario">
             <h:outputStylesheet name="css/appearUploadFile.css" />
             <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}"/>
             <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
             <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
             <br/>
             <h:form id="formfoto" enctype="multipart/form-data">
+                <p:growl id="msg" showDetail="true" life="4000"/>
                 <center>
                     <p:outputLabel style="font-weight:bold;" value="Foto de perfil" />                   
                 </center>
                 <center>    
                     <br/>
-                    <p:graphicImage  rendered="#{usuarioController.miImagen ==null}"
-                                     style="height:100px; width:100px;"
-                                     value="#{usuarioController.imagenDefecto}"
+                    <c:if test="#{usuarioController.fotoDefecto}">
+                    <p:graphicImage
+                                    style="height:100px; width:100px;" transient="true"
+                                    value="#{usuarioController.imagenDefecto}"
                                      cache="false"/>
-                    <p:graphicImage  rendered="#{usuarioController.miImagen !=null}"
-                                     id="img"
-                                     style="height:100px; width:100px;"
-                                     value="#{usuarioController.miImagen}"
-                                     cache="false"/>
+                    </c:if>
+                    <c:if test="#{!usuarioController.fotoDefecto}">
+                        <p:graphicImage id="img"
+                                        style="height:100px; width:100px;" transient="true"
+                                         value="#{usuarioController.miImagen}"
+                                         cache="false"/>
+                    </c:if>
                     <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
                                    allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
                                    required="true"
                                    update="@form" multiple="false" label="Subir imagen">
                     </p:fileUpload> 
-                    <h:commandButton rendered="#{usuarioController.miImagen !=null}" 
-                                     value="Imagen por defecto" 
-                                     actionListener="#{usuarioController.establecerFotoPorDefecto()}"
-                                     immediate="true" type="reset" 
+                    <c:if test="#{!usuarioController.fotoDefecto}">
+                        <p:commandButton 
+                                         value="Imagen por defecto" 
+                                         actionListener="#{usuarioController.establecerFotoPorDefecto()}"
+                                         ajax="true"
                                      >
-                        <p:ajax immediate="true" update="@form" event="click"/>
-                        <!--f:ajax execute="@all" render="@form"/-->
-                    </h:commandButton>
+                            <f:ajax execute="@all" render="@form"/>
+                        </p:commandButton>
+                    </c:if>
                 </center>
                 <br/>
             </h:form>
