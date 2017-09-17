@@ -19,7 +19,7 @@
             <br/>
             <p:outputLabel value="Buscar materia: " style="font-weight: bold; color: #000000"/>
 
-            <p:inputText   style="width: 350px" placeholder="Nombre semestre, código asignatura o materia" value="#{materiaController.datoBusqueda}">
+            <p:inputText   style="width: 350px" placeholder="Nombre semestre, código materia o materia" value="#{materiaController.datoBusqueda}">
                 <p:ajax update="datalist"  event="keyup" />
             </p:inputText>
 
@@ -39,7 +39,7 @@
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Código Asignatura"/>
+                        <h:outputText value="Código materia"/>
                     </f:facet>
                     <h:outputText value="#{item.codigoMateria}"/>
                 </p:column>
