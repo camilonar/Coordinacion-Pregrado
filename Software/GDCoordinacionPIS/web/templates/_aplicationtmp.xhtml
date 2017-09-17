@@ -33,9 +33,8 @@
                         </p:graphicImage>                         
                     </p:commandButton>
                     <p:menu id="opciones"  overlay="true"  trigger="opcionesusuario" my="right top" at="right bottom" >
-                        <p:menuitem value="Mi Perfil" outcome="/perfilUsuario.xhtml"
-                                    ajax="false"
-                                    />
+                        <p:menuitem value="Mi Perfil" action="/perfilUsuario.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPerfilUsuario()}"
+                                    ajax="false"/>
                         <p:separator/>
                         <p:menuitem value="Cerrar Sesión" action="#{sesionController.logout()}"  />
                     </p:menu>

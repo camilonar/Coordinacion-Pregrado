@@ -12,13 +12,17 @@
                 <h:outputScript library="js" name ="Calendario.js"/>
             </h:head>  
             <h:body>
+                <p:separator/>
+                <center><p:outputLabel value="Usuarios" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <p:separator/>
+                <br/>
                 <f:metadata>
                     <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
                 </f:metadata>
                 <h:form>
                     <p:commandButton icon="ui-icon-plus" id="createButton"  value="Registrar usuario" 
                                      onclick="PF('UsuarioCreateDialog').show()">
-                                     
+
                     </p:commandButton>
                 </h:form>
                 <p:separator/>
@@ -91,7 +95,7 @@
                 <ui:include src="RegistrarUsuario.xhtml"/>
                 <ui:include src="EditarUsuario.xhtml"/>
                 <ui:include src="VerInfoUsuario.xhtml"/>
-                 
+
                 <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
                     <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
                     <h:form>

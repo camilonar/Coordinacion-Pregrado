@@ -14,6 +14,9 @@
                 <title>ofertasAcademicas</title>
             </h:head>
             <h:body>
+                <p:separator/>
+                <center><p:outputLabel value="Oferta académica" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <p:separator/>
                 <f:metadata>
                     <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
                 </f:metadata>
@@ -62,7 +65,7 @@
 
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion">
-                        
+
                         <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
                     </h:form>
 

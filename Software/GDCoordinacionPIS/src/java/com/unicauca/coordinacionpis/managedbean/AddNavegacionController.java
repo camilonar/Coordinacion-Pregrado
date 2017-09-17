@@ -91,6 +91,15 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    public void addPerfilUsuario() {
+        this.menuNavegacion = new DefaultMenuModel();
+        index.setValue("Index");
+        miga2.setValue("Mi perfil");
+
+        this.menuNavegacion.addElement(index);
+        this.menuNavegacion.addElement(miga2);
+    }
+
     public void addOfertaAcademicaGestion() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
