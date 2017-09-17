@@ -58,6 +58,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -470,8 +471,9 @@ public class RegistroFormatoAController implements Serializable {
         // create document and writer
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
+        String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("Z:\\dfm\\pro2\\aguaabril2016.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta+"aguaabril2016.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();

@@ -69,7 +69,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
+import java.util.Properties;
+import java.util.ResourceBundle;
 /**
  *
  * @author ROED26
@@ -99,7 +100,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
     private com.openkm.sdk4j.bean.Document documento;
     private InputStream stream;
     private boolean registroInicialOferta;
-
+    
     public RegistroOfertaAcademicaController() {
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         this.formatoFechaDocumento = new SimpleDateFormat("dd-MM-yyyy");
@@ -111,7 +112,6 @@ public class RegistroOfertaAcademicaController implements Serializable {
         registroInicialOferta = true;
         periodoOfertaAcademica = asignarPeriodo();
         anioOfertaAcademica = asignarAnioOferta();
-
     }
 
     @PostConstruct
@@ -356,7 +356,8 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             } else {
                 generarPDFPos();
-                File initialFile = new File("D:\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf");
+                String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+                File initialFile = new File(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
                 if (!existeFolder) {
                     okm.createFolderSimple("/okm:root/Coordinacion/Oferta academica");
@@ -666,8 +667,9 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
+        String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("Z:\\dfm\\pro2\\" + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();
