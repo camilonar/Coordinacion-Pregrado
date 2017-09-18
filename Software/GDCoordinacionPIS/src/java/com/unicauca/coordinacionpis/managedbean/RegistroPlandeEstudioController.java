@@ -737,7 +737,10 @@ public class RegistroPlandeEstudioController implements Serializable {
 
     
     
-   
+    public void cancelarEdicion() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('dlgEditarPlanEstudio').hide()");
+    }  
 
     public void deleteDocument() {
         try {
@@ -752,14 +755,6 @@ public class RegistroPlandeEstudioController implements Serializable {
         } catch (Exception e) {
 
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    } 
+        
 }
