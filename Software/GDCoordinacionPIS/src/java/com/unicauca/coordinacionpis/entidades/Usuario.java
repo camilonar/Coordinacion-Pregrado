@@ -5,6 +5,9 @@
  */
 package com.unicauca.coordinacionpis.entidades;
 
+import com.unicauca.coordinacionpis.utilidades.Utilidades;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +27,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -100,6 +106,8 @@ public class Usuario implements Serializable {
     @ManyToOne
     private Cargo carid;
 
+    @Transient
+    private StreamedContent miImagen;
     public Usuario() {
     }
 
@@ -231,5 +239,20 @@ public class Usuario implements Serializable {
     public void setUsufoto(byte[] usufoto) {
         this.usufoto = usufoto;
     }
-
+    public StreamedContent getMiImagen() {
+        convertirBytesAImagen();
+        if(miImagen == null)
+            miImagen = Utilidades.getImagenPorDefecto("foto");
+        return miImagen;
+    }
+    public void convertirBytesAImagen()
+    {
+        if(usufoto != null)
+        {
+            InputStream is = new ByteArrayInputStream( usufoto);
+            miImagen = new DefaultStreamedContent(is, "image/png");
+        }
+        else
+            miImagen = null;
+    }
 }

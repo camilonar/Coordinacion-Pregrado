@@ -11,8 +11,9 @@
 
         <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"
                   appendTo="@(body)" header="Editar información de usuario">
+            <h:outputStylesheet name="css/appearUploadFile.css" />
             <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}" update="formEditarfoto UsuarioEditForm"/>
-            <h:outputStylesheet library="css" name="uploadFile.css"/>
+            <!--h:outputStylesheet library="css" name="uploadFile.css"/-->
             <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
             <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
             <br/>
@@ -44,9 +45,8 @@
                         <p:commandButton 
                                          value="Imagen por defecto" 
                                          actionListener="#{usuarioController.establecerFotoPorDefecto()}"
-                                         ajax="true"
+                                         ajax="true" update="formEditarfoto"
                                      >
-                            <f:ajax execute="@all" render="@form"/>
                         </p:commandButton>
                     </c:if>
                 </center>
@@ -267,7 +267,7 @@
                 <p:separator/>
                 <center>
                     <p:commandButton action="#{usuarioController.editarUsuario()}" value="Actualizar" 
-                                     update="panel,:UsuarioListForm:datalist"/>
+                                     update=":UsuarioListForm"/>
                 </center>     
 
 

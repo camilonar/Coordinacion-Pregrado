@@ -21,7 +21,7 @@
                 </f:metadata>
                 <h:form>
                     <p:commandButton icon="ui-icon-plus" id="createButton"  value="Registrar usuario" 
-                                     onclick="PF('UsuarioCreateDialog').show()">
+                                     onclick="PF('UsuarioCreateDialog').show()" actionListener="#{usuarioController.prepareCreate()}">
 
                     </p:commandButton>
                 </h:form>

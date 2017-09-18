@@ -45,9 +45,8 @@
                         <p:commandButton 
                                          value="Imagen por defecto" 
                                          actionListener="#{usuarioController.establecerFotoPorDefecto()}"
-                                         ajax="true"
+                                         ajax="true" update ="formfoto"
                                      >
-                            <f:ajax execute="@all" render="@form"/>
                         </p:commandButton>
                     </c:if>
                 </center>
