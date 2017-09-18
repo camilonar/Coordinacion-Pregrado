@@ -274,6 +274,7 @@ public class UsuarioController implements Serializable {
         requestContext.update("msg");
         requestContext.update("formfoto");
         requestContext.update("UsuarioListForm");
+        
     }  
 
     public void seleccionarUsuarioEditar(Usuario usuario) {
@@ -450,8 +451,12 @@ public class UsuarioController implements Serializable {
         System.out.println("getImagenFlujo");
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+        {
+            System.out.println("render response");
             return new DefaultStreamedContent();
+        }
         } else {
+            System.out.println("no render");
             String id = context.getExternalContext().getRequestParameterMap().get("id");
             Usuario usu = ejbUsuario.buscarPorIdUsuario(Long.valueOf(id)).get(0);
             if (usu.getUsufoto() == null) {
@@ -506,6 +511,8 @@ public class UsuarioController implements Serializable {
         this.cargo = new Cargo();
         this.grupo = new Grupo();
         this.campoFoto = true;
+        ejbUsuario.limpiarCache();
+        this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
     }
     
@@ -556,7 +563,7 @@ public class UsuarioController implements Serializable {
         }
     }
     public StreamedContent getImagen(Usuario usuario) {
-        System.out.println("getImagen");
+        System.out.println("getImagen "+usuario);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
 

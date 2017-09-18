@@ -77,7 +77,8 @@
                             <f:facet name="header">
                                 <h:outputText value="Foto" />
                             </f:facet>
-                            <p:graphicImage id="imgUsuario" value="#{usuarioController.imagenFlujo}" width="50"  height="50" >
+                            <p:graphicImage id="imgUsuario" value="#{usuarioController.imagenFlujo}" 
+                                            width="50"  height="50" cache = "false">
                                 <f:param name="id" value="#{item.usuid}" />
                             </p:graphicImage>                            
 
