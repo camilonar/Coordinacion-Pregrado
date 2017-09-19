@@ -652,5 +652,8 @@ public class RegistroFormatoAController implements Serializable {
 
         }
     }
-
+    public void cancelarEdicion() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('dlgEditarFormatoA').hide()");
+    }
 }

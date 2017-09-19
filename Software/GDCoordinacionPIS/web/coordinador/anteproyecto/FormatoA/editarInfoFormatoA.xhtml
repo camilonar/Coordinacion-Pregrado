@@ -144,6 +144,7 @@
                         <p:commandButton value="Actualizar" update=":formListaAnteproyectos:datalist"
                                          action="#{registroFormatoAController.actualizarInfoFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                        <p:commandButton value="Cancelar" action = "#{registroFormatoAController.cancelarEdicion()}"/>
                     </p:column>
                 </p:row>
 
