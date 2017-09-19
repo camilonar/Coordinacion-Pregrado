@@ -239,7 +239,6 @@ public class UsuarioController implements Serializable {
     }
     
     public void editarUsuario() {
-        System.out.println("editarUsuario");
         usuario.setCarid(cargo);
         if(!fotoDefecto)
         {
@@ -252,6 +251,8 @@ public class UsuarioController implements Serializable {
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
+        
+        this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
         
         usuarioGrupoPK.setGruid(grupo.getGruid());
         usuarioGrupoPK.setUsuid(this.usuario.getUsuid());
@@ -278,7 +279,6 @@ public class UsuarioController implements Serializable {
     }  
 
     public void seleccionarUsuarioEditar(Usuario usuario) {
-        System.out.println("seleccionarUsuarioEditar");
         this.usuario = usuario;
         this.imagen = this.usuario.getUsufoto();
         if(this.imagen ==null)
@@ -297,7 +297,6 @@ public class UsuarioController implements Serializable {
     }
 
     public void seleccionarUsuarioVer(Usuario usuario) {
-        System.out.println("seleccionarUsuarioVer");
         this.usuario = usuario;
         this.imagen = this.usuario.getUsufoto();
         if(this.imagen ==null)
@@ -311,14 +310,12 @@ public class UsuarioController implements Serializable {
     }
 
     public void mostrarModificarContrasena() {
-        System.out.println("mostrarModificarContrasena");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoContrasena = false;
         requestContext.update("UsuarioEditForm");
     }
 
     public void cancelarActualizarContrasena() {
-        System.out.println("cancelarActualizarContrasena");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoContrasena = true;
         this.contrasena = "";
@@ -326,7 +323,6 @@ public class UsuarioController implements Serializable {
     }
 
     public void actualizarContrasena() {
-        System.out.println("actualizarContrasena");
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
         this.campoContrasena = true;
@@ -337,7 +333,6 @@ public class UsuarioController implements Serializable {
     }
 
     public String getFecha() {
-        System.out.println("getFecha");
         String fechaNacimiento = "";
         if (usuario.getUsufechanacimiento() != null) {
             fechaNacimiento = formatoFecha.format(usuario.getUsufechanacimiento());
@@ -347,12 +342,10 @@ public class UsuarioController implements Serializable {
     }
 
     public void buscarUsuario() {
-        System.out.println("buscarUsuario");
         this.items = ejbUsuario.buscarUsuarioEjb(this.datoBusqueda.toLowerCase());
     }
 
     private byte[] inputStreamToByteArray(UploadedFile file) {
-        System.out.println("inputStreamToByteArray");
         byte[] imagen = null;
         if (file != null) {
             try {
@@ -368,7 +361,6 @@ public class UsuarioController implements Serializable {
     }
 
     public void create() {
-        System.out.println("create");
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleAdmin").getString("UsuarioCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -376,12 +368,10 @@ public class UsuarioController implements Serializable {
     }
 
     public void update() {
-        System.out.println("upadte");
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleAdmin").getString("UsuarioUpdated"));
     }
 
     public void destroy() {
-        System.out.println("destroy");
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleAdmin").getString("UsuarioDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             usuario = null; // Remove selection
@@ -390,7 +380,6 @@ public class UsuarioController implements Serializable {
     }
 
     public List<Usuario> getItems() {
-        System.out.println("getITEMS");
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -398,12 +387,10 @@ public class UsuarioController implements Serializable {
     }
 
     public void cargarFoto(FileUploadEvent event) {
-        System.out.println("CARGAR FTO");
         file = event.getFile();
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
-        System.out.println("PERSISTS");
         if (usuario != null) {
             setEmbeddableKeys();
             try {
@@ -448,15 +435,12 @@ public class UsuarioController implements Serializable {
     }
 
     public StreamedContent getImagenFlujo() {
-        System.out.println("getImagenFlujo");
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
         {
-            System.out.println("render response");
             return new DefaultStreamedContent();
         }
         } else {
-            System.out.println("no render");
             String id = context.getExternalContext().getRequestParameterMap().get("id");
             Usuario usu = ejbUsuario.buscarPorIdUsuario(Long.valueOf(id)).get(0);
             if (usu.getUsufoto() == null) {
@@ -468,7 +452,6 @@ public class UsuarioController implements Serializable {
     }
 
     public StreamedContent getImagenFlujoEditar() {
-        System.out.println("getImagenFlujoEditar");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -483,7 +466,6 @@ public class UsuarioController implements Serializable {
     
 
     public void mostraSubirFoto() {
-        System.out.println("mostarrsubirfoto");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoFoto = false;
         requestContext.update("formEditarfoto");
@@ -491,7 +473,6 @@ public class UsuarioController implements Serializable {
     }
 
     public void actualizarFoto(FileUploadEvent event) {
-        System.out.println("actualizar foto");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         UploadedFile file = event.getFile();
         usuario.setUsufoto(inputStreamToByteArray(file));
@@ -505,7 +486,6 @@ public class UsuarioController implements Serializable {
     }
 
     public void cancelarRegistroUsuario() {
-        System.out.println("cancelar registro usuario");
         this.usuario = new Usuario();
         usuario.setUsugenero('M');
         this.cargo = new Cargo();
@@ -517,7 +497,6 @@ public class UsuarioController implements Serializable {
     }
     
     public DefaultStreamedContent getMiImagen() {
-        System.out.println("get mi imagen");
         convertirBytesAImagen();
         /*if(miImagen==null)
             miImagen = Utilidades.getImagenPorDefecto("foto");*/
@@ -525,7 +504,6 @@ public class UsuarioController implements Serializable {
     }
     public void convertirBytesAImagen()
     {
-        System.out.println("convertir bytes a imagen");
         if(imagen != null)
         {
             InputStream is = new ByteArrayInputStream((byte[]) imagen);
@@ -538,7 +516,6 @@ public class UsuarioController implements Serializable {
     }
     
     public void convertirImagenABytes(FileUploadEvent event) {
-        System.out.println("convertir imagen a bytes");
         try
         {
             fotoDefecto = false;
@@ -563,7 +540,6 @@ public class UsuarioController implements Serializable {
         }
     }
     public StreamedContent getImagen(Usuario usuario) {
-        System.out.println("getImagen "+usuario);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -578,7 +554,6 @@ public class UsuarioController implements Serializable {
     
     public void limpiarRegistrarUsuario()
     {
-        System.out.println("limpiarregistarusuario");
         this.miImagen = null;
         this.imagen = null;
         this.fotoDefecto = true;
@@ -589,7 +564,6 @@ public class UsuarioController implements Serializable {
     }
     public void establecerFotoPorDefecto()
     {
-        System.out.println("FOTO DEFECTO establecida");
         this.fotoDefecto = true;
     }
     @FacesConverter(forClass = Usuario.class)
