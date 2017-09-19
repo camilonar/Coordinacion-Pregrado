@@ -229,7 +229,7 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
-
+    
     public void aceptarFormatoA() {
 
         boolean existe = false;
@@ -630,8 +630,9 @@ public class RegistroFormatoAController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
+        
     }
-
+    
     public void deleteDocument() {
         try {
             okm.deleteDocument(documento.getPath());
