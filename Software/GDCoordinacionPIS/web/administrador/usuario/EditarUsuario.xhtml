@@ -159,10 +159,10 @@
 
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu style="width: 176px" id="carid" value="#{usuarioController.cargo.carid}" >
+                            <p:selectOneMenu style="width: 176px" id="carid" value="#{usuarioController.cargo}" >
                                 <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
                                                var="caridItem"
-                                               itemValue="#{caridItem.carid}"
+                                               itemValue="#{caridItem}"
                                                itemLabel="#{caridItem.carnombre}"
                                                />
                                 <f:validator validatorId="ValidarCamposSeleccionar"/>
