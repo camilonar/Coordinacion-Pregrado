@@ -38,7 +38,10 @@ and open the template in the editor.
                     <p:column colspan="4">
                         <p:outputLabel style="font-weight: bold; color: #000000" value="Nombre del archivo seleccionado: "/>
                         <p:outputLabel style="font-weight: bold; color: blue" value="#{registroPlandeEstudioController.nombreArchivo}  "/>
-                        <p:commandButton value="Cambiar archivo"  action="#{registroPlandeEstudioController.cambiarArchivo}"/>
+                        <!--<p:commandButton value="Cambiar archivo"  action="#{registroPlandeEstudioController.cambiarArchivo}"/> -->
+                        <p:column>
+                            <p:commandButton value="Cambiar archivo" action="#{registroFormatoAController.confirmarEliminacion(formatoA)}"  />
+                        </p:column>
                     </p:column>
                 </p:row>
             </p:panelGrid>
