@@ -10,7 +10,7 @@
     <ui:composition>
 
         <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"
-                  appendTo="@(body)" header="Editar información de usuario">
+                  appendTo="@(body)" header="Editar usuario" closable="false">
             <h:outputStylesheet name="css/appearUploadFile.css" />
             <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}" update="formEditarfoto UsuarioEditForm"/>
             <!--h:outputStylesheet library="css" name="uploadFile.css"/-->
@@ -85,13 +85,13 @@
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message id="msgCaracteresNombre" for="usunombres"/>
                         </p:column>
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message id="msgCaracteresApellido" for="usuapellidos"/>
                         </p:column>
                     </p:row>
@@ -136,7 +136,7 @@
                         </p:column>
                         <p:column>
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message id="msgUsuFechaNacimiento" for="usufechanacimiento"/>
                         </p:column>
                     </p:row>
@@ -174,13 +174,13 @@
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message id="msgCaracteresEMail" for="usuemail"/>
                         </p:column>
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message for="carid"/>
                         </p:column>
                     </p:row>
@@ -204,7 +204,7 @@
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message  for="grupoId"/>
                         </p:column>
 
@@ -253,19 +253,24 @@
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message id="msgCaracteresNombreUsuario" for="usunombreusuario"/>
                         </p:column>
                         <p:column>
 
                         </p:column>
-                        <p:column>
+                        <p:column style = "width: 100px">
                             <p:message for="usucontrasena"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
                 <p:separator/>
                 <center>
+                    <p:commandButton value="Cancelar" 
+                                     actionListener="#{usuarioController.cancelarRegistroUsuario()}"
+                                     onclick ="PF('UsuarioEditDlg').hide();"
+                                     immediate="true"
+                                     style="margin: 20px;"/>
                     <p:commandButton action="#{usuarioController.editarUsuario()}" value="Actualizar" 
                                      update="panel,:UsuarioListForm:datalist"/>
                 </center>     

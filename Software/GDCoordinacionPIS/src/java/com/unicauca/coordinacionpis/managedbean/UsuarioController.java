@@ -173,6 +173,9 @@ public class UsuarioController implements Serializable {
     public Usuario prepareCreate() {
         System.out.println("prepareCreate");
         usuario = new Usuario();
+        usuario.setUsunombres("");
+        this.file = null;
+        this.fotoDefecto = true;
         this.limpiarRegistrarUsuario();
         initializeEmbeddableKey();
         return usuario;
@@ -380,9 +383,7 @@ public class UsuarioController implements Serializable {
     }
 
     public List<Usuario> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        items = getFacade().findAll();
         return items;
     }
 
@@ -487,6 +488,7 @@ public class UsuarioController implements Serializable {
 
     public void cancelarRegistroUsuario() {
         this.usuario = new Usuario();
+        this.fotoDefecto = true;
         usuario.setUsugenero('M');
         this.cargo = new Cargo();
         this.grupo = new Grupo();
@@ -494,6 +496,7 @@ public class UsuarioController implements Serializable {
         ejbUsuario.limpiarCache();
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
+        this.limpiarRegistrarUsuario();
     }
     
     public DefaultStreamedContent getMiImagen() {
@@ -554,13 +557,25 @@ public class UsuarioController implements Serializable {
     
     public void limpiarRegistrarUsuario()
     {
+        this.usuario = new Usuario();
+        usuario.setUsugenero('M');
+        this.cargo = new Cargo();
+        this.grupo = new Grupo();
+        this.campoFoto = true;
+        ejbUsuario.limpiarCache();
+        this.items = ejbUsuario.findAll();
+        this.campoContrasena = true;
         this.miImagen = null;
         this.imagen = null;
         this.fotoDefecto = true;
     }
     public Date getFechaHoy()
     {
-        return new Date();
+        Date min = new Date();
+        min.setYear(min.getYear() - 18);
+        min.setMonth(11);
+        min.setDate(31);
+        return min;
     }
     public void establecerFotoPorDefecto()
     {
