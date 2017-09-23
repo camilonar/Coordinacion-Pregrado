@@ -256,14 +256,15 @@
                 <p:separator/>
                 <center>
                     
-                    <p:commandButton value="Cancelar" 
+                    <p:commandButton value="Cancelar" id="cancelar-btn"
                                      actionListener="#{usuarioController.cancelarRegistroUsuario()}"
                                      onclick ="PF('UsuarioCreateDialog').hide();
                                          $('#UsuarioCreateForm').trigger('reset');
                                      $('#formfoto').trigger('reset');"
                                      immediate="true"
                                      style="margin: 20px;"/>
-                    <p:commandButton action="#{usuarioController.registrarUsuario()}"
+                    <p:commandButton id="submit-btn"
+                                    action="#{usuarioController.registrarUsuario()}"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>
 

@@ -1,6 +1,8 @@
-The JWebUnit team is pleased to announce the JWebUnit 3.2 release!
+### JWebUnit
 
-http://jwebunit.sourceforge.net
+[![Build Status](https://travis-ci.org/JWebUnit/jwebunit.svg)](https://travis-ci.org/JWebUnit/jwebunit)
+
+https://jwebunit.github.io/jwebunit/
 
 JWebUnit is a Java framework that facilitates creation of acceptance tests for
 web applications. It evolved from a project where we were using HttpUnit and
@@ -10,7 +12,7 @@ code. JWebUnit is the result of these refactorings.
 We are using HtmlUnit (htmlunit.sourceforge.net).
 
 Changes in this version are available here:
-http://jwebunit.sourceforge.net/changes-report.html
+https://jwebunit.github.io/jwebunit/changes-report.html
 
 Have fun!
 -The JWebUnit team
