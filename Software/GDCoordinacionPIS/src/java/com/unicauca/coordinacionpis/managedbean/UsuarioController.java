@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -497,6 +498,14 @@ public class UsuarioController implements Serializable {
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
         this.limpiarRegistrarUsuario();
+        
+        Iterator<String> itIds = FacesContext.getCurrentInstance().getClientIdsWithMessages();
+        while (itIds.hasNext()) {
+            List<FacesMessage> messageList = FacesContext.getCurrentInstance().getMessageList(itIds.next());
+            if (!messageList.isEmpty()) { // if empty, it will be unmodifiable and throw UnsupportedOperationException...
+                messageList.clear();
+            }
+        }
     }
     
     public DefaultStreamedContent getMiImagen() {

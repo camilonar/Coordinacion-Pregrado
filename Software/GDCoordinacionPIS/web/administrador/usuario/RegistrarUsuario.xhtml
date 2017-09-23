@@ -65,6 +65,7 @@
                                          requiredMessage="Campo obligatorio">
                                 <f:validator validatorId="ValidarCampo75Caracteres"/>
                                 <p:ajax event="keyup" update="msgCaracteresNombre"/>
+                                <p:ajax event="change" update="msgCaracteresNombre"/>
                             </p:inputText>
 
                         </p:column>
@@ -222,8 +223,6 @@
                                          requiredMessage="Campo obligatorio">
                                 <f:validator validatorId="ValidarCampoNombreUsuario"/>
                                 <p:ajax event="keyup" update="msgCaracteresNombreUsuario"/>
-                                <p:ajax event="blur" update="msgCaracteresNombreUsuario"/>
-                                <p:ajax event="mousemove" update="msgCaracteresNombreUsuario"/>
                             </p:inputText>
 
 
@@ -249,20 +248,29 @@
 
                         </p:column>
                         <p:column style = "width: 100px">
-                            <p:message for="usucontrasena"/>
+                            <p:message class="message" for="usucontrasena"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
                 <p:separator/>
                 <center>
                     
-                    <p:commandButton value="Cancelar" 
+                    <!--p:commandButton value="Cancelar" 
                                      actionListener="#{usuarioController.cancelarRegistroUsuario()}"
                                      onclick ="PF('UsuarioCreateDialog').hide();
                                          $('#UsuarioCreateForm').trigger('reset');
-                                     $('#formfoto').trigger('reset');"
+                                     $('#formfoto').trigger('reset');
+                                     $('.message').trigger('reset');"
                                      immediate="true"
-                                     style="margin: 20px;"/>
+                                     process="@this"
+                                     style="margin: 20px;"/-->
+                    <p:button value="Cancelar"
+                              onclick ="PF('UsuarioCreateDialog').hide();
+                                         $('#UsuarioCreateForm').trigger('reset');
+                                     $('#formfoto').trigger('reset');"
+                                        style="margin: 20px;"
+                             
+                               />
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>

@@ -22,8 +22,8 @@
                 <h:form>
                     <p:commandButton icon="ui-icon-plus" id="createButton"  value="Registrar usuario" 
                                      onclick="PF('UsuarioCreateDialog').show()" 
-                                     action="#{usuarioController.cancelarRegistroUsuario()}" 
-                                     update = "@this">
+                                     action="#{usuarioController.prepareCreate()}" 
+                                     update = "@this" process=":">
 
                     </p:commandButton>
                 </h:form>
