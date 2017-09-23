@@ -255,6 +255,7 @@
                 <p:separator/>
                 <center>
                     
+
                     <!--p:commandButton value="Cancelar" 
                                      actionListener="#{usuarioController.cancelarRegistroUsuario()}"
                                      onclick ="PF('UsuarioCreateDialog').hide();
@@ -262,6 +263,7 @@
                                      $('#formfoto').trigger('reset');
                                      $('.message').trigger('reset');"
                                      immediate="true"
+
                                      process="@this"
                                      style="margin: 20px;"/-->
                     <p:button value="Cancelar"
@@ -272,6 +274,7 @@
                              
                                />
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
+
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>
 

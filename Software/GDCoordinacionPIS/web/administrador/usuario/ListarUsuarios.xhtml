@@ -19,11 +19,11 @@
                 <f:metadata>
                     <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
                 </f:metadata>
-                <h:form>
-                    <p:commandButton icon="ui-icon-plus" id="createButton"  value="Registrar usuario" 
+                <h:form id="form">
+                    <p:commandButton icon="ui-icon-plus" id="registrarusuario"  value="Registrar usuario" 
                                      onclick="PF('UsuarioCreateDialog').show()" 
                                      action="#{usuarioController.prepareCreate()}" 
-                                     update = "@this" process=":">
+                                     update = "@this" process="@this">
 
                     </p:commandButton>
                 </h:form>

@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -25,7 +25,7 @@
         <div id="antorcha"></div>
         <div id="bandera"></div>
         <div id="centrar">
-            <h:form>
+            <h:form id="form-inicio">
                 
                 <p:growl id="growl"  globalOnly="true" showDetail="true" sticky="true" />  
  
@@ -55,7 +55,7 @@
                             <p:column colspan="3" style="text-align: center; ">
                                 <p:commandButton style="background: gainsboro; width: 150px; color:#000000; font-weight: bold; "
                                                  value="Iniciar sesión" action="#{sesionController.login()}"
-                                                 ajax="false"
+                                                 ajax="false" id="login"
                                                  />
                             </p:column>
                         </p:row>

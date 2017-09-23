@@ -6,16 +6,19 @@
       xmlns:p="http://primefaces.org/ui">
     <h:body>
         <div id="contenidoMenu">
-            <h:form >
+            <h:form id="menu-admin">
                 <p:menu>
                     <p:submenu label="Materias">
-                        <p:menuitem value="Gestión de materias" action="/administrador/materia/ListarMaterias.xhtml?faces-redirect=true"   actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
+                        <p:menuitem id="menuitem-materias"
+                            value="Gestión de materias" action="/administrador/materia/ListarMaterias.xhtml?faces-redirect=true"   actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
                     </p:submenu>    
                     <p:submenu label="Departamentos  y facultades">
-                        <p:menuitem value="Gestión de departamentos " action="/administrador/departamento/listarDepartamento.xhtml?faces-redirect=true"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroDepFac()}" ajax="false"/>
+                        <p:menuitem id="menuitem-departamentos-facultades"
+                            value="Gestión de departamentos " action="/administrador/departamento/listarDepartamento.xhtml?faces-redirect=true"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroDepFac()}" ajax="false"/>
                     </p:submenu>
                     <p:submenu label="Usuarios">
-                        <p:menuitem value="Gestión de usuarios" action="/administrador/usuario/ListarUsuarios.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addGestionUsuario()}"  ajax="false"/>
+                        <p:menuitem id="menuitem-usuarios"
+                            value="Gestión de usuarios" action="/administrador/usuario/ListarUsuarios.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addGestionUsuario()}"  ajax="false"/>
                     </p:submenu>  
                 </p:menu>
             </h:form>
