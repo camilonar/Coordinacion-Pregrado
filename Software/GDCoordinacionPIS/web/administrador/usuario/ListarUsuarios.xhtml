@@ -19,8 +19,8 @@
                 <f:metadata>
                     <f:viewAction action="#{addNavegacionController.migaPrincipal(sesionController.grupo)}" />
                 </f:metadata>
-                <h:form>
-                    <p:commandButton icon="ui-icon-plus" id="createButton"  value="Registrar usuario" 
+                <h:form id="form">
+                    <p:commandButton icon="ui-icon-plus" id="registrar-usuario"  value="Registrar usuario" 
                                      onclick="PF('UsuarioCreateDialog').show()" 
                                      action="#{usuarioController.cancelarRegistroUsuario()}" 
                                      update = "@this">
