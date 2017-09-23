@@ -5,12 +5,15 @@
  */
 package test.usuario.utils;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sourceforge.jwebunit.junit.JWebUnit;
 import static net.sourceforge.jwebunit.junit.JWebUnit.assertButtonPresent;
 import static net.sourceforge.jwebunit.junit.JWebUnit.assertLinkPresent;
 import static net.sourceforge.jwebunit.junit.JWebUnit.beginAt;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickButton;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickLink;
+import test.usuario.registrar.RegistrarUsuarioTextFieldsTest;
 
 /**
  *
@@ -38,5 +41,18 @@ public class AbstractUsuarioTest {
         assertButtonPresent("form:registrar-usuario");
         clickButton("form:registrar-usuario");
         JWebUnit.assertMatch("false", JWebUnit.getElementById("UsuarioCreateDlg").getAttribute("aria-hidden"));
+    }
+    
+        protected void goToEditar(){
+        goToUsuario();
+        JWebUnit.assertMatch("true",JWebUnit.getElementById("UsuarioEditDlg").getAttribute("aria-hidden"));
+        assertButtonPresent("UsuarioListForm:datalist:0:editButton");
+        clickButton("UsuarioListForm:datalist:0:editButton");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RegistrarUsuarioTextFieldsTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JWebUnit.assertMatch("false", JWebUnit.getElementById("UsuarioEditDlg").getAttribute("aria-hidden"));
     }
 }

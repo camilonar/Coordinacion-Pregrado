@@ -239,12 +239,15 @@
                         </p:column>
 
                         <p:column rendered="#{usuarioController.campoContrasena}">
-                            <p:commandButton value="Modificar contraseña" action="#{usuarioController.mostrarModificarContrasena()}"/>
+                            <p:commandButton id="contrasena-btn"
+                                value="Modificar contraseña" action="#{usuarioController.mostrarModificarContrasena()}"/>
                         </p:column>
                         <p:column rendered="#{!usuarioController.campoContrasena}">
-                            <p:commandButton value="Aceptar" action="#{usuarioController.actualizarContrasena()}"
+                            <p:commandButton id="aceptar-contrasena-btn"
+                                             value="Aceptar" action="#{usuarioController.actualizarContrasena()}"
                                              onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
-                            <p:commandButton value="Cancelar" 
+                            <p:commandButton id="cancelar-contrasena-btn"
+                                             value="Cancelar" 
                                              action="#{usuarioController.cancelarActualizarContrasena()}"
                                              onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                         </p:column>
@@ -260,7 +263,8 @@
 
                         </p:column>
                         <p:column style = "width: 100px">
-                            <p:message for="usucontrasena"/>
+                            <p:message for="usucontrasena"
+                                       id="msgCaracteresContrasena"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -271,7 +275,8 @@
                                      onclick ="PF('UsuarioEditDlg').hide();"
                                      immediate="true"
                                      style="margin: 20px;"/>
-                    <p:commandButton action="#{usuarioController.editarUsuario()}" value="Actualizar" 
+                    <p:commandButton id="submit-btn"
+                                    action="#{usuarioController.editarUsuario()}" value="Actualizar" 
                                      update="panel,:UsuarioListForm:datalist"/>
                 </center>     
 

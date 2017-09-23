@@ -97,7 +97,7 @@ public class RegistrarUsuarioTextFieldsTest extends AbstractUsuarioTest{
             { RegistrarUsuarioNames.idNombreUsuario,"con20caracteres12345",RegistrarUsuarioNames.idMsgNombreUsuario,true},
             { RegistrarUsuarioNames.idNombreUsuario,"con21caracteres123456",RegistrarUsuarioNames.idMsgNombreUsuario,false},
             { RegistrarUsuarioNames.idNombreUsuario,"pmage",RegistrarUsuarioNames.idMsgNombreUsuario,false},
-            { RegistrarUsuarioNames.idNombreUsuario,"",RegistrarUsuarioNames.idMsgNombreUsuario,false},
+            { RegistrarUsuarioNames.idNombreUsuario,"",RegistrarUsuarioNames.idMsgNombreUsuario,false}
         });
     }
     
