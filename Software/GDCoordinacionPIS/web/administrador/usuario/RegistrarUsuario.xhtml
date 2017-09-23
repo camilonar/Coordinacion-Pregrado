@@ -249,7 +249,8 @@
                         </p:column>
                         <p:column style = "width: 100px">
 
-                            <p:message class="message" for="usucontrasena"/>
+                            <p:message class="message" for="usucontrasena"
+                                       id="msgCaracteresContrasena"/>
 
                         </p:column>
                     </p:row>
@@ -276,7 +277,7 @@
                              
                                />
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
-
+                                     id="submit-btn"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>
 
