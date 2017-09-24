@@ -30,8 +30,10 @@ and open the template in the editor.
 
                 <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
                 <center><h:outputLabel rendered="#{!registroOfertaAcademicaController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
-                <h:form rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
-                    <p:commandButton value="Agregar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />
+                <h:form id="form"
+                    rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
+                    <p:commandButton id="createButton"
+                        value="Agregar Plan de estudio" onclick="PF('dlgRegistroPlandeEstudio').show()" />
 
                 </h:form>
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
@@ -62,7 +64,8 @@ and open the template in the editor.
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
-                            <p:commandButton value="Editar" icon=" ui-icon-pencil" action="#{registroPlandeEstudioController.cargarPlanEstudio(dato)}" onclick="PF('dlgEditarPlanEstudio').show()"/>
+                            <p:commandButton id="editButton"
+                                             value="Editar" icon=" ui-icon-pencil" action="#{registroPlandeEstudioController.cargarPlanEstudio(dato)}" onclick="PF('dlgEditarPlanEstudio').show()"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
                                 <p:fileDownload value="#{registroPlandeEstudioController.descargarDocumento(dato)}" />
                             </p:commandButton>                    

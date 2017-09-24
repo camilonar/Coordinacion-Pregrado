@@ -20,8 +20,9 @@
                 <p:separator/>
                 <br/>
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
-                <h:form>
-                    <p:commandButton value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                <h:form id="form">
+                    <p:commandButton id="createButton"
+                        value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
 
                 </h:form>
                 <h:form id="formListaAnteproyectos">    

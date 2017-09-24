@@ -6,7 +6,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    
     
-    <p:dialog widgetVar="dlgRegistroFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
+    <p:dialog id="AnteproyectoCreateDlg"
+        widgetVar="dlgRegistroFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
               closable="true" header="Registro Formato A"> 
         <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>
         <h:form id="formSeleccionarArchivoFormatoA">
@@ -14,7 +15,8 @@
                            value="Seleccione el archivo pdf del Formato A" 
                            style="font-weight: bold; color: #000000"/>
             
-            <p:fileUpload rendered="#{!registroFormatoAController.exitoSubirArchivo}" mode="advanced" 
+            <p:fileUpload id="file-upload"
+                          rendered="#{!registroFormatoAController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
                           allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoAController.seleccionarArchivo}"/>
