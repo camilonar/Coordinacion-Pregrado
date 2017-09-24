@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.usuario.utils;
+package test.departamento.utils;
 
+import test.usuario.utils.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sourceforge.jwebunit.junit.JWebUnit;
@@ -19,13 +20,13 @@ import test.usuario.registrar.RegistrarUsuarioTextFieldsTest;
  *
  * @author Camilo
  */
-public class AbstractUsuarioTest {
+public class AbstractDepartamentoTest {
     
     //Configuración
     private static String nombreUsuario = "admin";
     private static String contrasena = "jefe";
     
-     protected void loginAsAdmin(){
+    protected void loginAsAdmin(){
         beginAt("/GDCP/sinSesion/index.xhtml"); 
         JWebUnit.setTextField("form-inicio:nombreUsuario", nombreUsuario);
         JWebUnit.setTextField("form-inicio:contrasena", contrasena);
@@ -33,30 +34,30 @@ public class AbstractUsuarioTest {
         clickButton("form-inicio:login");
     }
     
-    protected void goToUsuario(){
+    protected void goToDepartamento(){
         loginAsAdmin();
-        assertLinkPresent("menu-admin:menuitem-usuarios");
-        clickLink("menu-admin:menuitem-usuarios");
+        assertLinkPresent("menu-admin:menuitem-departamentos-facultades");
+        clickLink("menu-admin:menuitem-departamentos-facultades");
     }
     
     protected void goToRegistrar(){
-        goToUsuario();
-        JWebUnit.assertMatch("true",JWebUnit.getElementById("UsuarioCreateDlg").getAttribute("aria-hidden"));
-        assertButtonPresent("form:registrar-usuario");
-        clickButton("form:registrar-usuario");
-        JWebUnit.assertMatch("false", JWebUnit.getElementById("UsuarioCreateDlg").getAttribute("aria-hidden"));
+        goToDepartamento();
+        JWebUnit.assertMatch("true",JWebUnit.getElementById("DepartamentoCreateDlg").getAttribute("aria-hidden"));
+        assertButtonPresent("form:createButton");
+        clickButton("form:createButton");
+        JWebUnit.assertMatch("false", JWebUnit.getElementById("DepartamentoCreateDlg").getAttribute("aria-hidden"));
     }
     
         protected void goToEditar(){
-        goToUsuario();
-        JWebUnit.assertMatch("true",JWebUnit.getElementById("UsuarioEditDlg").getAttribute("aria-hidden"));
-        assertButtonPresent("UsuarioListForm:datalist:0:editButton");
-        clickButton("UsuarioListForm:datalist:0:editButton");
+        goToDepartamento();
+        JWebUnit.assertMatch("true",JWebUnit.getElementById("DepartamentoEditDlg").getAttribute("aria-hidden"));
+        assertButtonPresent("DepartamentoListForm:datalist:0:editButton");
+        clickButton("DepartamentoListForm:datalist:0:editButton");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(RegistrarUsuarioTextFieldsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JWebUnit.assertMatch("false", JWebUnit.getElementById("UsuarioEditDlg").getAttribute("aria-hidden"));
+        JWebUnit.assertMatch("false", JWebUnit.getElementById("DepartamentoEditDlg").getAttribute("aria-hidden"));
     }
 }

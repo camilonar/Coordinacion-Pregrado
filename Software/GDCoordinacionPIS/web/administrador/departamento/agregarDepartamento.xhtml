@@ -16,7 +16,8 @@
                         <p:outputLabel value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.CreateDepartamentoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombre}"/>
                     </p:panelGrid>
-                    <p:commandButton action="#{departamentoController.registrarDepartamento()}" value="Agregar" update="display,:DepartamentoListForm:datalist"/>
+                    <p:commandButton id="submit-btn"
+                        action="#{departamentoController.registrarDepartamento()}" value="Agregar" update="display,:DepartamentoListForm:datalist"/>
                     <p:commandButton value="Cancelar" actionListener="#{departamentoController.cancelarRegistro()}" oncomplete="PF('DepartamentoCreateDialog').hide()"/>
                 </h:panelGroup>
             </h:form>
