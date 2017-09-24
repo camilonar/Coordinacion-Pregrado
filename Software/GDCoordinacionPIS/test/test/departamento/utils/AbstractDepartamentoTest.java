@@ -14,7 +14,7 @@ import static net.sourceforge.jwebunit.junit.JWebUnit.assertLinkPresent;
 import static net.sourceforge.jwebunit.junit.JWebUnit.beginAt;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickButton;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickLink;
-import test.usuario.registrar.RegistrarUsuarioTextFieldsTest;
+import test.usuario.test_cases.RegistrarUsuarioTextFieldsTest;
 
 /**
  *

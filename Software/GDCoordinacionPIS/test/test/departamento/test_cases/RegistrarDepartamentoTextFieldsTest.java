@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.departamento.registrar;
+package test.departamento.test_cases;
 
-import test.usuario.registrar.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
