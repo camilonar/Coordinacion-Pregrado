@@ -60,7 +60,8 @@
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
                                              icon="ui-icon-search" title="Ver"/>
-                            <p:commandButton value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                            <p:commandButton id="editButton"
+                                             value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 

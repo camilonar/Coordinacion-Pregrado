@@ -174,7 +174,8 @@
 
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Guardar" update= ":formListaAnteproyectos:datalist"
+                        <p:commandButton id="submit-btn"
+                                         value="Guardar" update= ":formListaAnteproyectos:datalist"
                                          action="#{registroFormatoAController.aceptarFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
                     </p:column>

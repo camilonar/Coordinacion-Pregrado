@@ -7,7 +7,8 @@
     
      
     
-    <p:dialog widgetVar="dlgEditarFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
+    <p:dialog id="AnteproyectoEditDlg"
+              widgetVar="dlgEditarFormatoA" modal="true" resizable="false" width="830"  position="300,50"  
               closable="true" header="Editar información Formato A"> 
         <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>
         
@@ -141,7 +142,8 @@
 
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Actualizar" update=":formListaAnteproyectos:datalist"
+                        <p:commandButton id="submit-btn"
+                                         value="Actualizar" update=":formListaAnteproyectos:datalist"
                                          action="#{registroFormatoAController.actualizarInfoFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
                         <p:commandButton value="Cancelar" action = "#{registroFormatoAController.cancelarEdicion()}"/>

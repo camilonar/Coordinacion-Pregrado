@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.plan_estudios.utils;
+package test.anteproyecto.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,22 +13,21 @@ import static net.sourceforge.jwebunit.junit.JWebUnit.assertLinkPresent;
 import static net.sourceforge.jwebunit.junit.JWebUnit.beginAt;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickButton;
 import static net.sourceforge.jwebunit.junit.JWebUnit.clickLink;
-import test.plan_estudios.test_cases.RegistrarPlanEstudiosTextFieldsTest;
 import test.usuario.test_cases.RegistrarUsuarioTextFieldsTest;
 
 /**
  *
  * @author Camilo
  */
-public class AbstractPlanEstudiosTest {
-    
+public class AbstractAnteproyectoTest {
     /**
-     * Nota importante: para las pruebas el formulario de registro de planes de
-     * estudio debe estar renderizado desde el inicio
+     * Nota importante: para las pruebas el formulario de registro de anteproyectos
+     * debe estar renderizado desde el inicio
      */
     //Configuración
     private static String nombreUsuario = "pmage";
     private static String contrasena = "coordinador";
+    private static String archivoSubida = "C:\\Users\\Camilo\\Downloads\\4.5-9.pdf";
     
     protected void loginAsCoordinador(){
         beginAt("/GDCP/sinSesion/index.xhtml"); 
@@ -38,35 +37,36 @@ public class AbstractPlanEstudiosTest {
         clickButton("form-inicio:login");
     }
     
-    protected void goToPlanEstudio(){
+    protected void goToAnteproyecto(){
         loginAsCoordinador();
-        assertLinkPresent("menu-coordinador:menuitem-planes-estudio");
-        clickLink("menu-coordinador:menuitem-planes-estudio");
+        assertLinkPresent("menu-coordinador:menuitem-anteproyectos");
+        clickLink("menu-coordinador:menuitem-anteproyectos");
     }
     
     protected void goToRegistrar(){
-        goToPlanEstudio();
-        JWebUnit.assertMatch("true",JWebUnit.getElementById("PlanEstudioCreateDlg").getAttribute("aria-hidden"));
+        goToAnteproyecto();
+        JWebUnit.assertMatch("true",JWebUnit.getElementById("AnteproyectoCreateDlg").getAttribute("aria-hidden"));
         assertButtonPresent("form:createButton");
         clickButton("form:createButton");
         try {
             Thread.sleep(1500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(RegistrarPlanEstudiosTextFieldsTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractAnteproyectoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JWebUnit.assertMatch("false", JWebUnit.getElementById("PlanEstudioCreateDlg").getAttribute("aria-hidden"));
+        JWebUnit.assertMatch("false", JWebUnit.getElementById("AnteproyectoCreateDlg").getAttribute("aria-hidden"));
     }
     
         protected void goToEditar(){
-        goToPlanEstudio();
-        JWebUnit.assertMatch("true",JWebUnit.getElementById("PlanEstudioEditDlg").getAttribute("aria-hidden"));
-        assertButtonPresent("formPlanesdeEstudio:lstPlanesEstudio:0:editButton");
-        clickButton("formPlanesdeEstudio:lstPlanesEstudio:0:editButton");
+        goToAnteproyecto();
+        JWebUnit.assertMatch("true",JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
+        assertButtonPresent("formListaAnteproyectos:datalist:0:editButton");
+        clickButton("formListaAnteproyectos:datalist:0:editButton");
+        JWebUnit.assertMatch("true", JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(RegistrarUsuarioTextFieldsTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractAnteproyectoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JWebUnit.assertMatch("false", JWebUnit.getElementById("PlanEstudioEditDlg").getAttribute("aria-hidden"));
+        JWebUnit.assertMatch("false", JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
     }
 }
