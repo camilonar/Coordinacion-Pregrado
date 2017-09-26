@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+import javax.mail.internet.InternetAddress;
 
 @FacesValidator(value="ValidarCampoCorreoElectronico")
 public class ValidarCampoCorreoElectronico implements Validator
@@ -23,16 +24,39 @@ public class ValidarCampoCorreoElectronico implements Validator
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException 
     {
         
-        String texto = String.valueOf(value);        
-       if(!texto.isEmpty()){
+       String texto = String.valueOf(value); 
+       
+       /*if(!texto.isEmpty()){
             Pattern patron = Pattern.compile("([_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,}))");
         Matcher encaja = patron.matcher(texto);        
         if(!encaja.find())
         {
             FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El formato del correo no es válido. Ej: correo@correo.com");
             throw new ValidatorException(msg);
-        }
-        else
+        }*/
+       boolean error = false;
+       try
+       {
+
+            if(!texto.isEmpty())
+            {
+             Pattern patron = Pattern.compile("([_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,}))");
+             Matcher encaja = patron.matcher(texto);        
+             if(!encaja.find())
+             {
+                 FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El formato del correo no es válido. Ej: correo@correo.com");
+                 throw new ValidatorException(msg);
+             }
+             InternetAddress emailAddr = new InternetAddress(texto);       
+             emailAddr.validate();
+           }
+       }
+       catch(Exception e){
+           error = true;
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El formato del correo no es válido. Ej: correo@correo.com");
+           throw new ValidatorException(msg);
+       }
+        if(!error)
         {
             if(usuarioEJB.buscarPorEmail(texto))
             {
@@ -40,7 +64,7 @@ public class ValidarCampoCorreoElectronico implements Validator
                 throw new ValidatorException(msg);
             }
         }
-       }
+       
        
         
     }

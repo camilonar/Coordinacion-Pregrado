@@ -20,8 +20,9 @@
                 <p:separator/>
                 <br/>
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
-                <h:form>
-                    <p:commandButton value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                <h:form id="form">
+                    <p:commandButton id="createButton"
+                        value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
 
                 </h:form>
                 <h:form id="formListaAnteproyectos">    
@@ -59,7 +60,8 @@
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
                                              icon="ui-icon-search" title="Ver"/>
-                            <p:commandButton value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                            <p:commandButton id="editButton"
+                                             value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 

@@ -530,6 +530,16 @@ public class UsuarioController implements Serializable {
     public void convertirImagenABytes(FileUploadEvent event) {
         try
         {
+            
+            String type = event.getFile().getContentType();
+            System.out.println(type);
+            System.out.println(""+!type.equals("image/png"));
+            if(!type.equals("image/png") && !type.equals("image/jpeg") &&!type.equals("image/jpg"))
+            {
+                FacesMessage msg = new FacesMessage("Información","El formato de la imagen debe ser png, jpeg o jpg");  
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return;
+            }
             fotoDefecto = false;
             uploadedFile = event.getFile();
             InputStream is = event.getFile().getInputstream();

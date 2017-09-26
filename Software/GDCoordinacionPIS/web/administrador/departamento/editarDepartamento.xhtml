@@ -18,7 +18,8 @@
                         <p:outputLabel style="font-weight: bold; color: #000000" value="#{bundle.EditDepartamentoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.EditDepartamentoTitle_nombre}" required="true" requiredMessage="#{bundle.EditDepartamentoRequiredMessage_nombre}"/>
                     </p:panelGrid>
-                    <center><p:commandButton action="#{departamentoController.editarDepartamento()}" value="Guardar" update="display,:DepartamentoListForm:datalist" />
+                    <center><p:commandButton id="submit-btn"
+                            action="#{departamentoController.editarDepartamento()}" value="Guardar" update="display,:DepartamentoListForm:datalist" />
                         <p:commandButton value="Cancelar" action = "#{departamentoController.cancelarEdicion()}"/></center>
                 </h:panelGroup>
             </h:form>

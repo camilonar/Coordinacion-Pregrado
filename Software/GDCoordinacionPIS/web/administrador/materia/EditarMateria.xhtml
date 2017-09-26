@@ -131,7 +131,8 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton action="#{materiaController.editarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist" />
+                    <p:commandButton id="submit-btn"
+                        action="#{materiaController.editarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist" />
                     <p:commandButton value="Cancelar" action="#{materiaController.cancelarEdicion()}" onclick="MateriaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

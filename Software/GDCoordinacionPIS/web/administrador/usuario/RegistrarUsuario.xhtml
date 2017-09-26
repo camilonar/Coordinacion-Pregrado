@@ -35,11 +35,13 @@
                                         style="height:100px; width:100px;" transient="true"
                                          value="#{usuarioController.miImagen}"
                                          cache="false"/>
+                       
                     </c:if>
-                    <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
-                                   allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
+                    <p:fileUpload  id="imgupload" mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
+                                    sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
                                    required="true"
                                    update="@form" multiple="false" label="Subir imagen">
+                        
                     </p:fileUpload> 
                     <c:if test="#{!usuarioController.fotoDefecto}">
                         <p:commandButton 
@@ -63,9 +65,8 @@
                             <p:inputText id="usunombres" value="#{usuarioController.selected.usunombres}"
                                          title="#{bundleAdmin.CreateUsuarioTitle_usunombres}" required="true" 
                                          requiredMessage="Campo obligatorio">
-                                <f:validator validatorId="ValidarCampo75Caracteres"/>
+                                <f:validator validatorId="ValidarCampoNombre"/>
                                 <p:ajax event="keyup" update="msgCaracteresNombre"/>
-                                <p:ajax event="change" update="msgCaracteresNombre"/>
                             </p:inputText>
 
                         </p:column>
@@ -77,7 +78,7 @@
                             <p:inputText id="usuapellidos" value="#{usuarioController.selected.usuapellidos}"
                                          title="#{bundleAdmin.CreateUsuarioTitle_usuapellidos}" required="true" 
                                          requiredMessage="Campo obligatorio">
-                                <f:validator validatorId="ValidarCampo75Caracteres"/>
+                                <f:validator validatorId="ValidarCampoApellido"/>
                                 <p:ajax event="keyup" update="msgCaracteresApellido"/>
                             </p:inputText>                                        
                         </p:column>
@@ -234,7 +235,10 @@
                         <p:column>
                             <p:password id="usucontrasena" value="#{usuarioController.selected.usucontrasena}"
                                         title="#{bundleAdmin.CreateUsuarioTitle_usucontrasena}" 
-                                        required="true" requiredMessage="Campo obligatorio"/>        
+                                        required="true" requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampo20Caracteres"/>
+                                <p:ajax event="keyup" update="msgCaracteresContrasena"/>
+                            </p:password>
                         </p:column>
                     </p:row>
                     <p:row> 
@@ -249,7 +253,8 @@
                         </p:column>
                         <p:column style = "width: 100px">
 
-                            <p:message class="message" for="usucontrasena"/>
+                            <p:message class="message" for="usucontrasena"
+                                       id="msgCaracteresContrasena"/>
 
                         </p:column>
                     </p:row>
@@ -276,7 +281,7 @@
                              
                                />
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
-
+                                     id="submit-btn"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>
 

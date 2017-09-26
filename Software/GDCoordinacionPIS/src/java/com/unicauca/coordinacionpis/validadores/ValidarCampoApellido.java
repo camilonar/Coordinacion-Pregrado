@@ -10,8 +10,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 
-@FacesValidator(value="ValidarCampoNombre")
-public class ValidarCampoNombre implements Validator
+@FacesValidator(value="ValidarCampoApellido")
+public class ValidarCampoApellido implements Validator
 {
 
     @Override
@@ -20,14 +20,14 @@ public class ValidarCampoNombre implements Validator
         String texto = String.valueOf(value);
         
        if(texto.length()>75){
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El nombre admite máximo 75 caracteres");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El apellido admite máximo 75 caracteres");
            throw new ValidatorException(msg);
        }
        Pattern patron = Pattern.compile("[^A-Za-záéíóúÁÉÍÓÚ ]");
        Matcher encaja = patron.matcher(texto);  
        if(encaja.find())
        {
-           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El nombre solo admite caracteres alfabéticos.");
+           FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El apellido solo admite caracteres alfabéticos.");
            throw new ValidatorException(msg);
        }
     }

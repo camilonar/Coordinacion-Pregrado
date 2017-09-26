@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.usuario.utils;
+package test.usuario.test_cases;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import test.usuario.registrar.AbstractUsuarioTest;
+import test.usuario.utils.AbstractUsuarioTest;
+import test.usuario.utils.RegistrarUsuarioNames;
 
 /**
  * Pruebas de los campos de texto del formulario de registro de usuario
@@ -96,7 +97,7 @@ public class RegistrarUsuarioTextFieldsTest extends AbstractUsuarioTest{
             { RegistrarUsuarioNames.idNombreUsuario,"con20caracteres12345",RegistrarUsuarioNames.idMsgNombreUsuario,true},
             { RegistrarUsuarioNames.idNombreUsuario,"con21caracteres123456",RegistrarUsuarioNames.idMsgNombreUsuario,false},
             { RegistrarUsuarioNames.idNombreUsuario,"pmage",RegistrarUsuarioNames.idMsgNombreUsuario,false},
-            { RegistrarUsuarioNames.idNombreUsuario,"",RegistrarUsuarioNames.idMsgNombreUsuario,false},
+            { RegistrarUsuarioNames.idNombreUsuario,"",RegistrarUsuarioNames.idMsgNombreUsuario,false}
         });
     }
     

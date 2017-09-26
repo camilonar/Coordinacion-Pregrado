@@ -126,7 +126,8 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton action="#{materiaController.registrarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist"/>
+                    <p:commandButton id="submit-btn"
+                        action="#{materiaController.registrarMateria()}" value="Guardar" update="display,:MateriaListForm:datalist"/>
                     <p:commandButton value="Cancelar" oncomplete="#{materiaController.cancelarRegistro()}" onclick="PF('MateriaCreateDialog').hide()"/>
                 </h:panelGroup>
             </h:form>

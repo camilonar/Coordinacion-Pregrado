@@ -12,7 +12,8 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 
-    <p:dialog widgetVar="dlgRegistroPlandeEstudio" modal="true" width="560" position="425,50" 
+    <p:dialog id="PlanEstudioCreateDlg"
+        widgetVar="dlgRegistroPlandeEstudio" modal="true" width="560" position="425,50" 
               closable="true" showEffect="explode" header="Registro de Plan de Estudio">
        
         <h:outputStylesheet library="css" name="uploadFile.css"/>
@@ -21,7 +22,8 @@ and open the template in the editor.
             <p:outputLabel rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del plan de Estudio" 
                            style="font-weight: bold; color: #000000"/>
-            <p:fileUpload rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" mode="advanced" 
+            <p:fileUpload id="file-upload"
+                          rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
                           allowTypes="/(\.|\/)(pdf)$/"  update="mensaje" fileUploadListener="#{registroPlandeEstudioController.seleccionarArchivo}"/>
@@ -148,7 +150,8 @@ and open the template in the editor.
                 </p:row>
                 <p:row>
                     <p:column colspan="2">
-                        <p:commandButton value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
+                        <p:commandButton id="submit-btn"
+                            value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
                         <p:spacer width="30%" height="10"/>                                                                      
                     </p:column>
                 </p:row>
