@@ -23,7 +23,7 @@ public class ValidarCampoNombre implements Validator
            FacesMessage msg= new FacesMessage(FacesMessage.SEVERITY_ERROR,"Información","El nombre admite máximo 75 caracteres");
            throw new ValidatorException(msg);
        }
-       Pattern patron = Pattern.compile("[^A-Za-záéíóúÁÉÍÓÚ ]");
+       Pattern patron = Pattern.compile("[^A-Za-záéíóúÁÉÍÓÚñÑ ]");
        Matcher encaja = patron.matcher(texto);  
        if(encaja.find())
        {

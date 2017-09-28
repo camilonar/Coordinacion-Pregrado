@@ -277,9 +277,12 @@
                               onclick ="PF('UsuarioCreateDialog').hide();
                                          $('#UsuarioCreateForm').trigger('reset');
                                      $('#formfoto').trigger('reset');"
+                                     
                                         style="margin: 20px;"
                              
-                               />
+                               >
+                    </p:button>
+                    
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
                                      id="submit-btn"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>

@@ -176,8 +176,16 @@ public class UsuarioController implements Serializable {
         usuario = new Usuario();
         usuario.setUsunombres("");
         this.file = null;
+        if(!fotoDefecto)
+        {
+            this.establecerFotoPorDefecto();
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update("formfoto");
+        }
         this.fotoDefecto = true;
         this.limpiarRegistrarUsuario();
+        
+        
         initializeEmbeddableKey();
         return usuario;
     }
@@ -486,7 +494,17 @@ public class UsuarioController implements Serializable {
         requestContext.update(":UsuarioListForm:datalist");
 
     }
-
+    public void cancelarEditarUsuario(){
+        this.usuario = new Usuario();
+        this.fotoDefecto = true;
+        usuario.setUsugenero('M');
+        this.cargo = new Cargo();
+        this.grupo = new Grupo();
+        this.campoFoto = true;
+        ejbUsuario.limpiarCache();
+        this.items = ejbUsuario.findAll();
+        this.campoContrasena = true;
+    }
     public void cancelarRegistroUsuario() {
         this.usuario = new Usuario();
         this.fotoDefecto = true;
@@ -497,15 +515,14 @@ public class UsuarioController implements Serializable {
         ejbUsuario.limpiarCache();
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
-        this.limpiarRegistrarUsuario();
         
-        Iterator<String> itIds = FacesContext.getCurrentInstance().getClientIdsWithMessages();
-        while (itIds.hasNext()) {
-            List<FacesMessage> messageList = FacesContext.getCurrentInstance().getMessageList(itIds.next());
-            if (!messageList.isEmpty()) { // if empty, it will be unmodifiable and throw UnsupportedOperationException...
-                messageList.clear();
-            }
-        }
+        System.out.println("--> cancelar registro");
+        this.establecerFotoPorDefecto();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("formfoto");
+        requestContext.execute("PF('UsuarioCreateDialog').hide()");
+        requestContext.execute("$('#UsuarioCreateForm').trigger('reset')");
+        requestContext.execute("$('#formfoto').trigger('reset');");
     }
     
     public DefaultStreamedContent getMiImagen() {
@@ -598,6 +615,7 @@ public class UsuarioController implements Serializable {
     }
     public void establecerFotoPorDefecto()
     {
+        System.out.println("establecer foto por defecto");
         this.fotoDefecto = true;
     }
     @FacesConverter(forClass = Usuario.class)
