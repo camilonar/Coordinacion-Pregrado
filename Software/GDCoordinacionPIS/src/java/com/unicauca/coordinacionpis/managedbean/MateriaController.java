@@ -110,15 +110,17 @@ public class MateriaController implements Serializable {
     
     }
     public void cancelarEdicion() {
+        this.departamento = new Departamento();
+        this.materia = new Materia();
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('MateriaEditDialog').hide()");
-        departamento = new Departamento();
-        materia = new Materia();
-    }
-    public void cancelarRegistro(){
         
-        departamento = new Departamento();
-        materia = new Materia();
+    }
+    public void cancelarRegistro(){        
+        this.departamento = new Departamento();
+        this.materia = new Materia();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('MateriaCreateDlg').hide()");
     }
     
     public void confirmarEliminacion(Materia materia){
