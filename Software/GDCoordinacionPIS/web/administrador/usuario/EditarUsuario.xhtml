@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-
+        
         <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"
                   appendTo="@(body)" header="Editar usuario" closable="false">
             <h:outputStylesheet name="css/appearUploadFile.css" />
@@ -18,7 +18,7 @@
             <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
             <br/>
             <h:form id="formEditarfoto" enctype="multipart/form-data">
-                <p:growl id="msg" showDetail="true" life="4000"/>
+                
                 <center>
                     <p:outputLabel style="font-weight:bold;" value="Foto de perfil" />                   
                 </center>
@@ -234,7 +234,10 @@
                                         title="#{bundleAdmin.CreateUsuarioTitle_usucontrasena}" 
                                         >
                                 <f:validator validatorId="ValidarCampo20Caracteres"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
                                 <p:ajax event="keyup" update="msgCaracteresContrasena"/>
+                                <p:ajax event="blur" update="msgCaracteresContrasena"/>
+                                <p:ajax event="mousemove" update="msgCaracteresContrasena"/>
                             </p:password>
                         </p:column>
                         <p:column rendered="#{usuarioController.campoContrasena}" >
@@ -252,7 +255,8 @@
                             <p:commandButton id="cancelar-contrasena-btn"
                                              value="Cancelar" 
                                              action="#{usuarioController.cancelarActualizarContrasena()}"
-                                             onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
+                                             onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
+                                             immediate="true"/>
                         </p:column>
                     </p:row>
                     <p:row> 

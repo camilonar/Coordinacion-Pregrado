@@ -324,6 +324,7 @@ public class UsuarioController implements Serializable {
     public void mostrarModificarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoContrasena = false;
+        this.contrasena = "";
         requestContext.update("UsuarioEditForm");
     }
 
@@ -338,6 +339,7 @@ public class UsuarioController implements Serializable {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
         this.campoContrasena = true;
+        System.out.println("contasena "+contrasena);
         this.usuario.setUsucontrasena(Cifrar.sha256(this.contrasena));
         this.ejbUsuario.edit(this.usuario);
 
