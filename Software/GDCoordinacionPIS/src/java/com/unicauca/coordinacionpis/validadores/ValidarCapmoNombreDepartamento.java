@@ -30,7 +30,19 @@ public class ValidarCapmoNombreDepartamento implements Validator, Serializable {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String texto = String.valueOf(value);
-       
+
+        if (texto.length() > 100) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", "El nombre solo admite 100 caracteres");
+            throw new ValidatorException(msg);
+
+        }
+        
+        Pattern patron = Pattern.compile("[^A-Za-záéíóúÁÉÍÓÚñÑ ]");
+        Matcher encaja = patron.matcher(texto);
+        if (encaja.find()) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", "El nombre solo admite caracteres alfabéticos.");
+            throw new ValidatorException(msg);
+        }
 
         if (departamentoEJB.buscarUsuarioPorNombreDeDepartamentoBool(texto)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Información", "El nombre de departamento ya se encuentra en uso");

@@ -3,17 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/validadores/ValidarCampoApellido.java</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/validadores/ValidarCampoNombre.java</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/ListarUsuarios.xhtml</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/RegistrarUsuario.xhtml</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/managedbean/UsuarioController.java</file>
-            <file>file:/E:/Google%20Drive/Universidad/Décimo%20semestre/Proyecto%20II/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/EditarUsuario.xhtml</file>
-=======
-            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/usuario/RegistrarUsuario.xhtml</file>
-            <file>file:/C:/Users/Zuñiga/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/materia/CrearMateria.xhtml</file>
->>>>>>> d6f0ec73ee6e4ef465eb77c41c42fe47a34a6ff0
+            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/validadores/ValidarCapmoNombreDepartamento.java</file>
+            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/web/administrador/departamento/agregarDepartamento.xhtml</file>
+            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/validadores/ValidarCampoNombreUsuario.java</file>
+            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/entidades/Departamento.java</file>
+            <file>file:/C:/Users/David/Documents/GitHub/Coordinacion-Pregrado/Software/GDCoordinacionPIS/src/java/com/unicauca/coordinacionpis/sessionbean/UsuarioFacade.java</file>
         </group>
     </open-files>
 </project-private>
