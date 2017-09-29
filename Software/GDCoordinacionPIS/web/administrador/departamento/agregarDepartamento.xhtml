@@ -10,14 +10,34 @@
 
         <p:dialog id="DepartamentoCreateDlg" widgetVar="DepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Departamento">
             <h:form id="DepartamentoCreateForm">
-                 <p:growl id="messages" showDetail="true" />
+                <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="display">
-                    <p:panelGrid styleClass="panelgrid" columns="2" >
-                        <p:outputLabel value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.CreateDepartamentoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombre}"/>
+                    <p:panelGrid styleClass="panelgrid"  >
+
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.CreateDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es requerido">
+                                    <f:validator validatorId="ValidarCampoNombre"/>
+                                    <f:validator validatorId="ValidarCampoNombreDepartamento"/>
+                                    <p:ajax event="keyup" update="msgCaracteresApellido"/>
+                                </p:inputText>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column></p:column>
+                            <p:column>
+                            <p:message id="msgCaracteresApellido" for="nombre"/>
+                            </p:column>
+                        </p:row>
+
                     </p:panelGrid>
+
                     <p:commandButton id="submit-btn"
-                        action="#{departamentoController.registrarDepartamento()}" value="Agregar" update="display,:DepartamentoListForm:datalist"/>
+                                     action="#{departamentoController.registrarDepartamento()}" value="Agregar" update="display,:DepartamentoListForm:datalist"/>
                     <p:commandButton value="Cancelar" actionListener="#{departamentoController.cancelarRegistro()}" oncomplete="PF('DepartamentoCreateDialog').hide()"/>
                 </h:panelGroup>
             </h:form>
