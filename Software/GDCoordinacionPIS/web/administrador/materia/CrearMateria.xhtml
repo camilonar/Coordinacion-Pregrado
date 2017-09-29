@@ -143,7 +143,10 @@
                     </p:panelGrid>
                     <p:separator/>
                     <center>
-                        <p:commandButton value="Cancelar" oncomplete="#{materiaController.cancelarRegistro()}" onclick="PF('MateriaCreateDialog').hide()" style="margin: 20px;"/>
+                        <p:button value="Cancelar" onclick ="PF('MateriaCreateDialog').hide();
+                            $('#MateriaCreateForm').trigger('reset');" style="margin: 20px;">
+                        </p:button>
+                        
                         <p:commandButton id="submit-btn"
                                 action="#{materiaController.registrarMateria()}" value="Registrar" update="display,:MateriaListForm:datalist"/>
                     </center>

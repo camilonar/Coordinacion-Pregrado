@@ -142,7 +142,9 @@
                     </p:panelGrid>
                     <p:separator/>
                     <center>
-                         <p:commandButton value="Cancelar" action="#{materiaController.cancelarEdicion()}" onclick="MateriaEditDialog.hide()" style="margin: 20px;"/>
+                        <p:button value="Cancelar" onclick ="PF('MateriaEditDialog').hide();
+                            $('#MateriaEditForm').trigger('reset');" style="margin: 20px;">
+                        </p:button>
                         <p:commandButton id="submit-btn"
                             action="#{materiaController.editarMateria()}" value="Actualizar" update="display,:MateriaListForm:datalist" />                   
                     </center>
