@@ -8,18 +8,24 @@
 
     <ui:composition>
 
-        <p:dialog id="DepartamentoCreateDlg" widgetVar="DepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Departamento">
-            <h:form id="DepartamentoCreateForm">
+        <p:dialog id="DepartamentoCreateDlg" widgetVar="DepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Registrar Departamento">
+            
+            <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
+            <br/>
+            <h:form id="DepartamentoCreateForm" style="">
                 <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="display">
                     <p:panelGrid styleClass="panelgrid"  >
 
                         <p:row>
                             <p:column>
-                                <h:outputLabel value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />
+                                <h:outputLabel style="font-weight:bold;" value="#{bundle.CreateDepartamentoLabel_nombre}" for="nombre" />
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column>
                             <p:column >
-                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.CreateDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es requerido">
+                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.CreateDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es obligatorio">
                                     
                                     <f:validator validatorId="ValidarCampoNombreDepartamento"/>
                                     <p:ajax event="keyup" update="msgNombre"/>
@@ -40,10 +46,10 @@
                 </h:panelGroup>
                 <p:separator/>
                 <center>
-                    
-                       <p:commandButton id="submit-btn"
-                                     action="#{departamentoController.registrarDepartamento()}" value="Agregar" update="display,:DepartamentoListForm:datalist"/>
                     <p:commandButton value="Cancelar" actionListener="#{departamentoController.cancelarRegistro()}" oncomplete="PF('DepartamentoCreateDialog').hide()"/>
+                       <p:commandButton id="submit-btn"
+                                     action="#{departamentoController.registrarDepartamento()}" value="Registrar" update="display,:DepartamentoListForm:datalist"/>
+                    
                     
                 </center>
                     

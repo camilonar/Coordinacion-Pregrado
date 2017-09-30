@@ -8,14 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="DepartamentoEditDlg" widgetVar="DepartamentoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar Información Departamento">
-            <h:form id="DepartamentoEditForm">
+        <p:dialog id="DepartamentoEditDlg" widgetVar="DepartamentoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar  Departamento">
+            
+             <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
+            <br/>
+            <h:form id="DepartamentoEditForm" >
                 <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="display">
-                    <p:panelGrid styleClass="panelgrid"  rendered="#{departamentoController.selected != null}">
+                    <p:panelGrid style="label {font-weight:bold }" styleClass="panelgrid"  rendered="#{departamentoController.selected != null}">
                         <p:row>
                             <p:column>
-                                <p:outputLabel style="font-weight: bold; color: #000000" value="Identificación" for="idDepartamento" />
+                                <h:outputLabel style="font-weight: bold; color: #000000" value="Identificación:" for="idDepartamento" />
+                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column>´
                             <p:column>
                                 <p:inputText id="idDepartamento" value="#{departamentoController.selected.idDepartamento}" title="#{bundle.EditDepartamentoTitle_idDepartamento}" required="true" requiredMessage="" disabled="true"/>
@@ -23,13 +29,15 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:outputLabel style="font-weight: bold; color: #000000" value="#{bundle.EditDepartamentoLabel_nombre}" for="nombre" />
+                                <h:outputLabel style="font-weight: bold; color: #000000" value="#{bundle.EditDepartamentoLabel_nombre}" for="nombre" />
+                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column>
                             <p:column>
-                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.EditDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es requerido">
+                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.EditDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es obligatorio">
                                     <f:validator validatorId="ValidarCampoNombreDepartamento"/>
                                     <p:ajax event="keyup" update="msgNombre"/>
                                 </p:inputText>
+                                
                             </p:column>
                         </p:row>
 
@@ -51,11 +59,11 @@
                    <p:separator/>
                    <center>
                        
-                       
+                          <p:commandButton value="Cancelar" onclick ="PF('DepartamentoEditDialog').hide();" action = "#{departamentoController.cancelarEdicion()}"/>
                                     <p:commandButton id="submit-btn"
-                                                     action="#{departamentoController.editarDepartamento()}" value="Guardar" update="display,:DepartamentoListForm:datalist" />
+                                                     action="#{departamentoController.editarDepartamento()}" value="Actualizar" update="display,:DepartamentoListForm:datalist" />
                               
-                                    <p:commandButton value="Cancelar" onclick ="PF('DepartamentoEditDialog').hide();" action = "#{departamentoController.cancelarEdicion()}"/>
+                                 
                               
                        
                    </center>

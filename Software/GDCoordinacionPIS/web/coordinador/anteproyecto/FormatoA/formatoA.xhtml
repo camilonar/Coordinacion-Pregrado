@@ -18,14 +18,24 @@
                 <p:separator/>
                 <center><p:outputLabel value="Anteproyectos" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
-                <br/>
+                
+                
+                <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
+                <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
+                <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
+                <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
+
+               
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
-                <h:form id="form">
+                
+                <h:form id="form" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">
                     <p:commandButton id="createButton"
                         value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
 
                 </h:form>
-                <h:form id="formListaAnteproyectos">    
+                
+                
+                <h:form style="padding-top: 10px;" id="formListaAnteproyectos" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">    
                     <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 

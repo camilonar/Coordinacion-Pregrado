@@ -86,11 +86,11 @@ public class ValidarEdicionUsuarios implements Serializable {
             return false;
         } else {
             if (contrasena.length() < 6) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo contraseña minimo 6 caracteres.", "Campo contraseña minimo 6 caracteres."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo contraseña mínimo 6 caracteres.", "Campo contraseña mínimo 6 caracteres."));
                 return false;
             } else {
                 if (contrasena.length() > 20) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo contraseña maximo 20 caracteres.", "Campo contraseña maximo 20 caracteres."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campo contraseña máximo 20 caracteres.", "Campo contraseña máximo 20 caracteres."));
                     return false;
                 }
                 return true;
