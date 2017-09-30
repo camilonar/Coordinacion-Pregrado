@@ -682,10 +682,26 @@ public class RegistroFormatoAController implements Serializable {
     }
 
     public void cancelarEdicion() {
+        System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
+        requestContext.execute("PF('dlgRegistroFormatoA').hide()");
+        
     }
 
+    
+    public void cancelarRegistro() {
+        System.out.println("invocado apá");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("formSeleccionarArchivoFormatoA");
+        requestContext.update("formMetadatosFormatoA");
+        requestContext.update("formArchivoSelecionadoFormatoA");
+        requestContext.execute("PF('dlgRegistroFormatoA').hide()");
+    }
+    
+    
+    
+    
     public boolean getComprobarConexionOpenKM() {
         boolean conexion = true;
         try {

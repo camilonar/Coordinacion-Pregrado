@@ -130,7 +130,7 @@
                         <p:outputLabel value="primer estudiante:" style="font-weight: bold;"/>
                     </p:column>
                     <p:column colspan="1">
-                        <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                        <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)"  required="false"
                                      value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erroneo" >
                             <p:ajax update="msgNombre1" event="keyup"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
@@ -180,14 +180,19 @@
                 </p:row>
 
 
-                <p:row></p:row>
                 <p:row>
-                    <p:column colspan="2">
+                    <p:column colspan="4"/>
+                </p:row>
+                <p:row>
+                    <p:column colspan="4">
+                        
+                       <p:commandButton value="Cancelar"  style="margin-left: 40%; margin-right: 15px;" action = "#{registroFormatoAController.cancelarEdicion()}"/>
+                       
                        <p:commandButton id="submit-btn"
                                          value="Actualizar" update=":formListaAnteproyectos:datalist,panelMetadatos"
                                          action="#{registroFormatoAController.actualizarInfoFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
-                        <p:commandButton value="Cancelar" action = "#{registroFormatoAController.cancelarEdicion()}"/>
+                  
                     </p:column>
                 </p:row>
 

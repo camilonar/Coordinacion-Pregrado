@@ -85,7 +85,7 @@
 
                     <p:column colspan="1">
                         <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
-                                     value="#{registroFormatoAController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erroneo">
+                                     value="#{registroFormatoAController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
                             <p:ajax update="msgTitulo" event="keyup"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>    
@@ -100,7 +100,7 @@
                     </p:column>
 
                     <p:column colspan="1">
-                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erroneo" requiredMessage="Campo obligatorio"
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                     value="#{registroFormatoAController.metadatosAnteproyectos.fecha}" showOn="button" />
                     </p:column>
                 </p:row>
@@ -162,7 +162,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
-                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erroneo" >
+                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
                             <p:ajax update="msgNombre1" event="keyup"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -175,7 +175,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
-                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erroneo">
+                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
                             <p:ajax update="msgNombre2" event="keyup"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -212,19 +212,25 @@
                 </p:row>
 
 
-                <p:row></p:row>
                 <p:row>
-                    <p:column colspan="2">
-                        <p:commandButton id="submit-btn"
-                                         value="Guardar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
+                    <p:column colspan="4"/>
+                </p:row>
+                <p:row>
+                    <p:column colspan="4">
+                        
+                        <p:commandButton  id="cancel-btn" style="margin-left: 40%; margin-right: 15px;"
+                                         value="Cancelar"   
+                                         action="#{registroFormatoAController.cancelarEdicion()}" 
+                                          onsuccess="PF('dlgRegistroFormatoA').hide()"/>
+                       
+                       
+                        <p:commandButton  id="submit-btn"
+                                         value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
                                          action="#{registroFormatoAController.aceptarFormatoA()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                       
                     </p:column>
                 </p:row>
-
-
-
-
 
             </p:panelGrid> 
 
