@@ -71,6 +71,7 @@ public class MetadatosAntepoyecto {
     }
 
     public String getViabilidad() {
+        System.out.println("valor viabilidada:"+viabilidad);
         return viabilidad;
     }
 
