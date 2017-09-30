@@ -9,6 +9,11 @@
     <ui:composition>
 
         <p:dialog id="DepartamentoEditDlg" widgetVar="DepartamentoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar  Departamento">
+            
+             <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
+            <br/>
             <h:form id="DepartamentoEditForm" >
                 <p:growl id="messages" showDetail="true" />
                 <h:panelGroup id="display">
