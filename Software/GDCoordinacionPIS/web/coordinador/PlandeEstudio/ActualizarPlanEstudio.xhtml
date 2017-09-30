@@ -129,7 +129,7 @@ and open the template in the editor.
             </p:panelGrid>
             <p:separator/>
             <center>
-                <p:commandButton value="Cancelar"  style="margin: 20px;" action = "#{registroPlandeEstudioController.cancelarEdicion()}"/>                      
+                <p:commandButton value="Cancelar"  style="margin: 20px;" onclick ="PF('dlgEditarPlanEstudio').hide();"/>                      
                 <p:commandButton id="submit-btn"
                                  value="Actualizar" action="#{registroPlandeEstudioController.editarPlanEstudio()}" 
                                  update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" 
