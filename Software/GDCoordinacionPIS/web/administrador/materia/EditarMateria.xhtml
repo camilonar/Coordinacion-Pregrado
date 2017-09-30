@@ -116,7 +116,7 @@
                                 <p:outputLabel style="font-weight:bold;" value="Departamento:" />                                
                             </p:column> 
                             <p:column>
-                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
+                                <p:selectOneMenu style="width: 100px" id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
                                     <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                    var="idDepartamentoItem"
                                                    itemValue="#{idDepartamentoItem}"
