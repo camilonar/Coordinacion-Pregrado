@@ -501,52 +501,52 @@ public class RegistroFormatoAController implements Serializable {
     public List<Docente> getListaDocentes() {
 
         List<Docente> listaDocentes = new ArrayList<>();
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://wmyserver.sytes.net:8080/JefaturaPIS/webresources/docente");
-        httpget.setHeader("Content-type", "application/json");
-        String strResultado = "NaN";
-        try {
-            //ejecuta
-            HttpResponse response = httpclient.execute(httpget);
-            //Obtiene la respuesta del servidor
-            String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-            JSONArray array = new JSONArray(jsonResult);
-            //JSONObject object = new JSONObject(jsonResult);
-            //obtiene el status
-            // String status = object.getString("status");
-            //200 -> todo esta bien
-            //if( status.equals("200") )
-            //{
-            strResultado = "";
-            //extrae los registros
-            //JSONArray array = new JSONArray(object.getString("Registros"));
-            for (int i = 0; i < array.length(); i++) {
-                //recorre cada registro y concatena el resultado
-                JSONObject row = array.getJSONObject(i);
-                Docente docente = new Docente();
-                String nombres = row.getString("nombres");
-                docente.setNombres(nombres);
-                String apellidos = row.getString("apellidos");
-                docente.setApellidos(apellidos);
-                String documento = row.getString("documento");
-                docente.setDocumento(documento);
-                //String estId = row.getString("estId");
-                //String apellidos = row.getString("apellidos");
-                //System.out.println("PLC_TU "+ (i+1) +"\n\n"+"Nombres: "+ nombres + "\n"+"Apellidos: "+ apellidos + "\n\n"+ "\n"+"Estudios: "+ estId + "\n\n");
-                listaDocentes.add(docente);
-            }
-
-            // }
-        } catch (ClientProtocolException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
-        } catch (IOException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
-        } catch (JSONException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
-        }
+//        DefaultHttpClient httpclient = new DefaultHttpClient();
+//        HttpGet httpget = new HttpGet("http://wmyserver.sytes.net:8080/JefaturaPIS/webresources/docente");
+//        httpget.setHeader("Content-type", "application/json");
+//        String strResultado = "NaN";
+//        try {
+//            //ejecuta
+//            HttpResponse response = httpclient.execute(httpget);
+//            //Obtiene la respuesta del servidor
+//            String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+//            JSONArray array = new JSONArray(jsonResult);
+//            //JSONObject object = new JSONObject(jsonResult);
+//            //obtiene el status
+//            // String status = object.getString("status");
+//            //200 -> todo esta bien
+//            //if( status.equals("200") )
+//            //{
+//            strResultado = "";
+//            //extrae los registros
+//            //JSONArray array = new JSONArray(object.getString("Registros"));
+//            for (int i = 0; i < array.length(); i++) {
+//                //recorre cada registro y concatena el resultado
+//                JSONObject row = array.getJSONObject(i);
+//                Docente docente = new Docente();
+//                String nombres = row.getString("nombres");
+//                docente.setNombres(nombres);
+//                String apellidos = row.getString("apellidos");
+//                docente.setApellidos(apellidos);
+//                String documento = row.getString("documento");
+//                docente.setDocumento(documento);
+//                //String estId = row.getString("estId");
+//                //String apellidos = row.getString("apellidos");
+//                //System.out.println("PLC_TU "+ (i+1) +"\n\n"+"Nombres: "+ nombres + "\n"+"Apellidos: "+ apellidos + "\n\n"+ "\n"+"Estudios: "+ estId + "\n\n");
+//                listaDocentes.add(docente);
+//            }
+//
+//            // }
+//        } catch (ClientProtocolException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        }
         return listaDocentes;
     }
 
@@ -656,5 +656,22 @@ public class RegistroFormatoAController implements Serializable {
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
+    }
+    
+       public boolean getComprobarConexionOpenKM() {
+        boolean conexion = true;
+        try {
+            okm.getAppVersion();
+
+        } catch (RepositoryException ex) {
+            conexion = false;
+        } catch (DatabaseException ex) {
+            conexion = false;
+        } catch (UnknowException ex) {
+            conexion = false;
+        } catch (WebserviceException ex) {
+            conexion = false;
+        }
+        return conexion;
     }
 }
