@@ -62,7 +62,7 @@ and open the template in the editor.
             <p:row>
                 <p:column rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" colspan="2">
                     <p:outputLabel  
-                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos ("/>
+                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
                     <p:outputLabel value="*" style="color: #ff5252"/>
                     <p:outputLabel value=") son obligatorios."/>
                 </p:column>
@@ -130,14 +130,17 @@ and open the template in the editor.
                     </p:column>
                     <p:column>                        
                         <p:calendar  value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" 
-                                     id="vigPlanEstudio" 
-                                     navigator="true" 
+                                     id="vigPlanEstudio"
                                      showOn="button"
+                                     navigator="true"                                      
                                      pattern="dd/MM/yyyy" 
                                      required="true" 
                                      requiredMessage="Campo Vigencia Plan de Estudio obligatorio" 
-                                     placeholder="dd/mm/aaaa"  maxdate="#{registroPlandeEstudioController.fechaActual()} ">
-                            <f:ajax event="keyup" render="msgVigPlan"/>
+                                     readonlyInput="true"
+                                     maxdate="#{registroFormatoAController.todayDate}"
+                                     placeholder="dd/mm/aaaa">
+                            <f:ajax event="change" render="msgVigPlan"/>
+                            <f:ajax event="keyup" render="msgVigPlan"/>                            
                         </p:calendar>
 
                     </p:column>                   
