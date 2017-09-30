@@ -55,6 +55,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -198,6 +199,10 @@ public class RegistroFormatoAController implements Serializable {
         return listadoDocsAnteproecto;
     }
 
+    public Date getTodayDate() {
+        return new Date();
+    }
+
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
@@ -229,7 +234,7 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
-    
+
     public void aceptarFormatoA() {
 
         boolean existe = false;
@@ -340,9 +345,9 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.getCurrentInstance().update("msgRFA");
 
     }
-    
+
     public void actualizarInfoFormatoA() {
-       
+
         try {
             okm.addGroup(documento.getPath(), "okg:FormatoA");
             List<FormElement> fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoA");
@@ -401,17 +406,18 @@ public class RegistroFormatoAController implements Serializable {
         } catch (NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         requestContext.update("formMetadatosEditFormatoA");
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información se editó con éxito"));
         requestContext.getCurrentInstance().update("msgRFA");
     }
-    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento){
-     this.documento = documento;
+
+    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) {
+        this.documento = documento;
         List<FormElement> fElements;
         try {
             fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoA");
@@ -459,21 +465,21 @@ public class RegistroFormatoAController implements Serializable {
         } catch (WebserviceException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         requestContext.update("formMetadatosEditFormatoA");
         requestContext.execute("PF('dlgEditarFormatoA').show()");
-            
+
     }
 
     public void agregarMetadatos() {
         // create document and writer
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
-        String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+        String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta+"aguaabril2016.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "aguaabril2016.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();
@@ -547,6 +553,21 @@ public class RegistroFormatoAController implements Serializable {
 //            strResultado = e.getMessage();
 //            e.printStackTrace();
 //        }
+
+        if (listaDocentes.isEmpty()) {
+            Docente docente;
+            System.out.println("lista vacia");
+            for (int i = 0; i < 5; i++) {
+                docente = new Docente();
+                docente.setNombres("Docente fake" + i);
+                docente.setApellidos("Fake ");
+                docente.setDocumento("12345");
+                listaDocentes.add(docente);
+            }
+
+        }
+
+        System.out.println("tamaño lista profesores" + listaDocentes.size());
         return listaDocentes;
     }
 
@@ -625,23 +646,21 @@ public class RegistroFormatoAController implements Serializable {
     }
 
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
-        
+
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
-        
+
     }
-    
+
     public void deleteDocument() {
         try {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            
-            
-            
-             requestContext.execute("PF('Confirmacion').hide()");
+
+            requestContext.execute("PF('Confirmacion').hide()");
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se eliminó con éxito");
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -653,12 +672,13 @@ public class RegistroFormatoAController implements Serializable {
 
         }
     }
+
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
     }
-    
-       public boolean getComprobarConexionOpenKM() {
+
+    public boolean getComprobarConexionOpenKM() {
         boolean conexion = true;
         try {
             okm.getAppVersion();
