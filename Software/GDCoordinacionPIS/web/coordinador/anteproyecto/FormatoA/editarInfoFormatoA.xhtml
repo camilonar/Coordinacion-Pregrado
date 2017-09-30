@@ -50,7 +50,7 @@
                         <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
                                      value="#{registroFormatoAController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erroneo">
                             <p:ajax update="msgTitulo" event="keyup"/>
-                            <f:validateRegex pattern="[a-zA-Záéíóú]+[a-zA-Záéíóú\s]+" />
+                            <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>    
                     </p:column>
 
@@ -63,7 +63,7 @@
                     </p:column>
 
                     <p:column colspan="1">
-                        <!--><p:calendar size="22" required="true"  placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erroneo" requiredMessage="Campo obligatorio"
+                        <!--><p:calendar size="22" required="true" readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erroneo" requiredMessage="Campo obligatorio"
                                     value="#{registroFormatoAController.metadatosAnteproyectos.fecha}" showOn="button" /><-->
                         <p:outputLabel value="¡ups!,this is not working :'(" style="font-weight: bold; color: #000000"/>
                         
@@ -121,14 +121,17 @@
                     </p:column>
                 </p:row>
 
+                
                 <p:row>
                     <p:column colspan="1">
                         <p:outputLabel value="Nombre del " style="font-weight: bold; color: #000000"/><br/>
                         <p:outputLabel value="primer estudiante:" style="font-weight: bold;"/>
                     </p:column>
                     <p:column colspan="1">
-                        <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)"
-                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante1}">
+                        <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erroneo" >
+                            <p:ajax update="msgNombre1" event="keyup"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
 
                     </p:column>
@@ -138,18 +141,26 @@
                         <p:outputLabel value="segundo estudiante:" style="font-weight: bold;"/>
                     </p:column>
                     <p:column colspan="1">
-                        <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)"
-                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante2}">
+                        <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{registroFormatoAController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erroneo">
+                            <p:ajax update="msgNombre2" event="keyup"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
 
                     </p:column>
                 </p:row>
 
                 <p:row>
-                    <p:column colspan="4">
-
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante1" id="msgNombre1" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante2" id="msgNombre2" style="width: 80%;"/>
                     </p:column>
                 </p:row>
+                
                 <p:row>
                     <p:column colspan="1">
                         <p:outputLabel value="Acta de aprobación:" style="font-weight: bold; color: #000000"/>

@@ -45,6 +45,7 @@ import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.Docente;
 
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
+import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -62,6 +63,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.http.HttpResponse;
@@ -240,6 +243,9 @@ public class RegistroFormatoAController implements Serializable {
         boolean existe = false;
         boolean existeFolderCoordinacion = false;
         Document okmDocument = new Document();
+        
+        System.out.println("viabilidad:" + metadatosAnteproyectos.getViabilidad());
+       
         try {
 
             for (Folder fld : okm.getFolderChildren("/okm:root")) {
@@ -281,6 +287,7 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
+               
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -365,6 +372,7 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
+                
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
