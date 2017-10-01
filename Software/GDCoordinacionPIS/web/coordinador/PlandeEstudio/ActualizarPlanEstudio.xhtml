@@ -16,6 +16,19 @@ and open the template in the editor.
               closable="true" showEffect="explode" header="Editar Plan de estudio">
         <!--        <p:ajax event="close"/>-->
 
+        <h:form id="formActualizarArchivoPlanEstudio">
+            <p:growl id="msg" life="4000" showDetail="true"/>
+            <p:outputLabel rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" 
+                           value="Seleccione el archivo pdf del plan de Estudio" 
+                           style="font-weight: bold; color: #000000"/>
+            <p:fileUpload rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" mode="advanced" 
+                          label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
+                          dragDropSupport="true"  uploadLabel="Aceptar" cancelLabel="Cancelar"  
+                          allowTypes="/(\.|\/)(pdf)$/"  update="msg" fileUploadListener="#{registroPlandeEstudioController.seleccionarArchivoActualizacion}"/>
+
+            <!--<p:growl id="mensaje" showDetail="true" />-->
+        </h:form>
+
         <h:form id="formArchivoSelecionadoActualizarPlanEstudio">
             <p:panelGrid styleClass="panelgrid" rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">                
 
@@ -28,6 +41,7 @@ and open the template in the editor.
                 </p:row>
             </p:panelGrid>
         </h:form>
+
         <h:form id="formActualizarMetadatosPlanEstudio">            
             <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
             <center>
