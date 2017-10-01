@@ -16,19 +16,6 @@ and open the template in the editor.
               closable="true" showEffect="explode" header="Editar Plan de estudio">
         <!--        <p:ajax event="close"/>-->
 
-        <h:form id="formActualizarArchivoPlanEstudio">
-            <p:growl id="msg" life="4000" showDetail="true"/>
-            <p:outputLabel rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" 
-                           value="Seleccione el archivo pdf del plan de Estudio" 
-                           style="font-weight: bold; color: #000000"/>
-            <p:fileUpload rendered="#{!registroPlandeEstudioController.exitoSubirArchivo}" mode="advanced" 
-                          label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
-                          dragDropSupport="true"  uploadLabel="Aceptar" cancelLabel="Cancelar"  
-                          allowTypes="/(\.|\/)(pdf)$/"  update="msg" fileUploadListener="#{registroPlandeEstudioController.seleccionarArchivoActualizacion}"/>
-
-            <!--<p:growl id="mensaje" showDetail="true" />-->
-        </h:form>
-
         <h:form id="formArchivoSelecionadoActualizarPlanEstudio">
             <p:panelGrid styleClass="panelgrid" rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">                
 
@@ -42,15 +29,15 @@ and open the template in the editor.
             </p:panelGrid>
         </h:form>
         <h:form id="formActualizarMetadatosPlanEstudio">            
-            <p:separator/>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
             <center>
-                <p:outputLabel value="Información para edicion del plan de estudio:" style="font-weight: bold; color: #000000"/>             
+                <p:outputLabel rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" value="Información para edición del plan de estudio: " style="font-weight: bold; color: #000000"/>             
             </center>
-            <p:separator/>
-            <p:row>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
+            <p:row rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">
                 <p:column colspan="2">
                     <p:outputLabel  
-                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos ("/>
+                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
                     <p:outputLabel value="*" style="color: #ff5252"/>
                     <p:outputLabel value=") son obligatorios."/>
                 </p:column>
@@ -113,7 +100,7 @@ and open the template in the editor.
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column>                        
-                        <p:calendar value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" id="vigPlanEstudio" onkeypress="return false"  navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Vigencia Plan de Estudio obligatorio" maxdate="#{registroFormatoAController.todayDate}" readonlyInput="true" showOn="button" placeholder="dd/mm/aaaa"/>
+                        <p:calendar value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" id="vigPlanEstudio" onkeypress="return false"   navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Campo Vigencia Plan de Estudio obligatorio" maxdate="#{registroFormatoAController.todayDate}" readonlyInput="true" showOn="button" placeholder="dd/mm/aaaa"/>
                     </p:column>                   
                 </p:row>
                 <p:row>
@@ -127,10 +114,10 @@ and open the template in the editor.
                     </p:column>
                 </p:row>
             </p:panelGrid>
-            <p:separator/>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
             <center>
-                <p:commandButton value="Cancelar"  style="margin: 20px;" onclick ="PF('dlgEditarPlanEstudio').hide();"/>                      
-                <p:commandButton id="submit-btn"
+                <p:commandButton rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" value="Cancelar"  style="margin: 20px;" onclick ="PF('dlgEditarPlanEstudio').hide();"/>                      
+                <p:commandButton rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" id="submit-btn"
                                  value="Actualizar" action="#{registroPlandeEstudioController.editarPlanEstudio()}" 
                                  update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" 
                                  onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
