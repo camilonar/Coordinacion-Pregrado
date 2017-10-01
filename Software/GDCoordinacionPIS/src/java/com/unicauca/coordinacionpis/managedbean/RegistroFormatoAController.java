@@ -681,6 +681,14 @@ public class RegistroFormatoAController implements Serializable {
         }
     }
 
+    
+    public void cancelarEditar() {
+        System.out.println("incas");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('dlgEditarFormatoA').hide()");
+        
+        
+    }
     public void cancelarEdicion() {
         System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
