@@ -80,8 +80,7 @@
                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column>
                             <p:column>
-                                <p:inputText id="creditos" value="#{materiaController.selected.creditos}" title="Creditos" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos"
-                                              >
+                                <p:inputText id="creditos" value="#{materiaController.selected.creditos}" title="Creditos" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
                              <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
                                     <p:ajax event="keyup" update="msgCreditos"/>
                                 </p:inputText>
@@ -109,7 +108,7 @@
                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column>
                             <p:column>
-                                <p:inputText id="intensidadHoraria" value="#{materiaController.selected.intensidadHoraria}" title="Intensidad horaria" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos">
+                                <p:inputText id="intensidadHoraria" value="#{materiaController.selected.intensidadHoraria}" title="Intensidad horaria" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
                                 <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
                                     <p:ajax event="keyup" update="msgIhoraria"/>
                                 </p:inputText>                            
