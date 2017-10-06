@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.anteproyecto.utils;
+package test.formato_a.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,30 +21,29 @@ import test.usuario.test_cases.RegistrarUsuarioTextFieldsTest;
  */
 public class AbstractAnteproyectoTest {
     /**
-     * Nota importante: para las pruebas el formulario de registro de anteproyectos
+     * Nota importante: para las pruebas el formulario de registro de formato A
      * debe estar renderizado desde el inicio
      */
     //Configuración
-    private static String nombreUsuario = "pmage";
-    private static String contrasena = "coordinador";
-    private static String archivoSubida = "C:\\Users\\Camilo\\Downloads\\4.5-9.pdf";
+    private static final String NOMBRE_USUARIO = "pmage";
+    private static final String CONTRASENA = "coordinador";
     
     protected void loginAsCoordinador(){
         beginAt("/GDCP/sinSesion/index.xhtml"); 
-        JWebUnit.setTextField("form-inicio:nombreUsuario", nombreUsuario);
-        JWebUnit.setTextField("form-inicio:contrasena", contrasena);
+        JWebUnit.setTextField("form-inicio:nombreUsuario", NOMBRE_USUARIO);
+        JWebUnit.setTextField("form-inicio:contrasena", CONTRASENA);
         assertButtonPresent("form-inicio:login");
         clickButton("form-inicio:login");
     }
     
-    protected void goToAnteproyecto(){
+    protected void goToFormatoA(){
         loginAsCoordinador();
         assertLinkPresent("menu-coordinador:menuitem-anteproyectos");
         clickLink("menu-coordinador:menuitem-anteproyectos");
     }
     
     protected void goToRegistrar(){
-        goToAnteproyecto();
+        goToFormatoA();
         JWebUnit.assertMatch("true",JWebUnit.getElementById("AnteproyectoCreateDlg").getAttribute("aria-hidden"));
         assertButtonPresent("form:createButton");
         clickButton("form:createButton");
@@ -57,7 +56,7 @@ public class AbstractAnteproyectoTest {
     }
     
         protected void goToEditar(){
-        goToAnteproyecto();
+        goToFormatoA();
         JWebUnit.assertMatch("true",JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
         assertButtonPresent("formListaAnteproyectos:datalist:0:editButton");
         clickButton("formListaAnteproyectos:datalist:0:editButton");
