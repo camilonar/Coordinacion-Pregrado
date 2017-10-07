@@ -21,16 +21,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ROED26
+ * @author Daniela
  */
 @Entity
 @Table(name = "usuariogrupo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuariogrupo.findAll", query = "SELECT u FROM Usuariogrupo u"),
-    @NamedQuery(name = "Usuariogrupo.findByGruid", query = "SELECT u FROM Usuariogrupo u WHERE u.usuariogrupoPK.gruid = :gruid"),
-    @NamedQuery(name = "Usuariogrupo.findByUsuid", query = "SELECT u FROM Usuariogrupo u WHERE u.usuariogrupoPK.usuid = :usuid"),
-    @NamedQuery(name = "Usuariogrupo.findByUsunombreusuario", query = "SELECT u FROM Usuariogrupo u WHERE u.usunombreusuario = :usunombreusuario")})
+    @NamedQuery(name = "Usuariogrupo.findAll", query = "SELECT u FROM Usuariogrupo u")
+    , @NamedQuery(name = "Usuariogrupo.findByGruid", query = "SELECT u FROM Usuariogrupo u WHERE u.usuariogrupoPK.gruid = :gruid")
+    , @NamedQuery(name = "Usuariogrupo.findByUsuid", query = "SELECT u FROM Usuariogrupo u WHERE u.usuariogrupoPK.usuid = :usuid")
+    , @NamedQuery(name = "Usuariogrupo.findByUsunombreusuario", query = "SELECT u FROM Usuariogrupo u WHERE u.usunombreusuario = :usunombreusuario")})
 public class Usuariogrupo implements Serializable {
 
     private static final long serialVersionUID = 1L;

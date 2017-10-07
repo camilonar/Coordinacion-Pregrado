@@ -1,7 +1,9 @@
 package com.unicauca.coordinacionpis.managedbean;
 
 import com.unicauca.coordinacionpis.entidades.Cargo;
+import com.unicauca.coordinacionpis.entidades.Departamento;
 import com.unicauca.coordinacionpis.entidades.Grupo;
+import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
 import com.unicauca.coordinacionpis.entidades.Usuariogrupo;
 import com.unicauca.coordinacionpis.entidades.UsuariogrupoPK;
@@ -21,7 +23,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -47,6 +48,8 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class UsuarioController implements Serializable {
 
+    public enum TIPO_USUARIO{ADMIN, COORDINADOR, JEFE};
+    
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.UsuarioFacade ejbUsuario;
     @EJB
@@ -74,6 +77,10 @@ public class UsuarioController implements Serializable {
     private UploadedFile uploadedFile;
     
     private boolean fotoDefecto;
+    
+    private TIPO_USUARIO tipo;
+    private Departamento dpto;
+    private Programa programa;
 
     public UsuarioController() {
         this.usuario = new Usuario();
@@ -86,7 +93,18 @@ public class UsuarioController implements Serializable {
         
         this.miImagen = (DefaultStreamedContent) this.getImagenDefecto();
         fotoDefecto = true;
+        tipo = TIPO_USUARIO.ADMIN;
     }
+
+    public Programa getPrograma() {
+        return programa;
+    }
+
+    public void setPrograma(Programa programa) {
+        this.programa = programa;
+    }
+    
+    
 
     @PostConstruct
     public void init() {
@@ -185,7 +203,7 @@ public class UsuarioController implements Serializable {
         this.fotoDefecto = true;
         this.limpiarRegistrarUsuario();
         
-        
+        this.tipo = TIPO_USUARIO.ADMIN;
         initializeEmbeddableKey();
         return usuario;
     }
@@ -606,6 +624,7 @@ public class UsuarioController implements Serializable {
         this.miImagen = null;
         this.imagen = null;
         this.fotoDefecto = true;
+        this.tipo = TIPO_USUARIO.ADMIN;
     }
     public Date getFechaHoy()
     {
@@ -615,11 +634,57 @@ public class UsuarioController implements Serializable {
         min.setDate(31);
         return min;
     }
+
+    public TIPO_USUARIO getTipo() {
+        return tipo;
+    }
+    
+    
+    
     public void establecerFotoPorDefecto()
     {
         System.out.println("establecer foto por defecto");
         this.fotoDefecto = true;
     }
+    
+    public TIPO_USUARIO getTipoAdmin()
+    {
+        return TIPO_USUARIO.ADMIN;
+    }
+        public TIPO_USUARIO getTipoCoordinador()
+    {
+        return TIPO_USUARIO.COORDINADOR;
+    }
+    public TIPO_USUARIO getTipoJefe()
+    {
+        return TIPO_USUARIO.JEFE;
+    }
+    public void setTipoUsuario()
+    {
+        switch(grupo.getGruid())
+        {
+            case "1":
+                this.tipo = TIPO_USUARIO.ADMIN;
+                break;
+            case "2":
+                this.tipo = TIPO_USUARIO.COORDINADOR;
+                break;
+            case "3":
+                this.tipo = TIPO_USUARIO.JEFE;
+                break;
+        }
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("UsuarioCreateForm");
+    }
+
+    public Departamento getDpto() {
+        return dpto;
+    }
+
+    public void setDpto(Departamento dpto) {
+        this.dpto = dpto;
+    }
+    
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 
