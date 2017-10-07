@@ -5,11 +5,19 @@ import com.unicauca.coordinacionpis.entidades.Departamento;
 import com.unicauca.coordinacionpis.entidades.Grupo;
 import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
+import com.unicauca.coordinacionpis.entidades.UsuarioDepartamento;
+import com.unicauca.coordinacionpis.entidades.UsuarioDepartamentoPK;
+import com.unicauca.coordinacionpis.entidades.UsuarioPrograma;
+import com.unicauca.coordinacionpis.entidades.UsuarioProgramaPK;
 import com.unicauca.coordinacionpis.entidades.Usuariogrupo;
 import com.unicauca.coordinacionpis.entidades.UsuariogrupoPK;
 import com.unicauca.coordinacionpis.managedbean.util.JsfUtil;
 import com.unicauca.coordinacionpis.managedbean.util.JsfUtil.PersistAction;
+import com.unicauca.coordinacionpis.sessionbean.DepartamentoFacade;
+import com.unicauca.coordinacionpis.sessionbean.ProgramaFacade;
+import com.unicauca.coordinacionpis.sessionbean.UsuarioDepartamentoFacade;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
+import com.unicauca.coordinacionpis.sessionbean.UsuarioProgramaFacade;
 import com.unicauca.coordinacionpis.sessionbean.UsuariogrupoFacade;
 import com.unicauca.coordinacionpis.utilidades.Cifrar;
 import com.unicauca.coordinacionpis.utilidades.RedimensionadorImagenes;
@@ -47,6 +55,18 @@ import org.primefaces.model.UploadedFile;
 @Named("usuarioController")
 @SessionScoped
 public class UsuarioController implements Serializable {
+
+    @EJB
+    private UsuarioDepartamentoFacade usuarioDepartamentoFacade;
+
+    @EJB
+    private UsuarioProgramaFacade usuarioProgramaFacade;
+
+    @EJB
+    private DepartamentoFacade departamentoFacade;
+
+    @EJB
+    private ProgramaFacade programaFacade;
 
     public enum TIPO_USUARIO{ADMIN, COORDINADOR, JEFE};
     
@@ -97,6 +117,10 @@ public class UsuarioController implements Serializable {
     }
 
     public Programa getPrograma() {
+        if(programa == null)
+        {
+            programa = programaFacade.find(26); //Por defecto sistemas
+        }
         return programa;
     }
 
@@ -218,11 +242,7 @@ public class UsuarioController implements Serializable {
 
     public void registrarUsuario() 
     {
-        System.out.println("registrarUsuario");
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
-        System.out.println("Foto defecto: "+fotoDefecto);
-        System.out.println("imagen "+imagen);
-        System.out.println("usu imagen "+this.usuario.getUsufoto());
                 
         if(!fotoDefecto)
         {
@@ -232,10 +252,37 @@ public class UsuarioController implements Serializable {
         {
             this.usuario.setUsufoto(null);
         }
-        System.out.println("usu imagen "+this.usuario.getUsufoto());
         usuario.setCarid(cargo);
         ejbUsuario.create(usuario);
-        System.out.println("usu imagen "+this.usuario.getUsufoto());
+        
+        if(this.tipo == TIPO_USUARIO.COORDINADOR)
+        {
+            List<UsuarioPrograma> programas = new ArrayList<>();
+            UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
+            UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
+            up.setNombreUsuario(usuario.getUsunombreusuario());
+            up.setPrograma(programa);
+            up.setUsuario(usuario);
+            programas.add(up);
+            usuario.setUsuarioProgramaList(programas);
+            usuarioProgramaFacade.create(up);
+        }
+        else if(this.tipo == TIPO_USUARIO.JEFE)
+        {
+            List<UsuarioDepartamento> departamentos = new ArrayList<>();
+            UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
+            UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
+            ud.setNombreUsuario(usuario.getUsunombreusuario());
+            ud.setDepartamento(dpto);
+            ud.setUsuario(usuario);
+            departamentos.add(ud);
+            usuario.setUsuarioDepartamentoList(departamentos);
+            usuarioDepartamentoFacade.create(ud);
+        }
+        
+        dpto = null;
+        programa = null;
+        
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
 
@@ -246,11 +293,16 @@ public class UsuarioController implements Serializable {
         usuarioGrupo.setUsuario(usuario);
         usuarioGrupo.setUsunombreusuario(this.usuario.getUsunombreusuario());
         
+        
+        
         List a = new ArrayList();
         a.add(usuarioGrupo);
         this.usuario.setUsuariogrupoList(a);
         this.ejbUsuarioGrupo.create(usuarioGrupo);
-
+        
+        
+        
+        
         RequestContext requestContext = RequestContext.getCurrentInstance();
         
         ejbUsuario.limpiarCache();
@@ -324,6 +376,16 @@ public class UsuarioController implements Serializable {
         }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
+        
+        if(!this.usuario.getUsuarioDepartamentoList().isEmpty())
+            this.dpto = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento();
+        else
+            this.dpto = null;
+        
+        if(!this.usuario.getUsuarioProgramaList().isEmpty())
+            this.programa = this.usuario.getUsuarioProgramaList().get(0).getPrograma();
+        else
+            this.programa =null;
     }
 
     public void seleccionarUsuarioVer(Usuario usuario) {
@@ -678,6 +740,10 @@ public class UsuarioController implements Serializable {
     }
 
     public Departamento getDpto() {
+        if(dpto == null)
+        {
+            dpto = departamentoFacade.find(8);
+        }
         return dpto;
     }
 

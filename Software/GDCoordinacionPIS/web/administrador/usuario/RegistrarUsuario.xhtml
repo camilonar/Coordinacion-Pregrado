@@ -223,17 +223,16 @@
                             <p:outputLabel style="font-weight:bold;" value="Programa: " />
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}" >
-                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa}" 
+                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa.idPrograma}" 
                                              filter="true" style="width: 155px;">
                                 <p:ajax event="change" update="programaId"/> 
                                 <f:selectItems value="#{programaController.items}"
                                                var="programa"
-                                               itemValue="#{programa}"
+                                               itemValue="#{programa.idPrograma}"
                                                itemLabel="#{programa.nombrePrograma}"
                                                >
 
                                 </f:selectItems>
-                                <f:validator validatorId="ValidarCamposSeleccionar"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>

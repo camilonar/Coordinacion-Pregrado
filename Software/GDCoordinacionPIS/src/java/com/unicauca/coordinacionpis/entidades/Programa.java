@@ -8,17 +8,17 @@ package com.unicauca.coordinacionpis.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -46,11 +46,8 @@ public class Programa implements Serializable {
     @Size(max = 200)
     @Column(name = "nombrePrograma")
     private String nombrePrograma;
-    @JoinTable(name = "usuario_programa", joinColumns = {
-        @JoinColumn(name = "idPrograma", referencedColumnName = "idPrograma")}, inverseJoinColumns = {
-        @JoinColumn(name = "idUsuario", referencedColumnName = "USUID")})
-    @ManyToMany
-    private List<Usuario> usuarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programa")
+    private List<UsuarioPrograma> usuarioProgramaList;
     @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
     @ManyToOne(optional = false)
     private Facultad idfacultad;
@@ -79,12 +76,12 @@ public class Programa implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public List<UsuarioPrograma> getUsuarioProgramaList() {
+        return usuarioProgramaList;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioProgramaList(List<UsuarioPrograma> usuarioProgramaList) {
+        this.usuarioProgramaList = usuarioProgramaList;
     }
 
     public Facultad getIdfacultad() {
