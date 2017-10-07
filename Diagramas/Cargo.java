@@ -1,3 +1,4 @@
+
 package com.unicauca.coordinacionpis.entidades;
 
 import java.io.Serializable;
@@ -19,15 +20,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniela
+ * @author ROED26
  */
 @Entity
 @Table(name = "cargo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cargo.findAll", query = "SELECT c FROM Cargo c")
-    , @NamedQuery(name = "Cargo.findByCarid", query = "SELECT c FROM Cargo c WHERE c.carid = :carid")
-    , @NamedQuery(name = "Cargo.findByCarnombre", query = "SELECT c FROM Cargo c WHERE c.carnombre = :carnombre")})
+    @NamedQuery(name = "Cargo.findAll", query = "SELECT c FROM Cargo c"),
+    @NamedQuery(name = "Cargo.findByCarid", query = "SELECT c FROM Cargo c WHERE c.carid = :carid"),
+    @NamedQuery(name = "Cargo.findByCarnombre", query = "SELECT c FROM Cargo c WHERE c.carnombre = :carnombre")})
 public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;

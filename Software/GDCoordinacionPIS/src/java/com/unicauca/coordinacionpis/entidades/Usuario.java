@@ -5,9 +5,6 @@
  */
 package com.unicauca.coordinacionpis.entidades;
 
-import com.unicauca.coordinacionpis.utilidades.Utilidades;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,38 +25,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 /**
  *
- * @author ROED26
+ * @author Daniela
  */
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByUsuid", query = "SELECT u FROM Usuario u WHERE u.usuid = :usuid"),
-    @NamedQuery(name = "Usuario.findByUsufechanacimiento", query = "SELECT u FROM Usuario u WHERE u.usufechanacimiento = :usufechanacimiento"),
-    @NamedQuery(name = "Usuario.findByUsunombres", query = "SELECT u FROM Usuario u WHERE u.usunombres = :usunombres"),
-    @NamedQuery(name = "Usuario.findByUsuapellidos", query = "SELECT u FROM Usuario u WHERE u.usuapellidos = :usuapellidos"),
-    @NamedQuery(name = "Usuario.findByUsugenero", query = "SELECT u FROM Usuario u WHERE u.usugenero = :usugenero"),
-    @NamedQuery(name = "Usuario.findByUsunombreusuario", query = "SELECT u FROM Usuario u WHERE u.usunombreusuario = :usunombreusuario"),
-    @NamedQuery(name = "Usuario.findByUsucontrasena", query = "SELECT u FROM Usuario u WHERE u.usucontrasena = :usucontrasena"),
-    @NamedQuery(name = "Usuario.findByUsuemail", query = "SELECT u FROM Usuario u WHERE u.usuemail = :usuemail"),
-    @NamedQuery(name = "Usuario.findByBusquedaUsuarios", query = "SELECT u FROM Usuario u WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(u.usunombres,' '), u.usuapellidos),' ') ,u.usuemail), ' '),u.usunombreusuario)) LIKE :busqueda")
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    , @NamedQuery(name = "Usuario.findByUsuid", query = "SELECT u FROM Usuario u WHERE u.usuid = :usuid")
+    , @NamedQuery(name = "Usuario.findByUsufechanacimiento", query = "SELECT u FROM Usuario u WHERE u.usufechanacimiento = :usufechanacimiento")
+    , @NamedQuery(name = "Usuario.findByUsunombres", query = "SELECT u FROM Usuario u WHERE u.usunombres = :usunombres")
+    , @NamedQuery(name = "Usuario.findByUsuapellidos", query = "SELECT u FROM Usuario u WHERE u.usuapellidos = :usuapellidos")
+    , @NamedQuery(name = "Usuario.findByUsugenero", query = "SELECT u FROM Usuario u WHERE u.usugenero = :usugenero")
+    , @NamedQuery(name = "Usuario.findByUsunombreusuario", query = "SELECT u FROM Usuario u WHERE u.usunombreusuario = :usunombreusuario")
+    , @NamedQuery(name = "Usuario.findByUsucontrasena", query = "SELECT u FROM Usuario u WHERE u.usucontrasena = :usucontrasena")
+    , @NamedQuery(name = "Usuario.findByUsuemail", query = "SELECT u FROM Usuario u WHERE u.usuemail = :usuemail")
+    , @NamedQuery(name = "Usuario.findByBusquedaUsuarios", query = "SELECT u FROM Usuario u WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(u.usunombres,' '), u.usuapellidos),' ') ,u.usuemail), ' '),u.usunombreusuario)) LIKE :busqueda")
 })
 public class Usuario implements Serializable {
-
-    @Lob
-    @Column(name = "USUFOTO")
-    private byte[] usufoto;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -100,14 +91,19 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 150)
     @Column(name = "USUEMAIL")
     private String usuemail;
+    @Lob
+    @Column(name = "USUFOTO")
+    private byte[] usufoto;
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<Departamento> departamentoList;
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<Programa> programaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Usuariogrupo> usuariogrupoList;
     @JoinColumn(name = "CARID", referencedColumnName = "CARID")
     @ManyToOne
     private Cargo carid;
 
-    @Transient
-    private StreamedContent miImagen;
     public Usuario() {
     }
 
@@ -190,6 +186,32 @@ public class Usuario implements Serializable {
         this.usuemail = usuemail;
     }
 
+    public byte[] getUsufoto() {
+        return usufoto;
+    }
+
+    public void setUsufoto(byte[] usufoto) {
+        this.usufoto = usufoto;
+    }
+
+    @XmlTransient
+    public List<Departamento> getDepartamentoList() {
+        return departamentoList;
+    }
+
+    public void setDepartamentoList(List<Departamento> departamentoList) {
+        this.departamentoList = departamentoList;
+    }
+
+    @XmlTransient
+    public List<Programa> getProgramaList() {
+        return programaList;
+    }
+
+    public void setProgramaList(List<Programa> programaList) {
+        this.programaList = programaList;
+    }
+
     @XmlTransient
     public List<Usuariogrupo> getUsuariogrupoList() {
         return usuariogrupoList;
@@ -230,29 +252,5 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.unicauca.coordinacionpis.entidades.Usuario[ usuid=" + usuid + " ]";
-    }
-
-    public byte[] getUsufoto() {
-        return usufoto;
-    }
-
-    public void setUsufoto(byte[] usufoto) {
-        this.usufoto = usufoto;
-    }
-    public StreamedContent getMiImagen() {
-        convertirBytesAImagen();
-        if(miImagen == null)
-            miImagen = Utilidades.getImagenPorDefecto("foto");
-        return miImagen;
-    }
-    public void convertirBytesAImagen()
-    {
-        if(usufoto != null)
-        {
-            InputStream is = new ByteArrayInputStream( usufoto);
-            miImagen = new DefaultStreamedContent(is, "image/png");
-        }
-        else
-            miImagen = null;
     }
 }

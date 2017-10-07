@@ -159,7 +159,8 @@
 
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu style="width: 176px" id="carid" value="#{usuarioController.cargo}" >
+                            <p:selectOneMenu style="width: 176px" id="carid" value="#{usuarioController.cargo}" 
+                                             >
                                 <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
                                                var="caridItem"
                                                itemValue="#{caridItem}"
@@ -189,7 +190,7 @@
                             <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu style="width: 176px" id="grupoId" value="#{usuarioController.grupo}" >
+                            <p:selectOneMenu style="width: 155px;" id="grupoId" value="#{usuarioController.grupo}" >
                                 <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                                var="grupo"
                                                itemValue="#{grupo}"
@@ -198,7 +199,40 @@
                                 <f:validator validatorId="ValidarCamposSeleccionar"/>
                             </p:selectOneMenu>
                         </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}">
+                            <p:outputLabel style="font-weight:bold;" value="Departamento: " />
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
+                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
+                                              filter="true" style="width: 155px;">
+                                <p:ajax event="change" update="departamentoId"/> 
+                                <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                               var="dpto"
+                                               itemValue="#{dpto}"
+                                               itemLabel="#{dpto.nombre}"
+                                               >
 
+                                </f:selectItems>
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}">
+                            <p:outputLabel style="font-weight:bold;" value="Programa: " />
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}" >
+                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa}" 
+                                             filter="true" style="width: 155px;">
+                                <p:ajax event="change" update="programaId"/> 
+                                <f:selectItems value="#{programaController.items}"
+                                               var="programa"
+                                               itemValue="#{programa}"
+                                               itemLabel="#{programa.nombrePrograma}"
+                                               >
+
+                                </f:selectItems>
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
                     </p:row>
                     <p:row> 
                         <p:column>

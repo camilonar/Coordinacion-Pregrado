@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,15 +28,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ROED26
+ * @author Daniela
  */
 @Entity
 @Table(name = "departamento")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
-    @NamedQuery(name = "Departamento.findByIdDepartamento", query = "SELECT d FROM Departamento d WHERE d.idDepartamento = :idDepartamento"),
-    @NamedQuery(name = "Departamento.findByNombre", query = "SELECT d FROM Departamento d WHERE d.nombre = :nombre")})
+    @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d")
+    , @NamedQuery(name = "Departamento.findByIdDepartamento", query = "SELECT d FROM Departamento d WHERE d.idDepartamento = :idDepartamento")
+    , @NamedQuery(name = "Departamento.findByNombre", query = "SELECT d FROM Departamento d WHERE d.nombre = :nombre")})
 public class Departamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +50,11 @@ public class Departamento implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
+    @JoinTable(name = "usuario_departamento", joinColumns = {
+        @JoinColumn(name = "idDepartamento", referencedColumnName = "id_departamento")}, inverseJoinColumns = {
+        @JoinColumn(name = "idUsuario", referencedColumnName = "USUID")})
+    @ManyToMany
+    private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
     private List<Materia> materiaList;
 
@@ -76,6 +84,15 @@ public class Departamento implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @XmlTransient
@@ -109,7 +126,7 @@ public class Departamento implements Serializable {
 
     @Override
     public String toString() {
-        return "com.unicauca.coodinacionpis.entidades.Departamento[ idDepartamento=" + idDepartamento + " ]";
+        return "com.unicauca.coordinacionpis.entidades.Departamento[ idDepartamento=" + idDepartamento + " ]";
     }
     
 }
