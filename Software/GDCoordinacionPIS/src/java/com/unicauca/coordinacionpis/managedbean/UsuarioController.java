@@ -279,7 +279,7 @@ public class UsuarioController implements Serializable {
             usuario.setUsuarioDepartamentoList(departamentos);
             usuarioDepartamentoFacade.create(ud);
         }
-        
+        this.tipo = TIPO_USUARIO.ADMIN;
         dpto = null;
         programa = null;
         
@@ -334,6 +334,41 @@ public class UsuarioController implements Serializable {
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
         
+        for(UsuarioPrograma up: this.usuario.getUsuarioProgramaList())
+        {
+            usuarioProgramaFacade.remove(up);
+        }
+        for(UsuarioDepartamento ud: this.usuario.getUsuarioDepartamentoList())
+        {
+            usuarioDepartamentoFacade.remove(ud);
+        }
+        if(this.tipo == TIPO_USUARIO.COORDINADOR)
+        {
+            List<UsuarioPrograma> programas = new ArrayList<>();
+            UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
+            UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
+            up.setNombreUsuario(usuario.getUsunombreusuario());
+            up.setPrograma(programa);
+            up.setUsuario(usuario);
+            programas.add(up);
+            usuario.setUsuarioProgramaList(programas);
+            usuarioProgramaFacade.create(up);
+        }
+        else if(this.tipo == TIPO_USUARIO.JEFE)
+        {
+            List<UsuarioDepartamento> departamentos = new ArrayList<>();
+            UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
+            UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
+            ud.setNombreUsuario(usuario.getUsunombreusuario());
+            ud.setDepartamento(dpto);
+            ud.setUsuario(usuario);
+            departamentos.add(ud);
+            usuario.setUsuarioDepartamentoList(departamentos);
+            usuarioDepartamentoFacade.create(ud);
+        }
+        this.tipo = TIPO_USUARIO.ADMIN;
+        
+        
         this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
         
         usuarioGrupoPK.setGruid(grupo.getGruid());
@@ -376,14 +411,20 @@ public class UsuarioController implements Serializable {
         }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
-        
+        this.tipo = TIPO_USUARIO.ADMIN;
         if(!this.usuario.getUsuarioDepartamentoList().isEmpty())
+        {
             this.dpto = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento();
+            this.tipo = TIPO_USUARIO.JEFE;
+        }
         else
             this.dpto = null;
         
         if(!this.usuario.getUsuarioProgramaList().isEmpty())
+        {
             this.programa = this.usuario.getUsuarioProgramaList().get(0).getPrograma();
+            this.tipo = TIPO_USUARIO.COORDINADOR;
+        }
         else
             this.programa =null;
     }
@@ -737,6 +778,23 @@ public class UsuarioController implements Serializable {
         }
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("UsuarioCreateForm");
+    }
+    public void setTipoUsuarioEditar()
+    {
+        switch(grupo.getGruid())
+        {
+            case "1":
+                this.tipo = TIPO_USUARIO.ADMIN;
+                break;
+            case "2":
+                this.tipo = TIPO_USUARIO.COORDINADOR;
+                break;
+            case "3":
+                this.tipo = TIPO_USUARIO.JEFE;
+                break;
+        }
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("UsuarioEditForm");
     }
 
     public Departamento getDpto() {
