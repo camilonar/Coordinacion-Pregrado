@@ -159,7 +159,7 @@
                             <p:outputLabel style="font-weight:bold;" value="Cargo:" />
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="carid" value="#{usuarioController.cargo}" >
+                            <p:selectOneMenu id="carid" value="#{usuarioController.cargo}" style="width: 155px;">
                                 <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
                                                var="caridItem"
                                                itemValue="#{caridItem}"
@@ -205,7 +205,8 @@
                             <p:outputLabel style="font-weight:bold;" value="Departamento: " />
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
-                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" >
+                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
+                                              filter="true" style="width: 155px;">
                                 <p:ajax event="change" update="departamentoId"/> 
                                 <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                var="dpto"
@@ -221,12 +222,13 @@
                             <p:outputLabel style="font-weight:bold;" value="Programa: " />
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}" >
-                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa}" >
+                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa}" 
+                                             filter="true" style="width: 155px;">
                                 <p:ajax event="change" update="programaId"/> 
                                 <f:selectItems value="#{programaController.items}"
                                                var="programa"
                                                itemValue="#{programa}"
-                                               itemLabel="#{programa.nombre}"
+                                               itemLabel="#{programa.nombrePrograma}"
                                                >
 
                                 </f:selectItems>
