@@ -22,6 +22,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.openkm.sdk4j.OKMWebservices;
 import com.openkm.sdk4j.OKMWebservicesFactory;
 import com.openkm.sdk4j.bean.Folder;
+import com.openkm.sdk4j.bean.QueryParams;
 import com.openkm.sdk4j.bean.QueryResult;
 import com.openkm.sdk4j.bean.form.FormElement;
 import com.openkm.sdk4j.bean.form.Input;
@@ -85,6 +86,10 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class RegistroFormatoAController implements Serializable {
+
+    //TEMPORALLLL
+    String programaTemporal = "Sistemas";
+    ///
 
     private MetadatosAntepoyecto metadatosAnteproyectos;
     private boolean exitoSubirArchivo;
@@ -172,22 +177,18 @@ public class RegistroFormatoAController implements Serializable {
         this.streamedContent = streamedContent;
     }
 
-    public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() {
+    public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() throws PathNotFoundException, RepositoryException {
         listadoDocsAnteproecto.clear();
         try {
-            List<QueryResult> lista = okm.findByName(datos);
+            QueryParams parametros = new QueryParams();
+            parametros.setPath(this.getPathFormatoA());
+            parametros.setName(datos);
+            List<QueryResult> lista = okm.find(parametros);
             for (int i = 0; i < lista.size(); i++) {
-                String[] pathDividido = lista.get(i).getDocument().getPath().split("/");
-                String path = "/" + pathDividido[1] + "/" + pathDividido[2] + "/" + pathDividido[3];
-                if (path.equalsIgnoreCase("/okm:root/Coordinacion/FormatoA")) {
-                    listadoDocsAnteproecto.add(lista.get(i).getDocument());
-                }
-            }
-            /*listadoDocsOfertasAcademicas
-                    = okm.getDocumentChildren("/okm:root/Oferta academica");*/
+                listadoDocsAnteproecto.add(lista.get(i).getDocument());
 
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } catch (DatabaseException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnknowException ex) {
@@ -238,41 +239,30 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
 
-    public void aceptarFormatoA() {
+    public void aceptarFormatoA() throws PathNotFoundException {
 
-        boolean existe = false;
-        boolean existeFolderCoordinacion = false;
-        Document okmDocument = new Document();
-        
+
         System.out.println("viabilidad:" + metadatosAnteproyectos.getViabilidad());
-       
+
         try {
 
-            for (Folder fld : okm.getFolderChildren("/okm:root")) {
-                if (fld.getPath().equalsIgnoreCase("/okm:root/Coordinacion")) {
-
-                    existeFolderCoordinacion = true;
-                }
-            }
-            if (existeFolderCoordinacion) {
-                for (Folder fld : okm.getFolderChildren("/okm:root/Coordinacion")) {
-                    if (fld.getPath().equalsIgnoreCase("/okm:root/Coordinacion/FormatoA")) {
-                        existe = true;
-                    }
-                }
-            } else {
+            if (!okm.hasNode("/okm:root/Coordinacion")) {
                 okm.createFolderSimple("/okm:root/Coordinacion");
             }
-
-            if (!existe) {
-                okm.createFolderSimple("/okm:root/Coordinacion/FormatoA");
-                okm.createDocumentSimple("/okm:root/Coordinacion/FormatoA/" + archivOferta.getFileName(), archivOferta.getInputstream());
-            } else {
-                okm.createDocumentSimple("/okm:root/Coordinacion/FormatoA/" + archivOferta.getFileName(), archivOferta.getInputstream());
+            if (!okm.hasNode("/okm:root/Coordinacion/Anteproyectos")) {
+                okm.createFolderSimple("/okm:root/Coordinacion/Anteproyectos");
             }
-            okm.addGroup("/okm:root/Coordinacion/FormatoA/" + archivOferta.getFileName(), "okg:FormatoA");
+            if (!okm.hasNode("/okm:root/Coordinacion/Anteproyectos/" + programaTemporal)) {
+                okm.createFolderSimple("/okm:root/Coordinacion/Anteproyectos/" + programaTemporal);
+            }
+            if (!okm.hasNode("/okm:root/Coordinacion/Anteproyectos/" + programaTemporal + "/FormatoA")) {
+                okm.createFolderSimple("/okm:root/Coordinacion/Anteproyectos/" + programaTemporal + "/FormatoA");
+            }
+            
+            okm.createDocumentSimple(this.getPathFormatoA() + archivOferta.getFileName(), archivOferta.getInputstream());
+            okm.addGroup(this.getPathFormatoA() + archivOferta.getFileName(), "okg:FormatoA");
 
-            List<FormElement> fElements = okm.getPropertyGroupProperties("/okm:root/Coordinacion/FormatoA/" + archivOferta.getFileName(), "okg:FormatoA");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathFormatoA() + archivOferta.getFileName(), "okg:FormatoA");
             for (FormElement fElement : fElements) {
                 if (fElement.getName().equals("okp:FormatoA.docente")) {
                     Input name = (Input) fElement;
@@ -287,7 +277,6 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
-               
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -301,43 +290,10 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                 }
             }
-            okm.setPropertyGroupProperties("/okm:root/Coordinacion/FormatoA/" + archivOferta.getFileName(), "okg:FormatoA", fElements);
-
-        } catch (PathNotFoundException ex) {
+            okm.setPropertyGroupProperties(this.getPathFormatoA()+ archivOferta.getFileName(), "okg:FormatoA", fElements);
+        } catch (PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException | AccessDeniedException | ItemExistsException | ExtensionException | AutomationException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ItemExistsException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedMimeTypeException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileSizeExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UserQuotaExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VirusDetectedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPropertyException ex) {
+        } catch (NoSuchGroupException | LockException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
         agregarMetadatos();
@@ -372,7 +328,6 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
-                
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -612,19 +567,7 @@ public class RegistroFormatoAController implements Serializable {
             file = new DefaultStreamedContent(is, "application/pdf", nombreDelArchivo(doc.getPath()));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
+        } catch (RepositoryException | PathNotFoundException | AccessDeniedException | DatabaseException | UnknowException | WebserviceException | IOException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -681,23 +624,21 @@ public class RegistroFormatoAController implements Serializable {
         }
     }
 
-    
     public void cancelarEditar() {
         System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
-        
-        
+
     }
+
     public void cancelarEdicion() {
         System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
-        
+
     }
 
-    
     public void cancelarRegistro() {
         System.out.println("invocado apá");
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -706,24 +647,26 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.update("formArchivoSelecionadoFormatoA");
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
     }
-    
-    
-    
-    
+
     public boolean getComprobarConexionOpenKM() {
         boolean conexion = true;
         try {
             okm.getAppVersion();
 
-        } catch (RepositoryException ex) {
-            conexion = false;
-        } catch (DatabaseException ex) {
-            conexion = false;
-        } catch (UnknowException ex) {
-            conexion = false;
-        } catch (WebserviceException ex) {
+        } catch (RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
             conexion = false;
         }
         return conexion;
     }
+    
+    
+    /**
+     * Devuelve la ruta del formatoA para el coordinador que inicio sesion
+     * @return la ruta donde se encuantra la carpeta de FormatoA para el coordinador especifico de cada 
+     * programa (El que inicio sesion)
+     */
+    public String getPathFormatoA(){
+       return "/okm:root/Coordinacion/Anteproyectos/" + programaTemporal + "/FormatoA/";
+    }
+
 }
