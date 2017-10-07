@@ -6,6 +6,15 @@
 	<input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
 	<input label="Acta aprobacion" type="text" name="okp:FormatoA.ActaAprobacion" />
  </property-group>
+
+<property-group label="FormatoC" name="okg:FormatoC">
+    <input label="Docente" type="text" name="okp:FormatoC.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoC.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoC.Fecha" />
+	<input label="Primer estudiante" type="text" name="okp:FormatoC.PrimerEstudiante" />
+	<input label="Segundo estudiante" type="text" name="okp:FormatoC.SegundoEstudiante" />
+	<input label="Acta aprobacion" type="text" name="okp:FormatoC.ActaAprobacion" />
+</property-group>
     
  <property-group label="OfertaAcademicaPrematricula" name="okg:OfertaAcademicaPrematricula">
     <input label="calculo 1 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes"/>
