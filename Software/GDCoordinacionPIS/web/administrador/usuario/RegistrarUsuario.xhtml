@@ -189,7 +189,8 @@
                             <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="grupoId" value="#{usuarioController.grupo.gruid}" >
+                            <p:selectOneMenu id="grupoId" value="#{usuarioController.grupo.gruid}" 
+                                             style="width: 155px;">
                                 <p:ajax event="change" update="grupoId" listener="#{usuarioController.setTipoUsuario()}"/> 
                                 <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                                var="grupo"
