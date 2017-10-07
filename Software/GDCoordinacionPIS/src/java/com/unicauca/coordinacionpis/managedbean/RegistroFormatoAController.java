@@ -45,6 +45,7 @@ import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.Docente;
 
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
+import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -55,12 +56,15 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.http.HttpResponse;
@@ -198,6 +202,10 @@ public class RegistroFormatoAController implements Serializable {
         return listadoDocsAnteproecto;
     }
 
+    public Date getTodayDate() {
+        return new Date();
+    }
+
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
@@ -229,12 +237,15 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
-    
+
     public void aceptarFormatoA() {
 
         boolean existe = false;
         boolean existeFolderCoordinacion = false;
         Document okmDocument = new Document();
+        
+        System.out.println("viabilidad:" + metadatosAnteproyectos.getViabilidad());
+       
         try {
 
             for (Folder fld : okm.getFolderChildren("/okm:root")) {
@@ -276,6 +287,7 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
+               
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -340,9 +352,9 @@ public class RegistroFormatoAController implements Serializable {
         requestContext.getCurrentInstance().update("msgRFA");
 
     }
-    
+
     public void actualizarInfoFormatoA() {
-       
+
         try {
             okm.addGroup(documento.getPath(), "okg:FormatoA");
             List<FormElement> fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoA");
@@ -360,6 +372,7 @@ public class RegistroFormatoAController implements Serializable {
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
 
+                
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -401,17 +414,18 @@ public class RegistroFormatoAController implements Serializable {
         } catch (NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         requestContext.update("formMetadatosEditFormatoA");
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información se editó con éxito"));
         requestContext.getCurrentInstance().update("msgRFA");
     }
-    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento){
-     this.documento = documento;
+
+    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) {
+        this.documento = documento;
         List<FormElement> fElements;
         try {
             fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoA");
@@ -459,21 +473,21 @@ public class RegistroFormatoAController implements Serializable {
         } catch (WebserviceException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         requestContext.update("formMetadatosEditFormatoA");
         requestContext.execute("PF('dlgEditarFormatoA').show()");
-            
+
     }
 
     public void agregarMetadatos() {
         // create document and writer
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
-        String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+        String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
         try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta+"aguaabril2016.pdf"));
+            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "aguaabril2016.pdf"));
             // add meta-data to pdf
             document.addAuthor("Memorynotfound");
             document.addCreationDate();
@@ -501,52 +515,67 @@ public class RegistroFormatoAController implements Serializable {
     public List<Docente> getListaDocentes() {
 
         List<Docente> listaDocentes = new ArrayList<>();
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://wmyserver.sytes.net:8080/JefaturaPIS/webresources/docente");
-        httpget.setHeader("Content-type", "application/json");
-        String strResultado = "NaN";
-        try {
-            //ejecuta
-            HttpResponse response = httpclient.execute(httpget);
-            //Obtiene la respuesta del servidor
-            String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-            JSONArray array = new JSONArray(jsonResult);
-            //JSONObject object = new JSONObject(jsonResult);
-            //obtiene el status
-            // String status = object.getString("status");
-            //200 -> todo esta bien
-            //if( status.equals("200") )
-            //{
-            strResultado = "";
-            //extrae los registros
-            //JSONArray array = new JSONArray(object.getString("Registros"));
-            for (int i = 0; i < array.length(); i++) {
-                //recorre cada registro y concatena el resultado
-                JSONObject row = array.getJSONObject(i);
-                Docente docente = new Docente();
-                String nombres = row.getString("nombres");
-                docente.setNombres(nombres);
-                String apellidos = row.getString("apellidos");
-                docente.setApellidos(apellidos);
-                String documento = row.getString("documento");
-                docente.setDocumento(documento);
-                //String estId = row.getString("estId");
-                //String apellidos = row.getString("apellidos");
-                //System.out.println("PLC_TU "+ (i+1) +"\n\n"+"Nombres: "+ nombres + "\n"+"Apellidos: "+ apellidos + "\n\n"+ "\n"+"Estudios: "+ estId + "\n\n");
+//        DefaultHttpClient httpclient = new DefaultHttpClient();
+//        HttpGet httpget = new HttpGet("http://wmyserver.sytes.net:8080/JefaturaPIS/webresources/docente");
+//        httpget.setHeader("Content-type", "application/json");
+//        String strResultado = "NaN";
+//        try {
+//            //ejecuta
+//            HttpResponse response = httpclient.execute(httpget);
+//            //Obtiene la respuesta del servidor
+//            String jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
+//            JSONArray array = new JSONArray(jsonResult);
+//            //JSONObject object = new JSONObject(jsonResult);
+//            //obtiene el status
+//            // String status = object.getString("status");
+//            //200 -> todo esta bien
+//            //if( status.equals("200") )
+//            //{
+//            strResultado = "";
+//            //extrae los registros
+//            //JSONArray array = new JSONArray(object.getString("Registros"));
+//            for (int i = 0; i < array.length(); i++) {
+//                //recorre cada registro y concatena el resultado
+//                JSONObject row = array.getJSONObject(i);
+//                Docente docente = new Docente();
+//                String nombres = row.getString("nombres");
+//                docente.setNombres(nombres);
+//                String apellidos = row.getString("apellidos");
+//                docente.setApellidos(apellidos);
+//                String documento = row.getString("documento");
+//                docente.setDocumento(documento);
+//                //String estId = row.getString("estId");
+//                //String apellidos = row.getString("apellidos");
+//                //System.out.println("PLC_TU "+ (i+1) +"\n\n"+"Nombres: "+ nombres + "\n"+"Apellidos: "+ apellidos + "\n\n"+ "\n"+"Estudios: "+ estId + "\n\n");
+//                listaDocentes.add(docente);
+//            }
+//
+//            // }
+//        } catch (ClientProtocolException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            strResultado = e.getMessage();
+//            e.printStackTrace();
+//        }
+
+        if (listaDocentes.isEmpty()) {
+            Docente docente;
+            System.out.println("lista vacia");
+            for (int i = 0; i < 5; i++) {
+                docente = new Docente();
+                docente.setNombres("Docente fake" + i);
+                docente.setApellidos("Fake ");
+                docente.setDocumento("12345");
                 listaDocentes.add(docente);
             }
 
-            // }
-        } catch (ClientProtocolException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
-        } catch (IOException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
-        } catch (JSONException e) {
-            strResultado = e.getMessage();
-            e.printStackTrace();
         }
+
+        System.out.println("tamaño lista profesores" + listaDocentes.size());
         return listaDocentes;
     }
 
@@ -625,23 +654,21 @@ public class RegistroFormatoAController implements Serializable {
     }
 
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
-        
+
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
-        
+
     }
-    
+
     public void deleteDocument() {
         try {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            
-            
-            
-             requestContext.execute("PF('Confirmacion').hide()");
+
+            requestContext.execute("PF('Confirmacion').hide()");
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se eliminó con éxito");
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -653,8 +680,50 @@ public class RegistroFormatoAController implements Serializable {
 
         }
     }
-    public void cancelarEdicion() {
+
+    
+    public void cancelarEditar() {
+        System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
+        
+        
+    }
+    public void cancelarEdicion() {
+        System.out.println("incas");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('dlgEditarFormatoA').hide()");
+        requestContext.execute("PF('dlgRegistroFormatoA').hide()");
+        
+    }
+
+    
+    public void cancelarRegistro() {
+        System.out.println("invocado apá");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("formSeleccionarArchivoFormatoA");
+        requestContext.update("formMetadatosFormatoA");
+        requestContext.update("formArchivoSelecionadoFormatoA");
+        requestContext.execute("PF('dlgRegistroFormatoA').hide()");
+    }
+    
+    
+    
+    
+    public boolean getComprobarConexionOpenKM() {
+        boolean conexion = true;
+        try {
+            okm.getAppVersion();
+
+        } catch (RepositoryException ex) {
+            conexion = false;
+        } catch (DatabaseException ex) {
+            conexion = false;
+        } catch (UnknowException ex) {
+            conexion = false;
+        } catch (WebserviceException ex) {
+            conexion = false;
+        }
+        return conexion;
     }
 }

@@ -27,13 +27,13 @@ public class AbstractPlanEstudiosTest {
      * estudio debe estar renderizado desde el inicio
      */
     //Configuración
-    private static String nombreUsuario = "pmage";
-    private static String contrasena = "coordinador";
+    private static final String NOMBRE_USUARIO = "pmage";
+    private static final String CONTRASENA = "coordinador";
     
     protected void loginAsCoordinador(){
         beginAt("/GDCP/sinSesion/index.xhtml"); 
-        JWebUnit.setTextField("form-inicio:nombreUsuario", nombreUsuario);
-        JWebUnit.setTextField("form-inicio:contrasena", contrasena);
+        JWebUnit.setTextField("form-inicio:nombreUsuario", NOMBRE_USUARIO);
+        JWebUnit.setTextField("form-inicio:contrasena", CONTRASENA);
         assertButtonPresent("form-inicio:login");
         clickButton("form-inicio:login");
     }

@@ -13,9 +13,10 @@ and open the template in the editor.
 
 
     <p:dialog id="PlanEstudioCreateDlg"
-        widgetVar="dlgRegistroPlandeEstudio" modal="true" width="560" position="425,50" 
-              closable="true" showEffect="explode" header="Registro de Plan de Estudio">
-       
+              resizable="false"
+              widgetVar="dlgRegistroPlandeEstudio" modal="true" width="620" position="300,90" 
+              closable="true" header="Registro de Plan de Estudio">
+
         <h:outputStylesheet library="css" name="uploadFile.css"/>
 
         <h:form id="formSeleccionarArchivoPlanEstudio">
@@ -33,13 +34,13 @@ and open the template in the editor.
 
 
         <h:form id="formArchivoSelecionadoPlanEstudio">
-           
+
             <p:panelGrid  styleClass="panelgrid" 
-                         rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">
+                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">
                 <p:row>
                     <p:column colspan="4">
                         <p:outputLabel style="font-weight: bold; color: #000000" value="Nombre del archivo seleccionado: "/>
-                        <p:outputLabel style="font-weight: bold; color: blue" value="#{registroPlandeEstudioController.nombreArchivo}  "/>
+                        <p:outputLabel style="font-weight: bold; color: blue" value="#{registroPlandeEstudioController.nombreArchivo}    "/>
                         <!--<p:commandButton value="Cambiar archivo"  action="#{registroPlandeEstudioController.cambiarArchivo}"/> -->
                         <p:column>
                             <p:commandButton value="Cambiar archivo" action="#{registroFormatoAController.confirmarEliminacion(formatoA)}"  />
@@ -53,27 +54,21 @@ and open the template in the editor.
 
         <h:form id="formMetadatosPlanEstudio">
             <p:growl id="msg" showDetail="true" life="4000" autoUpdate="false" globalOnly="true"/>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
+            <center>
+                <p:outputLabel rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" value="Información para registro del plan de estudio:" style="font-weight: bold; color: #000000"/>             
+            </center>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
+            <p:row>
+                <p:column rendered="#{registroPlandeEstudioController.exitoSubirArchivo}" colspan="2">
+                    <p:outputLabel  
+                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
+                    <p:outputLabel value="*" style="color: #ff5252"/>
+                    <p:outputLabel value=") son obligatorios."/>
+                </p:column>
+            </p:row>
             <p:panelGrid  styleClass="panelgrid" id="panelMetadadosPlanEstudio"
-                         rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">  
-
-                <p:row>
-                    <p:column colspan="2">
-                        <p:outputLabel style="font-weight: bold; color: #000000" 
-                                       value="Diligencie el siguiente formulario, tenga en cuenta los campos obligatorios ("/>
-                        <p:outputLabel value="*" style="color: #ff5252"/>
-                        <p:outputLabel style="font-weight: bold; color: #000000" value=")"/>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column colspan="2" >
-
-                    </p:column> 
-                </p:row>
-                <p:row>
-                    <p:column colspan="2" style="text-align: center; background: #C8CDD6; font-weight: bold;">
-                        <p:outputLabel  value="Datos Plan de Estudio" style="font-weight: bold; color: #000000"/>             
-                    </p:column>  
-                </p:row>
+                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}">                 
                 <p:row>
                     <p:column colspan="2" >
 
@@ -81,27 +76,35 @@ and open the template in the editor.
                 </p:row>
 
                 <p:row>
+                    <p:column >
+
+                    </p:column> 
+                </p:row>
+
+                <p:row>
                     <p:column>
-                        <p:outputLabel value="N&#250;mero Plan de Estudio" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="N&#250;mero Plan de Estudio:" style="font-weight: bold; color: #000000"/>
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column>
-                        <p:spinner id="numPlanEstudio" maxlength="3" value="#{registroPlandeEstudioController.metadatosPlandeEstudio.numero}" required="true" requiredMessage="Campo Número Plan de Estudio obligatorio" min="1">
+                        <p:spinner id="numPlanEstudio" converterMessage="El campo solo admite valores númericos" maxlength="3" value="#{registroPlandeEstudioController.metadatosPlandeEstudio.numero}" required="true" requiredMessage="Campo Número Plan de Estudio obligatorio" min="1">
                             <f:ajax event="change" render="msgNumPlan" /> 
                             <f:ajax event="keyup" render="msgNumPlan" /> 
                             <!--Validar que el campo del número del plan de estudio sea mayor que cero-->
                             <f:validator validatorId="validarCampoNumeroPlanEstudio" rendered="msgNumPlan"/>
                         </p:spinner>
-                    </p:column>                   
+                    </p:column>
+                    <p:column/>
                 </p:row>
                 <p:row>
-                    <p:column colspan="2">
+                    <p:column/>
+                    <p:column style = "width: 100px">
                         <p:message id="msgNumPlan" for="numPlanEstudio"/>
                     </p:column>
                 </p:row>
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="Acuerdo Plan de Estudio" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="Acuerdo Plan de Estudio:" style="font-weight: bold; color: #000000"/>
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column>
@@ -109,60 +112,66 @@ and open the template in the editor.
                             <!--Validar el tamaño del dato ingresado en el campo, cada ves que se presione una tecla-->
                             <!--<p:watermark for="acPlanEstudio" value="Acuerdo" id="watermark" />-->
                             <f:ajax event="keyup" render="msgAcPlan"/>
-                            
+                            <f:ajax event="focus" render="msgNumPlan" /> 
                             <f:validateLength minimum="5"/>
                         </p:inputText>
                     </p:column>                   
                 </p:row>
                 <p:row>
-                    <p:column colspan="2">
+                    <p:column/>
+                    <p:column style = "width: 100px">
                         <p:message id="msgAcPlan" for="acPlanEstudio"/>
                     </p:column>
                 </p:row>
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="Vigencia Plan de Estudio" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="Vigencia Plan de Estudio:" style="font-weight: bold; color: #000000"/>
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column>                        
                         <p:calendar  value="#{registroPlandeEstudioController.metadatosPlandeEstudio.vigencia}" 
-                                     id="vigPlanEstudio" 
-                                     navigator="true" 
+                                     id="vigPlanEstudio"
                                      showOn="button"
+                                     navigator="true"                                      
                                      pattern="dd/MM/yyyy" 
                                      required="true" 
                                      requiredMessage="Campo Vigencia Plan de Estudio obligatorio" 
-                                     placeholder="dd/mm/aaaa"  maxdate="#{registroPlandeEstudioController.fechaActual()} ">
-                            <f:ajax event="keyup" render="msgVigPlan"/>
+                                     readonlyInput="true"
+                                     maxdate="#{registroFormatoAController.todayDate}"
+                                     placeholder="dd/mm/aaaa">
+                            <f:ajax event="change" render="msgVigPlan"/>
+                            <f:ajax event="keyup" render="msgVigPlan"/>                            
                         </p:calendar>
-                        
+
                     </p:column>                   
                 </p:row>
                 <p:row>
-                    <p:column colspan="2">
+                    <p:column/>
+                    <p:column style = "width: 100px">
                         <p:message id="msgVigPlan" for="vigPlanEstudio"/>
                     </p:column>
-                </p:row>  
-                <p:row>
-                    <p:column colspan="2">
-
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column colspan="2">
-                        <p:commandButton id="submit-btn"
-                            value="Agregar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" style="width: 80px;height:25px" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
-                        <p:spacer width="30%" height="10"/>                                                                      
-                    </p:column>
-                </p:row>
+                </p:row>                                 
             </p:panelGrid>
+            <p:separator rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"/>
+            <center>
+                <p:button value="Cancelar"
+                          rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"
+                          onclick ="PF('dlgRegistroPlandeEstudio').hide();
+                                  $('#formSeleccionarArchivoPlanEstudio').trigger('reset');"
+
+                          style="margin: 20px;"/>                
+
+                <p:commandButton id="submit-btn"
+                                 rendered="#{registroPlandeEstudioController.exitoSubirArchivo}"
+                                 value="Registrar" action="#{registroPlandeEstudioController.aceptarRegistroPlanEstudio()}" update=":formPlanesdeEstudio:lstPlanesEstudio,panelMetadadosPlanEstudio" onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()"/>
+            </center>
         </h:form>
     </p:dialog>
-<!--    <p:dialog header="Información" widgetVar="mensajeInformacionPlanEstudio" modal="true" position="center" closable="false">
-        <h:outputLabel style="font-size: 15px;"  value="Plan de estudio registrado exitosamente"/>
-        <h:form>
-            <p:commandButton  value="Aceptar" style="font-weight: normal;"
-                              onclick="PF('mensajeInformacionPlanEstudio').hide()" />
-        </h:form>
-    </p:dialog>-->
+    <!--    <p:dialog header="Información" widgetVar="mensajeInformacionPlanEstudio" modal="true" position="center" closable="false">
+            <h:outputLabel style="font-size: 15px;"  value="Plan de estudio registrado exitosamente"/>
+            <h:form>
+                <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                  onclick="PF('mensajeInformacionPlanEstudio').hide()" />
+            </h:form>
+        </p:dialog>-->
 </html>

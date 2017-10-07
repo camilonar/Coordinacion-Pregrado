@@ -53,7 +53,7 @@ public class EditarDepartamentoTextFieldsTest extends AbstractDepartamentoTest{
     @Parameterized.Parameters(name = "campo: {0}; contenido: {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {    
-            { EditarDepartamentoNames.idNombre,"Dpto. Electrónica",EditarDepartamentoNames.idMsgNombre,true},
+            { EditarDepartamentoNames.idNombre,"Dpto. Electrónica",EditarDepartamentoNames.idMsgNombre,false},
             { EditarDepartamentoNames.idNombre,"Sistemas",EditarDepartamentoNames.idMsgNombre,true},
             { EditarDepartamentoNames.idNombre,"SistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasERT",EditarDepartamentoNames.idMsgNombre,true},
             { EditarDepartamentoNames.idNombre,"SistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasERTQ",EditarDepartamentoNames.idMsgNombre,true},

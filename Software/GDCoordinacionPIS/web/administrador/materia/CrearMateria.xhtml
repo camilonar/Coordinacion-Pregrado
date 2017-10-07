@@ -81,8 +81,8 @@
                             </p:column>
                             
                             <p:column>
-                                <p:inputText id="creditos" value="#{materiaController.selected.creditos}" title="Creditos" required="true" requiredMessage="Campo Obligatorio">
-                                    <f:validator validatorId="ValidarCampoCreditos"/>
+                                <p:inputText id="creditos" value="#{materiaController.selected.creditos}" title="Creditos" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
+                                    <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
                                     <p:ajax event="keyup" update="msgCreditos"/>
                                 </p:inputText>
                             </p:column>
@@ -108,8 +108,8 @@
                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
                             </p:column> 
                             <p:column>
-                                <p:inputText id="intensidadHoraria" value="#{materiaController.selected.intensidadHoraria}" title="Intensidad horaria" required="true" requiredMessage="Campo Obligatorio">
-                                    <f:validator validatorId="ValidarCampoIHoraria"/>
+                                <p:inputText id="intensidadHoraria" value="#{materiaController.selected.intensidadHoraria}" title="Intensidad horaria" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
+                                    <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
                                     <p:ajax event="keyup" update="msgIhoraria"/>
                                 </p:inputText>                            
                             </p:column>
@@ -117,7 +117,7 @@
                                 <p:outputLabel style="font-weight:bold;" value="Departamento:" />                                
                             </p:column> 
                             <p:column>
-                                <p:selectOneMenu id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
+                                <p:selectOneMenu style="width: 100px" id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
                                     <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                    var="idDepartamentoItem"
                                                    itemValue="#{idDepartamentoItem}"

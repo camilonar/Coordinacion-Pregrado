@@ -23,13 +23,13 @@ import test.usuario.test_cases.RegistrarUsuarioTextFieldsTest;
 public class AbstractDepartamentoTest {
     
     //Configuración
-    private static String nombreUsuario = "admin";
-    private static String contrasena = "jefe";
+    private static final String NOMBRE_USUARIO = "admin";
+    private static final String CONTRASENA = "jefe";
     
     protected void loginAsAdmin(){
         beginAt("/GDCP/sinSesion/index.xhtml"); 
-        JWebUnit.setTextField("form-inicio:nombreUsuario", nombreUsuario);
-        JWebUnit.setTextField("form-inicio:contrasena", contrasena);
+        JWebUnit.setTextField("form-inicio:nombreUsuario", NOMBRE_USUARIO);
+        JWebUnit.setTextField("form-inicio:contrasena", CONTRASENA);
         assertButtonPresent("form-inicio:login");
         clickButton("form-inicio:login");
     }

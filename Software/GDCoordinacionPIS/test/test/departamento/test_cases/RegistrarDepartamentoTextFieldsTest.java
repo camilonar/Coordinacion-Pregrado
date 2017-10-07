@@ -52,7 +52,7 @@ public class RegistrarDepartamentoTextFieldsTest extends AbstractDepartamentoTes
     @Parameterized.Parameters(name = "campo: {0}; contenido: {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {    
-            { RegistrarDepartamentoNames.idNombre,"Dpto. Electrónica",RegistrarDepartamentoNames.idMsgNombre,true},
+            { RegistrarDepartamentoNames.idNombre,"Dpto. Electrónica",RegistrarDepartamentoNames.idMsgNombre,false},
             { RegistrarDepartamentoNames.idNombre,"Sistemas",RegistrarDepartamentoNames.idMsgNombre,true},
             { RegistrarDepartamentoNames.idNombre,"SistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasERT",RegistrarDepartamentoNames.idMsgNombre,true},
             { RegistrarDepartamentoNames.idNombre,"SistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasSistemasERTQ",RegistrarDepartamentoNames.idMsgNombre,true},
