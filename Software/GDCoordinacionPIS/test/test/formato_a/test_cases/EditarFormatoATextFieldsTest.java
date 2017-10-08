@@ -16,14 +16,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import test.formato_a.utils.AbstractAnteproyectoTest;
+import test.formato_a.utils.AbstractFormatoATest;
 import test.formato_a.utils.EditarFormatoANames;
 /**
  * Pruebas de los campos de texto del formulario de edición de formato A
  * @author Camilo
  */
 @RunWith(Parameterized.class)
-public class EditarFormatoATextFieldsTest extends AbstractAnteproyectoTest{
+public class EditarFormatoATextFieldsTest extends AbstractFormatoATest{
     
     @Parameterized.Parameter(0)
     /**

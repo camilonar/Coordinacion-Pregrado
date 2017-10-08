@@ -19,7 +19,7 @@ import test.usuario.test_cases.RegistrarUsuarioTextFieldsTest;
  *
  * @author Camilo
  */
-public class AbstractAnteproyectoTest {
+public class AbstractFormatoATest {
     /**
      * Nota importante: para las pruebas el formulario de registro de formato A
      * debe estar renderizado desde el inicio
@@ -50,7 +50,7 @@ public class AbstractAnteproyectoTest {
         try {
             Thread.sleep(1500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(AbstractAnteproyectoTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractFormatoATest.class.getName()).log(Level.SEVERE, null, ex);
         }
         JWebUnit.assertMatch("false", JWebUnit.getElementById("AnteproyectoCreateDlg").getAttribute("aria-hidden"));
     }
@@ -64,7 +64,7 @@ public class AbstractAnteproyectoTest {
         try {
             Thread.sleep(3500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(AbstractAnteproyectoTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractFormatoATest.class.getName()).log(Level.SEVERE, null, ex);
         }
         JWebUnit.assertMatch("false", JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
     }

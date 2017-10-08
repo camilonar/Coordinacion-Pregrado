@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import test.formato_a.utils.AbstractAnteproyectoTest;
+import test.formato_a.utils.AbstractFormatoATest;
 import test.departamento.utils.RegistrarDepartamentoNames;
 import test.materias.utils.AbstractMateriaTest;
 import test.materias.utils.RegistrarMateriaNames;
@@ -26,7 +26,7 @@ import test.formato_a.utils.RegistrarFormatoANames;
  * @author Camilo
  */
 @RunWith(Parameterized.class)
-public class RegistrarFormatoATextFieldsTest extends AbstractAnteproyectoTest{
+public class RegistrarFormatoATextFieldsTest extends AbstractFormatoATest{
     
     @Parameterized.Parameter(0)
     /**
