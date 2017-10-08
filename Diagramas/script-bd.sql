@@ -134,7 +134,6 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `coordpis-bd`.`facultad` (
   `idfacultad` INT NOT NULL AUTO_INCREMENT,
   `facultadNombre` VARCHAR(200) NULL,
-  `facultadcol` VARCHAR(45) NULL,
   PRIMARY KEY (`idfacultad`))
 ENGINE = InnoDB;
 
@@ -162,7 +161,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `coordpis-bd`.`usuario_programa` (
   `idUsuario` BIGINT(20) NOT NULL,
   `idPrograma` INT NOT NULL,
-  `nombreUsuario` VARCHAR(45) NULL,
+  `nombreUsuario` VARCHAR(75) NULL,
   INDEX `fk_usuario_programa_usuario1_idx` (`idUsuario` ASC),
   INDEX `fk_usuario_programa_programa1_idx` (`idPrograma` ASC),
   PRIMARY KEY (`idUsuario`, `idPrograma`),
@@ -185,7 +184,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `coordpis-bd`.`usuario_departamento` (
   `idUsuario` BIGINT(20) NOT NULL,
   `idDepartamento` INT(11) NOT NULL,
-  `nombreUsuario` VARCHAR(45) NULL,
+  `nombreUsuario` VARCHAR(75) NULL,
   INDEX `fk_usuario_departamento_usuario1_idx` (`idUsuario` ASC),
   INDEX `fk_usuario_departamento_departamento1_idx` (`idDepartamento` ASC),
   PRIMARY KEY (`idUsuario`, `idDepartamento`),

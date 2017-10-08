@@ -228,6 +228,8 @@ public class UsuarioController implements Serializable {
         this.limpiarRegistrarUsuario();
         
         this.tipo = TIPO_USUARIO.ADMIN;
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("UsuarioCreateForm");
         this.dpto = null;
         this.programa = null;
         initializeEmbeddableKey();
@@ -497,6 +499,8 @@ public class UsuarioController implements Serializable {
 
     public void buscarUsuario() {
         this.items = ejbUsuario.buscarUsuarioEjb(this.datoBusqueda.toLowerCase());
+        System.out.println("->"+items.size());
+        System.out.println("dato: "+this.datoBusqueda);
     }
 
     private byte[] inputStreamToByteArray(UploadedFile file) {
