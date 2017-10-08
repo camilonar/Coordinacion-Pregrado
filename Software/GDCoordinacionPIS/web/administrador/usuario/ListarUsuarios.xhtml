@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/sesionAdmin/_admintmp.xhtml">
 
-        <ui:define name="body">
+        <ui:define name="body" >
             <h:head>
                 <h:outputScript library="js" name ="Calendario.js"/>
             </h:head>  
@@ -30,7 +30,7 @@
                 </h:form>
                 <p:separator/>
                 <h:form id="UsuarioListForm">
-                    <p:panelGrid columns="2" styleClass="panelgrid">
+                    <p:panelGrid columns="2" styleClass="panelgrid" >
                         <p:outputLabel style="font-weight: bold;" value="Buscar usuario:" />
                         <p:inputText  placeholder="Digite nombres, apellidos, nombre de usuario o email" 
                                       style="width: 400px;"  value="#{usuarioController.datoBusqueda}" >
