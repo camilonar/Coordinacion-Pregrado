@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
 
@@ -109,6 +110,28 @@
                                             
                                         </p:column>
 
+                                    </p:row>
+                                    <p:row rendered="#{usuarioController.tipo == usuarioController.tipoJefe}">
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Departamento" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="dptoid" value="#{usuarioController.dpto.nombre}" 
+                                                />
+                                            
+                                        </p:column>
+                                    </p:row>
+                                    <p:row rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}">
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Programa" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="programaid" value="#{usuarioController.programa.nombrePrograma}" 
+                                                />
+                                            
+                                        </p:column>
                                     </p:row>
                                 </p:panelGrid>
 

@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -94,12 +93,12 @@ public class Usuario implements Serializable {
     @Lob
     @Column(name = "USUFOTO")
     private byte[] usufoto;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Departamento> departamentoList;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Programa> programaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<UsuarioDepartamento> usuarioDepartamentoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Usuariogrupo> usuariogrupoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<UsuarioPrograma> usuarioProgramaList;
     @JoinColumn(name = "CARID", referencedColumnName = "CARID")
     @ManyToOne
     private Cargo carid;
@@ -195,21 +194,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Departamento> getDepartamentoList() {
-        return departamentoList;
+    public List<UsuarioDepartamento> getUsuarioDepartamentoList() {
+        return usuarioDepartamentoList;
     }
 
-    public void setDepartamentoList(List<Departamento> departamentoList) {
-        this.departamentoList = departamentoList;
-    }
-
-    @XmlTransient
-    public List<Programa> getProgramaList() {
-        return programaList;
-    }
-
-    public void setProgramaList(List<Programa> programaList) {
-        this.programaList = programaList;
+    public void setUsuarioDepartamentoList(List<UsuarioDepartamento> usuarioDepartamentoList) {
+        this.usuarioDepartamentoList = usuarioDepartamentoList;
     }
 
     @XmlTransient
@@ -219,6 +209,15 @@ public class Usuario implements Serializable {
 
     public void setUsuariogrupoList(List<Usuariogrupo> usuariogrupoList) {
         this.usuariogrupoList = usuariogrupoList;
+    }
+
+    @XmlTransient
+    public List<UsuarioPrograma> getUsuarioProgramaList() {
+        return usuarioProgramaList;
+    }
+
+    public void setUsuarioProgramaList(List<UsuarioPrograma> usuarioProgramaList) {
+        this.usuarioProgramaList = usuarioProgramaList;
     }
 
     public Cargo getCarid() {
@@ -253,4 +252,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.unicauca.coordinacionpis.entidades.Usuario[ usuid=" + usuid + " ]";
     }
+    
 }
