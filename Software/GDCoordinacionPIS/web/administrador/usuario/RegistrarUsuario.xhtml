@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition>            
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" 
+                  appendTo="@(body)" header="Registrar usuario" closable="false">
+            <h:outputStylesheet name="css/appearUploadFile.css" />
+            <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}"/>
+            <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
+            <h:form id="formfoto" enctype="multipart/form-data">
+                <center>
+                    <p:outputLabel style="font-weight:bold;" value="Foto de perfil" />                   
+                </center>
+                <center>    
+                    <br/>
+                    <c:if test="#{usuarioController.fotoDefecto}">
+                    <p:graphicImage
+                                    style="height:100px; width:100px;" transient="true"
+                                    value="#{usuarioController.imagenDefecto}"
+                                     cache="false"/>
+                    </c:if>
+                    <c:if test="#{!usuarioController.fotoDefecto}">
+                        <p:graphicImage id="img"
+                                        style="height:100px; width:100px;" transient="true"
+                                         value="#{usuarioController.miImagen}"
+                                         cache="false"/>
+                       
+                    </c:if>
+                    <p:fileUpload  id="imgupload" mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
+                                    sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
+                                   required="true"
+                                   update="@form" multiple="false" label="Subir imagen">
+                        
+                    </p:fileUpload> 
+                    <c:if test="#{!usuarioController.fotoDefecto}">
+                        <p:commandButton 
+                                         value="Imagen por defecto" 
+                                         actionListener="#{usuarioController.establecerFotoPorDefecto()}"
+                                         ajax="true" update ="formfoto"
+                                     >
+                        </p:commandButton>
+                    </c:if>
+                </center>
+                <br/>
+            </h:form>
+            <h:form id="UsuarioCreateForm">
+                <p:panelGrid  styleClass="panelgrid"  id="panel2">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Nombres:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="usunombres" value="#{usuarioController.selected.usunombres}"
+                                         title="#{bundleAdmin.CreateUsuarioTitle_usunombres}" required="true" 
+                                         requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampoNombre"/>
+                                <p:ajax event="keyup" update="msgCaracteresNombre"/>
+                            </p:inputText>
+
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Apellidos:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="usuapellidos" value="#{usuarioController.selected.usuapellidos}"
+                                         title="#{bundleAdmin.CreateUsuarioTitle_usuapellidos}" required="true" 
+                                         requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampoApellido"/>
+                                <p:ajax event="keyup" update="msgCaracteresApellido"/>
+                            </p:inputText>                                        
+                        </p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message id="msgCaracteresNombre" for="usunombres"/>
+                        </p:column>
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message id="msgCaracteresApellido" for="usuapellidos"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Género:"  />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneRadio value="#{usuarioController.selected.usugenero}">
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Femenino" itemValue="F" />                                    
+                            </p:selectOneRadio>
+
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Fecha de nacimiento:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="usufechanacimiento" 
+                                        placeholder="dd/mm/aaaa" pattern="dd/MM/yyyy" 
+                                        value="#{usuarioController.selected.usufechanacimiento}" 
+                                        title="#{bundleAdmin.EditUsuarioTitle_usufechanacimiento}" 
+                                        required="true" 
+                                        readonlyInput="true"
+                                        requiredMessage="Campo obligatorio" 
+                                        showOn="button"
+                                        navigator = "true"
+                                        locale="es"
+                                        showOtherMonths="true"
+                                        maxdate="#{usuarioController.fechaHoy}">
+                                <p:ajax event="keyup" update="msgUsuFechaNacimiento"/>
+                                <p:ajax event="dateSelect" update="msgUsuFechaNacimiento"/>   </p:calendar>
+                        </p:column>
+
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+                        </p:column>
+                        <p:column>
+                        </p:column>
+                        <p:column>
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message id="msgUsuFechaNacimiento" for="usufechanacimiento"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Email:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="usuemail" value="#{usuarioController.selected.usuemail}"
+                                         title="#{bundleAdmin.CreateUsuarioTitle_usuemail}" 
+                                         required="true" requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampoCorreoElectronico"/>
+                                <p:ajax event="keyup" update="msgCaracteresEMail"/>
+                            </p:inputText>
+
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Cargo:" />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="carid" value="#{usuarioController.cargo}" style="width: 155px;">
+                                <f:selectItems value="#{cargoController.itemsAvailableSelectOne}"
+                                               var="caridItem"
+                                               itemValue="#{caridItem}"
+                                               itemLabel="#{caridItem.carnombre}"
+                                               />
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message id="msgCaracteresEMail" for="usuemail"/>
+                        </p:column>
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message for="carid"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="grupoId" value="#{usuarioController.grupo.gruid}" 
+                                             style="width: 155px;">
+                                <p:ajax event="change" update="grupoId" listener="#{usuarioController.setTipoUsuario()}"/> 
+                                <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
+                                               var="grupo"
+                                               itemValue="#{grupo.gruid}"
+                                               itemLabel="#{grupo.grudescripcion}"
+                                               >
+
+                                </f:selectItems>
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}">
+                            <p:outputLabel style="font-weight:bold;" value="Departamento: " />
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
+                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
+                                              filter="true" style="width: 155px;">
+                                <p:ajax event="change" update="departamentoId"/> 
+                                <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                               var="dpto"
+                                               itemValue="#{dpto}"
+                                               itemLabel="#{dpto.nombre}"
+                                               >
+
+                                </f:selectItems>
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}">
+                            <p:outputLabel style="font-weight:bold;" value="Programa: " />
+                        </p:column>
+                        <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}" >
+                            <p:selectOneMenu id="programaId" value="#{usuarioController.programa}" 
+                                             filter="true" style="width: 155px;">
+                                <p:ajax event="change" update="programaId"/> 
+                                <f:selectItems value="#{programaController.items}"
+                                               var="programa"
+                                               itemValue="#{programa}"
+                                               itemLabel="#{programa.nombrePrograma}"
+                                               >
+
+                                </f:selectItems>
+                                <f:validator validatorId="ValidarCamposSeleccionar"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message  for="grupoId"/>
+                        </p:column>
+
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Nombre de usuario:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="usunombreusuario" value="#{usuarioController.selected.usunombreusuario}" 
+                                         title="#{bundleAdmin.CreateUsuarioTitle_usunombreusuario}" required="true" 
+                                         requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampoNombreUsuario"/>
+                                <p:ajax event="keyup" update="msgCaracteresNombreUsuario"/>
+                            </p:inputText>
+
+
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Contraseña:" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:password id="usucontrasena" value="#{usuarioController.selected.usucontrasena}"
+                                        title="#{bundleAdmin.CreateUsuarioTitle_usucontrasena}" 
+                                        required="true" requiredMessage="Campo obligatorio">
+                                <f:validator validatorId="ValidarCampo20Caracteres"/>
+                                <p:ajax event="keyup" update="msgCaracteresContrasena"/>
+                            </p:password>
+                        </p:column>
+                    </p:row>
+                    <p:row> 
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+                            <p:message id="msgCaracteresNombreUsuario" for="usunombreusuario"/>
+                        </p:column>
+                        <p:column>
+
+                        </p:column>
+                        <p:column style = "width: 100px">
+
+                            <p:message class="message" for="usucontrasena"
+                                       id="msgCaracteresContrasena"/>
+
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:separator/>
+                <center>
+                    
+
+                    <!--p:commandButton value="Cancelar" 
+                                     actionListener="#{usuarioController.cancelarRegistroUsuario()}"
+                                     onclick ="PF('UsuarioCreateDialog').hide();
+                                         $('#UsuarioCreateForm').trigger('reset');
+                                     $('#formfoto').trigger('reset');
+                                     $('.message').trigger('reset');"
+                                     immediate="true"
+
+                                     process="@this"
+                                     style="margin: 20px;"/-->
+                    <p:button value="Cancelar"
+                              onclick ="PF('UsuarioCreateDialog').hide();
+                                         $('#UsuarioCreateForm').trigger('reset');
+                                     $('#formfoto').trigger('reset');"
+                                     
+                                        style="margin: 20px;"
+                             
+                               >
+                    </p:button>
+                    
+                    <p:commandButton action="#{usuarioController.registrarUsuario()}"
+                                     id="submit-btn"
+                                     value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
+                </center>
+
+            </h:form>
+            
+        </p:dialog>
+    </ui:composition>
+
+</html>

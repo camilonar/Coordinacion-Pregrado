@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleMateria</base-name>
+            <var>bundleMateria</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleMateria</base-name>
+            <var>bundleMateria</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleAdmin</base-name>
+            <var>bundleAdmin</var>
+        </resource-bundle>
+    </application>
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.FileUploadRenderer</renderer-type>
+            <renderer-class>com.unicauca.coordinacionpis.utilidades.MyFileUploadRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+</faces-config>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <div id="contenidoMenu">
+            <h:form id="menu-coordinador">
+                <p:menu rendered="#{sesionController.opcionesCoordinador}" >
+                    <p:submenu label="Oferta académica">
+                        <p:menuitem id="menuitem-ofertas-academicas"
+                            value="Gestión de ofertas académicas" action="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
+                    </p:submenu>    
+                    <p:submenu label="Planes de Estudio">
+                        <p:menuitem id="menuitem-planes-estudio"
+                            value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
+                    </p:submenu>  
+                    <p:submenu label="Anteproyecto">
+                        <p:menuitem id="menuitem-anteproyectos"
+                            value="Gestión de anteproyectos" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                    </p:submenu>
+                </p:menu>
+                
+            </h:form>
+        </div>
+
+    </h:body>
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true"
+                  resizable="false" appendTo="@(body)" header="Ver información de usuario">
+            <p:ajax event="close" listener="#{usuarioController.cancelarRegistroUsuario()}" update="formfotoView UsuarioViewForm"/>
+            <p:panelGrid styleClass="panelgrid">
+                <p:row>
+                    <p:column>
+                        <h:form id="formfotoView" enctype="multipart/form-data">
+                            <p:panelGrid  id="panel" styleClass="panelgrid">
+                                <p:row>
+                                    <p:column >
+                                        <p:graphicImage id="personPicture" rendered="#{usuarioController.miImagen !=null}"
+                                                                                   style="height:70px; width:70px;"
+                                                                                   value="#{usuarioController.miImagen}"
+                                                                                   cache="false"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+                    </p:column>
+                    <p:column>
+                        <h:form id="UsuarioViewForm">
+                            <h:panelGroup id="display">
+                                <p:panelGrid >
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Nombres" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="usunombres" value="#{usuarioController.selected.usunombres}"
+                                                           title="#{bundleAdmin.CreateUsuarioTitle_usunombres}" />                                   
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Apellidos" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="usuapellidos" value="#{usuarioController.selected.usuapellidos}"
+                                                           title="#{bundleAdmin.CreateUsuarioTitle_usuapellidos}" />
+
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+
+                                        <p:column>
+                                            <p:outputLabel  style="font-weight: bold; color: #000000" value="Género"  />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel rendered="#{usuarioController.selected.usugenero=='M'}" value="Masculino"/>
+                                            <p:outputLabel rendered="#{usuarioController.selected.usugenero=='F'}" value="Femenino"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Fecha de nacimiento" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="usufechanacimiento" value="#{usuarioController.fecha}" />
+                                        </p:column>
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Email" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="usuemail" value="#{usuarioController.selected.usuemail}"
+                                                           title="#{bundleAdmin.CreateUsuarioTitle_usuemail}" 
+                                                           />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Nombre de usuario" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="usunombreusuario" value="#{usuarioController.selected.usunombreusuario}" 
+                                                           title="#{bundleAdmin.CreateUsuarioTitle_usunombreusuario}"  
+                                                           />
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Tipo de usuario" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="grupoId" value="#{usuarioController.grupo.grudescripcion}" 
+                                                />
+                                            
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel style="font-weight: bold; color: #000000" value="Cargo" />
+
+                                        </p:column>
+                                        <p:column>
+                                            <p:outputLabel id="carid" value="#{usuarioController.cargo.carnombre}" 
+                                                />
+                                            
+                                        </p:column>
+
+                                    </p:row>
+                                </p:panelGrid>
+
+                            </h:panelGroup>
+                        </h:form>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+
+        </p:dialog>
+
+    </ui:composition>
+</html>

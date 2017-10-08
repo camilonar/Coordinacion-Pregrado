@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartamentoEditDlg" widgetVar="DepartamentoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar  Departamento">
+            
+             <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+            <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+            <br/>
+            <br/>
+            <h:form id="DepartamentoEditForm" >
+                <p:growl id="messages" showDetail="true" />
+                <h:panelGroup id="display">
+                    <p:panelGrid style="label {font-weight:bold }" styleClass="panelgrid"  rendered="#{departamentoController.selected != null}">
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel style="font-weight: bold; color: #000000" value="Identificación:" for="idDepartamento" />
+                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column>´
+                            <p:column>
+                                <p:inputText id="idDepartamento" value="#{departamentoController.selected.idDepartamento}" title="#{bundle.EditDepartamentoTitle_idDepartamento}" required="true" requiredMessage="" disabled="true"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel style="font-weight: bold; color: #000000" value="#{bundle.EditDepartamentoLabel_nombre}" for="nombre" />
+                                 <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="nombre" value="#{departamentoController.selected.nombre}" title="#{bundle.EditDepartamentoTitle_nombre}" required="true" requiredMessage="Nombre de departamento es obligatorio">
+                                    <f:validator validatorId="ValidarCampoNombreDepartamento"/>
+                                    <p:ajax event="keyup" update="msgNombre"/>
+                                </p:inputText>
+                                
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                            </p:column>
+                            <p:column style = "width: 180px">
+                                <p:message id="msgNombre" for="nombre"/>
+                            </p:column>
+
+                        </p:row>
+
+                     
+
+                    </p:panelGrid>
+
+                </h:panelGroup>
+                
+                   <p:separator/>
+                   <center>
+                       
+                          <p:commandButton value="Cancelar" onclick ="PF('DepartamentoEditDialog').hide();" action = "#{departamentoController.cancelarEdicion()}"/>
+                                    <p:commandButton id="submit-btn"
+                                                     action="#{departamentoController.editarDepartamento()}" value="Actualizar" update="display,:DepartamentoListForm:datalist" />
+                              
+                                 
+                              
+                       
+                   </center>
+                   
+            </h:form>
+        </p:dialog>
+
+
+
+    </ui:composition>
+</html>
+

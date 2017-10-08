@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/sesionAdmin/_admintmp.xhtml">
+
+        <ui:define name="body">
+
+            <h:body>
+                                <p:separator/>
+                <center><p:outputLabel value="Departamentos y facultades" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <p:separator/>
+                <br/>
+                <h:form id="form">
+                    <p:commandButton id="createButton" icon="ui-icon-plus" value="Registrar Departamento" onclick="PF('DepartamentoCreateDialog').show()"/>
+                </h:form>
+                <h:form id="DepartamentoListForm">
+                     <p:growl id="msg" showDetail="true" life="4000"/>
+                    <p:dataTable id="datalist" value="#{departamentoController.items}" var="item"
+
+                                 paginator="true"
+                                 rowKey="#{item.idDepartamento}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 paginatorPosition="top"
+                                 >
+
+                        <p:column style = "width: 220px">
+                            <f:facet name="header">
+                                <h:outputText value="Identificación departamento"/>
+                            </f:facet>
+                            <center><h:outputText value="#{item.idDepartamento}"/></center>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre Departamento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column style="width: 70px">
+
+                            <f:facet name="header">
+                                <h:outputText value="Acciones"/>
+                            </f:facet>
+
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" action="#{departamentoController.setSelected(item)}" update=":DepartamentoEditForm" oncomplete="PF('DepartamentoEditDialog').show()" />
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash" action="#{departamentoController.mostrarMensajeConfirmarEliminarDepartamento(item)}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+
+                <ui:include src="agregarDepartamento.xhtml"/>
+                <ui:include src="editarDepartamento.xhtml"/>
+
+
+                <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
+                    <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                    <h:form>
+                        <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                          onclick="PF('mensajeRegistroExitoso').hide()"/>
+                    </h:form>
+                </p:dialog>
+                <p:dialog header="Error" modal="true" position="center" widgetVar="mensajeError" closable="false">
+                    <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                    <h:form>
+                        <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                          onclick="PF('mensajeError').hide()" />
+                    </h:form>
+                </p:dialog>
+
+                <!-->
+                <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeConfirmarEliminar" closable="false">
+                    <p:outputLabel value ="¿Seguro que desea eliminar el departamento?"/><br/><br/>
+                    <h:form>
+                        <center><p:commandButton  value="Aceptar" action="#{departamentoController.eliminarDepartamento()}" style="font-weight: normal;"
+                                                  />
+                            <p:commandButton  value="Cancelar" style="font-weight: normal;"
+                                              action="#{departamentoController.cancelarEliminacion()}"/></center>
+                    </h:form>
+                </p:dialog>
+                -->
+
+                <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeConfirmarEliminar" closable="false">
+                    <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                    <h:form>
+
+
+                       
+                         <p:commandButton  value="Cancelar"  style="margin: 0 5% 0 20%; width:25%;"
+                                          action="#{departamentoController.cancelarEliminacion()}"
+                                          onclick="PF('mensajeConfirmarEliminar').hide()"/>  
+                         
+                        <p:commandButton  value="Aceptar" style="margin: 0 0 0 0; width:25%;"
+                                          action="#{departamentoController.eliminarDepartamento()}"  />
+                       
+
+                        
+
+
+
+                    </h:form>
+                </p:dialog>
+            </h:body>
+
+        </ui:define>
+    </ui:composition>
+</html>

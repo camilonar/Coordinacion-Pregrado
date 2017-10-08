@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MateriaEditDlg" widgetVar="MateriaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar materia">
+            <h:form id="MateriaEditForm">
+                <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" />  
+                <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+                <br/><br/>
+                <h:panelGroup id="display">
+                    <p:panelGrid  styleClass="panelgrid">
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Semestre:" />                                
+                            </p:column> 
+                            <p:column>
+                                <p:selectOneMenu id="semestre" value="#{materiaController.selected.semestre}" required="true" requiredMessage="Campo obligatorio">
+                                    <f:selectItem itemLabel="I" itemValue="I"/>
+                                    <f:selectItem itemLabel="II" itemValue="II"/>
+                                    <f:selectItem itemLabel="III" itemValue="III"/>
+                                    <f:selectItem itemLabel="IV" itemValue="IV"/>
+                                    <f:selectItem itemLabel="V" itemValue="V"/>
+                                    <f:selectItem itemLabel="VI" itemValue="VI"/>
+                                    <f:selectItem itemLabel="VII" itemValue="VII"/>
+                                    <f:selectItem itemLabel="VIII" itemValue="VIII"/>
+                                    <f:selectItem itemLabel="IX" itemValue="IX"/>
+                                    <f:selectItem itemLabel="X" itemValue="X"/>                                 
+                                </p:selectOneMenu>
+                            </p:column>
+
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Código Materia:" />
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="codigoMateria" value="#{materiaController.selected.codigoMateria}" title="Codigo Materia" required="true" requiredMessage="Campo Obligatorio">
+                                    <f:validator validatorId="ValidarCampoCodigoA"/>
+                                    <p:ajax event="keyup" update="msgCodigo"/>
+                                </p:inputText>
+                            </p:column>
+                        
+                        </p:row>
+			<p:row> 
+                            <p:column>
+
+                            </p:column>
+                            <p:column style = "width: 100px">
+                                <p:message id="msgSemestre" for="semestre"/>  
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                            <p:column style = "width: 100px">
+                                    <p:message id="msgCodigo" for="codigoMateria"/> 
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Nombre Materia:" />
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column> 
+                            <p:column>
+                                <p:inputText id="nombreMateria" value="#{materiaController.selected.nombreMateria}" title="Nombre materia" required="true" requiredMessage="Campo Obligatorio">
+                            <f:validator validatorId="ValidarCampoNombre"/>
+                                    <p:ajax event="keyup" update="msgNombre"/>
+                                </p:inputText>
+                            </p:column>
+
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Créditos:" />
+                                
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="creditos" value="#{materiaController.selected.creditos}" title="Creditos" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
+                             <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
+                                    <p:ajax event="keyup" update="msgCreditos"/>
+                                </p:inputText>
+                            </p:column>						
+                        
+                        </p:row>
+			<p:row> 
+                            <p:column>
+
+                            </p:column>
+                            <p:column style = "width: 100px">
+                                <p:message id="msgNombre" for="nombreMateria"/> 
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                            <p:column style = "width: 100px">
+                                    <p:message id="msgCreditos" for="creditos"/>  
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Intensidad Horaria:" />
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="intensidadHoraria" value="#{materiaController.selected.intensidadHoraria}" title="Intensidad horaria" required="true" requiredMessage="Campo Obligatorio" converterMessage="El campo solo admite valores numéricos positivos" validatorMessage="El campo solo admite valores numéricos positivos">
+                                <f:validateLongRange minimum = "0" maximum = "2147483647"/> 
+                                    <p:ajax event="keyup" update="msgIhoraria"/>
+                                </p:inputText>                            
+                            </p:column>   
+                            <p:column>
+                                <p:outputLabel style="font-weight:bold;" value="Departamento:" />                                
+                            </p:column> 
+                            <p:column>
+                                <p:selectOneMenu style="width: 100px" id="idDepartamento" value="#{materiaController.departamento}" required="true" requiredMessage="#{bundleMateria.EditMateriaRequiredMessage_idDepartamento}">
+                                    <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                                   var="idDepartamentoItem"
+                                                   itemValue="#{idDepartamentoItem}"
+                                                   itemLabel="#{idDepartamentoItem.nombre}"/>
+                                </p:selectOneMenu>  
+                            </p:column>                    
+                        </p:row>
+			<p:row> 
+                            <p:column>
+
+                            </p:column>
+                            <p:column style = "width: 100px">
+                                <p:message id="msgIhoraria" for="intensidadHoraria"/>
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                        </p:row>                    
+                        
+                    </p:panelGrid>
+                    <p:separator/>
+                    <center>
+                        <p:button value="Cancelar" onclick ="PF('MateriaEditDialog').hide();
+                            $('#MateriaEditForm').trigger('reset');" style="margin: 20px;">
+                        </p:button>
+                        <p:commandButton id="submit-btn"
+                            action="#{materiaController.editarMateria()}" value="Actualizar" update="display,:MateriaListForm:datalist" />                   
+                    </center>
+                   
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

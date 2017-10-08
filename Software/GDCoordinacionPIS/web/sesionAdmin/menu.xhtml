@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <div id="contenidoMenu">
+            <h:form id="menu-admin">
+                <p:menu>
+                    <p:submenu label="Materias">
+                        <p:menuitem id="menuitem-materias"
+                            value="Gestión de materias" action="/administrador/materia/ListarMaterias.xhtml?faces-redirect=true"   actionListener="#{addNavegacionController.addOfertaAcademicaRegistroMaterias()}" ajax="false"/>                        
+                    </p:submenu>    
+                    <p:submenu label="Departamentos  y facultades">
+                        <p:menuitem id="menuitem-departamentos-facultades"
+                            value="Gestión de departamentos " action="/administrador/departamento/listarDepartamento.xhtml?faces-redirect=true"  actionListener="#{addNavegacionController.addOfertaAcademicaRegistroDepFac()}" ajax="false"/>
+                    </p:submenu>
+                    <p:submenu label="Usuarios">
+                        <p:menuitem id="menuitem-usuarios"
+                            value="Gestión de usuarios" action="/administrador/usuario/ListarUsuarios.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addGestionUsuario()}"  ajax="false"/>
+                    </p:submenu>  
+                </p:menu>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>
