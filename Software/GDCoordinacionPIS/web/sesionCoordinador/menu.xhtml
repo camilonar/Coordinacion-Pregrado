@@ -17,10 +17,13 @@
                         <p:menuitem id="menuitem-planes-estudio"
                             value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
                     </p:submenu>  
-                    <p:submenu label="Anteproyecto">
+                    <p:submenu label="Anteproyectos">
                         <p:menuitem id="menuitem-anteproyectos"
-                            value="Gestión de anteproyectos" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
-                         <p:menuitem id="menuitem-formatoC"
+                            value="Gestión de formato A" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                        
+                        <p:menuitem id="menuitem-formatoB"
+                            value="Gestión de formato B" action="/coordinador/anteproyecto/FormatoB/formatoB.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                        <p:menuitem id="menuitem-formatoC"
                             value="Gestión de formato C" action="/coordinador/anteproyecto/FormatoC/formatoC.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
                     </p:submenu>
                 </p:menu>

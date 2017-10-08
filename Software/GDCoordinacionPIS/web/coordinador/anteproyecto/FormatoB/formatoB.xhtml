@@ -16,33 +16,33 @@
             </h:head>
             <h:body>
                 <p:separator/>
-                <center><p:outputLabel value="Anteproyectos - Gestión de formato A" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <center><p:outputLabel value="Anteproyectos - Gestión de formato B" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
                 
                 
-                <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
-                <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
-                <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
-                <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
+                <br rendered="#{!registroFormatoBController.comprobarConexionOpenKM}"/>
+                <br rendered="#{!registroFormatoBController.comprobarConexionOpenKM}"/>
+                <center><h:outputLabel rendered="#{!registroFormatoBController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
+                <center><h:outputLabel rendered="#{!registroFormatoBController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
 
                
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
                 
-                <h:form id="form" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">
+                <h:form id="form" rendered="#{registroFormatoBController.comprobarConexionOpenKM}">
                     <p:commandButton id="createButton"
-                        value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                        value="Agregar Formato B" onclick="PF('dlgRegistroFormatoB').show()"/>
 
                 </h:form>
                 
                 
-                <h:form style="padding-top: 10px;" id="formListaAnteproyectos" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">    
+                <h:form style="padding-top: 10px;" id="formListaAnteproyectos" rendered="#{registroFormatoBController.comprobarConexionOpenKM}">    
                     <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
-                    <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoAController.datos}">
+                    <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoBController.datos}">
                         <p:ajax update="datalist"  event="keyup" />
                     </p:inputText>  
-                    <p:dataTable value="#{registroFormatoAController.listadoAnteproecto}" 
+                    <p:dataTable value="#{registroFormatoBController.listadoAnteproecto}" 
                                  id="datalist" paginator="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"
@@ -52,38 +52,38 @@
                             <f:facet name="header">
                                 <p:outputLabel value="Nombre del documento"/>
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoAController.nombreDelArchivo(formatoA.getPath())}"/>
+                            <p:outputLabel value="#{registroFormatoBController.nombreDelArchivo(formatoA.getPath())}"/>
                         </p:column>
                         <p:column style="width: 360px" >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoAController.fecha(formatoA.getCreated())}"/>
+                            <p:outputLabel value="#{registroFormatoBController.fecha(formatoA.getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA)}" />
+                                <p:fileDownload value="#{registroFormatoBController.descargarDocumento(formatoA)}" />
                             </p:commandButton>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
+                                             action="#{registroFormatoBController.cargarDatosEdicion(formatoA)}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoAController.confirmarEliminacion(formatoA)}" 
+                                             action="#{registroFormatoBController.confirmarEliminacion(formatoA)}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
 
                         </p:column>
                     </p:dataTable>
                 </h:form>
 
-                <ui:include src="registrarFormatoA.xhtml"/> 
-                <ui:include src="editarInfoFormatoA.xhtml"/> 
+                <ui:include src="registrarFormatoB.xhtml"/> 
+                <ui:include src="editarInfoFormatoB.xhtml"/> 
                 <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
                     <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
                     <h:form>
@@ -99,7 +99,7 @@
                                           onclick="PF('Confirmacion').hide()"/>
 
                         <p:commandButton  value="Aceptar" style="margin: 0 0 0 0; width:25%;"
-                                          action="#{registroFormatoAController.deleteDocument()}"  />
+                                          action="#{registroFormatoBController.deleteDocument()}"  />
                     </h:form>
                 </p:dialog>
                 <p:dialog widgetVar="visualizarPDF" modal="true">
