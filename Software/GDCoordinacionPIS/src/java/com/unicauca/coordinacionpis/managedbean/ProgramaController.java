@@ -16,6 +16,8 @@ public class ProgramaController implements Serializable {
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.ProgramaFacade ejbFacade;
     private List<Programa> items = null;
+    
+    
     private Programa programa;
    
 
