@@ -51,9 +51,7 @@ public class Programa implements Serializable {
         @JoinColumn(name = "idUsuario", referencedColumnName = "USUID")})
     @ManyToMany
     private List<Usuario> usuarioList;
-    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
-    @ManyToOne(optional = false)
-    private Facultad idfacultad;
+
 
     public Programa() {
     }
@@ -87,13 +85,6 @@ public class Programa implements Serializable {
         this.usuarioList = usuarioList;
     }
 
-    public Facultad getIdfacultad() {
-        return idfacultad;
-    }
-
-    public void setIdfacultad(Facultad idfacultad) {
-        this.idfacultad = idfacultad;
-    }
 
     @Override
     public int hashCode() {

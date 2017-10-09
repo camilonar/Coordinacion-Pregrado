@@ -499,8 +499,6 @@ public class UsuarioController implements Serializable {
 
     public void buscarUsuario() {
         this.items = ejbUsuario.buscarUsuarioEjb(this.datoBusqueda.toLowerCase());
-        System.out.println("->"+items.size());
-        System.out.println("dato: "+this.datoBusqueda);
     }
 
     private byte[] inputStreamToByteArray(UploadedFile file) {
