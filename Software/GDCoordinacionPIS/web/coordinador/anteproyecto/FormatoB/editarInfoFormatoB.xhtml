@@ -49,7 +49,7 @@
                     <p:column colspan="1">
                         <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
                                      value="#{registroFormatoBController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
-                            <p:ajax update="msgTitulo" event="keyup"/>
+                            <p:ajax update="msgTitulo" event="change"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>    
                     </p:column>
@@ -133,7 +133,7 @@
                     <p:column colspan="1">
                        <p:inputText id="nomEstudiante1" size="25"  required="true" requiredMessage="Campo obligatorio" placeholder="Nombre(s) y apellido(s)" 
                                      value="#{registroFormatoBController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
-                            <p:ajax update="msgNombre1" event="keyup"/>
+                            <p:ajax update="msgNombre1" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
 
@@ -146,7 +146,7 @@
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
                                      value="#{registroFormatoBController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
-                            <p:ajax update="msgNombre2" event="keyup"/>
+                            <p:ajax update="msgNombre2" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
 
@@ -186,9 +186,11 @@
                 </p:row>
                 <p:row>
                     <p:column colspan="4">
-                        
-                        <p:commandButton value="Cancelar"  style="margin-left: 40%; margin-right: 15px;" onsuccess="PF('dlgEditarFormatoB').hide()"/>
                        
+                        <p:button value="Cancelar"  onclick ="PF('dlgEditarFormatoB').hide();
+                            $('#formMetadatosEditFormatoB').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
+                        </p:button>  
+                        
                        <p:commandButton id="submit-btn"
                                          value="Actualizar" update=":formListaAnteproyectos:datalist,panelMetadatos"
                                          action="#{registroFormatoBController.actualizarInfoFormatoB()}" 

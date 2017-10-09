@@ -248,6 +248,9 @@ public class RegistroFormatoBController implements Serializable {
     public void cambiarArchivo() {
         exitoSubirArchivo = false;
         RequestContext requestContext = RequestContext.getCurrentInstance();
+        
+        requestContext.update("dlgRegistroFormatoB");        
+        
         requestContext.update("formSeleccionarArchivoFormatoB");
         requestContext.update("formMetadatosFormatoB");
         requestContext.update("formArchivoSelecionadoFormatoB");
@@ -263,6 +266,9 @@ public class RegistroFormatoBController implements Serializable {
         requestContext.execute("PF('dlgRegistroFormatoB').hide()");
         requestContext.update("formArchivoSelecionadoFormatoB");
     }
+    
+    
+   
     
     public void aceptarFormatoB() throws PathNotFoundException {
         
@@ -674,6 +680,11 @@ public class RegistroFormatoBController implements Serializable {
     public void cancelarEdicion() {
         System.out.println("incas");
         RequestContext requestContext = RequestContext.getCurrentInstance();
+        
+        requestContext.update("formSeleccionarArchivoFormatoB");
+        requestContext.update("formMetadatosFormatoB");
+        requestContext.update("formArchivoSelecionadoFormatoB");
+        
         requestContext.execute("PF('dlgEditarFormatoB').hide()");
         requestContext.execute("PF('dlgRegistroFormatoB').hide()");
         
