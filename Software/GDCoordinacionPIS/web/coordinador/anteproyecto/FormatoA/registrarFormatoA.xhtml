@@ -26,6 +26,11 @@
                           allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoAController.seleccionarArchivo}"/>
 
 
+            <script>
+                $(document).on("click", ".ui-fileupload input[type=file]", function (event) {
+                    $(this).closest('.ui-fileupload').find('.ui-icon-close').trigger('click');
+                });
+            </script>
 
             <p:growl id="messages" showDetail="true" />
         </h:form>
@@ -193,8 +198,8 @@
                         <p:message for="nomEstudiante2" id="msgNombre2" style="width: 80%;"/>
                     </p:column>
                 </p:row>
-                
-                
+
+
                 <p:row>
                     <p:column colspan="1">
                         <p:outputLabel value="Acta de aprobación:" style="font-weight: bold; color: #000000"/>
@@ -217,16 +222,16 @@
                 </p:row>
                 <p:row>
                     <p:column colspan="4">
-                        
-                       
-                         <p:button value="Cancelar" onclick ="PF('dlgRegistroFormatoA').hide();
-                            $('#formMetadatosFormatoA').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
+
+
+                        <p:button value="Cancelar" onclick ="PF('dlgRegistroFormatoA').hide();
+                                 $('#formMetadatosFormatoA').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
                         </p:button>  
                         <p:commandButton  id="submit-btn"
-                                         value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
-                                         action="#{registroFormatoAController.aceptarFormatoA()}" 
-                                         onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
-                       
+                                          value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
+                                          action="#{registroFormatoAController.aceptarFormatoA()}" 
+                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+
                     </p:column>
                 </p:row>
 

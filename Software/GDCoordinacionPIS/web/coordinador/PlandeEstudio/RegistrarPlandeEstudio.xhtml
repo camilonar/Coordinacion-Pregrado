@@ -29,6 +29,13 @@ and open the template in the editor.
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
                           allowTypes="/(\.|\/)(pdf)$/"  update="mensaje" fileUploadListener="#{registroPlandeEstudioController.seleccionarArchivo}"/>
 
+            <script>
+                $(document).on("click", ".ui-fileupload input[type=file]", function (event) {
+                    $(this).closest('.ui-fileupload').find('.ui-icon-close').trigger('click');
+                });
+            </script>
+
+
             <p:growl id="mensaje" showDetail="true" life="4000" globalOnly="true" autoUpdate="false"/>
         </h:form>
 

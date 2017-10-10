@@ -233,8 +233,10 @@ public class RegistroFormatoBController implements Serializable {
     }
     
     public void seleccionarArchivo(FileUploadEvent event) {
+        
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
+        System.out.println("archivo b:"+ archivOferta.getFileName());
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + event.getFile().getFileName() + "' se selccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();

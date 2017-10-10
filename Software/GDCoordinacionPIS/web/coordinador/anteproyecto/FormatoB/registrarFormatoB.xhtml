@@ -21,9 +21,17 @@
 
             <p:fileUpload id="file-upload"
                           rendered="#{!registroFormatoBController.exitoSubirArchivo}" mode="advanced" 
-                          label="Seleccionar archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
+                          label="Seleccionar archivo"  fileLimit="1" fileLimitMessage="Sólo es posible seleccionar un archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
-                          allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoBController.seleccionarArchivo}"/>
+                          allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoBController.seleccionarArchivo}">
+
+                <script>
+                    $(document).on("click", ".ui-fileupload input[type=file]", function (event) {
+                        $(this).closest('.ui-fileupload').find('.ui-icon-close').trigger('click');
+                    });
+                </script>
+                
+            </p:fileUpload>
 
 
 
@@ -194,8 +202,8 @@
                         <p:message for="nomEstudiante2" id="msgNombre2" style="width: 80%;"/>
                     </p:column>
                 </p:row>
-                
-                
+
+
                 <p:row>
                     <p:column colspan="1">
                         <p:outputLabel value="Acta de aprobación:" style="font-weight: bold; color: #000000"/>
@@ -218,17 +226,17 @@
                 </p:row>
                 <p:row>
                     <p:column colspan="4">
-                        
-                       
-                          <p:button value="Cancelar" onclick ="PF('dlgRegistroFormatoB').hide();
-                            $('#formMetadatosFormatoB').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
+
+
+                        <p:button value="Cancelar" onclick ="PF('dlgRegistroFormatoB').hide();
+                                  $('#formMetadatosFormatoB').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
                         </p:button>                
-                       
+
                         <p:commandButton  id="submit-btn"
-                                         value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
-                                         action="#{registroFormatoBController.aceptarFormatoB()}" 
-                                         onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
-                       
+                                          value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
+                                          action="#{registroFormatoBController.aceptarFormatoB()}" 
+                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+
                     </p:column>
                 </p:row>
 
