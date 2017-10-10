@@ -206,10 +206,10 @@
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
                              <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
-                                              filter="true" style="width: 155px;">
+                                              filter="true" style="width: 155px;" >
                                 <p:ajax event="change" update="departamentoId"/> 
                                 <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
-                                               var="dpto"
+                                               var="dpto" 
                                                itemValue="#{dpto}"
                                                itemLabel="#{dpto.nombre}"
                                                >

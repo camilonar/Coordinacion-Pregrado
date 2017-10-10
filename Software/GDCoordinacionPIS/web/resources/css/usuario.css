@@ -169,3 +169,13 @@ body {
 {
     background:#339cdf url(../img/editar.svg) repeat-x;
 }
+
+.ui-selectonemenu-filter-container {
+    width: 80% !important;
+    display: block;
+    border: 0;
+}
+.ui-icon-search{
+    margin-left: 0px !important;
+    border-left: 0px !important;
+}
