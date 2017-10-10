@@ -45,6 +45,7 @@ public class VisualizarDocumentoBean {
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update(":visualizacion");
             requestContext.execute("PF('visualizarPDF').show()");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
