@@ -239,7 +239,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         this.subirDocumento(okm, archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
-<<<<<<< HEAD
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
         //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -252,116 +251,22 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
         rc.update("mensaje2");
         rc.update("msg");
-=======
 
-        try {
+        limpiarVariables();
 
-            boolean existeFolder = false;
-            boolean existeFolderCoordinacion = false;
-            boolean existeDocumento = false;
-            String consecutivo = "";
-            int iter = 0;
-            String nombreArchTmp = nombreArchivo.split(".pdf")[0];
+        rc.update("formSeleccionarArchivoPlanEstudio");
+        rc.update("formArchivoSelecionadoPlanEstudio");
+        rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
 
-            existeFolderCoordinacion = existeCarpeta(1);
+        rc.update("lstPlanesEstudio");
 
-            if (existeFolderCoordinacion) {
-                existeFolder = existeCarpeta(2);
-            } else {
-                okm.createFolderSimple("/okm:root/Coordinacion");
-            }
+        rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
 
-            if (existeFolder) {//Si existe la carpeta, busca el documento
-                boolean repetido = false;
-                while (!repetido) {
-                    for (com.openkm.sdk4j.bean.Document doc : okm.getDocumentChildren("/okm:root/Coordinacion/Planes de Estudio")) {
-                        if (doc.getPath().equalsIgnoreCase("/okm:root/Coordinacion/Planes de Estudio/" + nombreArchTmp + consecutivo + ".pdf")) {//Buscar en openkm si existe el archivo a guardar
-                            iter++;
-                            consecutivo = "_" + iter;
-                            repetido = false;
-                            existeDocumento = true;
-                            break;
-                        }
-                        repetido = true;
-                    }
-                }
-            }
-            if (existeFolder) {//Si existe la carpeta Planes de Estudio, crea dentro de ella el documento
-                if (!existeDocumento) {
-                    okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento en openkm                    
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+        rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
 
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "'  se registró con éxito");
-                } else {
-                    okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", archivoPlan.getInputstream());//Crear el documento en openkm                    
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + metadatosPlandeEstudio.getNumero());
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + metadatosPlandeEstudio.getAcuerdo());
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+        rc.update("mensaje2");
+        rc.update("msg");
 
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", nombreArchivo+" esta repetido, se agregara un consecutivo al nuevo documento");
-                }
-            } else {//Si la carpeta no existe, la crea y dentro de ella crea el documento.
-
-                okm.createFolderSimple(rutaPlanesDeEstudio);//Crear carpeta Planes de Estudio en openkm
-                okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento dentro de la carpeta Planes de Estudio en openkm
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
-            }
-
-            //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
-            FacesContext.getCurrentInstance().addMessage(null, message);
-
-            limpiarVariables();
-
-            rc.update("formSeleccionarArchivoPlanEstudio");
-            rc.update("formArchivoSelecionadoPlanEstudio");
-            rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
-
-            listaDocs();
-            rc.update("lstPlanesEstudio");
-
-            rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
-
-            rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
-
-            rc.update("mensaje2");
-            rc.update("msg");
-
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ItemExistsException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedMimeTypeException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileSizeExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UserQuotaExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VirusDetectedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VersionException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
->>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
     }
 
     /**
@@ -416,11 +321,9 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
 
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
-<<<<<<< HEAD
-        String path = this.getPathDocumento()+nombreArchivo;
-=======
 
->>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
+        String path = this.getPathDocumento() + nombreArchivo;
+
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
                 okm.deleteDocument(path + "/" + documentoAnterior);
@@ -462,41 +365,10 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
             rc.update("lstPlanesEstudio");
             rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
 
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedMimeTypeException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileSizeExceededException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UserQuotaExceededException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VirusDetectedException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ItemExistsException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VersionException ex) {
+        } catch (AccessDeniedException | RepositoryException | PathNotFoundException | LockException | DatabaseException | ExtensionException | UnknowException | WebserviceException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException | ItemExistsException | AutomationException | VersionException ex) {
             Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     /**
      * Limita la fecha de la vigencia del plan de estudio
@@ -516,41 +388,8 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         nombreArchivo = "";
         archivoPlan = null;
         exitoSubirArchivo = false;
-<<<<<<< HEAD
-=======
 
     }
-
-    /**
-     * Verifica en openkm si existe o no el directorio donde se van a guardar
-     * los planes de estudio. Si existe retorna true, de lo contrario retorna
-     * false.
-     *
-     * @return retorna un valor true o false. existe en openkm
-     * @throws PathNotFoundException
-     * @throws RepositoryException
-     * @throws DatabaseException
-     * @throws UnknowException
-     * @throws WebserviceException
-     */
-    private boolean existeCarpeta(int opcion) throws PathNotFoundException, RepositoryException, DatabaseException, UnknowException, WebserviceException {
-
-        if (opcion == 1) {
-            for (Folder fld : okm.getFolderChildren("/okm:root")) {
-
-                if (fld.getPath().equalsIgnoreCase("/okm:root/Coordinacion")) {
-                    return true;
-                }
-            }
-
-        } else {
-            for (Folder f : okm.getFolderChildren("/okm:root/Coordinacion")) {
-                if (f.getPath().equalsIgnoreCase(rutaPlanesDeEstudio)) {//Buscar en openkm si existe la carpeta Planes de Estudio     
->>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
-
-    }
-
- 
 
     /**
      * Recibe como parametro el plan de estudios a descargar, obtiene la ruta de
@@ -747,7 +586,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         }
     }
 
-<<<<<<< HEAD
     @Override
     public String getPathDocumento() {
         return "/okm:root/Coordinacion/Plan de Estudios/" + this.getPrgramaUsuario() + "/";
@@ -766,6 +604,4 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
 
     }
 
-=======
->>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
 }
