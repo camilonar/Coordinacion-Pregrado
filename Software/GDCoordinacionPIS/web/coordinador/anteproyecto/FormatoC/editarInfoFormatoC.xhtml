@@ -1,11 +1,206 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    
-   
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML f1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:dialog id="AnteproyectoEditDlg"
+              widgetVar="dlgEditarFormatoC" modal="true" resizable="false" width="900"  position="300,50"  
+              closable="true" header="Editar formato C"> 
+
+        <p:ajax event="close" listener="#{formatoCController.cancelarFormatoC()}"/>
+        
+        
+     
+        <h:form id="formMetadatosEditFormatoC" >
+            
+            <p:panelGrid styleClass="panelgrid" id="panelMetadatos"  style="width: 100%;">
+
+                <p:row>
+
+                    <p:column colspan="4">
+                        <p:separator/>
+                        <center><p:outputLabel value="Información para editar formato C:" style="font-size: medium; font-weight: bold;"/></center>
+                        <p:separator/>
+                    </p:column>
+
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="4" style="padding-bottom: 30px; padding-top: 10px;">
+                        <p:outputLabel style="color: #000000" value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                        <p:outputLabel style="color: #000000" value=") son obligatorios."/>
+                        <br/>
+                    </p:column>
+                </p:row>
+
+
+
+                <p:row>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Título del anteproyecto:" style="font-weight: bold;color: #000000 "/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
+                                     value="#{formatoCController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
+                            <p:ajax update="msgTitulo" event="change"/>
+                            <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
+                        </p:inputText>    
+                    </p:column>
+
+
+
+                    <p:column colspan="1">
+
+                        <p:outputLabel value="Fecha:" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Esto es de Iver xD" style="font-weight: bold; color: #000000"/>
+                    </p:column>
+                         
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="titulo" id="msgTitulo" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        
+                    </p:column>
+                </p:row>
+
+
+                <p:row>
+                    <p:column colspan="1">
+                        <p:outputLabel value="Docente:" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:selectOneMenu id="docente" style="width: 93%; "  required="true" requiredMessage="Campo obligatorio"  filter="true" value="#{formatoCController.metadatosAnteproyectos.profesor}">
+                            <f:selectItem itemLabel="-- Seleccione un docente -- "/>
+                            <f:selectItems  value="#{formatoCController.listaDocentes}" var="profesor" 
+                                           itemLabel="#{profesor.nombres} #{profesor.apellidos}" itemValue="#{profesor.nombres} #{profesor.apellidos}" />
+                        </p:selectOneMenu>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Viabilidad:" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:selectOneRadio required="true" requiredMessage="Campo requerido" id="viabilidad" style="width: 50%;" 
+                                          value="#{formatoCController.metadatosAnteproyectos.viabilidad}"  >
+                            <f:selectItem itemLabel="Si" itemValue="Si"/>
+                            <f:selectItem itemLabel="No" itemValue="No"/>
+                        </p:selectOneRadio>
+
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="docente" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="viabilidad" style="width: 80%;"/>
+                    </p:column>
+                </p:row>
+
+                
+                <p:row>
+                    <p:column colspan="1">
+                        <p:outputLabel value="Nombre del " style="font-weight: bold; color: #000000"/><br/>
+                        <p:outputLabel value="primer estudiante:" style="font-weight: bold;"/>
+                         <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                       <p:inputText id="nomEstudiante1" size="25"  required="true" requiredMessage="Campo obligatorio" placeholder="Nombre(s) y apellido(s)" 
+                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
+                            <p:ajax update="msgNombre1" event="change"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
+                        </p:inputText>
+
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Nombre del " style="font-weight: bold; color: #000000"/><br/>  
+                        <p:outputLabel value="segundo estudiante:" style="font-weight: bold;"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
+                            <p:ajax update="msgNombre2" event="change"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
+                        </p:inputText>
+
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante1" id="msgNombre1" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante2" id="msgNombre2" style="width: 80%;"/>
+                    </p:column>
+                </p:row>
+                
+                <p:row>
+                    <p:column colspan="1">
+                        <p:outputLabel value="Acta de aprobación:" style="font-weight: bold; color: #000000"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:selectOneMenu style="width: 93%;" id="actaAprobacion" value="#{formatoCController.metadatosAnteproyectos.actaAprobacion}" >
+                            <f:selectItem itemLabel="--Seleccione una opción--" itemValue="default"/>
+                            <f:selectItem itemLabel="Acta-0001" itemValue="ac-0001"/>
+                            <f:selectItem itemLabel="Acta-0002" itemValue="ac-0002"/>
+                            <f:selectItem itemLabel="Acta-0003" itemValue="ac-0003"/>
+                            <f:selectItem itemLabel="Acta-0004" itemValue="ac-0004" />
+                        </p:selectOneMenu>
+
+                    </p:column>
+                </p:row>
+
+
+                <p:row>
+                    <p:column colspan="4"/>
+                </p:row>
+                <p:row>
+                    <p:column colspan="4">
+                       
+                        <p:button value="Cancelar"  onclick ="PF('dlgEditarFormatoC').hide();
+                            $('#formMetadatosEditFormatoC').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
+                        </p:button>  
+                        
+                       <p:commandButton id="submit-btn"
+                                         value="Actualizar" update=":formListaFormatoC:datalist,panelMetadatos"
+                                         action="#{formatoCController.actualizarInfoFormatoC()}" 
+                                         onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                  
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid> 
+
+            <p:growl id="messagesGuardar" showDetail="true" />
+        </h:form>
+
+
+    </p:dialog>
+
 </html>
+

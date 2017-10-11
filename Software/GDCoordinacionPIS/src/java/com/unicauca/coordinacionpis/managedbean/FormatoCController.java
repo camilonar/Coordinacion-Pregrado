@@ -269,7 +269,10 @@ public class FormatoCController implements Serializable{
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setFecha(name.getValue());
                 }
-
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad")) {
+                    Input name = (Input) fElement;
+                    this.metadatosAnteproyectos.setViabilidad(name.getValue());
+                }
                 if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setNombreEstudiante1(name.getValue());
