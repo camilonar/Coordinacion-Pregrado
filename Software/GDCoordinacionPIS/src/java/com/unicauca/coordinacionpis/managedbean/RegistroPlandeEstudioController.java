@@ -25,6 +25,7 @@ import com.openkm.sdk4j.exception.VersionException;
 import com.openkm.sdk4j.exception.VirusDetectedException;
 import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosPlanEstudio;
+import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
 import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import com.unicauca.coordinacionpis.utilidades.Validador;
 import java.io.BufferedInputStream;
@@ -63,7 +64,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class RegistroPlandeEstudioController implements Serializable {
+public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate implements Serializable {
 
     /**
      * Atributos
@@ -81,7 +82,6 @@ public class RegistroPlandeEstudioController implements Serializable {
     private BufferedInputStream input;
     private SimpleDateFormat formatoFecha;
     private String documentoAnterior;
-    private String rutaPlanesDeEstudio;
     private int auxNumeroPlan;
     private String auxAcuerdoPlan;
     private Date auxFechaPlan;
@@ -100,7 +100,6 @@ public class RegistroPlandeEstudioController implements Serializable {
         this.conexionOpenKM = new ConexionOpenKM();
         this.okm = conexionOpenKM.getOkm();
         this.documentoAnterior = "";
-        this.rutaPlanesDeEstudio = "/okm:root/Coordinacion/Planes de Estudio";
         auxNumeroPlan = 1;
         auxAcuerdoPlan = "";
         auxFechaPlan = null;
@@ -130,9 +129,8 @@ public class RegistroPlandeEstudioController implements Serializable {
         this.datos = datos;
     }
 
-    public List<Document> getDocumentosPlanEstudio() {
-
-        return documentosPlanEstudio;
+    public List<Document> getDocumentosPlanEstudio() throws PathNotFoundException, RepositoryException, RepositoryException {
+        return this.getListaDocumentos(okm, datos);
     }
 
     public void setDocumentosPlanEstudio(List<Document> documentosPlanEstudio) {
@@ -238,8 +236,23 @@ public class RegistroPlandeEstudioController implements Serializable {
      * los planes de estudio(planEstudio).
      */
     public void aceptarRegistroPlanEstudio() {
+        this.subirDocumento(okm, archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
+<<<<<<< HEAD
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
+        //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        limpiarVariables();
+        rc.update("formSeleccionarArchivoPlanEstudio");
+        rc.update("formArchivoSelecionadoPlanEstudio");
+        rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
+        rc.update("lstPlanesEstudio");
+        rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
+        rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
+        rc.update("mensaje2");
+        rc.update("msg");
+=======
 
         try {
 
@@ -348,6 +361,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         } catch (LockException ex) {
             Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
         }
+>>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
     }
 
     /**
@@ -402,29 +416,33 @@ public class RegistroPlandeEstudioController implements Serializable {
 
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
+<<<<<<< HEAD
+        String path = this.getPathDocumento()+nombreArchivo;
+=======
 
+>>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
-                okm.deleteDocument(rutaPlanesDeEstudio + "/" + documentoAnterior);
-                okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento en openkm   
-                okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
-                okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
-                okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+                okm.deleteDocument(path + "/" + documentoAnterior);
+                okm.createDocumentSimple(path, archivoPlan.getInputstream());//Crear el documento en openkm   
+                okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
+                okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
+                okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
             } else {
                 if (metadatosPlandeEstudio.getNumero() != auxNumeroPlan) {
-                    okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxNumeroPlan);
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getNumero());
+                    okm.removeKeyword(path, "" + auxNumeroPlan);
+                    okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
                 if (!metadatosPlandeEstudio.getAcuerdo().equalsIgnoreCase(auxAcuerdoPlan)) {
-                    okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + auxAcuerdoPlan);
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
+                    okm.removeKeyword(path, "" + auxAcuerdoPlan);
+                    okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
                 if (metadatosPlandeEstudio.getVigencia().compareTo(auxFechaPlan) != 0) {
-                    okm.removeKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(auxFechaPlan));
-                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+                    okm.removeKeyword(path, "" + formatoFecha.format(auxFechaPlan));
+                    okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
             }
@@ -441,8 +459,6 @@ public class RegistroPlandeEstudioController implements Serializable {
             rc.update("formActualizarArchivoPlanEstudio");
             rc.update("formArchivoSelecionadoActualizarPlanEstudio");
             rc.update("formActualizarMetadatosPlanEstudio");//Actualizar el formulario de registro
-
-            listaDocs();
             rc.update("lstPlanesEstudio");
             rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
 
@@ -481,29 +497,6 @@ public class RegistroPlandeEstudioController implements Serializable {
         }
     }
 
-    /**
-     * Recupera los planes de estudio contenidos en openkm
-     */
-    public void listaDocs() {
-        try {
-
-            if (existeCarpeta(1) && existeCarpeta(2)) {
-                documentosPlanEstudio.clear();
-                documentosPlanEstudio = okm.getDocumentChildren(rutaPlanesDeEstudio);//Obtener los Planes de Estudio contenidos en openkm          
-            }
-
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /**
      * Limita la fecha de la vigencia del plan de estudio
@@ -523,6 +516,8 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = "";
         archivoPlan = null;
         exitoSubirArchivo = false;
+<<<<<<< HEAD
+=======
 
     }
 
@@ -551,14 +546,11 @@ public class RegistroPlandeEstudioController implements Serializable {
         } else {
             for (Folder f : okm.getFolderChildren("/okm:root/Coordinacion")) {
                 if (f.getPath().equalsIgnoreCase(rutaPlanesDeEstudio)) {//Buscar en openkm si existe la carpeta Planes de Estudio     
+>>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
 
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
+
+ 
 
     /**
      * Recibe como parametro el plan de estudios a descargar, obtiene la ruta de
@@ -755,4 +747,25 @@ public class RegistroPlandeEstudioController implements Serializable {
         }
     }
 
+<<<<<<< HEAD
+    @Override
+    public String getPathDocumento() {
+        return "/okm:root/Coordinacion/Plan de Estudios/" + this.getPrgramaUsuario() + "/";
+    }
+
+    @Override
+    public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
+        try {
+            String path = this.getPathDocumento() + archivOferta.getFileName();
+            okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
+            okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
+            okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+        } catch (VersionException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
+            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+=======
+>>>>>>> ef19b9c17ea5e1e702d877649ed2d912efa7d784
 }

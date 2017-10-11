@@ -37,8 +37,7 @@ and open the template in the editor.
 
                 </h:form>
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
-                    <!--Llama al método listaDocs para recuperar los planes de estudio contenidos en openkm-->
-                    <div onclick="#{registroPlandeEstudioController.listaDocs()}"/>
+                 
                     <!--Muestra los planes de estudio contenidos en openkm-->
                     <p:dataTable value="#{registroPlandeEstudioController.documentosPlanEstudio}"
                                  id="lstPlanesEstudio" paginator="true"

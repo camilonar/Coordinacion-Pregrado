@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unicauca.coordinacionpis.managedbean.Anteproyecto;
+package com.unicauca.coordinacionpis.managedbean.Document;
 
 import com.openkm.sdk4j.OKMWebservices;
 import com.openkm.sdk4j.bean.QueryParams;
@@ -49,20 +49,19 @@ import org.primefaces.model.UploadedFile;
  *
  * @author David
  */
-public abstract class RegistroFormatoTemplate {
+public abstract class RegistroDocumentoTemplate {
 
-    String programaFormato;
+    String programa;
 
     @EJB
     private UsuarioFacade ejbUsuario;
 
     /**
-     * Retorna la ruta donde se guardará el formato esta ruta debe incluir la
-     * ruta de inicio e.j "/okm:root/" donde root es el usuario.
+     * Retorna la ruta donde se guardan los documentos .
      *
      * @return
      */
-    public abstract String getPathFormato();
+    public abstract String getPathDocumento();
 
     //Agraga los metadatos al archivo guardado en openKM
     /**
@@ -72,11 +71,11 @@ public abstract class RegistroFormatoTemplate {
      */
     public abstract void addMetadata(OKMWebservices okm, UploadedFile archivOferta);
 
-    public void subirFormato(OKMWebservices okm, UploadedFile archivOferta) {
+    public void subirDocumento(OKMWebservices okm, UploadedFile archivOferta) {
 
         try {
-            this.crearRutaFormato(okm);
-            okm.createDocumentSimple(this.getPathFormato() + archivOferta.getFileName(), archivOferta.getInputstream());
+            this.crearRutaDocumento(okm);
+            okm.createDocumentSimple(this.getPathDocumento() + archivOferta.getFileName(), archivOferta.getInputstream());
 
             this.addMetadata(okm, archivOferta);
         } catch (PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException | AccessDeniedException | ItemExistsException | ExtensionException | AutomationException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException ex) {
@@ -91,9 +90,9 @@ public abstract class RegistroFormatoTemplate {
      *
      * @param okm objeto con la sesion en openKM
      */
-    public void crearRutaFormato(OKMWebservices okm) throws RepositoryException, AccessDeniedException, DatabaseException, UnknowException, WebserviceException, PathNotFoundException, ItemExistsException, ExtensionException, AutomationException {
+    public void crearRutaDocumento(OKMWebservices okm) throws RepositoryException, AccessDeniedException, DatabaseException, UnknowException, WebserviceException, PathNotFoundException, ItemExistsException, ExtensionException, AutomationException {
 
-        String ruta = this.getPathFormato();
+        String ruta = this.getPathDocumento();
 
         if (okm.hasNode(ruta)) {
             return;
@@ -111,9 +110,9 @@ public abstract class RegistroFormatoTemplate {
     }
 
     //LISTAR D EMANERA GENERIA CON PAGINACINOO 
-    public List<com.openkm.sdk4j.bean.Document> getListaFormatos(OKMWebservices okm, String name) throws PathNotFoundException, RepositoryException {
+    public List<com.openkm.sdk4j.bean.Document> getListaDocumentos(OKMWebservices okm, String name) throws PathNotFoundException, RepositoryException {
 
-        String ruta = this.getPathFormato();
+        String ruta = this.getPathDocumento();
         List<com.openkm.sdk4j.bean.Document> listadoDocsFormatos = new ArrayList<>();
         listadoDocsFormatos.clear();
         try {
@@ -136,20 +135,20 @@ public abstract class RegistroFormatoTemplate {
 
     public String getPrgramaUsuario() {
 
-        if (this.programaFormato == null) {
+        if (this.programa == null) {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
             Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
             UsuarioPrograma usuarioPrograma = usuario.getUsuarioProgramaList().get(0); ///VERIFICAR SI ES SOLO UNO TODO TO DO
             String nombrePrograma = usuarioPrograma.getPrograma().getNombrePrograma();
             
-            this.programaFormato = nombrePrograma;
+            this.programa = nombrePrograma;
             
             return nombrePrograma;
             
         } else {
            
-            return programaFormato;
+            return programa;
         }
 
     }

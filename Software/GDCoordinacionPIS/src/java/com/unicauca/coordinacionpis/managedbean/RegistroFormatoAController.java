@@ -48,8 +48,9 @@ import com.unicauca.coordinacionpis.classMetadatos.Docente;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
 import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
-import com.unicauca.coordinacionpis.managedbean.Anteproyecto.RegistroFormatoTemplate;
+import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
+import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -94,7 +95,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class RegistroFormatoAController extends RegistroFormatoTemplate implements Serializable {
+public class RegistroFormatoAController extends RegistroDocumentoTemplate implements Serializable {
 
     //TEMPORALLLL
     String programaTemporal = "Sistemas";
@@ -110,10 +111,8 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
     private String datos;
     private List<com.openkm.sdk4j.bean.Document> listadoDocsAnteproecto;
     private com.openkm.sdk4j.bean.Document documento;
-    String url = "http://localhost:8083/OpenKM";
-    String user = "okmAdmin";
-    String pass = "admin";
-    OKMWebservices okm = OKMWebservicesFactory.newInstance(url, user, pass);
+    private ConexionOpenKM conexionOpenKM;
+    OKMWebservices okm ;
     private SimpleDateFormat formatoFecha;
 
     public RegistroFormatoAController() {
@@ -121,6 +120,8 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
         listadoDocsAnteproecto = new ArrayList<>();
+        conexionOpenKM = new  ConexionOpenKM();
+        okm = conexionOpenKM.getOkm();
     }
 
     @PostConstruct
@@ -189,7 +190,7 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
     }
 
     public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() throws PathNotFoundException, RepositoryException {
-        return getListaFormatos(okm, this.datos);
+        return getListaDocumentos(okm, this.datos);
     }
 
     public Date getTodayDate() {
@@ -230,7 +231,7 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
 
     public void aceptarFormatoA() throws PathNotFoundException {
 
-        this.subirFormato(okm, archivOferta);
+        this.subirDocumento(okm, archivOferta);
 
     }
 
@@ -570,23 +571,14 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
         return conexion;
     }
 
-    /**
-     * Devuelve la ruta del formatoA para el coordinador que inicio sesion
-     *
-     * @return la ruta donde se encuantra la carpeta de FormatoA para el
-     * coordinador especifico de cada programa (El que inicio sesion)
-     */
-    @Override
-    public String getPathFormato() {
-        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoA/";
-    }
-
+   
     @Override
     public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
         try {
-            okm.addGroup(this.getPathFormato() + archivOferta.getFileName(), "okg:FormatoA");
+            String path = this.getPathDocumento();
+            okm.addGroup( path + archivOferta.getFileName(), "okg:FormatoA");
 
-            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathFormato() + archivOferta.getFileName(), "okg:FormatoA");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta.getFileName(), "okg:FormatoA");
             for (FormElement fElement : fElements) {
                 if (fElement.getName().equals("okp:FormatoA.docente")) {
                     Input name = (Input) fElement;
@@ -614,7 +606,7 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
                     name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                 }
             }
-            okm.setPropertyGroupProperties(this.getPathFormato() + archivOferta.getFileName(), "okg:FormatoA", fElements);
+            okm.setPropertyGroupProperties(path + archivOferta.getFileName(), "okg:FormatoA", fElements);
         } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -631,4 +623,10 @@ public class RegistroFormatoAController extends RegistroFormatoTemplate implemen
         requestContext.getCurrentInstance().update("msgRFA");
     }
 
+    @Override
+    public String getPathDocumento() {
+       return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoA/";
+    }
+
+    
 }
