@@ -86,8 +86,6 @@ public class RegistroPlandeEstudioController implements Serializable {
     private String auxAcuerdoPlan;
     private Date auxFechaPlan;
     private OKMWebservices okm;
-    
-    
 
     /**
      * Constructor encargado de inicializar algunas de los atributos asignados a
@@ -179,7 +177,6 @@ public class RegistroPlandeEstudioController implements Serializable {
         rc.update("formSeleccionarArchivoPlanEstudio");
         rc.update("formArchivoSelecionadoPlanEstudio");
         rc.update("formMetadatosPlanEstudio");
-       
 
     }
 
@@ -195,7 +192,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -217,7 +214,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = event.getFile().getFileName();
         System.out.println("nombre archivo: " + nombreArchivo);
         archivoPlan = event.getFile();
-        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
+        FacesMessage mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, mensaje);
         RequestContext rc = RequestContext.getCurrentInstance();
         rc.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
@@ -249,19 +246,30 @@ public class RegistroPlandeEstudioController implements Serializable {
             boolean existeFolder = false;
             boolean existeFolderCoordinacion = false;
             boolean existeDocumento = false;
+            String consecutivo = "";
+            int iter = 0;
+            String nombreArchTmp = nombreArchivo.split(".pdf")[0];
 
             existeFolderCoordinacion = existeCarpeta(1);
 
             if (existeFolderCoordinacion) {
                 existeFolder = existeCarpeta(2);
-            }else{
+            } else {
                 okm.createFolderSimple("/okm:root/Coordinacion");
             }
 
             if (existeFolder) {//Si existe la carpeta, busca el documento
-                for (com.openkm.sdk4j.bean.Document doc : okm.getDocumentChildren("/okm:root/Coordinacion/Planes de Estudio")) {
-                    if (doc.getPath().equalsIgnoreCase("/okm:root/Coordinacion/Planes de Estudio/" + nombreArchivo)) {//Buscar en openkm si existe el archivo a guardar
-                        existeDocumento = true;
+                boolean repetido = false;
+                while (!repetido) {
+                    for (com.openkm.sdk4j.bean.Document doc : okm.getDocumentChildren("/okm:root/Coordinacion/Planes de Estudio")) {
+                        if (doc.getPath().equalsIgnoreCase("/okm:root/Coordinacion/Planes de Estudio/" + nombreArchTmp + consecutivo + ".pdf")) {//Buscar en openkm si existe el archivo a guardar
+                            iter++;
+                            consecutivo = "_" + iter;
+                            repetido = false;
+                            existeDocumento = true;
+                            break;
+                        }
+                        repetido = true;
                     }
                 }
             }
@@ -272,9 +280,14 @@ public class RegistroPlandeEstudioController implements Serializable {
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + metadatosPlandeEstudio.getAcuerdo());
                     okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchivo, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
 
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "El archivo '" + nombreArchivo + "'  se registró con éxito");
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "'  se registró con éxito");
                 } else {
-                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Ocurrió un error registrando el archivo " + nombreArchivo);
+                    okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", archivoPlan.getInputstream());//Crear el documento en openkm                    
+                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + metadatosPlandeEstudio.getNumero());
+                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + metadatosPlandeEstudio.getAcuerdo());
+                    okm.addKeyword(rutaPlanesDeEstudio + "/" + nombreArchTmp + consecutivo + ".pdf", "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+
+                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", nombreArchivo+" esta repetido, se agregara un consecutivo al nuevo documento");
                 }
             } else {//Si la carpeta no existe, la crea y dentro de ella crea el documento.
 
@@ -282,10 +295,9 @@ public class RegistroPlandeEstudioController implements Serializable {
                 okm.createDocumentSimple(rutaPlanesDeEstudio + "/" + nombreArchivo, archivoPlan.getInputstream());//Crear el documento dentro de la carpeta Planes de Estudio en openkm
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
             }
-            
+
             //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
             FacesContext.getCurrentInstance().addMessage(null, message);
-            
 
             limpiarVariables();
 
@@ -295,17 +307,14 @@ public class RegistroPlandeEstudioController implements Serializable {
 
             listaDocs();
             rc.update("lstPlanesEstudio");
-            
-           
+
             rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
-             
+
             rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
-            
+
             rc.update("mensaje2");
             rc.update("msg");
-            
-             
-            
+
         } catch (PathNotFoundException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RepositoryException ex) {
@@ -392,7 +401,7 @@ public class RegistroPlandeEstudioController implements Serializable {
     public void editarPlanEstudio() {
 
         RequestContext rc = RequestContext.getCurrentInstance();
-        FacesMessage message=new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
 
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
@@ -419,11 +428,10 @@ public class RegistroPlandeEstudioController implements Serializable {
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
                 }
             }
-            
-            if(message!=null)
-            {
+
+            if (message != null) {
                 FacesContext.getCurrentInstance().addMessage(null, message);
-            
+
             }
             rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
             rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
@@ -515,7 +523,7 @@ public class RegistroPlandeEstudioController implements Serializable {
         nombreArchivo = "";
         archivoPlan = null;
         exitoSubirArchivo = false;
-    
+
     }
 
     /**
@@ -620,12 +628,12 @@ public class RegistroPlandeEstudioController implements Serializable {
      * @param doc plan de estudio
      */
     public void visualizardePlanEstudio(Document doc) {
-        System.out.println(";; "+doc.getPath());
+        System.out.println(";; " + doc.getPath());
         InputStream in = null;
         try {
             this.documento = doc;
             in = okm.getContent(doc.getPath());
-            System.out.println("in: "+in.toString());
+            System.out.println("in: " + in.toString());
             streamedContent = new DefaultStreamedContent(in, "application/pdf");
             //-------
             Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -634,12 +642,12 @@ public class RegistroPlandeEstudioController implements Serializable {
             if (b != null) {
                 streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
             }
-            System.out.println("b: "+b);
-            System.out.println("StreamContent"+streamedContent.getName());
+            System.out.println("b: " + b);
+            System.out.println("StreamContent" + streamedContent.getName());
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update(":visualizacionPlanPdf");
             requestContext.execute("PF('visualizarPlanPDF').show()");
-           
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -697,18 +705,14 @@ public class RegistroPlandeEstudioController implements Serializable {
         return conexion;
     }
 
-    
-    
-    
-    
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
-        System.out.println("Recibí documento: " +documento.getPath());
+        System.out.println("Recibí documento: " + documento.getPath());
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
-        this.documento=documento;
+        this.documento = documento;
     }
-    
+
     /**
      * Recibe como parametro un plan de estudio, realiza un llamado a openkm
      * para eliminar el plan de estudio, al realizar este llamado se pasa la
@@ -718,9 +722,6 @@ public class RegistroPlandeEstudioController implements Serializable {
      *
      * @param doc plan de estudio
      */
-    
-    
-    
 //    public void deleteDocument() {
 //        try {
 //            okm.deleteDocument(this.documento.getPath());
@@ -734,13 +735,10 @@ public class RegistroPlandeEstudioController implements Serializable {
 //
 //        }
 //    }
-
-    
-    
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarPlanEstudio').hide()");
-    }  
+    }
 
     public void deleteDocument() {
         try {
@@ -751,10 +749,10 @@ public class RegistroPlandeEstudioController implements Serializable {
             requestContext.execute("PF('Confirmacion').hide()");
             //requestContext.execute("PF('mensajeRegistroExitoso').show()");
             requestContext.update(":lstPlanesEstudio");
-             requestContext.update("formPlanesdeEstudio");
+            requestContext.update("formPlanesdeEstudio");
         } catch (Exception e) {
 
         }
-    } 
-        
+    }
+
 }
