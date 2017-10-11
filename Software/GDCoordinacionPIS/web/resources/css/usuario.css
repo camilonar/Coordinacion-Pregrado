@@ -171,11 +171,16 @@ body {
 }
 
 .ui-selectonemenu-filter-container {
-    width: 80% !important;
+    width: 85% !important;
     display: block;
     border: 0;
 }
-.ui-icon-search{
+
+.ui-selectonemenu-filter {
+    width: 98% !important;
+}
+ .ui-selectonemenu-filter-container > .ui-icon-search{
     margin-left: 0px !important;
     border-left: 0px !important;
+    right:0px !important;
 }
