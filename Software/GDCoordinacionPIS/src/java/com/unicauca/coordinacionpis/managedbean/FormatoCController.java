@@ -132,17 +132,7 @@ public class FormatoCController implements Serializable{
                     listadoDocsFormatoC.add(lista.get(i).getDocument());
                 }
             }
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (RepositoryException | DatabaseException | UnknowException | WebserviceException | IOException | ParseException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listadoDocsFormatoC;
@@ -293,21 +283,7 @@ public class FormatoCController implements Serializable{
                     this.metadatosAnteproyectos.setActaAprobacion(name.getValue());
                 }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
+        } catch (IOException | ParseException | NoSuchGroupException | PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -382,6 +358,7 @@ public class FormatoCController implements Serializable{
     public void cambiarArchivo() {
         exitoSubirArchivo = false;
         RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("dlgRegistroFormatoC");
         requestContext.update("formSeleccionarArchivoFormatoC");
         requestContext.update("formMetadatosFormatoC");
         requestContext.update("formArchivoSelecionadoFormatoC");
@@ -443,8 +420,10 @@ public class FormatoCController implements Serializable{
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
-
-               
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad")) {
+                    Input name = (Input) fElement;
+                    name.setValue(this.metadatosAnteproyectos.getViabilidad());
+                }
                 if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -460,41 +439,9 @@ public class FormatoCController implements Serializable{
             }
             okm.setPropertyGroupProperties("/okm:root/Coordinacion/FormatoC/" + archivoFormatoC.getFileName(), "okg:FormatoC", fElements);
 
-        } catch (PathNotFoundException ex) {
+        } catch (PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException | AccessDeniedException | ItemExistsException | ExtensionException | AutomationException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException ex) {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ItemExistsException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedMimeTypeException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileSizeExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UserQuotaExceededException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (VirusDetectedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPropertyException ex) {
+        } catch (NoSuchGroupException | LockException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
         agregarMetadatos();
@@ -559,8 +506,10 @@ public class FormatoCController implements Serializable{
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
-
-                
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad")) {
+                    Input name = (Input) fElement;
+                    name.setValue(this.metadatosAnteproyectos.getViabilidad());
+                }
                 if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
@@ -575,31 +524,7 @@ public class FormatoCController implements Serializable{
                 }
             }
             okm.setPropertyGroupProperties(documento.getPath(), "okg:FormatoC", fElements);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPropertyException ex) {
+        } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
