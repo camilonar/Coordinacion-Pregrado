@@ -63,6 +63,9 @@ and open the template in the editor.
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
+                            <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(dato)}"
+                                             icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar" icon=" ui-icon-pencil" action="#{registroPlandeEstudioController.cargarPlanEstudio(dato)}" onclick="PF('dlgEditarPlanEstudio').show()"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
@@ -70,9 +73,7 @@ and open the template in the editor.
                             </p:commandButton>                    
                             <!--<p:commandButton value="Ver" action="{registroPlandeEstudioController.show(dato)}" icon="ui-icon-search" title="Ver"/>-->  
                             <!--<p:commandLink styleClass="btn" value="ver" action="{registroPlandeEstudioController.visualizarDocumento(dato)}" ajax="false" target="_blank" style="background-color: gainsboro;padding: 2px 15px 2px 15px; border-radius: 2px; text-decoration: none"></p:commandLink>-->
-                            <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(dato)}"
-                                             icon="ui-icon-search" title="Ver"/>
+                            
                             <!--<p:commandButton value="Eliminar" 
                                              action="#{registroPlandeEstudioController.deleteDocument(dato)}" 
                                              icon="ui-icon-trash" update="lstPlanesEstudio" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()">

@@ -64,9 +64,6 @@
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
-                            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA)}" />
-                            </p:commandButton>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
                                              icon="ui-icon-search" title="Ver"/>
@@ -74,14 +71,15 @@
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
                                              icon="ui-icon-pencil" title="Editar"/>
+                            <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
+                                <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA)}" />
+                            </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
                                              action="#{registroFormatoAController.confirmarEliminacion(formatoA)}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
-
                         </p:column>
                     </p:dataTable>
                 </h:form>
-
                 <ui:include src="registrarFormatoA.xhtml"/> 
                 <ui:include src="editarInfoFormatoA.xhtml"/> 
                 <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
