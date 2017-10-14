@@ -97,9 +97,7 @@ import org.primefaces.model.UploadedFile;
 @ViewScoped
 public class RegistroFormatoAController extends RegistroDocumentoTemplate implements Serializable {
 
-    //TEMPORALLLL
-    String programaTemporal = "Sistemas";
-    ///
+
     @EJB
     private UsuarioFacade ejbUsuario;
 
