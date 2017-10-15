@@ -228,9 +228,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     }
 
     public void aceptarFormatoA() throws PathNotFoundException {
-
         this.subirDocumento(okm, archivOferta);
-
     }
 
     public void actualizarInfoFormatoA() {
@@ -266,31 +264,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                 }
             }
             okm.setPropertyGroupProperties(documento.getPath(), "okg:FormatoA", fElements);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPropertyException ex) {
+        } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -571,12 +545,12 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
 
    
     @Override
-    public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
+    public void addMetadata(OKMWebservices okm, String archivOferta) {
         try {
             String path = this.getPathDocumento();
-            okm.addGroup( path + archivOferta.getFileName(), "okg:FormatoA");
+            okm.addGroup( path + archivOferta, "okg:FormatoA");
 
-            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta.getFileName(), "okg:FormatoA");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:FormatoA");
             for (FormElement fElement : fElements) {
                 if (fElement.getName().equals("okp:FormatoA.docente")) {
                     Input name = (Input) fElement;
@@ -604,7 +578,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                     name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                 }
             }
-            okm.setPropertyGroupProperties(path + archivOferta.getFileName(), "okg:FormatoA", fElements);
+            okm.setPropertyGroupProperties(path + archivOferta, "okg:FormatoA", fElements);
         } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }

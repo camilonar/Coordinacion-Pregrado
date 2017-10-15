@@ -5,9 +5,15 @@
  */
 package com.unicauca.coordinacionpis.managedbean;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.openkm.sdk4j.OKMWebservices;
 import com.openkm.sdk4j.bean.Document;
 import com.openkm.sdk4j.bean.Folder;
+import com.openkm.sdk4j.bean.form.FormElement;
+import com.openkm.sdk4j.bean.form.Input;
 import com.openkm.sdk4j.exception.AccessDeniedException;
 import com.openkm.sdk4j.exception.AutomationException;
 import com.openkm.sdk4j.exception.DatabaseException;
@@ -15,6 +21,8 @@ import com.openkm.sdk4j.exception.ExtensionException;
 import com.openkm.sdk4j.exception.FileSizeExceededException;
 import com.openkm.sdk4j.exception.ItemExistsException;
 import com.openkm.sdk4j.exception.LockException;
+import com.openkm.sdk4j.exception.NoSuchGroupException;
+import com.openkm.sdk4j.exception.NoSuchPropertyException;
 import com.openkm.sdk4j.exception.ParseException;
 import com.openkm.sdk4j.exception.PathNotFoundException;
 import com.openkm.sdk4j.exception.RepositoryException;
@@ -32,6 +40,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -40,7 +49,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +103,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      * la clase
      */
     public RegistroPlandeEstudioController() {
-        this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
         this.metadatosPlandeEstudio = new MetadatosPlanEstudio();
         this.documentosPlanEstudio = new ArrayList<>();
@@ -236,10 +247,14 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      * los planes de estudio(planEstudio).
      */
     public void aceptarRegistroPlanEstudio() {
-        this.subirDocumento(okm, archivoPlan);
+        boolean subirDocumento = this.subirDocumento(okm, archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
+        if (subirDocumento) {
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' esta repetido, se agregara un consecutivo al nuevo documento");
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
+        }
         //rc.execute("PF('dlgRegistroPlandeEstudio').hide()");//Cerrar el dialog que contiene el formulario
         FacesContext.getCurrentInstance().addMessage(null, message);
         limpiarVariables();
@@ -279,35 +294,40 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      *
      * @param document plan de estudio
      */
-    public void cargarPlanEstudio(Document document) {
-        try {
-            RequestContext rc = RequestContext.getCurrentInstance();
+    public void cargarPlanEstudio(Document documento) {
 
-            Set<String> palabras = document.getKeywords();
-            for (int i = 0; i < palabras.size(); i++) {
-                if (Validador.esFecha((String) palabras.toArray()[i])) {
-                    String fecha = (String) palabras.toArray()[i];
-                    metadatosPlandeEstudio.setVigencia(formatoFecha.parse(fecha));
-                    auxFechaPlan = metadatosPlandeEstudio.getVigencia();
-                } else if (Validador.esNumero((String) palabras.toArray()[i])) {
-                    metadatosPlandeEstudio.setNumero(Integer.parseInt((String) palabras.toArray()[i]));
-                    auxNumeroPlan = metadatosPlandeEstudio.getNumero();
-                } else {
-                    metadatosPlandeEstudio.setAcuerdo((String) palabras.toArray()[i]);
-                    auxAcuerdoPlan = metadatosPlandeEstudio.getAcuerdo();
+        RequestContext rc = RequestContext.getCurrentInstance();
+
+        this.documento = documento;
+        List<FormElement> fElements;
+        try {
+            fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:PlanEstudio");
+            for (FormElement fElement : fElements) {
+                if (fElement.getName().equals("okp:PlanEstudio.Numero")) {
+                    Input name = (Input) fElement;
+                    this.metadatosPlandeEstudio.setNumero(Integer.parseInt(name.getValue()));
+                }
+                if (fElement.getName().equals("okp:PlanEstudio.Acuerdo")) {
+                    Input name = (Input) fElement;
+                    this.metadatosPlandeEstudio.setAcuerdo(name.getValue());
+                }
+                if (fElement.getName().equals("okp:PlanEstudio.Vigencia")) {
+                    Input name = (Input) fElement;
+                    this.metadatosPlandeEstudio.setVigencia(formatoFecha.parse(name.getValue()));
                 }
             }
-
-            nombreArchivo = nombreDelArchivo(document.getPath());
-            documentoAnterior = nombreArchivo;
-            this.exitoSubirArchivo = true;
-
-            rc.update("formActualizarArchivoPlanEstudio");
-            rc.update("formArchivoSelecionadoActualizarPlanEstudio");
-            rc.update("formActualizarMetadatosPlanEstudio");
-        } catch (java.text.ParseException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (java.text.ParseException | IOException | ParseException | NoSuchGroupException | PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
+            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        nombreArchivo = nombreDelArchivo(documento.getPath());
+        documentoAnterior = nombreArchivo;
+        this.exitoSubirArchivo = true;
+
+        rc.update("formActualizarArchivoPlanEstudio");
+        rc.update("formArchivoSelecionadoActualizarPlanEstudio");
+        rc.update("formActualizarMetadatosPlanEstudio");
+
     }
 
     /**
@@ -321,53 +341,49 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
 
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
-
         String path = this.getPathDocumento() + nombreArchivo;
-
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
-                okm.deleteDocument(path + "/" + documentoAnterior);
-                okm.createDocumentSimple(path, archivoPlan.getInputstream());//Crear el documento en openkm   
-                okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
-                okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
-                okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
+                okm.deleteDocument(this.getPathDocumento() + "/" + documentoAnterior);
+                subirDocumento(okm, archivoPlan);
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
             } else {
-                if (metadatosPlandeEstudio.getNumero() != auxNumeroPlan) {
-                    okm.removeKeyword(path, "" + auxNumeroPlan);
-                    okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
+                okm.addGroup(path, "okg:PlanEstudio");
+                List<FormElement> fElements = okm.getPropertyGroupProperties(path, "okg:PlanEstudio");
+                for (FormElement fElement : fElements) {
+                    if (fElement.getName().equals("okp:PlanEstudio.Numero")) {
+                        Input name = (Input) fElement;
+                        name.setValue("" + this.metadatosPlandeEstudio.getNumero());
+                    }
+                    if (fElement.getName().equals("okp:PlanEstudio.Acuerdo")) {
+                        Input name = (Input) fElement;
+                        name.setValue(this.metadatosPlandeEstudio.getAcuerdo());
+                    }
+                    if (fElement.getName().equals("okp:PlanEstudio.Vigencia")) {
+                        Input name = (Input) fElement;
+                        name.setValue("" + formatoFecha.format(this.metadatosPlandeEstudio.getVigencia()));
+                    }
                 }
-                if (!metadatosPlandeEstudio.getAcuerdo().equalsIgnoreCase(auxAcuerdoPlan)) {
-                    okm.removeKeyword(path, "" + auxAcuerdoPlan);
-                    okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
-                }
-                if (metadatosPlandeEstudio.getVigencia().compareTo(auxFechaPlan) != 0) {
-                    okm.removeKeyword(path, "" + formatoFecha.format(auxFechaPlan));
-                    okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-                    message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
-                }
+                okm.setPropertyGroupProperties(path, "okg:PlanEstudio", fElements);
             }
-
-            if (message != null) {
-                FacesContext.getCurrentInstance().addMessage(null, message);
-
-            }
-            rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
-            rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
-
-            limpiarVariables();
-
-            rc.update("formActualizarArchivoPlanEstudio");
-            rc.update("formArchivoSelecionadoActualizarPlanEstudio");
-            rc.update("formActualizarMetadatosPlanEstudio");//Actualizar el formulario de registro
-            rc.update("lstPlanesEstudio");
-            rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
-
-        } catch (AccessDeniedException | RepositoryException | PathNotFoundException | LockException | DatabaseException | ExtensionException | UnknowException | WebserviceException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException | ItemExistsException | AutomationException | VersionException ex) {
+        } catch (LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | UnknowException | WebserviceException | ExtensionException | NoSuchGroupException | AutomationException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (message != null) {
+            FacesContext.getCurrentInstance().addMessage(null, message);
+
+        }
+        rc.update("formMetadatosPlanEstudio");//Actualizar el formulario de registro
+        rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
+
+        limpiarVariables();
+
+        rc.update("formActualizarArchivoPlanEstudio");
+        rc.update("formArchivoSelecionadoActualizarPlanEstudio");
+        rc.update("formActualizarMetadatosPlanEstudio");//Actualizar el formulario de registro
+        rc.update("lstPlanesEstudio");
+        rc.execute("PF('dlgEditarPlanEstudio').hide()");//Cerrar el dialog que contiene el formulario
+
     }
 
     /**
@@ -592,16 +608,30 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
+    public void addMetadata(OKMWebservices okm, String archivOferta) {
         try {
-            String path = this.getPathDocumento() + archivOferta.getFileName();
-            okm.addKeyword(path, "" + metadatosPlandeEstudio.getNumero());
-            okm.addKeyword(path, "" + metadatosPlandeEstudio.getAcuerdo());
-            okm.addKeyword(path, "" + formatoFecha.format(metadatosPlandeEstudio.getVigencia()));
-        } catch (VersionException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
-            Logger.getLogger(RegistroPlandeEstudioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            String path = this.getPathDocumento();
+            okm.addGroup(path + archivOferta, "okg:PlanEstudio");
 
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:PlanEstudio");
+            for (FormElement fElement : fElements) {
+                if (fElement.getName().equals("okp:PlanEstudio.Numero")) {
+                    Input name = (Input) fElement;
+                    name.setValue("" + this.metadatosPlandeEstudio.getNumero());
+                }
+                if (fElement.getName().equals("okp:PlanEstudio.Acuerdo")) {
+                    Input name = (Input) fElement;
+                    name.setValue(this.metadatosPlandeEstudio.getAcuerdo());
+                }
+                if (fElement.getName().equals("okp:PlanEstudio.Vigencia")) {
+                    Input name = (Input) fElement;
+                    name.setValue("" + formatoFecha.format(this.metadatosPlandeEstudio.getVigencia()));
+                }
+            }
+            okm.setPropertyGroupProperties(path + archivOferta, "okg:PlanEstudio", fElements);
+        } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
+            Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

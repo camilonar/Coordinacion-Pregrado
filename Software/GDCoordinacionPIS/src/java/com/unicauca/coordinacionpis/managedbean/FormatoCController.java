@@ -478,11 +478,11 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
+    public void addMetadata(OKMWebservices okm, String archivOferta) {
             try {
-                okm.addGroup(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoC");
+                okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoC");
 
-                List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoB");
+                List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB");
                 for (FormElement fElement : fElements) {
                     if (fElement.getName().equals("okp:FormatoC.docente")) {
                         Input name = (Input) fElement;
@@ -514,7 +514,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                         name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                     }
                 }
-                okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoC", fElements);
+                okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoC", fElements);
                 agregarMetadatos();
                 exitoSubirArchivo = false;
                 RequestContext requestContext = RequestContext.getCurrentInstance();

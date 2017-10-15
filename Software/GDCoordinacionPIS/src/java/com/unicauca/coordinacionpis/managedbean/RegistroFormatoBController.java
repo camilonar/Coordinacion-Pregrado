@@ -630,11 +630,11 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, UploadedFile archivOferta) {
+    public void addMetadata(OKMWebservices okm, String archivOferta) {
         try {
-            okm.addGroup(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoB");
+            okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoB");
 
-            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoB");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB");
             for (FormElement fElement : fElements) {
                 if (fElement.getName().equals("okp:FormatoB.docente")) {
                     Input name = (Input) fElement;
@@ -666,7 +666,7 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
                     name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                 }
             }
-            okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta.getFileName(), "okg:FormatoB", fElements);
+            okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB", fElements);
             agregarMetadatos();
             exitoSubirArchivo = false;
             RequestContext requestContext = RequestContext.getCurrentInstance();

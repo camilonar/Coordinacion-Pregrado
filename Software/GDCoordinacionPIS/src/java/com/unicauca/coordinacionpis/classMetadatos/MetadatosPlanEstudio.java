@@ -47,4 +47,8 @@ public class MetadatosPlanEstudio {
         this.vigencia = vigencia;
     }
 
+
+    
+
+
 }
