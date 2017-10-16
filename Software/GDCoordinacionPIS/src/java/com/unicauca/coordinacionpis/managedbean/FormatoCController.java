@@ -36,6 +36,7 @@ import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.Docente;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
 import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
+import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -78,10 +79,8 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     private String datos;
     private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoC;
     private com.openkm.sdk4j.bean.Document documento;
-    String url = "http://localhost:8083/OpenKM";
-    String user = "okmAdmin";
-    String pass = "admin";
-    OKMWebservices okm = OKMWebservicesFactory.newInstance(url, user, pass);
+       private ConexionOpenKM conexionOpenKM;
+    OKMWebservices okm ;
     private SimpleDateFormat formatoFecha;
 
     public FormatoCController() {
@@ -89,6 +88,9 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
         listadoDocsFormatoC = new ArrayList<>();
+        conexionOpenKM = new  ConexionOpenKM();
+        okm = conexionOpenKM.getOkm();
+        
     }
     
     @PostConstruct
@@ -123,7 +125,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     
     public List<com.openkm.sdk4j.bean.Document> getListadoFormatoC() throws PathNotFoundException, RepositoryException{
         
-        return this.getListaDocumentos(okm, pass);
+        return this.getListaDocumentos(okm,datos);
     }
     
     public String getDatos() {

@@ -47,6 +47,7 @@ import com.unicauca.coordinacionpis.classMetadatos.Docente;
 
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
 import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
+import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -98,13 +99,12 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
     private UploadedFile archivOferta;
     private StreamedContent streamedContent;
     private String datos;
+    private ConexionOpenKM conexionOpenKM;
     private List<com.openkm.sdk4j.bean.Document> listadoDocsAnteproecto;
     private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoB;
     private com.openkm.sdk4j.bean.Document documento;
-    String url = "http://localhost:8083/OpenKM";
-    String user = "okmAdmin";
-    String pass = "admin";
-    OKMWebservices okm = OKMWebservicesFactory.newInstance(url, user, pass);
+
+    OKMWebservices okm;
     private SimpleDateFormat formatoFecha;
 
     public RegistroFormatoBController() {
@@ -112,6 +112,8 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
         listadoDocsAnteproecto = new ArrayList<>();
+        conexionOpenKM = new  ConexionOpenKM();
+        okm = conexionOpenKM.getOkm();
     }
 
     @PostConstruct
@@ -207,9 +209,9 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
     }
 
     public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() throws PathNotFoundException, RepositoryException {
-       
-        return this.getListaDocumentos(okm, pass);
-        
+
+        return this.getListaDocumentos(okm, datos);
+
     }
 
     public Date getTodayDate() {
@@ -255,7 +257,7 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
 
     public void aceptarFormatoB() throws PathNotFoundException {
 
-       this.subirDocumento(okm, archivOferta);
+        this.subirDocumento(okm, archivOferta);
 
     }
 
@@ -626,15 +628,17 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
 
     @Override
     public String getPathDocumento() {
-        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoA/";
+        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoB/";
     }
 
     @Override
     public void addMetadata(OKMWebservices okm, String archivOferta) {
         try {
-            okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoB");
 
-            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB");
+            String path = this.getPathDocumento();
+            okm.addGroup(path + archivOferta, "okg:FormatoB");
+
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:FormatoB");
             for (FormElement fElement : fElements) {
                 if (fElement.getName().equals("okp:FormatoB.docente")) {
                     Input name = (Input) fElement;

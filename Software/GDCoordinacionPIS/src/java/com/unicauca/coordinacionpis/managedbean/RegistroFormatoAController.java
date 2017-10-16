@@ -547,6 +547,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     @Override
     public void addMetadata(OKMWebservices okm, String archivOferta) {
         try {
+            
             String path = this.getPathDocumento();
             okm.addGroup( path + archivOferta, "okg:FormatoA");
 
