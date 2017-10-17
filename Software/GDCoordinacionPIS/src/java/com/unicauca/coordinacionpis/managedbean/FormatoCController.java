@@ -271,10 +271,6 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setNombreEstudiante2(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoC.ActaAprobacion")) {
-                    Input name = (Input) fElement;
-                    this.metadatosAnteproyectos.setActaAprobacion(name.getValue());
-                }
             }
         } catch (IOException | ParseException | NoSuchGroupException | PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
@@ -433,10 +429,6 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante2());
                 }
-                if (fElement.getName().equals("okp:FormatoC.ActaAprobacion")) {
-                    Input name = (Input) fElement;
-                    name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
-                }
             }
             okm.setPropertyGroupProperties(documento.getPath(), "okg:FormatoC", fElements);
         } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
@@ -510,10 +502,6 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                     if (fElement.getName().equals("okp:FormatoC.SegundoEstudiante")) {
                         Input name = (Input) fElement;
                         name.setValue(this.metadatosAnteproyectos.getNombreEstudiante2());
-                    }
-                    if (fElement.getName().equals("okp:FormatoC.ActaAprobacion")) {
-                        Input name = (Input) fElement;
-                        name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
                     }
                 }
                 okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoC", fElements);
