@@ -476,7 +476,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
             try {
                 okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoC");
 
-                List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB");
+                List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoC");
                 for (FormElement fElement : fElements) {
                     if (fElement.getName().equals("okp:FormatoC.docente")) {
                         Input name = (Input) fElement;
