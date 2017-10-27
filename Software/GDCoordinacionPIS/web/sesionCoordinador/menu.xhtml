@@ -11,23 +11,24 @@
                 <p:menu rendered="#{sesionController.opcionesCoordinador}" >
                     <p:submenu label="Oferta académica">
                         <p:menuitem id="menuitem-ofertas-academicas"
-                            value="Gestión de ofertas académicas" action="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
+                                    value="Gestión de ofertas académicas" action="/coordinador/OfertaAcademica/ofertasAcademicas.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addOfertaAcademicaGestion()}" ajax="false"/>
                     </p:submenu>    
                     <p:submenu label="Planes de Estudio">
                         <p:menuitem id="menuitem-planes-estudio"
-                            value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
+                                    value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
                     </p:submenu>  
                     <p:submenu label="Anteproyectos">
                         <p:menuitem id="menuitem-anteproyectos"
-                            value="Gestión de formato A" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
-                        
+                                    value="Gestión de formato A" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+
                         <p:menuitem id="menuitem-formatoB"
-                            value="Gestión de formato B" action="/coordinador/anteproyecto/FormatoB/formatoB.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                                    value="Gestión de formato B" action="/coordinador/anteproyecto/FormatoB/formatoB.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
                         <p:menuitem id="menuitem-formatoC"
-                            value="Gestión de formato C" action="/coordinador/anteproyecto/FormatoC/formatoC.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                                    value="Gestión de formato C" action="/coordinador/anteproyecto/FormatoC/formatoC.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+                        <p:menuitem id="menuitem-checklist"
+                                    value="Gestión de checklist" action="/coordinador/anteproyecto/Checklist/checklist.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
                     </p:submenu>
                 </p:menu>
-                
             </h:form>
         </div>
 

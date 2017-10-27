@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE property-groups PUBLIC "-//OpenKM//DTD Property Groups 2.0//EN"
+                                 "http://www.openkm.com/dtd/property-groups-2.0.dtd">
+<property-groups>
+	
+<property-group label="FormatoA" name="okg:FormatoA">
+    <input label="Docente" type="text" name="okp:FormatoA.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoA.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoA.Fecha" />
+	<input label="Viabilidad" type="text" name="okp:FormatoA.Viabilidad" />
+	
+    <input label="Primer estudiante" type="text" name="okp:FormatoA.PrimerEstudiante" />
+    	<input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
+	<input label="Acta aprobacion" type="text" name="okp:FormatoA.ActaAprobacion" />
+ </property-group>
+
+ <property-group label="FormatoB" name="okg:FormatoB">
+    <input label="Docente" type="text" name="okp:FormatoB.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoB.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoB.Fecha" />
+	<input label="Viabilidad" type="text" name="okp:FormatoB.Viabilidad" />
+     <input label="Primer estudiante" type="text" name="okp:FormatoB.PrimerEstudiante" />     	
+	<input label="Segundo estudiante" type="text" name="okp:FormatoB.SegundoEstudiante" />
+	<input label="Acta aprobacion" type="text" name="okp:FormatoB.ActaAprobacion" />
+ </property-group>
+    
+<property-group label="FormatoC" name="okg:FormatoC">
+    <input label="Docente" type="text" name="okp:FormatoC.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoC.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoC.Fecha" />
+    <input label="Primer estudiante" type="text" name="okp:FormatoC.PrimerEstudiante" />     	
+    <input label="Segundo estudiante" type="text" name="okp:FormatoC.SegundoEstudiante" />
+ </property-group>
+    
+<property-group label="Checklist" name="okg:Checklist">
+    <input label="Docente" type="text" name="okp:Checklist.Docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:Checklist.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:Checklist.Fecha" />
+    <input label="Primer estudiante" type="text" name="okp:Checklist.PrimerEstudiante" />     	
+    <input label="Segundo estudiante" type="text" name="okp:Checklist.SegundoEstudiante" />
+ </property-group>
+    
+ 
+ <property-group label="PlanEstudio" name="okg:PlanEstudio">
+    <input label="Numero" type="text" name="okp:PlanEstudio.Numero"/>
+    <input label="Acuerdo" type="text" name="okp:PlanEstudio.Acuerdo" />
+    <input label="Vigencia" type="text" name="okp:PlanEstudio.Vigencia" />
+ </property-group>
+    
+    
+    
+ <property-group label="OfertaAcademicaPrematricula" name="okg:OfertaAcademicaPrematricula">
+    <input label="calculo 1 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes"/>
+	<input label="calculo 1 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo1GruposSolicitados"/>
+	<input label="calculo 2 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo2NumEstudiantes"/>
+	<input label="calculo 2 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo2GruposSolicitados"/>
+	<input label="calculo 3 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo3NumEstudiantes"/>
+	<input label="calculo 3 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo3GruposSolicitados"/>
+	<input label="Algebra lineal numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.AlgebraLinealNumEstudiantes"/>
+	<input label="Algebra lineal grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.AlgebraLinealSolicitados"/>
+	<input label="Ecuaciones Dif. numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.ecuacionesNumEstudiantes"/>
+	<input label="Ecuaciones Dif. grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.ecuacionesGruposSolicitados"/>
+	<input label="estadistica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.estadisticaNumEstudiantes"/>
+	<input label="estadistica grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.estadisticaGruposSolicitados"/>
+	<input label="Mecanica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.mecanicaNumEstudiantes"/>
+	<input label="Mecanicoa grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.mecanicaGruposSolicitados"/>
+	<input label="Electromagnetismo numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.electroNumEstudiantes"/>
+	<input label="Electromagnetismo grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.electroGruposSolicitados"/>
+	<input label="Ondas numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.OndasNumEstudiantes"/>
+	<input label="Ondas grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.OndasGruposSolicitados"/>
+	<input label="Lab. mecanica numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.LabMecanicaNumEstudiantes"/>
+	<input label="Lab. mecanica grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.LabMecanicaGruposSolicitados"/>
+	<input label="Lab. Electromagnetismo numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.labElectroNumEstudiantes"/>
+	<input label="Lab. Electromagnetismo grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.LabElectroGruposSolicitados"/>
+</property-group>
+</property-groups>

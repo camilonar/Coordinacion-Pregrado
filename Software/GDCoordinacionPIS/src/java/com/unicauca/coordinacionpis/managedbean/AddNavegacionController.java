@@ -164,13 +164,14 @@ public class AddNavegacionController implements Serializable {
         index.setValue("Index");
         miga1.setValue("Anteproyecto");
         miga2.setValue("Gestión de anteproyectos");
-
+        
         this.menuNavegacion.addElement(index);
         this.menuNavegacion.addElement(miga1);
         this.menuNavegacion.addElement(miga2);
 
     }
 
+    
     public void cambioDeOpciones() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
