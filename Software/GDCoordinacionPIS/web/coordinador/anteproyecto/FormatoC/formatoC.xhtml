@@ -48,13 +48,39 @@
                                  rows="10" emptyMessage="Sin documentos"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  var="formatoC">
-                        <p:column >
+                    
+                        
+                         <p:column>
                             <f:facet name="header">
-                                <p:outputLabel value="Nombre del documento"/>
+                                <p:outputLabel value="Titulo"/>
                             </f:facet>
-                            <p:outputLabel value="#{formatoCController.nombreDelArchivo(formatoC.getDocument().getPath())}"/>
+                            <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.TituloAnteproyecto')}"/>
                         </p:column>
-                        <p:column style="width: 360px" >
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Docente"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.docente')}"/>
+                        </p:column>
+                        
+                          <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Primer Estudiante"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.PrimerEstudiante')} "/>
+                        </p:column>
+                          
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Segundo Estudiante"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.SegundoEstudiante')} "/>
+                        </p:column>
+                        
+                        
+                        
+                        <p:column  >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>

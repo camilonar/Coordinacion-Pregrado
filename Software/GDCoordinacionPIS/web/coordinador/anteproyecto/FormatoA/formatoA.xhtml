@@ -49,7 +49,14 @@
                                  rows="10" emptyMessage="Sin documentos"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  var="formatoA">
-                       
+                      
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Titulo"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoA.getPropiertieValue('okp:FormatoA.TituloAnteproyecto')}"/>
+                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="Docente"/>
@@ -57,19 +64,30 @@
                             <p:outputLabel value="#{formatoA.getPropiertieValue('okp:FormatoA.docente')}"/>
                         </p:column>
                         
+                          <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Primer Estudiante"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoA.getPropiertieValue('okp:FormatoA.PrimerEstudiante')} "/>
+                        </p:column>
+                          
                         <p:column>
                             <f:facet name="header">
-                                <p:outputLabel value="Nombre del documento"/>
+                                <p:outputLabel value="Segundo Estudiante"/>
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoAController.nombreDelArchivo(formatoA.getDocument().getPath())}"/>
+                            <p:outputLabel value="#{formatoA.getPropiertieValue('okp:FormatoA.SegundoEstudiante')} "/>
                         </p:column>
                         
-                        <p:column style="width: 360px" >
+                        
+                   
+                        
+                        <p:column  >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
                             <p:outputLabel value="#{registroFormatoAController.fecha(formatoA.getDocument().getCreated())}"/>
                         </p:column>
+                        
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
