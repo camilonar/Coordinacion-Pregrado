@@ -39,8 +39,8 @@ and open the template in the editor.
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
                  
                     <!--Muestra los planes de estudio contenidos en openkm-->
-                    <p:dataTable value="#{registroPlandeEstudioController.documentosPlanEstudio}"
-                                 id="lstPlanesEstudio" paginator="true"
+                    <p:dataTable value="#{registroPlandeEstudioController.dataModelDocumentos}"
+                                 id="lstPlanesEstudio" paginator="true" lazy="true"
                                  rowKey="#{item.id}" paginatorPosition="top"
                                  rows="10" emptyMessage="Sin documentos "                        
                                  var="dato">

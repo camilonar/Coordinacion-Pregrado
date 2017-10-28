@@ -107,19 +107,16 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     private UploadedFile archivOferta;
     private StreamedContent streamedContent;
     private String datos;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsAnteproecto;
     private com.openkm.sdk4j.bean.Document documento;
-    private ConexionOpenKM conexionOpenKM;
-    OKMWebservices okm ;
     private SimpleDateFormat formatoFecha;
 
     public RegistroFormatoAController() {
+        super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
-        listadoDocsAnteproecto = new ArrayList<>();
-        conexionOpenKM = new  ConexionOpenKM();
-        okm = conexionOpenKM.getOkm();
+    
+       
     }
 
     @PostConstruct
@@ -187,9 +184,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         this.streamedContent = streamedContent;
     }
 
-    public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() throws PathNotFoundException, RepositoryException {
-        return getListaDocumentos(okm, this.datos);
-    }
+  
 
     public Date getTodayDate() {
         return new Date();
@@ -228,7 +223,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     }
 
     public void aceptarFormatoA() throws PathNotFoundException {
-        this.subirDocumento(okm, archivOferta);
+        this.subirDocumento( archivOferta);
     }
 
     public void actualizarInfoFormatoA() {
@@ -545,7 +540,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
 
    
     @Override
-    public void addMetadata(OKMWebservices okm, String archivOferta) {
+    public void addMetadata( String archivOferta) {
         try {
             
             String path = this.getPathDocumento();
@@ -601,5 +596,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoA/";
     }
 
+    
+//    public String getEstu(){
+//
+//
+//}
     
 }

@@ -86,7 +86,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     private UploadedFile archivoPlan;
     private String datos;
     private List<Document> documentosPlanEstudio;
-    private ConexionOpenKM conexionOpenKM;
     private StreamedContent streamedContent;
     private com.openkm.sdk4j.bean.Document documento;
     private BufferedOutputStream output;
@@ -96,20 +95,20 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     private int auxNumeroPlan;
     private String auxAcuerdoPlan;
     private Date auxFechaPlan;
-    private OKMWebservices okm;
+
 
     /**
      * Constructor encargado de inicializar algunas de los atributos asignados a
      * la clase
      */
     public RegistroPlandeEstudioController() {
+        super();
+        
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
         this.metadatosPlandeEstudio = new MetadatosPlanEstudio();
         this.documentosPlanEstudio = new ArrayList<>();
         this.exitoSubirArchivo = false;
-        this.conexionOpenKM = new ConexionOpenKM();
-        this.okm = conexionOpenKM.getOkm();
         this.documentoAnterior = "";
         auxNumeroPlan = 1;
         auxAcuerdoPlan = "";
@@ -140,9 +139,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         this.datos = datos;
     }
 
-    public List<Document> getDocumentosPlanEstudio() throws PathNotFoundException, RepositoryException, RepositoryException {
-        return this.getListaDocumentos(okm, datos);
-    }
 
     public void setDocumentosPlanEstudio(List<Document> documentosPlanEstudio) {
         this.documentosPlanEstudio = documentosPlanEstudio;
@@ -247,7 +243,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      * los planes de estudio(planEstudio).
      */
     public void aceptarRegistroPlanEstudio() {
-        boolean subirDocumento = this.subirDocumento(okm, archivoPlan);
+        boolean subirDocumento = this.subirDocumento( archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         if (subirDocumento) {
@@ -345,7 +341,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         try {
             if (!nombreArchivo.equals(documentoAnterior)) {
                 okm.deleteDocument(this.getPathDocumento() + "/" + documentoAnterior);
-                subirDocumento(okm, archivoPlan);
+                subirDocumento(archivoPlan);
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El plan de estudio se editó con éxito");
             } else {
                 okm.addGroup(path, "okg:PlanEstudio");
@@ -608,7 +604,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, String archivOferta) {
+    public void addMetadata( String archivOferta) {
         try {
             String path = this.getPathDocumento();
             okm.addGroup(path + archivOferta, "okg:PlanEstudio");

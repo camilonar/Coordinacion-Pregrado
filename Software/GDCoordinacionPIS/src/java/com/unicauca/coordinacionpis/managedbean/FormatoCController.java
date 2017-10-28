@@ -77,19 +77,14 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     private UploadedFile archivoFormatoC;
     private StreamedContent streamedContent;
     private String datos;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoC;
     private com.openkm.sdk4j.bean.Document documento;
-       private ConexionOpenKM conexionOpenKM;
-    OKMWebservices okm ;
     private SimpleDateFormat formatoFecha;
-
     public FormatoCController() {
+        super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
-        listadoDocsFormatoC = new ArrayList<>();
-        conexionOpenKM = new  ConexionOpenKM();
-        okm = conexionOpenKM.getOkm();
+       
         
     }
     
@@ -123,10 +118,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
         requestContext.update("formArchivoSelecionadoFormatoC");
     }
     
-    public List<com.openkm.sdk4j.bean.Document> getListadoFormatoC() throws PathNotFoundException, RepositoryException{
-        
-        return this.getListaDocumentos(okm,datos);
-    }
+
     
     public String getDatos() {
         return datos;
@@ -365,7 +357,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     }
     
     public void aceptarFormatoC() {
-        this.subirDocumento(okm, archivoFormatoC);
+        this.subirDocumento( archivoFormatoC);
     }
     
     public void agregarMetadatos() {
@@ -472,7 +464,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, String archivOferta) {
+    public void addMetadata( String archivOferta) {
             try {
                 okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoC");
 

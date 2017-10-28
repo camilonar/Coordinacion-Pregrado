@@ -48,8 +48,8 @@
                     </p:inputText>  
                     
                     
-                    <p:dataTable value="#{registroChecklistController.listadoAnteproecto}" 
-                                 id="datalist" paginator="true"
+                    <p:dataTable value="#{registroChecklistController.dataModelDocumentos}" 
+                                 id="datalist" paginator="true" lazy="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"
                                  rowsPerPageTemplate="10,20,30,40,50"

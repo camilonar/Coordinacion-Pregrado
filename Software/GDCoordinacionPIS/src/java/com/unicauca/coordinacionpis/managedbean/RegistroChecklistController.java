@@ -99,21 +99,17 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
     private UploadedFile archivOferta;
     private StreamedContent streamedContent;
     private String datos;
-    private ConexionOpenKM conexionOpenKM;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsAnteproecto;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsChecklist;
     private com.openkm.sdk4j.bean.Document documento;
 
-    OKMWebservices okm;
+    
     private SimpleDateFormat formatoFecha;
 
     public RegistroChecklistController() {
+        super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
-        listadoDocsAnteproecto = new ArrayList<>();
-        conexionOpenKM = new  ConexionOpenKM();
-        okm = conexionOpenKM.getOkm();
+    
     }
 
     @PostConstruct
@@ -181,39 +177,7 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
         this.streamedContent = streamedContent;
     }
 
-    public List<com.openkm.sdk4j.bean.Document> getListadoChecklist() {
-        listadoDocsChecklist.clear();
-        try {
-            List<QueryResult> lista = okm.findByName(datos);
-            for (int i = 0; i < lista.size(); i++) {
-                String[] pathDividido = lista.get(i).getDocument().getPath().split("/");
-                String path = "/" + pathDividido[1] + "/" + pathDividido[2] + "/" + pathDividido[3];
-                if (path.equalsIgnoreCase("/okm:root/Coordinacion/Checklist")) {
-                    listadoDocsChecklist.add(lista.get(i).getDocument());
-                }
-            }
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listadoDocsChecklist;
-    }
-
-    public List<com.openkm.sdk4j.bean.Document> getListadoAnteproecto() throws PathNotFoundException, RepositoryException {
-
-        return this.getListaDocumentos(okm, datos);
-
-    }
-
+ 
     public Date getTodayDate() {
         return new Date();
     }
@@ -257,7 +221,7 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
 
     public void aceptarChecklist() throws PathNotFoundException {
 
-        this.subirDocumento(okm, archivOferta);
+        this.subirDocumento(archivOferta);
 
     }
 
@@ -617,7 +581,7 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, String archivOferta) {
+    public void addMetadata( String archivOferta) {
         try {
 
             String path = this.getPathDocumento();

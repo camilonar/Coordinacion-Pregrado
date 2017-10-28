@@ -42,8 +42,8 @@
                     <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoAController.datos}">
                         <p:ajax update="datalist"  event="keyup" />
                     </p:inputText>  
-                    <p:dataTable value="#{registroFormatoAController.listadoAnteproecto}" 
-                                 id="datalist" paginator="true"
+                    <p:dataTable value="#{registroFormatoAController.dataModelDocumentos}" 
+                                 id="datalist" paginator="true" lazy="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"
                                  rowsPerPageTemplate="10,20,30,40,50"
