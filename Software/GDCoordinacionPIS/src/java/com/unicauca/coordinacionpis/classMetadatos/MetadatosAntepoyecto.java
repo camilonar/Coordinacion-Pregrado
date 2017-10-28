@@ -62,7 +62,9 @@ public class MetadatosAntepoyecto {
         this.titulo = titulo;
     }
 
-    public String getFecha() {
+    public String getFecha() 
+    {
+        System.out.println("En metodo getFecha");
         return fecha;
     }
 
@@ -70,7 +72,9 @@ public class MetadatosAntepoyecto {
         this.fecha = fecha;
     }
 
-    public String getViabilidad() {
+    public String getViabilidad() 
+    {
+        System.out.println("En metodo getViabilidad");
         return viabilidad;
     }
 
