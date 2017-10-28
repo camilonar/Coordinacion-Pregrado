@@ -634,5 +634,8 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
             Logger.getLogger(RegistroChecklistController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+  @Override
+    public String getOKGPropierties() {
+      return "okg:Checklist";
+    }
 }

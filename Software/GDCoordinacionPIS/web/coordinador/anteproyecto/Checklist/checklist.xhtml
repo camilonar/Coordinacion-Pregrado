@@ -58,30 +58,30 @@
                             <f:facet name="header">
                                 <p:outputLabel value="Nombre del documento"/>
                             </f:facet>
-                            <p:outputLabel value="#{registroChecklistController.nombreDelArchivo(checklist.getPath())}"/>
+                            <p:outputLabel value="#{registroChecklistController.nombreDelArchivo(checklist.getDocument().getPath())}"/>
                         </p:column>
                         <p:column style="width: 360px" >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{registroChecklistController.fecha(checklist.getCreated())}"/>
+                            <p:outputLabel value="#{registroChecklistController.fecha(checklist.getDocument().getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(checklist)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(checklist.getDocument())}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroChecklistController.cargarDatosEdicion(checklist)}" 
+                                             action="#{registroChecklistController.cargarDatosEdicion(checklist.getDocument())}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroChecklistController.descargarDocumento(checklist)}" />
+                                <p:fileDownload value="#{registroChecklistController.descargarDocumento(checklist.getDocument())}" />
                             </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroChecklistController.confirmarEliminacion(checklist)}" 
+                                             action="#{registroChecklistController.confirmarEliminacion(checklist.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
 
                         </p:column>

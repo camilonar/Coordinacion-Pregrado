@@ -52,30 +52,30 @@
                             <f:facet name="header">
                                 <p:outputLabel value="Nombre del documento"/>
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoBController.nombreDelArchivo(formatoA.getPath())}"/>
+                            <p:outputLabel value="#{registroFormatoBController.nombreDelArchivo(formatoA.getDocument().getPath())}"/>
                         </p:column>
                         <p:column style="width: 360px" >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoBController.fecha(formatoA.getCreated())}"/>
+                            <p:outputLabel value="#{registroFormatoBController.fecha(formatoA.getDocument().getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoA.getDocument())}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoBController.cargarDatosEdicion(formatoA)}" 
+                                             action="#{registroFormatoBController.cargarDatosEdicion(formatoA.getDocument())}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroFormatoBController.descargarDocumento(formatoA)}" />
+                                <p:fileDownload value="#{registroFormatoBController.descargarDocumento(formatoA.getDocument())}" />
                             </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoBController.confirmarEliminacion(formatoA)}" 
+                                             action="#{registroFormatoBController.confirmarEliminacion(formatoA.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
 
                         </p:column>

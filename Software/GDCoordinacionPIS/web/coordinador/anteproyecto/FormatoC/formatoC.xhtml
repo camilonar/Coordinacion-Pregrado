@@ -52,30 +52,30 @@
                             <f:facet name="header">
                                 <p:outputLabel value="Nombre del documento"/>
                             </f:facet>
-                            <p:outputLabel value="#{formatoCController.nombreDelArchivo(formatoC.getPath())}"/>
+                            <p:outputLabel value="#{formatoCController.nombreDelArchivo(formatoC.getDocument().getPath())}"/>
                         </p:column>
                         <p:column style="width: 360px" >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{formatoCController.fecha(formatoC.getCreated())}"/>
+                            <p:outputLabel value="#{formatoCController.fecha(formatoC.getDocument().getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoC)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoC.getDocument())}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{formatoCController.cargarDatosEdicion(formatoC)}" 
+                                             action="#{formatoCController.cargarDatosEdicion(formatoC.getDocument())}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{formatoCController.descargarDocumento(formatoC)}" />
+                                <p:fileDownload value="#{formatoCController.descargarDocumento(formatoC.getDocument())}" />
                             </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{formatoCController.confirmarEliminacion(formatoC)}" 
+                                             action="#{formatoCController.confirmarEliminacion(formatoC.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
 
                         </p:column>

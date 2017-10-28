@@ -531,6 +531,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                 if (fElement.getName().equals("okp:FormatoA.docente")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getProfesor());
+                    
                 }
                 if (fElement.getName().equals("okp:FormatoA.TituloAnteproyecto")) 
                 {
@@ -582,5 +583,8 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
 //
 //
 //}
-    
+      @Override
+    public String getOKGPropierties() {
+      return "okg:FormatoA";
+    }
 }

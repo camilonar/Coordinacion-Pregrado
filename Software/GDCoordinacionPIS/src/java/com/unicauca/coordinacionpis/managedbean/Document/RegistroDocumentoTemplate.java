@@ -39,6 +39,7 @@ import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Spliterator;
@@ -74,36 +75,46 @@ public abstract class RegistroDocumentoTemplate {
     public RegistroDocumentoTemplate() {
         conexionOpenKM = new ConexionOpenKM();
         okm = conexionOpenKM.getOkm();
-        
-         dataModelDocumentos = new LazyDataModel<Document>() {
+
+        dataModelDocumentos = new LazyDataModel<DocumentoMetadatos>() {
             @Override
-            public List<Document> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-               
+            public List<DocumentoMetadatos> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
                 String ruta = getPathDocumento();
-                
-                List<com.openkm.sdk4j.bean.Document> listadoDocsFormatos = new ArrayList<>();
-                listadoDocsFormatos.clear();
+
+                List<DocumentoMetadatos> listadoDocs = new ArrayList<>();
+                listadoDocs.clear();
                 try {
                     if (okm.hasNode(ruta)) {
                         QueryParams parametros = new QueryParams();
                         parametros.setPath(ruta);
-                        //parametros.setName(name);
-                        System.out.println(first);
+
                         ResultSet result = okm.findPaginated(parametros, first, pageSize);
                         List<QueryResult> lista = result.getResults();
-                        setRowCount((int)result.getTotal());
+                        setRowCount((int) result.getTotal());
                         for (int i = 0; i < lista.size(); i++) {
-                            listadoDocsFormatos.add(lista.get(i).getDocument());
-                          
+                            Document docum = lista.get(i).getDocument();
+                            HashMap<String, FormElement> metadata = new HashMap();
+                            
+                            List<FormElement> propertyGroupProperties = okm.getPropertyGroupProperties(lista.get(i).getDocument().getPath(), getOKGPropierties());
+                            for (FormElement propertyGroupProperty : propertyGroupProperties) {
+                                metadata.put(propertyGroupProperty.getName(), propertyGroupProperty);
+                            }
+                            DocumentoMetadatos documento = new DocumentoMetadatos(docum,metadata);
+                            listadoDocs.add(documento);
                         }
                     }
                 } catch (DatabaseException | UnknowException | WebserviceException | IOException | ParseException ex) {
                     Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (RepositoryException ex) {
                     Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchGroupException ex) {
+                    Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (PathNotFoundException ex) {
+                    Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                return listadoDocsFormatos;
+
+                return listadoDocs;
             }
         };
 
@@ -216,8 +227,15 @@ public abstract class RegistroDocumentoTemplate {
 
     public void setDataModelDocumentos(DataModel dataModelDocumentos) {
         this.dataModelDocumentos = dataModelDocumentos;
-        Document d ;
-        
+        Document d;
+
     }
+
+    /**
+     * Debe retornar el nombre de el OKG grouppropierties del documento
+     *
+     * @return
+     */
+    public abstract String getOKGPropierties();
 
 }

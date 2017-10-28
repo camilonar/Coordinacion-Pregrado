@@ -511,4 +511,9 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                 Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
+    
+  @Override
+    public String getOKGPropierties() {
+      return "okg:FormatoC";
+    }
 }

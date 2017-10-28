@@ -677,4 +677,9 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         }
     }
 
+    @Override
+    public String getOKGPropierties() {
+      return "okg:FormatoB";
+    }
+
 }

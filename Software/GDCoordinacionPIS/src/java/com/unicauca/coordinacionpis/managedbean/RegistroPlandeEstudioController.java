@@ -96,14 +96,13 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     private String auxAcuerdoPlan;
     private Date auxFechaPlan;
 
-
     /**
      * Constructor encargado de inicializar algunas de los atributos asignados a
      * la clase
      */
     public RegistroPlandeEstudioController() {
         super();
-        
+
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
         this.metadatosPlandeEstudio = new MetadatosPlanEstudio();
@@ -138,7 +137,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     public void setDatos(String datos) {
         this.datos = datos;
     }
-
 
     public void setDocumentosPlanEstudio(List<Document> documentosPlanEstudio) {
         this.documentosPlanEstudio = documentosPlanEstudio;
@@ -243,7 +241,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      * los planes de estudio(planEstudio).
      */
     public void aceptarRegistroPlanEstudio() {
-        boolean subirDocumento = this.subirDocumento( archivoPlan);
+        boolean subirDocumento = this.subirDocumento(archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         if (subirDocumento) {
@@ -604,7 +602,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
     }
 
     @Override
-    public void addMetadata( String archivOferta) {
+    public void addMetadata(String archivOferta) {
         try {
             String path = this.getPathDocumento();
             okm.addGroup(path + archivOferta, "okg:PlanEstudio");
@@ -628,6 +626,11 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
             Logger.getLogger(RegistroFormatoAController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public String getOKGPropierties() {
+        return "okg:PlanEstudio";
     }
 
 }
