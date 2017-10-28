@@ -6,8 +6,10 @@
 package com.unicauca.coordinacionpis.managedbean.Document;
 
 import com.openkm.sdk4j.OKMWebservices;
+import com.openkm.sdk4j.bean.Document;
 import com.openkm.sdk4j.bean.QueryParams;
 import com.openkm.sdk4j.bean.QueryResult;
+import com.openkm.sdk4j.bean.ResultSet;
 import com.openkm.sdk4j.bean.form.FormElement;
 import com.openkm.sdk4j.bean.form.Input;
 import com.openkm.sdk4j.exception.AccessDeniedException;
@@ -33,17 +35,25 @@ import com.unicauca.coordinacionpis.entidades.UsuarioPrograma;
 import com.unicauca.coordinacionpis.managedbean.RegistroFormatoAController;
 import com.unicauca.coordinacionpis.managedbean.RegistroOfertaAcademicaController;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
+import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -54,8 +64,61 @@ public abstract class RegistroDocumentoTemplate {
 
     String programa;
 
+    private DataModel dataModelDocumentos;
+
+    private ConexionOpenKM conexionOpenKM;
+    public OKMWebservices okm;
+
     @EJB
     private UsuarioFacade ejbUsuario;
+
+    public RegistroDocumentoTemplate() {
+        conexionOpenKM = new ConexionOpenKM();
+        okm = conexionOpenKM.getOkm();
+
+        dataModelDocumentos = new LazyDataModel<DocumentoMetadatos>() {
+            @Override
+            public List<DocumentoMetadatos> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
+                String ruta = getPathDocumento();
+
+                List<DocumentoMetadatos> listadoDocs = new ArrayList<>();
+                listadoDocs.clear();
+                try {
+                    if (okm.hasNode(ruta)) {
+                        QueryParams parametros = new QueryParams();
+                        parametros.setPath(ruta);
+
+                        ResultSet result = okm.findPaginated(parametros, first, pageSize);
+                        List<QueryResult> lista = result.getResults();
+                        setRowCount((int) result.getTotal());
+                        for (int i = 0; i < lista.size(); i++) {
+                            Document docum = lista.get(i).getDocument();
+                            HashMap<String, FormElement> metadata = new HashMap();
+                            
+                            List<FormElement> propertyGroupProperties = okm.getPropertyGroupProperties(lista.get(i).getDocument().getPath(), getOKGPropierties());
+                            for (FormElement propertyGroupProperty : propertyGroupProperties) {
+                                metadata.put(propertyGroupProperty.getName(), propertyGroupProperty);
+                            }
+                            DocumentoMetadatos documento = new DocumentoMetadatos(docum,metadata);
+                            listadoDocs.add(documento);
+                        }
+                    }
+                } catch (DatabaseException | UnknowException | WebserviceException | IOException | ParseException ex) {
+                    Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RepositoryException ex) {
+                    Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchGroupException ex) {
+                    Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (PathNotFoundException ex) {
+                    Logger.getLogger(RegistroDocumentoTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                return listadoDocs;
+            }
+        };
+
+    }
 
     /**
      * Retorna la ruta donde se guardan los documentos .
@@ -70,9 +133,9 @@ public abstract class RegistroDocumentoTemplate {
      * @param okm Objeto con la sesion en openKM
      * @param archivOferta Archivo guardado en openKM
      */
-    public abstract void addMetadata(OKMWebservices okm, String archivOferta);
+    public abstract void addMetadata(String archivOferta);
 
-    public boolean subirDocumento(OKMWebservices okm, UploadedFile archivOferta) {
+    public boolean subirDocumento(UploadedFile archivOferta) {
         boolean existeDocumento = false;
         try {
             this.crearRutaDocumento(okm);
@@ -99,10 +162,10 @@ public abstract class RegistroDocumentoTemplate {
             }
             if (existeDocumento) {
                 okm.createDocumentSimple(this.getPathDocumento() + nombreArchTmp + consecutivo + ".pdf", archivOferta.getInputstream());
-                this.addMetadata(okm, nombreArchTmp + consecutivo + ".pdf");
+                this.addMetadata(nombreArchTmp + consecutivo + ".pdf");
             } else {
                 okm.createDocumentSimple(this.getPathDocumento() + archivOferta.getFileName(), archivOferta.getInputstream());
-                this.addMetadata(okm, archivOferta.getFileName());
+                this.addMetadata(archivOferta.getFileName());
             }
 
         } catch (PathNotFoundException | RepositoryException | DatabaseException | UnknowException | WebserviceException | AccessDeniedException | ItemExistsException | ExtensionException | AutomationException | IOException | UnsupportedMimeTypeException | FileSizeExceededException | UserQuotaExceededException | VirusDetectedException ex) {
@@ -138,30 +201,6 @@ public abstract class RegistroDocumentoTemplate {
         }
     }
 
-    //LISTAR D EMANERA GENERIA CON PAGINACINOO 
-    public List<com.openkm.sdk4j.bean.Document> getListaDocumentos(OKMWebservices okm, String name) throws PathNotFoundException, RepositoryException {
-
-        String ruta = this.getPathDocumento();
-        List<com.openkm.sdk4j.bean.Document> listadoDocsFormatos = new ArrayList<>();
-        listadoDocsFormatos.clear();
-        try {
-            if (okm.hasNode(ruta)) {
-                QueryParams parametros = new QueryParams();
-                parametros.setPath(ruta);
-                parametros.setName(name);
-                List<QueryResult> lista = okm.find(parametros);
-                for (int i = 0; i < lista.size(); i++) {
-                    listadoDocsFormatos.add(lista.get(i).getDocument());
-
-                }
-            }
-
-        } catch (DatabaseException | UnknowException | WebserviceException | IOException | ParseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listadoDocsFormatos;
-    }
-
     public String getPrgramaUsuario() {
 
         if (this.programa == null) {
@@ -181,5 +220,22 @@ public abstract class RegistroDocumentoTemplate {
         }
 
     }
+
+    public DataModel getDataModelDocumentos() {
+        return dataModelDocumentos;
+    }
+
+    public void setDataModelDocumentos(DataModel dataModelDocumentos) {
+        this.dataModelDocumentos = dataModelDocumentos;
+        Document d;
+
+    }
+
+    /**
+     * Debe retornar el nombre de el OKG grouppropierties del documento
+     *
+     * @return
+     */
+    public abstract String getOKGPropierties();
 
 }

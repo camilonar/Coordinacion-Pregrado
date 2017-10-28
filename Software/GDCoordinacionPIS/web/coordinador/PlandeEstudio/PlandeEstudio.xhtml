@@ -39,16 +39,18 @@ and open the template in the editor.
                 <h:form id="formPlanesdeEstudio" rendered="#{registroPlandeEstudioController.comprobarConexionOpenKM}">
                  
                     <!--Muestra los planes de estudio contenidos en openkm-->
-                    <p:dataTable value="#{registroPlandeEstudioController.documentosPlanEstudio}"
-                                 id="lstPlanesEstudio" paginator="true"
+                    <p:dataTable value="#{registroPlandeEstudioController.dataModelDocumentos}"
+                                 id="lstPlanesEstudio" paginator="true" lazy="true"
                                  rowKey="#{item.id}" paginatorPosition="top"
                                  rows="10" emptyMessage="Sin documentos "                        
+                               
+                                 rowsPerPageTemplate="10,20,30,40,50"
                                  var="dato">
                         <p:column>
                             <f:facet name="header">
                                 Nombre del archivo
                             </f:facet>
-                            <p:outputLabel value="#{registroPlandeEstudioController.nombreDelArchivo(dato.path)}"/>
+                            <p:outputLabel value="#{registroPlandeEstudioController.nombreDelArchivo(dato.getDocument().path)}"/>
 
                         </p:column>
 
@@ -56,7 +58,7 @@ and open the template in the editor.
                             <f:facet name="header">
                                 Fecha de creaci&#243;n
                             </f:facet>
-                            <p:outputLabel value="#{registroPlandeEstudioController.fecha(dato.created.time)}"/>
+                            <p:outputLabel value="#{registroPlandeEstudioController.fecha(dato.getDocument().created.time)}"/>
                         </p:column>
 
                         <p:column style="text-align: center; width: 280px">
@@ -64,12 +66,12 @@ and open the template in the editor.
                                 Acciones
                             </f:facet>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(dato)}"
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(dato.getDocument())}"
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
-                                             value="Editar" icon=" ui-icon-pencil" action="#{registroPlandeEstudioController.cargarPlanEstudio(dato)}" onclick="PF('dlgEditarPlanEstudio').show()"/>
+                                             value="Editar" icon=" ui-icon-pencil" action="#{registroPlandeEstudioController.cargarPlanEstudio(dato.getDocument())}" onclick="PF('dlgEditarPlanEstudio').show()"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroPlandeEstudioController.descargarDocumento(dato)}" />
+                                <p:fileDownload value="#{registroPlandeEstudioController.descargarDocumento(dato.getDocument())}" />
                             </p:commandButton>                    
                             <!--<p:commandButton value="Ver" action="{registroPlandeEstudioController.show(dato)}" icon="ui-icon-search" title="Ver"/>-->  
                             <!--<p:commandLink styleClass="btn" value="ver" action="{registroPlandeEstudioController.visualizarDocumento(dato)}" ajax="false" target="_blank" style="background-color: gainsboro;padding: 2px 15px 2px 15px; border-radius: 2px; text-decoration: none"></p:commandLink>-->
@@ -86,6 +88,10 @@ and open the template in the editor.
                                              icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
+                    
+                     <p:blockUI block="lstPlanesEstudio" trigger="lstPlanesEstudio">
+                        CARGANDO...<br />
+                    </p:blockUI>
 
                     <p:growl id="mensajeEliminar" showDetail="true" life="4000" >
 

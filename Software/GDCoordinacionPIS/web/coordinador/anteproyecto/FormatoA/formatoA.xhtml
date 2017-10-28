@@ -18,23 +18,23 @@
                 <p:separator/>
                 <center><p:outputLabel value="Anteproyectos - Gestión de formato A" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
-                
-                
+
+
                 <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
                 <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
                 <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
                 <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
 
-               
+
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
-                
+
                 <h:form id="form" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">
                     <p:commandButton id="createButton"
-                        value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                                     value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
 
                 </h:form>
-                
-                
+
+
                 <h:form style="padding-top: 10px;" id="formListaAnteproyectos" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">    
                     <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
@@ -42,43 +42,58 @@
                     <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoAController.datos}">
                         <p:ajax update="datalist"  event="keyup" />
                     </p:inputText>  
-                    <p:dataTable value="#{registroFormatoAController.listadoFormatoA}" 
-                                 id="datalist" paginator="true"
+
+                    <p:dataTable value="#{registroFormatoAController.dataModelDocumentos}" 
+                                 id="datalist" paginator="true" lazy="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  var="formatoA">
+                       
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Docente"/>
+                            </f:facet>
+                            <p:outputLabel value="#{formatoA.getPropiertieValue('okp:FormatoA.docente')}"/>
+                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="Nombre del documento"/>
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoAController.nombreDelArchivo(formatoA.getPath())}"/>
+                            <p:outputLabel value="#{registroFormatoAController.nombreDelArchivo(formatoA.getDocument().getPath())}"/>
                         </p:column>
+                        
                         <p:column style="width: 360px" >
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{registroFormatoAController.fecha(formatoA.getCreated())}"/>
+                            <p:outputLabel value="#{registroFormatoAController.fecha(formatoA.getDocument().getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
                                 Acciones
                             </f:facet>
                             <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoA)}" 
+                                             action="#{visualizarDocumentoBean.visualizarDocumento(formatoA.getDocument())}" 
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoAController.cargarDatosEdicion(formatoA)}" 
+                                             action="#{registroFormatoAController.cargarDatosEdicion(formatoA.getDocument())}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA)}" />
+                                <p:fileDownload value="#{registroFormatoAController.descargarDocumento(formatoA.getDocument())}" />
                             </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroFormatoAController.confirmarEliminacion(formatoA)}" 
+                                             action="#{registroFormatoAController.confirmarEliminacion(formatoA.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
+                    
+                    <p:blockUI block="datalist" trigger="datalist">
+                        CARGANDO...<br />
+                    </p:blockUI>
+                    
                 </h:form>
                 <ui:include src="registrarFormatoA.xhtml"/> 
                 <ui:include src="editarInfoFormatoA.xhtml"/> 

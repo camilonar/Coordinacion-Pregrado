@@ -71,22 +71,18 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     private UploadedFile archivoFormatoA;
     private StreamedContent streamedContent;
     private String datos;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoA;
+
     private com.openkm.sdk4j.bean.Document documento;
-    private ConexionOpenKM conexionOpenKM;
-    OKMWebservices okm ;
     private SimpleDateFormat formatoFecha;
 
-    public RegistroFormatoAController()
-    {
+
+    public RegistroFormatoAController() {
+        super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
-        listadoDocsFormatoA = new ArrayList<>();
-        conexionOpenKM = new  ConexionOpenKM();
-        okm = conexionOpenKM.getOkm();    
     }
-    
+       
     @PostConstruct
     public void init() 
     {
@@ -119,11 +115,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.update("formMetadatosFormatoA");
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
-    
-    public List<com.openkm.sdk4j.bean.Document> getListadoFormatoA() throws PathNotFoundException, RepositoryException
-    {    
-        return this.getListaDocumentos(okm,datos);
-    }
+ 
     
     public String getDatos() 
     {
@@ -184,9 +176,13 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     {
         this.streamedContent = streamedContent;
     }
+
+ 
+
     
     public Date getTodayDate() 
     {
+
         return new Date();
     }
     
@@ -242,8 +238,11 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return file;
+    }
+    
+    public void aceptarFormatoA() throws PathNotFoundException {
+        this.subirDocumento(archivoFormatoA);
     }
     
     public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) 
@@ -403,10 +402,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
     
-    public void aceptarFormatoA() 
-    {
-        this.subirDocumento(okm, archivoFormatoA);
-    }
+
     
     public void agregarMetadatos()
     {
@@ -525,18 +521,17 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     }
 
     @Override
-    public void addMetadata(OKMWebservices okm, String archivOferta)
-    {
-        try
-        {
-            okm.addGroup(this.getPathDocumento() + archivOferta, "okg:FormatoA");
-            List<FormElement> fElements = okm.getPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoA");
-            for (FormElement fElement : fElements) 
-            {
-                if (fElement.getName().equals("okp:FormatoA.docente")) 
-                {
+    public void addMetadata( String archivOferta) {
+        try {
+            String path = this.getPathDocumento();
+            okm.addGroup( path + archivOferta, "okg:FormatoA");
+
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:FormatoA");
+            for (FormElement fElement : fElements) {
+                if (fElement.getName().equals("okp:FormatoA.docente")) {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getProfesor());
+                    
                 }
                 if (fElement.getName().equals("okp:FormatoA.TituloAnteproyecto")) 
                 {
@@ -580,5 +575,16 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+
+ 
+//    public String getEstu(){
+//
+//
+//}
+      @Override
+    public String getOKGPropierties() {
+      return "okg:FormatoA";
     }
 }
