@@ -40,7 +40,7 @@
 
 
                 <p:row>
-
+                    
                     <p:column colspan="1">
                         <p:outputLabel value="Título del anteproyecto:" style="font-weight: bold;color: #000000 "/>
                         <p:outputLabel value="*" style="color: #ff5252"/>
@@ -54,22 +54,24 @@
                         </p:inputText>    
                     </p:column>
 
-
-
                     <p:column colspan="1">
-
                         <p:outputLabel value="Fecha:" style="font-weight: bold; color: #000000"/>
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
 
                     <p:column colspan="1">
+                        <p:outputLabel value="#{registroFormatoAController.metadatosAnteproyectos.fecha}" style="font-weight: normal; color: #000000"/>
+                        
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                    showOn="button">
+                        </p:calendar>
+                             
+                    
+                    
                         <!--><p:calendar size="22" required="true" readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                     value="#{registroFormatoAController.metadatosAnteproyectos.fecha}" showOn="button" /><-->
-                        <!--><p:outputLabel value="¡ups!,this is not working :'(" style="font-weight: bold; color: #000000"/><-->
-                        
                         
                     </p:column>
-                    
                     
                 </p:row>
 
@@ -195,10 +197,6 @@
                   
                     </p:column>
                 </p:row>
-
-
-
-
 
             </p:panelGrid> 
 

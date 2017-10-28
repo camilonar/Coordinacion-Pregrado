@@ -42,7 +42,7 @@
                     <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoAController.datos}">
                         <p:ajax update="datalist"  event="keyup" />
                     </p:inputText>  
-                    <p:dataTable value="#{registroFormatoAController.listadoAnteproecto}" 
+                    <p:dataTable value="#{registroFormatoAController.listadoFormatoA}" 
                                  id="datalist" paginator="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"

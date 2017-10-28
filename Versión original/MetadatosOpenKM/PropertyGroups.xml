@@ -1,20 +1,44 @@
-<property-group label="FormatoA" name="okg:FormatoA">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE property-groups PUBLIC "-//OpenKM//DTD Property Groups 2.0//EN"
+                                 "http://www.openkm.com/dtd/property-groups-2.0.dtd">
+<property-groups>
+	
+ <property-group label="FormatoA" name="okg:FormatoA">
     <input label="Docente" type="text" name="okp:FormatoA.docente"/>
     <input label="Titulo anteproyecto" type="text" name="okp:FormatoA.TituloAnteproyecto" />
     <input label="Fecha" type="text" name="okp:FormatoA.Fecha" />
-	<input label="Primer estudiante" type="text" name="okp:FormatoA.PrimerEstudiante" />
+	<input label="Viabilidad" type="text" name="okp:FormatoA.Viabilidad" />
+    <input label="Primer estudiante" type="text" name="okp:FormatoA.PrimerEstudiante" />
 	<input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
 	<input label="Acta aprobacion" type="text" name="okp:FormatoA.ActaAprobacion" />
  </property-group>
 
-<property-group label="FormatoC" name="okg:FormatoC">
+ <property-group label="FormatoB" name="okg:FormatoB">
+    <input label="Docente" type="text" name="okp:FormatoB.docente"/>
+    <input label="Titulo anteproyecto" type="text" name="okp:FormatoB.TituloAnteproyecto" />
+    <input label="Fecha" type="text" name="okp:FormatoB.Fecha" />
+	<input label="Viabilidad" type="text" name="okp:FormatoB.Viabilidad" />
+    <input label="Primer estudiante" type="text" name="okp:FormatoB.PrimerEstudiante" />     	
+	<input label="Segundo estudiante" type="text" name="okp:FormatoB.SegundoEstudiante" />
+	<input label="Acta aprobacion" type="text" name="okp:FormatoB.ActaAprobacion" />
+ </property-group>
+    
+ <property-group label="FormatoC" name="okg:FormatoC">
     <input label="Docente" type="text" name="okp:FormatoC.docente"/>
     <input label="Titulo anteproyecto" type="text" name="okp:FormatoC.TituloAnteproyecto" />
     <input label="Fecha" type="text" name="okp:FormatoC.Fecha" />
-	<input label="Primer estudiante" type="text" name="okp:FormatoC.PrimerEstudiante" />
+	<input label="Viabilidad" type="text" name="okp:FormatoC.Viabilidad" />
+    <input label="Primer estudiante" type="text" name="okp:FormatoC.PrimerEstudiante" />     	
 	<input label="Segundo estudiante" type="text" name="okp:FormatoC.SegundoEstudiante" />
-	<input label="Acta aprobacion" type="text" name="okp:FormatoC.ActaAprobacion" />
-</property-group>
+ </property-group>
+ 
+ <property-group label="PlanEstudio" name="okg:PlanEstudio">
+    <input label="Numero" type="text" name="okp:PlanEstudio.Numero"/>
+    <input label="Acuerdo" type="text" name="okp:PlanEstudio.Acuerdo" />
+    <input label="Vigencia" type="text" name="okp:PlanEstudio.Vigencia" />
+ </property-group>
+    
+    
     
  <property-group label="OfertaAcademicaPrematricula" name="okg:OfertaAcademicaPrematricula">
     <input label="calculo 1 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes"/>
@@ -40,3 +64,4 @@
 	<input label="Lab. Electromagnetismo numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.labElectroNumEstudiantes"/>
 	<input label="Lab. Electromagnetismo grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.LabElectroGruposSolicitados"/>
 </property-group>
+</property-groups>

@@ -8,9 +8,8 @@
     <input label="Titulo anteproyecto" type="text" name="okp:FormatoA.TituloAnteproyecto" />
     <input label="Fecha" type="text" name="okp:FormatoA.Fecha" />
 	<input label="Viabilidad" type="text" name="okp:FormatoA.Viabilidad" />
-	
     <input label="Primer estudiante" type="text" name="okp:FormatoA.PrimerEstudiante" />
-    	<input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
+    <input label="Segundo estudiante" type="text" name="okp:FormatoA.SegundoEstudiante" />
 	<input label="Acta aprobacion" type="text" name="okp:FormatoA.ActaAprobacion" />
  </property-group>
 
@@ -19,7 +18,7 @@
     <input label="Titulo anteproyecto" type="text" name="okp:FormatoB.TituloAnteproyecto" />
     <input label="Fecha" type="text" name="okp:FormatoB.Fecha" />
 	<input label="Viabilidad" type="text" name="okp:FormatoB.Viabilidad" />
-     <input label="Primer estudiante" type="text" name="okp:FormatoB.PrimerEstudiante" />     	
+    <input label="Primer estudiante" type="text" name="okp:FormatoB.PrimerEstudiante" />     	
 	<input label="Segundo estudiante" type="text" name="okp:FormatoB.SegundoEstudiante" />
 	<input label="Acta aprobacion" type="text" name="okp:FormatoB.ActaAprobacion" />
  </property-group>
@@ -40,15 +39,12 @@
     <input label="Segundo estudiante" type="text" name="okp:Checklist.SegundoEstudiante" />
  </property-group>
     
- 
  <property-group label="PlanEstudio" name="okg:PlanEstudio">
     <input label="Numero" type="text" name="okp:PlanEstudio.Numero"/>
     <input label="Acuerdo" type="text" name="okp:PlanEstudio.Acuerdo" />
     <input label="Vigencia" type="text" name="okp:PlanEstudio.Vigencia" />
  </property-group>
-    
-    
-    
+        
  <property-group label="OfertaAcademicaPrematricula" name="okg:OfertaAcademicaPrematricula">
     <input label="calculo 1 numero estudiante" type="text" name="okp:OfertaAcademicaPrematricula.calculo1NumEstudiantes"/>
 	<input label="calculo 1 grupos solicitados" type="text" name="okp:OfertaAcademicaPrematricula.calculo1GruposSolicitados"/>
