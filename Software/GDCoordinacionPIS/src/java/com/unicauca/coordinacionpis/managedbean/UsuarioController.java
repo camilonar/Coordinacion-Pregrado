@@ -68,8 +68,10 @@ public class UsuarioController implements Serializable {
     @EJB
     private ProgramaFacade programaFacade;
 
-    public enum TIPO_USUARIO{ADMIN, COORDINADOR, JEFE};
-    
+    public enum TIPO_USUARIO {
+        ADMIN, COORDINADOR, JEFE
+    };
+
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.UsuarioFacade ejbUsuario;
     @EJB
@@ -90,14 +92,13 @@ public class UsuarioController implements Serializable {
     private UploadedFile file;
 
     private SimpleDateFormat formatoFecha;
-    
-    
+
     private byte[] imagen;
     private DefaultStreamedContent miImagen;
     private UploadedFile uploadedFile;
-    
+
     private boolean fotoDefecto;
-    
+
     private TIPO_USUARIO tipo;
     private Departamento dpto;
     private Programa programa;
@@ -110,15 +111,14 @@ public class UsuarioController implements Serializable {
         this.campoFoto = true;
         this.campoContrasena = true;
         this.formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-        
+
         this.miImagen = (DefaultStreamedContent) this.getImagenDefecto();
         fotoDefecto = true;
         tipo = TIPO_USUARIO.ADMIN;
     }
 
     public Programa getPrograma() {
-        if(programa == null)
-        {
+        if (programa == null) {
             programa = programaFacade.find(26); //Por defecto sistemas
         }
         return programa;
@@ -127,8 +127,6 @@ public class UsuarioController implements Serializable {
     public void setPrograma(Programa programa) {
         this.programa = programa;
     }
-    
-    
 
     @PostConstruct
     public void init() {
@@ -138,7 +136,7 @@ public class UsuarioController implements Serializable {
     public boolean isFotoDefecto() {
         return fotoDefecto;
     }
-    
+
     public Usuario getSelected() {
         return usuario;
     }
@@ -218,15 +216,14 @@ public class UsuarioController implements Serializable {
         usuario = new Usuario();
         usuario.setUsunombres("");
         this.file = null;
-        if(!fotoDefecto)
-        {
+        if (!fotoDefecto) {
             this.establecerFotoPorDefecto();
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update("formfoto");
         }
         this.fotoDefecto = true;
         this.limpiarRegistrarUsuario();
-        
+
         this.tipo = TIPO_USUARIO.ADMIN;
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("UsuarioCreateForm");
@@ -244,23 +241,18 @@ public class UsuarioController implements Serializable {
         this.campoFoto = campoFoto;
     }
 
-    public void registrarUsuario() 
-    {
+    public void registrarUsuario() {
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
-                
-        if(!fotoDefecto)
-        {
+
+        if (!fotoDefecto) {
             this.usuario.setUsufoto(imagen);
-        }
-        else
-        {
+        } else {
             this.usuario.setUsufoto(null);
         }
         usuario.setCarid(cargo);
         ejbUsuario.create(usuario);
-        
-        if(this.tipo == TIPO_USUARIO.COORDINADOR)
-        {
+
+        if (this.tipo == TIPO_USUARIO.COORDINADOR) {
             List<UsuarioPrograma> programas = new ArrayList<>();
             UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
             UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
@@ -270,9 +262,7 @@ public class UsuarioController implements Serializable {
             programas.add(up);
             usuario.setUsuarioProgramaList(programas);
             usuarioProgramaFacade.create(up);
-        }
-        else if(this.tipo == TIPO_USUARIO.JEFE)
-        {
+        } else if (this.tipo == TIPO_USUARIO.JEFE) {
             List<UsuarioDepartamento> departamentos = new ArrayList<>();
             UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
             UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
@@ -286,7 +276,7 @@ public class UsuarioController implements Serializable {
         this.tipo = TIPO_USUARIO.ADMIN;
         dpto = null;
         programa = null;
-        
+
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
 
@@ -296,58 +286,48 @@ public class UsuarioController implements Serializable {
         usuarioGrupo.setGrupo(grupo);
         usuarioGrupo.setUsuario(usuario);
         usuarioGrupo.setUsunombreusuario(this.usuario.getUsunombreusuario());
-        
-        
-        
+
         List a = new ArrayList();
         a.add(usuarioGrupo);
         this.usuario.setUsuariogrupoList(a);
         this.ejbUsuarioGrupo.create(usuarioGrupo);
-        
-        
-        
-        
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         ejbUsuario.limpiarCache();
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
 
         requestContext.execute("PF('UsuarioCreateDialog').hide()");
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información","El usuario se registró con éxito.");
-        FacesContext.getCurrentInstance().addMessage(null,msg);
-        
-       // requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se registró con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        // requestContext.execute("PF('mensajeRegistroExitoso').show()");
         requestContext.update("msg");
         requestContext.update("formfoto");
 
     }
-    
-    public void editarUsuario() {
+
+    public void editarUsuarioRol() {
+        usuario.setUsuestado(true);
         usuario.setCarid(cargo);
-        if(!fotoDefecto)
-        {
+        if (!fotoDefecto) {
             this.usuario.setUsufoto(imagen);
-        }
-        else
-        {
+        } else {
             this.usuario.setUsufoto(null);
         }
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
-        
-        for(UsuarioPrograma up: this.usuario.getUsuarioProgramaList())
-        {
+
+        for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
             usuarioProgramaFacade.remove(up);
         }
-        for(UsuarioDepartamento ud: this.usuario.getUsuarioDepartamentoList())
-        {
+        for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
             usuarioDepartamentoFacade.remove(ud);
         }
-        if(this.tipo == TIPO_USUARIO.COORDINADOR)
-        {
+        if (this.tipo == TIPO_USUARIO.COORDINADOR) {
             List<UsuarioPrograma> programas = new ArrayList<>();
             UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
             UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
@@ -357,9 +337,7 @@ public class UsuarioController implements Serializable {
             programas.add(up);
             usuario.setUsuarioProgramaList(programas);
             usuarioProgramaFacade.create(up);
-        }
-        else if(this.tipo == TIPO_USUARIO.JEFE)
-        {
+        } else if (this.tipo == TIPO_USUARIO.JEFE) {
             List<UsuarioDepartamento> departamentos = new ArrayList<>();
             UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
             UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
@@ -371,10 +349,72 @@ public class UsuarioController implements Serializable {
             usuarioDepartamentoFacade.create(ud);
         }
         this.tipo = TIPO_USUARIO.ADMIN;
-        
-        
+
         this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
-        
+
+        usuarioGrupoPK.setGruid(grupo.getGruid());
+        usuarioGrupoPK.setUsuid(this.usuario.getUsuid());
+        usuarioGrupo.setUsuariogrupoPK(usuarioGrupoPK);
+        usuarioGrupo.setUsunombreusuario(this.usuario.getUsunombreusuario());
+        this.ejbUsuarioGrupo.edit(usuarioGrupo);
+
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('UsuarioRolDialog').hide()");
+        ejbUsuario.limpiarCache();
+        items = ejbUsuario.findAll();
+        usuario = new Usuario();
+        usuario.setUsugenero('M');
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se editó con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        requestContext.update("msg");
+        //requestContext.update("UsuarioListForm");
+
+    }
+    
+    public void editarUsuario() {
+        usuario.setCarid(cargo);
+        if (!fotoDefecto) {
+            this.usuario.setUsufoto(imagen);
+        } else {
+            this.usuario.setUsufoto(null);
+        }
+        Usuariogrupo usuarioGrupo = new Usuariogrupo();
+        UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
+        ejbUsuario.edit(usuario);
+
+        for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
+            usuarioProgramaFacade.remove(up);
+        }
+        for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
+            usuarioDepartamentoFacade.remove(ud);
+        }
+        if (this.tipo == TIPO_USUARIO.COORDINADOR) {
+            List<UsuarioPrograma> programas = new ArrayList<>();
+            UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
+            UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
+            up.setNombreUsuario(usuario.getUsunombreusuario());
+            up.setPrograma(programa);
+            up.setUsuario(usuario);
+            programas.add(up);
+            usuario.setUsuarioProgramaList(programas);
+            usuarioProgramaFacade.create(up);
+        } else if (this.tipo == TIPO_USUARIO.JEFE) {
+            List<UsuarioDepartamento> departamentos = new ArrayList<>();
+            UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
+            UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
+            ud.setNombreUsuario(usuario.getUsunombreusuario());
+            ud.setDepartamento(dpto);
+            ud.setUsuario(usuario);
+            departamentos.add(ud);
+            usuario.setUsuarioDepartamentoList(departamentos);
+            usuarioDepartamentoFacade.create(ud);
+        }
+        this.tipo = TIPO_USUARIO.ADMIN;
+
+        this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
+
         usuarioGrupoPK.setGruid(grupo.getGruid());
         usuarioGrupoPK.setUsuid(this.usuario.getUsuid());
         usuarioGrupo.setUsuariogrupoPK(usuarioGrupoPK);
@@ -387,80 +427,72 @@ public class UsuarioController implements Serializable {
         items = ejbUsuario.findAll();
         usuario = new Usuario();
         usuario.setUsugenero('M');
-      
+
         requestContext.execute("PF('UsuarioCreateDialog').hide()");
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Información","El usuario se editó con éxito.");
-        FacesContext.getCurrentInstance().addMessage(null,msg);
-        
-       // requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se editó con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        // requestContext.execute("PF('mensajeRegistroExitoso').show()");
         requestContext.update("msg");
         requestContext.update("formfoto");
         requestContext.update("UsuarioListForm");
-        
-    }  
+
+    }
 
     public void seleccionarUsuarioEditar(Usuario usuario) {
         this.usuario = usuario;
         this.imagen = this.usuario.getUsufoto();
-        if(this.imagen ==null)
-        {
+        if (this.imagen == null) {
             this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
             convertirBytesAImagen();
             System.out.println("seleccionarUsuarioEditar file = null");
             this.fotoDefecto = true;
-        }
-        else
-        {
+        } else {
             this.fotoDefecto = false;
         }
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
         this.tipo = TIPO_USUARIO.ADMIN;
-        if(!this.usuario.getUsuarioDepartamentoList().isEmpty())
-        {
+        if (!this.usuario.getUsuarioDepartamentoList().isEmpty()) {
             this.dpto = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento();
             this.tipo = TIPO_USUARIO.JEFE;
-        }
-        else
+        } else {
             this.dpto = null;
-        
-        if(!this.usuario.getUsuarioProgramaList().isEmpty())
-        {
+        }
+
+        if (!this.usuario.getUsuarioProgramaList().isEmpty()) {
             this.programa = this.usuario.getUsuarioProgramaList().get(0).getPrograma();
             this.tipo = TIPO_USUARIO.COORDINADOR;
+        } else {
+            this.programa = null;
         }
-        else
-            this.programa =null;
     }
 
     public void seleccionarUsuarioVer(Usuario usuario) {
         this.usuario = usuario;
         this.imagen = this.usuario.getUsufoto();
-        if(this.imagen ==null)
-        {
+        if (this.imagen == null) {
             this.miImagen = (DefaultStreamedContent) Utilidades.getImagenPorDefecto("foto");
             convertirBytesAImagen();
         }
-        
+
         this.cargo = usuario.getCarid();
         this.grupo = ejbUsuarioGrupo.buscarPorNombreUsuarioObj(usuario.getUsunombreusuario()).getGrupo();
-        
+
         this.tipo = TIPO_USUARIO.ADMIN;
-        if(!this.usuario.getUsuarioDepartamentoList().isEmpty())
-        {
+        if (!this.usuario.getUsuarioDepartamentoList().isEmpty()) {
             this.dpto = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento();
             this.tipo = TIPO_USUARIO.JEFE;
-        }
-        else
+        } else {
             this.dpto = null;
-        
-        if(!this.usuario.getUsuarioProgramaList().isEmpty())
-        {
+        }
+
+        if (!this.usuario.getUsuarioProgramaList().isEmpty()) {
             this.programa = this.usuario.getUsuarioProgramaList().get(0).getPrograma();
             this.tipo = TIPO_USUARIO.COORDINADOR;
+        } else {
+            this.programa = null;
         }
-        else
-            this.programa =null;
     }
 
     public void mostrarModificarContrasena() {
@@ -481,7 +513,7 @@ public class UsuarioController implements Serializable {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
         this.campoContrasena = true;
-        System.out.println("contasena "+contrasena);
+        System.out.println("contasena " + contrasena);
         this.usuario.setUsucontrasena(Cifrar.sha256(this.contrasena));
         this.ejbUsuario.edit(this.usuario);
 
@@ -583,17 +615,17 @@ public class UsuarioController implements Serializable {
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-    
-    public StreamedContent getImagenDefecto(){
+
+    public StreamedContent getImagenDefecto() {
         return Utilidades.getImagenPorDefecto("foto");
     }
 
     public StreamedContent getImagenFlujo() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-        {
-            return new DefaultStreamedContent();
-        }
+            {
+                return new DefaultStreamedContent();
+            }
         } else {
             String id = context.getExternalContext().getRequestParameterMap().get("id");
             Usuario usu = ejbUsuario.buscarPorIdUsuario(Long.valueOf(id)).get(0);
@@ -617,7 +649,6 @@ public class UsuarioController implements Serializable {
         }
 
     }
-    
 
     public void mostraSubirFoto() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -638,7 +669,8 @@ public class UsuarioController implements Serializable {
         requestContext.update(":UsuarioListForm:datalist");
 
     }
-    public void cancelarEditarUsuario(){
+
+    public void cancelarEditarUsuario() {
         this.usuario = new Usuario();
         this.fotoDefecto = true;
         usuario.setUsugenero('M');
@@ -649,6 +681,7 @@ public class UsuarioController implements Serializable {
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
     }
+
     public void cancelarRegistroUsuario() {
         this.usuario = new Usuario();
         this.fotoDefecto = true;
@@ -659,7 +692,7 @@ public class UsuarioController implements Serializable {
         ejbUsuario.limpiarCache();
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
-        
+
         System.out.println("--> cancelar registro");
         this.establecerFotoPorDefecto();
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -668,47 +701,43 @@ public class UsuarioController implements Serializable {
         requestContext.execute("$('#UsuarioCreateForm').trigger('reset')");
         requestContext.execute("$('#formfoto').trigger('reset');");
     }
-    
+
     public DefaultStreamedContent getMiImagen() {
         convertirBytesAImagen();
         /*if(miImagen==null)
             miImagen = Utilidades.getImagenPorDefecto("foto");*/
         return miImagen;
     }
-    public void convertirBytesAImagen()
-    {
-        if(imagen != null)
-        {
+
+    public void convertirBytesAImagen() {
+        if (imagen != null) {
             InputStream is = new ByteArrayInputStream((byte[]) imagen);
             miImagen = new DefaultStreamedContent(is, "image/png");
         }
     }
-    
-    public void imagenPorDefecto(){
-        imagen=null;
+
+    public void imagenPorDefecto() {
+        imagen = null;
     }
-    
+
     public void convertirImagenABytes(FileUploadEvent event) {
-        try
-        {
-            
+        try {
+
             String type = event.getFile().getContentType();
             System.out.println(type);
-            System.out.println(""+!type.equals("image/png"));
-            if(!type.equals("image/png") && !type.equals("image/jpeg") &&!type.equals("image/jpg"))
-            {
-                FacesMessage msg = new FacesMessage("Información","El formato de la imagen debe ser png, jpeg o jpg");  
+            System.out.println("" + !type.equals("image/png"));
+            if (!type.equals("image/png") && !type.equals("image/jpeg") && !type.equals("image/jpg")) {
+                FacesMessage msg = new FacesMessage("Información", "El formato de la imagen debe ser png, jpeg o jpg");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
                 return;
             }
             fotoDefecto = false;
             uploadedFile = event.getFile();
             InputStream is = event.getFile().getInputstream();
-            ByteArrayOutputStream os = new ByteArrayOutputStream();            
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
             byte[] buffer = new byte[0xFFFF];
 
-            for (int len; (len = is.read(buffer)) != -1;)
-            {
+            for (int len; (len = is.read(buffer)) != -1;) {
                 os.write(buffer, 0, len);
             }
 
@@ -716,12 +745,11 @@ public class UsuarioController implements Serializable {
             imagen = os.toByteArray();
             usuario.setUsufoto(imagen);
             convertirBytesAImagen();
-        }
-        catch(IOException e)
-        {
-            
+        } catch (IOException e) {
+
         }
     }
+
     public StreamedContent getImagen(Usuario usuario) {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -734,9 +762,8 @@ public class UsuarioController implements Serializable {
         }
 
     }
-    
-    public void limpiarRegistrarUsuario()
-    {
+
+    public void limpiarRegistrarUsuario() {
         this.usuario = new Usuario();
         usuario.setUsugenero('M');
         this.cargo = new Cargo();
@@ -750,8 +777,8 @@ public class UsuarioController implements Serializable {
         this.fotoDefecto = true;
         this.tipo = TIPO_USUARIO.ADMIN;
     }
-    public Date getFechaHoy()
-    {
+
+    public Date getFechaHoy() {
         Date min = new Date();
         min.setYear(min.getYear() - 18);
         min.setMonth(11);
@@ -762,31 +789,32 @@ public class UsuarioController implements Serializable {
     public TIPO_USUARIO getTipo() {
         return tipo;
     }
-    
-    
-    
-    public void establecerFotoPorDefecto()
-    {
+
+    public void desactivarRol(long id) {
+        Usuario usuario = ejbUsuario.buscarPorIdUsuario(id).get(0);
+        usuario.setUsuestado(new Boolean(false));
+        ejbUsuario.edit(usuario);
+    }
+
+    public void establecerFotoPorDefecto() {
         System.out.println("establecer foto por defecto");
         this.fotoDefecto = true;
     }
-    
-    public TIPO_USUARIO getTipoAdmin()
-    {
+
+    public TIPO_USUARIO getTipoAdmin() {
         return TIPO_USUARIO.ADMIN;
     }
-        public TIPO_USUARIO getTipoCoordinador()
-    {
+
+    public TIPO_USUARIO getTipoCoordinador() {
         return TIPO_USUARIO.COORDINADOR;
     }
-    public TIPO_USUARIO getTipoJefe()
-    {
+
+    public TIPO_USUARIO getTipoJefe() {
         return TIPO_USUARIO.JEFE;
     }
-    public void setTipoUsuario()
-    {
-        switch(grupo.getGruid())
-        {
+
+    public void setTipoUsuario() {
+        switch (grupo.getGruid()) {
             case "1":
                 this.tipo = TIPO_USUARIO.ADMIN;
                 break;
@@ -800,10 +828,9 @@ public class UsuarioController implements Serializable {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("UsuarioCreateForm");
     }
-    public void setTipoUsuarioEditar()
-    {
-        switch(grupo.getGruid())
-        {
+
+    public void setTipoUsuarioEditar() {
+        switch (grupo.getGruid()) {
             case "1":
                 this.tipo = TIPO_USUARIO.ADMIN;
                 break;
@@ -816,11 +843,27 @@ public class UsuarioController implements Serializable {
         }
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("UsuarioEditForm");
+        requestContext.update("UsuarioRolForm");
+    }
+
+    public void setTipoUsuarioEditarRol() {
+        switch (grupo.getGruid()) {
+            case "1":
+                this.tipo = TIPO_USUARIO.ADMIN;
+                break;
+            case "2":
+                this.tipo = TIPO_USUARIO.COORDINADOR;
+                break;
+            case "3":
+                this.tipo = TIPO_USUARIO.JEFE;
+                break;
+        }
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("UsuarioRolForm");
     }
 
     public Departamento getDpto() {
-        if(dpto == null)
-        {
+        if (dpto == null) {
             dpto = departamentoFacade.find(8);
         }
         return dpto;
@@ -829,7 +872,7 @@ public class UsuarioController implements Serializable {
     public void setDpto(Departamento dpto) {
         this.dpto = dpto;
     }
-    
+
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 

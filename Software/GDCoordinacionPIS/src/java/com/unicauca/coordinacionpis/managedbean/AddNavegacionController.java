@@ -91,6 +91,17 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    public void addGestionUsuariRol() {
+        this.menuNavegacion = new DefaultMenuModel();
+        index.setValue("Index");
+        miga1.setValue("Usuarios");
+        miga2.setValue("Gestión de permisos");
+
+        this.menuNavegacion.addElement(index);
+        this.menuNavegacion.addElement(miga1);
+        this.menuNavegacion.addElement(miga2);
+    }
+
     public void addPerfilUsuario() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -164,14 +175,13 @@ public class AddNavegacionController implements Serializable {
         index.setValue("Index");
         miga1.setValue("Anteproyecto");
         miga2.setValue("Gestión de anteproyectos");
-        
+
         this.menuNavegacion.addElement(index);
         this.menuNavegacion.addElement(miga1);
         this.menuNavegacion.addElement(miga2);
 
     }
 
-    
     public void cambioDeOpciones() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
