@@ -1,0 +1,12 @@
+Script Para adicionar el estado a los usuarios
+
+//Agrega la columna estado
+
+ALTER TABLE usuario ADD USUESTADO bit DEFAULT 0;
+
+//Pone a todos los usuarios como activos
+
+UPDATE usuario SET USUESTADO=1;
+
+
+Adicional(workbench): para poder correr este script se debe ir a Edit->Preferences->Sql Editor y deshabilitar las casillas que empiezan con “safe” ; esto es por el UPDATE que actualiza a todos los usuarios y en el caso de workbench esta edición viene bloqueada.(Si quieren luego las pueden volver a activar).
