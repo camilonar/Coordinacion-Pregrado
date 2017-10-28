@@ -18,23 +18,23 @@
                 <p:separator/>
                 <center><p:outputLabel value="Anteproyectos - Gestión de formato A" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
-                
-                
+
+
                 <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
                 <br rendered="#{!registroFormatoAController.comprobarConexionOpenKM}"/>
                 <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
                 <center><h:outputLabel rendered="#{!registroFormatoAController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
 
-               
+
                 <p:growl id="msgRFA" showDetail="true" life="4000" globalOnly="true"/>
-                
+
                 <h:form id="form" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">
                     <p:commandButton id="createButton"
-                        value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                                     value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
 
                 </h:form>
-                
-                
+
+
                 <h:form style="padding-top: 10px;" id="formListaAnteproyectos" rendered="#{registroFormatoAController.comprobarConexionOpenKM}">    
                     <p:growl id="msg" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
@@ -80,6 +80,11 @@
                                              icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
+                    
+                    <p:blockUI block="datalist" trigger="datalist">
+                        CARGANDO...<br />
+                    </p:blockUI>
+                    
                 </h:form>
                 <ui:include src="registrarFormatoA.xhtml"/> 
                 <ui:include src="editarInfoFormatoA.xhtml"/> 

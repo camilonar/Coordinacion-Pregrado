@@ -43,6 +43,8 @@ and open the template in the editor.
                                  id="lstPlanesEstudio" paginator="true" lazy="true"
                                  rowKey="#{item.id}" paginatorPosition="top"
                                  rows="10" emptyMessage="Sin documentos "                        
+                               
+                                 rowsPerPageTemplate="10,20,30,40,50"
                                  var="dato">
                         <p:column>
                             <f:facet name="header">
@@ -86,6 +88,10 @@ and open the template in the editor.
                                              icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
+                    
+                     <p:blockUI block="lstPlanesEstudio" trigger="lstPlanesEstudio">
+                        CARGANDO...<br />
+                    </p:blockUI>
 
                     <p:growl id="mensajeEliminar" showDetail="true" life="4000" >
 
