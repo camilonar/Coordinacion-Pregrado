@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsucontrasena", query = "SELECT u FROM Usuario u WHERE u.usucontrasena = :usucontrasena")
     , @NamedQuery(name = "Usuario.findByUsuemail", query = "SELECT u FROM Usuario u WHERE u.usuemail = :usuemail")
     , @NamedQuery(name = "Usuario.findByBusquedaUsuarios", query = "SELECT u FROM Usuario u WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(u.usunombres,' '), u.usuapellidos),' ') ,u.usuemail), ' '),u.usunombreusuario)) LIKE :busqueda")
-    , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u Where u.usuestado = :usuestado") 
+    , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u Where u.usuestado = :usuestado")
 })
 public class Usuario implements Serializable {
 
@@ -94,6 +94,8 @@ public class Usuario implements Serializable {
     @Lob
     @Column(name = "USUFOTO")
     private byte[] usufoto;
+    @Column(name = "USUESTADO")
+    private Boolean usuestado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<UsuarioDepartamento> usuarioDepartamentoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -103,10 +105,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "CARID", referencedColumnName = "CARID")
     @ManyToOne
     private Cargo carid;
-    
-    @Column(name = "USUESTADO")
-    private byte usuestado;
-    
+
     public Usuario() {
     }
 
@@ -114,7 +113,7 @@ public class Usuario implements Serializable {
         this.usuid = usuid;
     }
 
-    public Usuario(Long usuid, Date usufechanacimiento, String usunombres, String usuapellidos, Character usugenero, String usunombreusuario, String usucontrasena, String usuemail, byte usuestado) {
+    public Usuario(Long usuid, Date usufechanacimiento, String usunombres, String usuapellidos, Character usugenero, String usunombreusuario, String usucontrasena, String usuemail) {
         this.usuid = usuid;
         this.usufechanacimiento = usufechanacimiento;
         this.usunombres = usunombres;
@@ -123,17 +122,24 @@ public class Usuario implements Serializable {
         this.usunombreusuario = usunombreusuario;
         this.usucontrasena = usucontrasena;
         this.usuemail = usuemail;
+    }
+
+    public byte[] getUsufoto() {
+        return usufoto;
+    }
+
+    public void setUsufoto(byte[] usufoto) {
+        this.usufoto = usufoto;
+    }
+
+    public Boolean getUsuestado() {
+        return usuestado;
+    }
+
+    public void setUsuestado(Boolean usuestado) {
         this.usuestado = usuestado;
     }
 
-    public void setUsuEstado(byte usuestado)
-    {
-        this.usuestado=usuestado;
-    }
-    public byte getUsuEstado()
-    {
-        return this.usuestado;
-    }
     public Long getUsuid() {
         return usuid;
     }
@@ -198,14 +204,6 @@ public class Usuario implements Serializable {
         this.usuemail = usuemail;
     }
 
-    public byte[] getUsufoto() {
-        return usufoto;
-    }
-
-    public void setUsufoto(byte[] usufoto) {
-        this.usufoto = usufoto;
-    }
-
     @XmlTransient
     public List<UsuarioDepartamento> getUsuarioDepartamentoList() {
         return usuarioDepartamentoList;
@@ -265,5 +263,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.unicauca.coordinacionpis.entidades.Usuario[ usuid=" + usuid + " ]";
     }
-    
+
 }
