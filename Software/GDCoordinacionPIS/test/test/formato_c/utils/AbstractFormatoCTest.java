@@ -57,8 +57,8 @@ public class AbstractFormatoCTest {
         protected void goToEditar(){
         goToFormatoC();
         JWebUnit.assertMatch("true",JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
-        assertButtonPresent("formListaAnteproyectos:datalist:0:editButton");
-        clickButton("formListaAnteproyectos:datalist:0:editButton");
+        assertButtonPresent("formListaFormatoC:datalist:0:editButton");
+        clickButton("formListaFormatoC:datalist:0:editButton");
         JWebUnit.assertMatch("true", JWebUnit.getElementById("AnteproyectoEditDlg").getAttribute("aria-hidden"));
         try {
             Thread.sleep(3500);

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.anteproyecto.utils;
+package test.checklist.utils;
+
+import test.formato_c.utils.*;
 
 /**
  * Clase que contiene constantes de identificaciones de campos en el formulario
- * de edición de anteproyectos
+ * de edición de checklist
  * @author Camilo
  */
-public interface EditarAnteproyectoNames {
-    public static String idFormulario = "formMetadatosEditFormatoA";
+public interface EditarChecklistNames {
+    public static String idFormulario = "formMetadatosEditChecklist";
     public static String idRegistrarBtn = idFormulario+":"+"submit-btn";
     //Título
     public static String idTitulo = idFormulario+":"+"titulo";
@@ -21,8 +23,8 @@ public interface EditarAnteproyectoNames {
     public static String idMsgFecha = idFormulario+":"+"msgFecha";
     //Estudiante 1
     public static String idNombre1 = idFormulario+":"+"nomEstudiante1";
-    public static String idMsgNombre1 = idFormulario+":"+"msgNomEstudiante1";
+    public static String idMsgNombre1 = idFormulario+":"+"msgNombre1";
     //Estudiante 2
     public static String idNombre2 = idFormulario+":"+"nomEstudiante2";
-    public static String idMsgNombre2 = idFormulario+":"+"msgNomEstudiante2";
+    public static String idMsgNombre2 = idFormulario+":"+"msgNombre2";
 }
