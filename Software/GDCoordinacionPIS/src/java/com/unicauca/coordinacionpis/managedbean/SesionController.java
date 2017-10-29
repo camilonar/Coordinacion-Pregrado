@@ -144,105 +144,27 @@ public class SesionController implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         this.activo=true;
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
-
-        if (req.getUserPrincipal() == null) {
-            try {
-                req.login(this.nombreDeUsuario, this.contrasenia);
-                
-                if(Activo(this.nombreDeUsuario))
-                {
-                    req.getServletContext().log("Autenticacion exitosa");
-                    this.haySesion = true;
-                    this.errorSesion = false;
-                    this.activo=true;
-                    Usuariogrupo usuariogrupo = this.ejbUsuarioGrupo.buscarPorNombreUsuarioObj(req.getUserPrincipal().getName());
-                    ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-                    CargarFormularioController cargarFormularioController = (CargarFormularioController) FacesContext.getCurrentInstance().getApplication()
-                            .getELResolver().getValue(elContext, null, "cargarFormulariosController");
-
-                    this.grupo = usuariogrupo.getUsuariogrupoPK().getGruid();
-                    if (grupo.equalsIgnoreCase("1")) {
-                        this.plantilla = "/sesionAdmin/_admintmp.xhtml";
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/administrador/usuario/ListarUsuarios.xhtml");
-
-                        identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
-                    } else if (grupo.equalsIgnoreCase("2")) {
-                        this.plantilla = "/sesionCoordinador/_coordinadortmp.xhtml";
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/coordinador/PlandeEstudio/PlandeEstudio.xhtml");
-                        identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
-                    } else if (grupo.equalsIgnoreCase("3")) {
-                        this.plantilla = "/sesionJefe/_jefetmp.xhtml";
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/jefe/OfertaAcademica/ofertasAcademicas.xhtml");
-                        identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
-                    }
-                }
-                else
-                {
-                    req.getServletContext().log("El usuario no se encuentra activo");
-                    this.haySesion = false;
-                    this.errorSesion = true;
-                    this.activo=false;
-                }
-            } catch (ServletException e) {
-
-                this.errorSesion = true;
-
-            }
-        } else {
-            logout();
-            try {
-                req.login(this.nombreDeUsuario, this.contrasenia);
-                if(Activo(this.nombreDeUsuario))
-                {
-                    req.getServletContext().log("Autenticacion exitosa");
-                    this.haySesion = true;
-                    this.errorSesion = false;
-                    this.activo=true;
-                    if (this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuariogrupoPK().getGruid().equalsIgnoreCase("2")) {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionCoordinador/Principal.xhtml");
-                        identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
-                    } else if (this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuariogrupoPK().getGruid().equalsIgnoreCase("2")) {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/sesionCoordinador/Principal.xhtml");
-                        identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
-
-                    }
-                }
-                else
-                {
-                    req.getServletContext().log("El usuario no se encuentra activo");
-                    this.haySesion = false;
-                    this.errorSesion = true;
-                    this.activo=false;
-                }
-            } catch (ServletException e) {
-
-                this.errorSesion = true;
-
-            }
-        }
-
+        
+        if (req.getUserPrincipal() != null) 
+            req.logout();
+          
+        try{ iniciarSesion(req); }catch (ServletException e) {this.errorSesion = true;}
+      
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = getCurrentInstance().getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        FacesContext context = FacesContext.getCurrentInstance();        
         if (this.errorSesion && this.activo==false) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            Flash flash = getCurrentInstance().getExternalContext().getFlash();
-            flash.setKeepMessages(true);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Su usuario se encuentra inactivo. Contáctese con el administrador"));
+            req.logout();            
+            context.addMessage(null, new FacesMessage("Error", "El usuario "+this.nombreDeUsuario+" se encuentra deshabilitado y por tanto el acceso al sistema ha sido denegado. Para mayor información contactese con el administrador del sistema"));   
             FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/");
-            
         }
         else if(this.errorSesion)
         {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            Flash flash = getCurrentInstance().getExternalContext().getFlash();
-            flash.setKeepMessages(true);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Nombre de usuario o contraseña erróneos"));
+            context.addMessage(null, new FacesMessage("Error", "Nombre de usuario o contraseña erróneos"));  
             FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/");
         }
+        
     }
 
     public void logout() throws IOException, ServletException {
@@ -329,11 +251,54 @@ public class SesionController implements Serializable {
             if(u.getUsuestado())
                 return true;
             else
+            {
+                this.haySesion = false;
+                this.errorSesion = true;
+                this.activo=false;
                 return false;
+            }
             
         } else {
+            this.haySesion = false;
+            this.errorSesion = true;
+            this.activo=false;
             return false;
         }
+    }
+
+    private void iniciarSesion(HttpServletRequest req) throws IOException, ServletException {
+        req.login(this.nombreDeUsuario, this.contrasenia); 
+        if(Activo(this.nombreDeUsuario))
+        {
+            req.getServletContext().log("Autenticacion exitosa");
+            this.haySesion = true;
+            this.errorSesion = false;
+            this.activo=true;
+            Usuariogrupo usuariogrupo = this.ejbUsuarioGrupo.buscarPorNombreUsuarioObj(req.getUserPrincipal().getName());
+            ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+            CargarFormularioController cargarFormularioController = (CargarFormularioController) FacesContext.getCurrentInstance().getApplication()
+            .getELResolver().getValue(elContext, null, "cargarFormulariosController");
+
+            this.grupo = usuariogrupo.getUsuariogrupoPK().getGruid();
+            if (grupo.equalsIgnoreCase("1")) {
+                this.plantilla = "/sesionAdmin/_admintmp.xhtml";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/administrador/usuario/ListarUsuarios.xhtml");
+
+                 identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
+
+            } else if (grupo.equalsIgnoreCase("2")) {
+                this.plantilla = "/sesionCoordinador/_coordinadortmp.xhtml";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/coordinador/PlandeEstudio/PlandeEstudio.xhtml");
+                identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
+
+            } else if (grupo.equalsIgnoreCase("3")) {
+                this.plantilla = "/sesionJefe/_jefetmp.xhtml";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/GDCP/jefe/OfertaAcademica/ofertasAcademicas.xhtml");
+                identificacion = "" + this.ejbUsuarioGrupo.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuario().getUsuid();
+
+            }
+        }
+        
     }
 
 }
