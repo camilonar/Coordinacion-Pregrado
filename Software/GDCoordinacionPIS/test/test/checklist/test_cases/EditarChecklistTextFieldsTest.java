@@ -57,6 +57,8 @@ public class EditarChecklistTextFieldsTest extends AbstractChecklistTest{
             { EditarChecklistNames.idTitulo,"12345",EditarChecklistNames.idMsgTitulo,false},
             { EditarChecklistNames.idTitulo,"#$%@",EditarChecklistNames.idMsgTitulo,false},
             { EditarChecklistNames.idTitulo,"",EditarChecklistNames.idMsgTitulo,false},
+            { EditarChecklistNames.idTitulo,"Esta cadena tiene exactamente trescientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgTitulo,true},
+            { EditarChecklistNames.idTitulo,"Esta cadena tiene más de trescientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgTitulo,false},
             { EditarChecklistNames.idFecha,"02/03/1985",EditarChecklistNames.idMsgFecha,true},
             { EditarChecklistNames.idFecha,"04/03/1995",EditarChecklistNames.idMsgFecha,true},
             { EditarChecklistNames.idFecha,"15/01/2018",EditarChecklistNames.idMsgFecha,false},
@@ -69,11 +71,15 @@ public class EditarChecklistTextFieldsTest extends AbstractChecklistTest{
             { EditarChecklistNames.idNombre1,"",EditarChecklistNames.idMsgNombre1,false},
             { EditarChecklistNames.idNombre1,"Sara1",EditarChecklistNames.idMsgNombre1,false},
             { EditarChecklistNames.idNombre1,"Sara_%",EditarChecklistNames.idMsgNombre1,false},
+            { EditarChecklistNames.idNombre1,"Esta cadena tiene exactamente doscientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgNombre1,true},
+            { EditarChecklistNames.idNombre1,"Esta cadena tiene más de doscientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgNombre1,false},
             { EditarChecklistNames.idNombre2,"Juan José Rodriguez Calderón",EditarChecklistNames.idMsgNombre2,true},
             { EditarChecklistNames.idNombre2,"T",EditarChecklistNames.idMsgNombre2,true},
             { EditarChecklistNames.idNombre2,"",EditarChecklistNames.idMsgNombre2,true},
             { EditarChecklistNames.idNombre2,"Sara1",EditarChecklistNames.idMsgNombre2,false},
-            { EditarChecklistNames.idNombre2,"Sara_%",EditarChecklistNames.idMsgNombre2,false}
+            { EditarChecklistNames.idNombre2,"Sara_%",EditarChecklistNames.idMsgNombre2,false},
+            { EditarChecklistNames.idNombre2,"Esta cadena tiene exactamente doscientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgNombre2,true},
+            { EditarChecklistNames.idNombre2,"Esta cadena tiene más de doscientos caracteres donde no hay ningún caracter especial aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",EditarChecklistNames.idMsgNombre2,false}
         });
     }
     
