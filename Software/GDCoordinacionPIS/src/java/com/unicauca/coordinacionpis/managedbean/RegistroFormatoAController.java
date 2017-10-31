@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -182,7 +183,6 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     
     public Date getTodayDate() 
     {
-
         return new Date();
     }
     
@@ -268,7 +268,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         }
     }
    
-     public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) 
+     public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) throws java.text.ParseException  
     {
         this.documento = documento;
         List<FormElement> fElements;
@@ -289,13 +289,34 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                 }
                 if (fElement.getName().equals("okp:FormatoA.Fecha")) 
                 {
-                    Input name = (Input) fElement;
+                    /*Input name = (Input) fElement;
+                    this.metadatosAnteproyectos.setFecha(name.getValue());*/
+                    
+                    Input name= (Input)fElement;
+                    String aux2= name.getValue();
+                    String[] partes= aux2.split(" ");
+                    String mes= partes[1];
+                    String dia= partes[2];
+                    String anio=partes[5];
+                    String fechafinal=dia+"-"+mes+"-"+anio;
+                    System.out.println("dia es "+dia);
+                    System.out.println("mes es "+mes);
+                    System.out.println("anio es "+anio);
+                    System.out.println("fecha sumada "+fechafinal);
+                    DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+                    Date aux1= new Date();
+                    aux1= format.parse(fechafinal);
+                    
                     this.metadatosAnteproyectos.setFecha(name.getValue());
+                    this.metadatosAnteproyectos.setDate3(aux1);
+                    System.out.println("en cargar fecha1 es "+name.getValue());
+                    System.out.println("en cargar fecha2 es "+aux1);
                 }
                 if (fElement.getName().equals("okp:FormatoA.Viabilidad"))
                 {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setViabilidad(name.getValue());
+                    System.out.println("viabilidad metodo es "+name.getValue());
                 }
                 if (fElement.getName().equals("okp:FormatoA.PrimerEstudiante"))
                 {
@@ -458,7 +479,16 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                 if (fElement.getName().equals("okp:FormatoA.Fecha")) 
                 {
                     Input name = (Input) fElement;
+                    Date aux1= new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+                    String aux2= name.getValue();
+                    
+                    //this.metadatosAnteproyectos.setFecha(name.getValue());
+                    //this.metadatosAnteproyectos.setDate3(aux1);
+                    System.out.println("actualizar fecha1 es "+name.getValue());
+                    System.out.println("actualizar fecha2 es "+aux1);
                     name.setValue(this.metadatosAnteproyectos.getFecha());
+                    name.setValue(this.metadatosAnteproyectos.getDate3().toString());
                 }
                 if (fElement.getName().equals("okp:FormatoA.Viabilidad")) 
                 {
