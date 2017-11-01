@@ -21,9 +21,9 @@
 
             <p:fileUpload id="file-upload"
                           rendered="#{!registroChecklistController.exitoSubirArchivo}" mode="advanced" 
-                          label="Seleccionar archivo"  fileLimit="1" fileLimitMessage="Sólo es posible seleccionar un archivo"  invalidFileMessage="Solo se permiten archivos PDF" 
+                          label="Seleccionar archivo"  fileLimit="1" fileLimitMessage="Sólo es posible seleccionar un archivo"  invalidFileMessage="Solo se permiten archivos excel." 
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
-                          allowTypes="/(\.|\/)(xsl|xsls)$/"  update="messages" fileUploadListener="#{registroChecklistController.seleccionarArchivo}">
+                          allowTypes="/(\.|\/)(xls|xlsx|xlsm|xltx|xltm)$/"  update="messages" fileUploadListener="#{registroChecklistController.seleccionarArchivo}">
 
                 <!--Control de subida de documentos-->
                 <script>
