@@ -92,7 +92,7 @@
                     </p:column>
 
                     <p:column colspan="1">
-                        <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
+                        <p:inputText size="25"  maxlength="200" id="titulo" required="true" requiredMessage="Campo obligatorio" 
                                      value="#{registroChecklistController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
                             <p:ajax update="msgTitulo" event="change"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
