@@ -156,7 +156,7 @@ public class SesionController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();        
         if (this.errorSesion && this.activo==false) {
             req.logout();            
-            context.addMessage(null, new FacesMessage("Error", "El usuario "+this.nombreDeUsuario+" se encuentra deshabilitado y por tanto el acceso al sistema ha sido denegado. Para mayor información contactese con el administrador del sistema"));   
+            context.addMessage(null, new FacesMessage("Error", "El usuario "+this.nombreDeUsuario+" se encuentra deshabilitado y por tanto el acceso al sistema ha sido denegado. Para mayor información contáctese con el administrador del sistema"));   
             FacesContext.getCurrentInstance().getExternalContext().redirect("/GDCoordinacionPIS/");
         }
         else if(this.errorSesion)
