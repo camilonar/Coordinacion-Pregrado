@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:dialog id="AnteproyectoCreateDlg"
+              widgetVar="dlgRegistroAnteproyecto" modal="true" resizable="false" width="900"  position="300,50"  
+              closable="true" header="Crear Anteproyecto"> 
+
+
+
+        <h:form id="registrarAnteproyecto" >
+            <p:panelGrid styleClass="panelgrid" id="PanelMetadatos"   style="width: 100%;">
+
+                <p:row>
+
+                    <p:column colspan="4">
+                        <p:separator/>
+                        <center><p:outputLabel value="Información para registro del formato A:" style="font-size: medium; font-weight: bold;"/></center>
+                        <p:separator/>
+                    </p:column>
+
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="4" style="padding-bottom: 30px; padding-top: 10px;">
+                        <p:outputLabel style="color: #000000" value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                        <p:outputLabel style="color: #000000" value=") son obligatorios."/>
+                        <br/>
+                    </p:column>
+                </p:row>
+
+
+
+                <p:row>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Título del anteproyecto:"  style="font-weight: bold;color: #000000 "/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
+                                     value="#{anteproyectoController.anteproyectoRegistrar.tituloAnteproyecto}"  validatorMessage="Formato de título erróneo">
+                            <p:ajax update="msgTitulo" event="change"/>
+                            <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
+                        </p:inputText>    
+                    </p:column>
+
+                    <p:column colspan="1">
+
+                        <p:outputLabel value="Fecha:" style="font-weight: bold; color: #000000"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                    value="#{anteproyectoController.anteproyectoRegistrar.fechaAnteproyecto}" showOn="button" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="titulo" id="msgTitulo" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="fecha" id="msgFecha" style="width: 80%;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="1">
+                        <p:outputLabel value="Codigo " style="font-weight: bold; color: #000000"/><br/>
+                        <p:outputLabel value="Primer estudiante:" style="font-weight: bold;"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="codEstudiante1" size="25" placeholder="" required="false"
+                                     value="#{anteproyectoController.estudiante1Select.codigoEstudiante}" validatorMessage="Formato de codigo erróneo" >
+                            <p:ajax update="msgCod1" event="change"/>
+
+                        </p:inputText>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Nombre " style="font-weight: bold; color: #000000"/><br/>
+                        <p:outputLabel value="primer estudiante:" style="font-weight: bold;"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{anteproyectoController.estudiante1Select.nombreEstudiante}" validatorMessage="Formato de nombre erróneo" >
+                            <p:ajax update="msgNombre1" event="change"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
+                        </p:inputText>
+
+                    </p:column>
+
+                </p:row>
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="codEstudiante1" id="msgCod1" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante1" id="msgNombre1" style="width: 80%;"/>
+
+                    </p:column>
+                </p:row>
+
+                <p:row>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Codigo " style="font-weight: bold; color: #000000"/><br/>  
+                        <p:outputLabel value="segundo estudiante:" style="font-weight: bold;"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="codEstudiante2" size="25" placeholder="0000000000" required="false"
+                                     value="#{anteproyectoController.estudiante2Select.codigoEstudiante}" validatorMessage="Formato de codigo erróneo">
+                            <p:ajax update="msgCod2" event="change"/>
+
+                        </p:inputText>
+
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Nombre " style="font-weight: bold; color: #000000"/><br/>  
+                        <p:outputLabel value="segundo estudiante:" style="font-weight: bold;"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{anteproyectoController.estudiante2Select.nombreEstudiante}" validatorMessage="Formato de nombre erróneo">
+                            <p:ajax update="msgNombre2" event="change"/>
+                            <f:validator validatorId="ValidarNombreOpcional"/>
+                        </p:inputText>
+
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="codEstudiante2" id="msgCod2" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomEstudiante2" id="msgNombre2" style="width: 80%;"/>
+                    </p:column>
+                </p:row>
+
+
+                <p:row>
+                    <p:column colspan="1">
+                        <p:outputLabel value="Codigo del " style="font-weight: bold; color: #000000"/><br/>  
+                        <p:outputLabel value="Director:" style="font-weight: bold;"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="codDirector" size="25" placeholder="" required="false"
+                                     value="#{anteproyectoController.directorSelect.idProfesor}" validatorMessage="Formato de nombre erróneo">
+                            <p:ajax update="msgCodigoDirector" event="change"/>
+
+                        </p:inputText>
+                    </p:column>
+
+                    <p:column colspan="1">
+                        <p:outputLabel value="Nombre del " style="font-weight: bold; color: #000000"/><br/>
+                        <p:outputLabel value="Director:" style="font-weight: bold;"/>
+                        <p:outputLabel value="*" style="color: #ff5252"/>
+                    </p:column>
+                    <p:column colspan="1">
+                        <p:inputText id="nomDirector" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
+                                     value="#{anteproyectoController.directorSelect.nombreProfesor}" validatorMessage="Formato de nombre erróneo" >
+                            <p:ajax update="msgNombreDirector" event="change"/>
+
+                        </p:inputText>
+                    </p:column>
+
+
+                </p:row>
+
+                <p:row>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="codDirector" id="msgCodigoDirector" style="width: 80%;"/>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:message for="nomDirector" id="msgNombreDirector" style="width: 80%;"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="4"/>
+                </p:row>
+                <p:row>
+                    <p:column colspan="4">
+                        <p:button value="Cancelar" style="margin-left: 40%; margin-right: 20px;">
+                        </p:button>  
+                        <p:commandButton  id="submit-btn"
+                                          action="#{anteproyectoController.registrarAnteproyecto()}" value="Registrar"   
+                                          />
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid> 
+
+
+
+
+         
+
+                    <p:growl id="messagesGuardar" showDetail="true" />
+        </h:form>
+
+
+    </p:dialog>
+
+</html>
+

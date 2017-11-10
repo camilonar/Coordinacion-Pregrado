@@ -18,6 +18,9 @@
                                     value="Gesti&#243;n Planes de Estudio" action="/coordinador/PlandeEstudio/PlandeEstudio.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addPlanesDeEstudioGestion()}" ajax="false"/>                        
                     </p:submenu>  
                     <p:submenu label="Anteproyectos">
+                           <p:menuitem id="anteproyectos"
+                                    value="Gestión anteproyectos" action="/coordinador/anteproyecto/anteproyecto.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
+
                         <p:menuitem id="menuitem-anteproyectos"
                                     value="Gestión de formato A" action="/coordinador/anteproyecto/FormatoA/formatoA.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" ajax="false"/>
 
