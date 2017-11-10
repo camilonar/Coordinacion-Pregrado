@@ -77,7 +77,8 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     private SimpleDateFormat formatoFecha;
 
 
-    public RegistroFormatoAController() {
+    public RegistroFormatoAController() 
+    {
         super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
@@ -107,7 +108,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         nombreArchivo = event.getFile().getFileName();
         archivoFormatoA = event.getFile();
         System.out.println("archivo a:"+ archivoFormatoA.getFileName());
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + event.getFile().getFileName() + "' se selccionó con éxito");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + event.getFile().getFileName() + "' se seleccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");
@@ -178,9 +179,6 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         this.streamedContent = streamedContent;
     }
 
- 
-
-    
     public Date getTodayDate() 
     {
         return new Date();
@@ -241,7 +239,9 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         return file;
     }
     
-    public void aceptarFormatoA() throws PathNotFoundException {
+    public void aceptarFormatoA() throws PathNotFoundException 
+    {
+        System.out.println("Aceptado formato A");
         this.subirDocumento(archivoFormatoA);
     }
     
@@ -305,8 +305,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                     System.out.println("fecha sumada "+fechafinal);
                     DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
                     Date aux1= new Date();
-                    aux1= format.parse(fechafinal);
-                    
+                    aux1= format.parse(fechafinal);                    
                     this.metadatosAnteproyectos.setFecha(name.getValue());
                     this.metadatosAnteproyectos.setDate3(aux1);
                     System.out.println("en cargar fecha1 es "+name.getValue());
@@ -422,9 +421,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
-    
-
-    
+        
     public void agregarMetadatos()
     {
         Document document = new Document(PageSize.A4);
@@ -482,9 +479,6 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                     Date aux1= new Date();
                     SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
                     String aux2= name.getValue();
-                    
-                    //this.metadatosAnteproyectos.setFecha(name.getValue());
-                    //this.metadatosAnteproyectos.setDate3(aux1);
                     System.out.println("actualizar fecha1 es "+name.getValue());
                     System.out.println("actualizar fecha2 es "+aux1);
                     name.setValue(this.metadatosAnteproyectos.getFecha());
@@ -606,13 +600,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
- 
-//    public String getEstu(){
-//
-//
-//}
+//////////
       @Override
     public String getOKGPropierties() {
       return "okg:FormatoA";
