@@ -8,6 +8,7 @@ package com.unicauca.coordinacionpis.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,6 +38,16 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Programa.findByIdPrograma", query = "SELECT p FROM Programa p WHERE p.idPrograma = :idPrograma")
     , @NamedQuery(name = "Programa.findByNombrePrograma", query = "SELECT p FROM Programa p WHERE p.nombrePrograma = :nombrePrograma")})
 public class Programa implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaEstudiante")
+    private List<Estudiante> estudianteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaAnteproyecto")
+    private List<Anteproyecto> anteproyectoList;
+    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
+    @ManyToOne(optional = false)
+    private Facultad idfacultad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaProfesor")
+    private List<Profesor> profesorList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -109,6 +121,41 @@ public class Programa implements Serializable {
     @Override
     public String toString() {
         return "com.unicauca.coordinacionpis.entidades.Programa[ idPrograma=" + idPrograma + " ]";
+    }
+
+    @XmlTransient
+    public List<Estudiante> getEstudianteList() {
+        return estudianteList;
+    }
+
+    public void setEstudianteList(List<Estudiante> estudianteList) {
+        this.estudianteList = estudianteList;
+    }
+
+    @XmlTransient
+    public List<Anteproyecto> getAnteproyectoList() {
+        return anteproyectoList;
+    }
+
+    public void setAnteproyectoList(List<Anteproyecto> anteproyectoList) {
+        this.anteproyectoList = anteproyectoList;
+    }
+
+    public Facultad getIdfacultad() {
+        return idfacultad;
+    }
+
+    public void setIdfacultad(Facultad idfacultad) {
+        this.idfacultad = idfacultad;
+    }
+
+    @XmlTransient
+    public List<Profesor> getProfesorList() {
+        return profesorList;
+    }
+
+    public void setProfesorList(List<Profesor> profesorList) {
+        this.profesorList = profesorList;
     }
     
 }
