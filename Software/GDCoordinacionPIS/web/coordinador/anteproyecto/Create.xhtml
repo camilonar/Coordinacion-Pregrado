@@ -18,26 +18,17 @@
                 <p:separator/>
 
                 <h:form>
-                    <p:panelGrid styleClass="panelgrid" style="width: 100%" columns="4"  >            
-                        <h:outputText value="Titulo Anteproyecto " /> 
-                        <p:inputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}"/> 
-                        <h:outputText value="Fecha  " /> 
-                        <p:calendar required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c" value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" navigator="true" pattern="dd/MM/yyyy"/>            
-                    </p:panelGrid>
-                </h:form>
 
-                <p:separator/>
-                <p:outputLabel value="Información Estudiantes: " style="font-weight: bold; color: #000000"/>
-                <p:separator/>
-                <h:form>
-                    <p:panelGrid styleClass="panelgrid"  style="width: 100%" columns="5"  >            
+                    <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="5"  >            
                         <h:outputText value="Codigo  Estudiante " /> 
                         <p:inputText value="#{anteproyectoController.estudianteSelected.idEstudiante}">
                             <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
                         </p:inputText>                           
                         <h:outputText value="Nombre  Estudiante " /> 
-                        <p:inputText id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}" />
-                        <p:commandButton value="Agregar Estudiante" update="datalistEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
+                        <p:inputText id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
+                            <p:ajax event="change"/>
+                        </p:inputText>
+                        <p:commandButton value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
                     </p:panelGrid>
 
                     <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante"
@@ -59,17 +50,40 @@
                             <h:outputText value="#{estudiante.nombreEstudiante}"/>
                         </p:column>
                     </p:dataTable>
+
+
                 </h:form>
+
                 <p:separator/>
-                <p:outputLabel value="Información Director: " style="font-weight: bold; color: #000000"/>
+                <p:outputLabel value="Información Anteproyecto: " style="font-weight: bold; color: #000000"/>
                 <p:separator/>
-                
-                <h:form id="formDirector">
+
+                <h:form id="formAnteproyecto">
                     <p:panelGrid styleClass="panelgrid" style="width: 100%" columns="4"  >            
+                        <h:outputText value="Titulo Anteproyecto " /> 
+                        <p:inputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}">
+                            <p:ajax  event="change"/>
+                        </p:inputText>
+
+                        <h:outputText value="Fecha  " />                       
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                    value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">
+                            <p:ajax event="change"/>
+                        </p:calendar>
+                    </p:panelGrid>
+
+
+
+                    <p:separator/>
+                    <p:outputLabel value="Información Director: " style="font-weight: bold; color: #000000"/>
+                    <p:separator/>
+
+
+                    <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" columns="4"  >            
 
                         <h:outputText value="Codigo Director: " /> 
                         <p:inputText value="#{anteproyectoController.directorSelected.idProfesor}">
-                            <p:ajax update="formDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
+                            <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                         </p:inputText>
                         <h:outputText value="Nombre Director:  " /> 
                         <p:inputText value="#{anteproyectoController.directorSelected.nombreProfesor}" />   
@@ -77,13 +91,13 @@
                         <p:inputText value="#{anteproyectoController.directorSelected.universidadProfesor}"/> 
 
                     </p:panelGrid>
+
+                    <p:commandButton value="Registrar" action="#{anteproyectoController.registrarAnteproyecto()}">
+                    </p:commandButton>
+
                 </h:form>
 
-                <h:form>
-                    <p:commandButton value="Registrar" action="#{anteproyectoController.registrarAnteproyecto()}">
-                        
-                    </p:commandButton>
-                </h:form>
+
 
 
 

@@ -28,7 +28,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -41,6 +43,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -85,6 +89,16 @@ public class AnteproyectoController implements Serializable {
         this.directorSelected = new Profesor();
     }
 
+    public DataModel getDataModelAnteproyectos() {
+        return dataModelAnteproyectos;
+    }
+
+    public void setDataModelAnteproyectos(DataModel dataModelAnteproyectos) {
+        this.dataModelAnteproyectos = dataModelAnteproyectos;
+    }
+    
+    
+
     public Estudiante getEstudianteSelected() {
         return estudianteSelected;
     }
@@ -122,7 +136,7 @@ public class AnteproyectoController implements Serializable {
 
     public void addToListEstudiantes() {
         if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
-                  this.estudiantes.add(estudianteSelected);
+            this.estudiantes.add(estudianteSelected);
             estudianteSelected = new Estudiante();
         }
 
@@ -132,6 +146,7 @@ public class AnteproyectoController implements Serializable {
        Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
        if(completo!=null){
            this.estudianteSelected = completo;
+           
        }
 
     }
@@ -145,7 +160,8 @@ public class AnteproyectoController implements Serializable {
     }
       
       public void registrarAnteproyecto(){
-          
+          System.out.println("fecha "+anteproyectoSelected.getFechaAnteproyecto());
+          System.out.println("titulo "+anteproyectoSelected.getTituloAnteproyecto());
          Profesor director  = this.ejbProfesor.find(directorSelected.getIdProfesor());
          if(director==null){
           // registrar profesor nuevo
@@ -153,13 +169,21 @@ public class AnteproyectoController implements Serializable {
          }
          anteproyectoSelected.setDirectorAnteproyecto(director);
          anteproyectoSelected.setProgramaAnteproyecto(getPrgramaUsuario());
-         this.ejbAnteproyecto.create(anteproyectoSelected);
+          try {
+               this.ejbAnteproyecto.create(anteproyectoSelected);
+          } catch (EJBException e) {
+             ConstraintViolationException causedByException = (ConstraintViolationException) e.getCausedByException();
+             
+             Set<ConstraintViolation<?>> constraintViolations = causedByException.getConstraintViolations();
+              for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+                  System.out.println(constraintViolation.toString());
+              }
+          }
+        
           System.out.println("Registro completo");
       }
       
        public Programa getPrgramaUsuario() {
-
-       
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
             Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
