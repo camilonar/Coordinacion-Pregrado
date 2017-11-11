@@ -55,12 +55,12 @@ import org.primefaces.model.SortOrder;
 @ManagedBean
 @ViewScoped
 public class AnteproyectoController implements Serializable {
-
+    
     private Anteproyecto anteproyectoSelected;
     private Estudiante estudianteSelected;
     private Profesor directorSelected;
     private List<Estudiante> estudiantes;
-
+    
     @EJB
     private UsuarioFacade ejbUsuario;
     @EJB
@@ -81,116 +81,118 @@ public class AnteproyectoController implements Serializable {
             return ejbAnteproyecto.findRange(range);
         }
     };
-
+    
     public AnteproyectoController() {
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
         this.anteproyectoSelected = new Anteproyecto();
         this.directorSelected = new Profesor();
     }
-
+    
     public DataModel getDataModelAnteproyectos() {
         return dataModelAnteproyectos;
     }
-
+    
     public void setDataModelAnteproyectos(DataModel dataModelAnteproyectos) {
         this.dataModelAnteproyectos = dataModelAnteproyectos;
     }
     
-    
-
     public Estudiante getEstudianteSelected() {
         return estudianteSelected;
     }
-
+    
     public void setEstudianteSelected(Estudiante estudianteSelected) {
         this.estudianteSelected = estudianteSelected;
     }
-
+    
     public List<Estudiante> getEstudiantes() {
         return estudiantes;
     }
-
+    
     public void setEstudiantes(List<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
     }
-
+    
     public Anteproyecto getAnteproyectoSelected() {
         return anteproyectoSelected;
     }
-
+    
     public void setAnteproyectoSelected(Anteproyecto anteproyectoSelected) {
         this.anteproyectoSelected = anteproyectoSelected;
     }
-
+    
     public Profesor getDirectorSelected() {
         return directorSelected;
     }
-
+    
     public void setDirectorSelected(Profesor directorSelected) {
         this.directorSelected = directorSelected;
     }
     
-    
-    
-
     public void addToListEstudiantes() {
         if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
             estudianteSelected = new Estudiante();
         }
-
-    }
-    
-    public void autocompletarEstudiante(){
-       Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
-       if(completo!=null){
-           this.estudianteSelected = completo;
-           
-       }
-
-    }
-    
-      public void autocompletarDirector(){
-      Profesor completo = this.ejbProfesor.find(directorSelected.getIdProfesor());
-       if(completo!=null){
-           this.directorSelected = completo;
-       }
-
-    }
-      
-      public void registrarAnteproyecto(){
-          System.out.println("fecha "+anteproyectoSelected.getFechaAnteproyecto());
-          System.out.println("titulo "+anteproyectoSelected.getTituloAnteproyecto());
-         Profesor director  = this.ejbProfesor.find(directorSelected.getIdProfesor());
-         if(director==null){
-          // registrar profesor nuevo
-             System.out.println("Profesor no existe");
-         }
-         anteproyectoSelected.setDirectorAnteproyecto(director);
-         anteproyectoSelected.setProgramaAnteproyecto(getPrgramaUsuario());
-          try {
-               this.ejbAnteproyecto.create(anteproyectoSelected);
-          } catch (EJBException e) {
-             ConstraintViolationException causedByException = (ConstraintViolationException) e.getCausedByException();
-             
-             Set<ConstraintViolation<?>> constraintViolations = causedByException.getConstraintViolations();
-              for (ConstraintViolation<?> constraintViolation : constraintViolations) {
-                  System.out.println(constraintViolation.toString());
-              }
-          }
         
-          System.out.println("Registro completo");
-      }
-      
-       public Programa getPrgramaUsuario() {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
-            Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
-            UsuarioPrograma usuarioPrograma = usuario.getUsuarioProgramaList().get(0); ///VERIFICAR SI ES SOLO UNO TODO TO DO
-            return usuarioPrograma.getPrograma();
-     
     }
+    
+    public void autocompletarEstudiante() {
+        Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
+        if (completo != null) {
+            this.estudianteSelected = completo;
+            
+        }
+        
+    }
+    
+    public void autocompletarDirector() {
+        Profesor completo = this.ejbProfesor.find(directorSelected.getIdProfesor());
+        if (completo != null) {
+            this.directorSelected = completo;
+        }
+        
+    }
+    
+    public void registrarAnteproyecto() {
+       
+       
+        Programa prgramaUsuario = getPrgramaUsuario();
+        
+        for (Estudiante estudiante : estudiantes) {
+            if(this.ejbEstudiante.find(estudiante.getIdEstudiante())==null){
+                estudiante.setProgramaEstudiante(prgramaUsuario);
+                this.ejbEstudiante.create(estudiante);
+            }
+            estudiante.getAnteproyectoList().add(anteproyectoSelected);
+        }
+       
+        Profesor director = this.ejbProfesor.find(directorSelected.getIdProfesor()); 
+        if (director == null) {
+            // registrar profesor nuevo
+            this.directorSelected.setProgramaProfesor(prgramaUsuario);
+            this.ejbProfesor.create(this.directorSelected);
+            director=this.directorSelected;
+           
+        }
+        
+        
+        anteproyectoSelected.setDirectorAnteproyecto(director);
+        anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
+        anteproyectoSelected.setEstudianteList(estudiantes);
+   
+            this.ejbAnteproyecto.create(anteproyectoSelected);
       
-
+        System.out.println("Registro completo");
+    }
+    
+    public Programa getPrgramaUsuario() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+        Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
+        UsuarioPrograma usuarioPrograma = usuario.getUsuarioProgramaList().get(0); ///VERIFICAR SI ES SOLO UNO TODO TO DO
+        return usuarioPrograma.getPrograma();
+        
+    }
+    
 }

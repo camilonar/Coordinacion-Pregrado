@@ -18,7 +18,9 @@
                 <p:separator/>
 
                 <h:form>
-
+                    <p:separator/>
+                    <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
+                    <p:separator/>
                     <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="5"  >            
                         <h:outputText value="Codigo  Estudiante " /> 
                         <p:inputText value="#{anteproyectoController.estudianteSelected.idEstudiante}">
@@ -31,11 +33,11 @@
                         <p:commandButton value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
                     </p:panelGrid>
 
-                    <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante"
+                    <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante" emptyMessage="No hay Estudiantes seleccionados"
                                  paginator="true"
                                  rowKey="#{estudiante.idEstudiante}"
                                  rows="10"
-                                 rowsPerPageTemplate="7,10,20,30,40"
+
                                  >
                         <p:column>
                             <f:facet name="header">
@@ -91,10 +93,10 @@
                         <p:inputText value="#{anteproyectoController.directorSelected.universidadProfesor}"/> 
 
                     </p:panelGrid>
-
-                    <p:commandButton value="Registrar" action="#{anteproyectoController.registrarAnteproyecto()}">
-                    </p:commandButton>
-
+                    <center>
+                        <p:commandButton value="Registrar" action="#{anteproyectoController.registrarAnteproyecto()}">
+                        </p:commandButton>
+                    </center>
                 </h:form>
 
 
