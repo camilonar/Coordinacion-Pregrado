@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import javax.transaction.UserTransaction;
 import com.unicauca.coordinacionpis.managedbean.util.JsfUtil;
 import com.unicauca.coordinacionpis.managedbean.util.PagingInfo;
+import com.unicauca.coordinacionpis.sessionbean.AbstractFacade;
 import com.unicauca.coordinacionpis.sessionbean.AnteproyectoFacade;
 import com.unicauca.coordinacionpis.sessionbean.EstudianteFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProfesorFacade;
@@ -51,16 +52,20 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class AnteproyectoController implements Serializable {
 
+    private Anteproyecto anteproyectoSelected;
+    private Estudiante estudianteSelected;
+    private Profesor directorSelected;
+    private List<Estudiante> estudiantes;
+
     @EJB
     private UsuarioFacade ejbUsuario;
-
     @EJB
     private AnteproyectoFacade ejbAnteproyecto;
     @EJB
     private EstudianteFacade ejbEstudiante;
     @EJB
     private ProfesorFacade ejbProfesor;
-     @EJB
+    @EJB
     private ProgramaFacade ejbPrograma;
 
     //modificar para filtrar por cualquier campo 
@@ -73,164 +78,95 @@ public class AnteproyectoController implements Serializable {
         }
     };
 
-    private Anteproyecto anteproyectoRegistrar;
-    private Estudiante estudiante1Select;
-    private Estudiante estudiante2Select;
-    private Profesor directorSelect;
-    private Profesor codirectorSelect;
-
-    private ArrayList<Estudiante> estudiantesList;
-    private ArrayList<Profesor> profesorsList;
-
     public AnteproyectoController() {
-        anteproyectoRegistrar = new Anteproyecto();
-        estudiante1Select = new  Estudiante();
-        estudiante2Select = new  Estudiante();
-        directorSelect = new Profesor();
-        codirectorSelect = new Profesor();
- 
+        estudianteSelected = new Estudiante();
+        this.estudiantes = new ArrayList<>();
+        this.anteproyectoSelected = new Anteproyecto();
+        this.directorSelected = new Profesor();
     }
 
-    
-    
-    public DataModel getDataModelAnteproyectos() {
-        return dataModelAnteproyectos;
+    public Estudiante getEstudianteSelected() {
+        return estudianteSelected;
     }
 
-    public void setDataModelAnteproyectos(DataModel dataModelAnteproyectos) {
-        this.dataModelAnteproyectos = dataModelAnteproyectos;
+    public void setEstudianteSelected(Estudiante estudianteSelected) {
+        this.estudianteSelected = estudianteSelected;
     }
 
-    public AnteproyectoFacade getEjbAnteproyecto() {
-        return ejbAnteproyecto;
+    public List<Estudiante> getEstudiantes() {
+        return estudiantes;
     }
 
-    public void setEjbAnteproyecto(AnteproyectoFacade ejbAnteproyecto) {
-        this.ejbAnteproyecto = ejbAnteproyecto;
+    public void setEstudiantes(List<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
     }
 
     public Anteproyecto getAnteproyectoSelected() {
-        return anteproyectoRegistrar;
+        return anteproyectoSelected;
     }
 
     public void setAnteproyectoSelected(Anteproyecto anteproyectoSelected) {
-        this.anteproyectoRegistrar = anteproyectoSelected;
+        this.anteproyectoSelected = anteproyectoSelected;
     }
 
-    public ArrayList<Estudiante> getEstudiantesList() {
-        if (estudiantesList == null) {
-            estudiantesList = new ArrayList();
-        }
-        return estudiantesList;
+    public Profesor getDirectorSelected() {
+        return directorSelected;
     }
 
-    public void setEstudiantesList(ArrayList<Estudiante> estudiantesList) {
-        this.estudiantesList = estudiantesList;
+    public void setDirectorSelected(Profesor directorSelected) {
+        this.directorSelected = directorSelected;
     }
-
-    public ArrayList<Profesor> getProfesorsList() {
-        return profesorsList;
-    }
-
-    public void setProfesorsList(ArrayList<Profesor> profesorsList) {
-        this.profesorsList = profesorsList;
-    }
-
-    public Estudiante getEstudianteSelect() {
-        if (estudiante1Select == null) {
-            return new Estudiante();
-        }
-        return estudiante1Select;
-    }
-
-    public void setEstudianteSelect(Estudiante estudianteSelect) {
-        this.estudiante1Select = estudianteSelect;
-    }
-
-    public Estudiante getEstudiante1Select() {
-        if (estudiante1Select == null) {
-            estudiante1Select = new Estudiante();
-        }
-        return estudiante1Select;
-    }
-
-    public void setEstudiante1Select(Estudiante estudiante1Select) {
-        this.estudiante1Select = estudiante1Select;
-    }
-
-    public Estudiante getEstudiante2Select() {
-        if (estudiante2Select == null) {
-            estudiante2Select = new Estudiante();
-        }
-        return estudiante2Select;
-    }
-
-    public void setEstudiante2Select(Estudiante estudiante2Select) {
-        this.estudiante2Select = estudiante2Select;
-    }
-
-    public Profesor getDirectorSelect() {
-        if (directorSelect == null) {
-            directorSelect = new Profesor();
-        }
-
-        return directorSelect;
-    }
-
-    public void setDirectorSelect(Profesor directorSelect) {
-        this.directorSelect = directorSelect;
-    }
-
-    public Profesor getCodirecotrSelect() {
-        if (codirectorSelect == null) {
-            codirectorSelect = new Profesor();
-        }
-        return codirectorSelect;
-    }
-
-    public void setCodirecotrSelect(Profesor codirecotrSelect) {
-        this.codirectorSelect = codirecotrSelect;
-    }
-
-    public void registrarAnteproyecto() {
-
-        Profesor director = ejbProfesor.find(directorSelect.getIdProfesor());
-        if (director == null) {
-            System.out.println("No existee director");
-        }
-        System.out.println("Director "+ director.getNombreProfesor());
-        anteproyectoRegistrar.setDirectorAnteproyecto(directorSelect);
-        Programa programa = ejbPrograma.find(this.getPrgramaUsuario());
-        System.out.println("Programa "+programa.getNombrePrograma());
-        anteproyectoRegistrar.setProgramaAnteproyecto(programa);
-        System.out.println("Fecha: "+anteproyectoRegistrar.getFechaAnteproyecto());
-        System.out.println("Titulo: "+anteproyectoRegistrar.getTituloAnteproyecto());
-        
-        ejbAnteproyecto.create(anteproyectoRegistrar);
-
-    }
-
-    public int getPrgramaUsuario() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
-        Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
-        UsuarioPrograma usuarioPrograma = usuario.getUsuarioProgramaList().get(0); ///VERIFICAR SI ES SOLO UNO TODO TO DO
-        int idPrograma = usuarioPrograma.getPrograma().getIdPrograma();
-        return idPrograma;
-    }
-
-    public Anteproyecto getAnteproyectoRegistrar() {
-        if(anteproyectoRegistrar==null){
-            anteproyectoRegistrar=new Anteproyecto();
-        }
-        return anteproyectoRegistrar;
-        
-    }
-
-    public void setAnteproyectoRegistrar(Anteproyecto anteproyectoRegistrar) {
-        this.anteproyectoRegistrar = anteproyectoRegistrar;
-    }
-
     
     
+    
+
+    public void addToListEstudiantes() {
+        if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
+                  this.estudiantes.add(estudianteSelected);
+            estudianteSelected = new Estudiante();
+        }
+
+    }
+    
+    public void autocompletarEstudiante(){
+       Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
+       if(completo!=null){
+           this.estudianteSelected = completo;
+       }
+
+    }
+    
+      public void autocompletarDirector(){
+      Profesor completo = this.ejbProfesor.find(directorSelected.getIdProfesor());
+       if(completo!=null){
+           this.directorSelected = completo;
+       }
+
+    }
+      
+      public void registrarAnteproyecto(){
+          
+         Profesor director  = this.ejbProfesor.find(directorSelected.getIdProfesor());
+         if(director==null){
+          // registrar profesor nuevo
+             System.out.println("Profesor no existe");
+         }
+         anteproyectoSelected.setDirectorAnteproyecto(director);
+         anteproyectoSelected.setProgramaAnteproyecto(getPrgramaUsuario());
+         this.ejbAnteproyecto.create(anteproyectoSelected);
+          System.out.println("Registro completo");
+      }
+      
+       public Programa getPrgramaUsuario() {
+
+       
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+            Usuario usuario = ejbUsuario.buscarUsuarioPorNombreDeUsuario(req.getUserPrincipal().getName());
+            UsuarioPrograma usuarioPrograma = usuario.getUsuarioProgramaList().get(0); ///VERIFICAR SI ES SOLO UNO TODO TO DO
+            return usuarioPrograma.getPrograma();
+     
+    }
+      
+
 }
