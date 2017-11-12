@@ -6,7 +6,6 @@
 package com.unicauca.coordinacionpis.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,13 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Daniela
+ * @author David
  */
 @Entity
 @Table(name = "usuario_departamento")
@@ -36,9 +34,7 @@ public class UsuarioDepartamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UsuarioDepartamentoPK usuarioDepartamentoPK;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 75)
+    @Size(max = 75)
     @Column(name = "nombreUsuario")
     private String nombreUsuario;
     @JoinColumn(name = "idDepartamento", referencedColumnName = "id_departamento", insertable = false, updatable = false)
@@ -53,11 +49,6 @@ public class UsuarioDepartamento implements Serializable {
 
     public UsuarioDepartamento(UsuarioDepartamentoPK usuarioDepartamentoPK) {
         this.usuarioDepartamentoPK = usuarioDepartamentoPK;
-    }
-
-    public UsuarioDepartamento(UsuarioDepartamentoPK usuarioDepartamentoPK, String nombreUsuario) {
-        this.usuarioDepartamentoPK = usuarioDepartamentoPK;
-        this.nombreUsuario = nombreUsuario;
     }
 
     public UsuarioDepartamento(long idUsuario, int idDepartamento) {

@@ -64,8 +64,8 @@ public class Anteproyecto implements Serializable {
         @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
         @JoinColumn(name = "profesor", referencedColumnName = "idProfesor")})
     @ManyToMany
-    private List<Profesor> profesorList; 
-    @JoinTable(name = "estudiante-anteproyecto", joinColumns = {
+    private List<Profesor> profesorList;
+    @JoinTable(name = "estudiante_anteproyecto", joinColumns = {
         @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
         @JoinColumn(name = "estudiante", referencedColumnName = "idEstudiante")})
     @ManyToMany

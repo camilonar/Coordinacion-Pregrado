@@ -160,11 +160,12 @@ public class AnteproyectoController implements Serializable {
         Programa prgramaUsuario = getPrgramaUsuario();
         
         for (Estudiante estudiante : estudiantes) {
+            
             if(this.ejbEstudiante.find(estudiante.getIdEstudiante())==null){
                 estudiante.setProgramaEstudiante(prgramaUsuario);
                 this.ejbEstudiante.create(estudiante);
             }
-            estudiante.getAnteproyectoList().add(anteproyectoSelected);
+           
         }
        
         Profesor director = this.ejbProfesor.find(directorSelected.getIdProfesor()); 
@@ -175,15 +176,15 @@ public class AnteproyectoController implements Serializable {
             director=this.directorSelected;
            
         }
-        
-        
+
         anteproyectoSelected.setDirectorAnteproyecto(director);
         anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
-        anteproyectoSelected.setEstudianteList(estudiantes);
-   
+         anteproyectoSelected.setEstudianteList(estudiantes);
             this.ejbAnteproyecto.create(anteproyectoSelected);
+            
+  
       
-        System.out.println("Registro completo");
+        System.out.println("E completo");
     }
     
     public Programa getPrgramaUsuario() {

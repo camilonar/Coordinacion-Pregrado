@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniela
+ * @author David
  */
 @Entity
 @Table(name = "usuario")
@@ -46,9 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByUsunombreusuario", query = "SELECT u FROM Usuario u WHERE u.usunombreusuario = :usunombreusuario")
     , @NamedQuery(name = "Usuario.findByUsucontrasena", query = "SELECT u FROM Usuario u WHERE u.usucontrasena = :usucontrasena")
     , @NamedQuery(name = "Usuario.findByUsuemail", query = "SELECT u FROM Usuario u WHERE u.usuemail = :usuemail")
-    , @NamedQuery(name = "Usuario.findByBusquedaUsuarios", query = "SELECT u FROM Usuario u WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(u.usunombres,' '), u.usuapellidos),' ') ,u.usuemail), ' '),u.usunombreusuario)) LIKE :busqueda")
-    , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u Where u.usuestado = :usuestado")
-})
+    , @NamedQuery(name = "Usuario.findByUsuestado", query = "SELECT u FROM Usuario u WHERE u.usuestado = :usuestado")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -124,22 +122,6 @@ public class Usuario implements Serializable {
         this.usuemail = usuemail;
     }
 
-    public byte[] getUsufoto() {
-        return usufoto;
-    }
-
-    public void setUsufoto(byte[] usufoto) {
-        this.usufoto = usufoto;
-    }
-
-    public Boolean getUsuestado() {
-        return usuestado;
-    }
-
-    public void setUsuestado(Boolean usuestado) {
-        this.usuestado = usuestado;
-    }
-
     public Long getUsuid() {
         return usuid;
     }
@@ -204,6 +186,22 @@ public class Usuario implements Serializable {
         this.usuemail = usuemail;
     }
 
+    public byte[] getUsufoto() {
+        return usufoto;
+    }
+
+    public void setUsufoto(byte[] usufoto) {
+        this.usufoto = usufoto;
+    }
+
+    public Boolean getUsuestado() {
+        return usuestado;
+    }
+
+    public void setUsuestado(Boolean usuestado) {
+        this.usuestado = usuestado;
+    }
+
     @XmlTransient
     public List<UsuarioDepartamento> getUsuarioDepartamentoList() {
         return usuarioDepartamentoList;
@@ -263,5 +261,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.unicauca.coordinacionpis.entidades.Usuario[ usuid=" + usuid + " ]";
     }
-
+    
 }

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.unicauca.coordinacionpis.entidades;
 
 import java.io.Serializable;
@@ -18,37 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ROED26
+ * @author David
  */
 @Entity
 @Table(name = "materia")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"),
-    @NamedQuery(name = "Materia.findByIdMateria", query = "SELECT m FROM Materia m WHERE m.idMateria = :idMateria"),
-    @NamedQuery(name = "Materia.findByNombreMateria", query = "SELECT m FROM Materia m WHERE m.nombreMateria = :nombreMateria"),
-    @NamedQuery(name = "Materia.findByNumeroEstudiantes", query = "SELECT m FROM Materia m WHERE m.numeroEstudiantes = :numeroEstudiantes"),
-    @NamedQuery(name = "Materia.findByGruposSolicitados", query = "SELECT m FROM Materia m WHERE m.gruposSolicitados = :gruposSolicitados"),
-    @NamedQuery(name = "Materia.findByGruposCancelados", query = "SELECT m FROM Materia m WHERE m.gruposCancelados = :gruposCancelados"),
-    @NamedQuery(name = "Materia.findByGruposOfertados", query = "SELECT m FROM Materia m WHERE m.gruposOfertados = :gruposOfertados"),
-    @NamedQuery(name = "Materia.findByGruposFusionados", query = "SELECT m FROM Materia m WHERE m.gruposFusionados = :gruposFusionados"),
-    @NamedQuery(name = "Materia.findByGruposNuevos", query = "SELECT m FROM Materia m WHERE m.gruposNuevos = :gruposNuevos"),
-    @NamedQuery(name = "Materia.findByMateria", query = "SELECT m FROM Materia m WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(m.semestre,' '),m.codigoMateria),' '),m.nombreMateria)) LIKE :datoBusqueda")
-})
-
+    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
+    , @NamedQuery(name = "Materia.findByIdMateria", query = "SELECT m FROM Materia m WHERE m.idMateria = :idMateria")
+    , @NamedQuery(name = "Materia.findBySemestre", query = "SELECT m FROM Materia m WHERE m.semestre = :semestre")
+    , @NamedQuery(name = "Materia.findByCodigoMateria", query = "SELECT m FROM Materia m WHERE m.codigoMateria = :codigoMateria")
+    , @NamedQuery(name = "Materia.findByNombreMateria", query = "SELECT m FROM Materia m WHERE m.nombreMateria = :nombreMateria")
+    , @NamedQuery(name = "Materia.findByCreditos", query = "SELECT m FROM Materia m WHERE m.creditos = :creditos")
+    , @NamedQuery(name = "Materia.findByIntensidadHoraria", query = "SELECT m FROM Materia m WHERE m.intensidadHoraria = :intensidadHoraria")
+    , @NamedQuery(name = "Materia.findByNumeroEstudiantes", query = "SELECT m FROM Materia m WHERE m.numeroEstudiantes = :numeroEstudiantes")
+    , @NamedQuery(name = "Materia.findByGruposSolicitados", query = "SELECT m FROM Materia m WHERE m.gruposSolicitados = :gruposSolicitados")
+    , @NamedQuery(name = "Materia.findByGruposCancelados", query = "SELECT m FROM Materia m WHERE m.gruposCancelados = :gruposCancelados")
+    , @NamedQuery(name = "Materia.findByGruposOfertados", query = "SELECT m FROM Materia m WHERE m.gruposOfertados = :gruposOfertados")
+    , @NamedQuery(name = "Materia.findByGruposFusionados", query = "SELECT m FROM Materia m WHERE m.gruposFusionados = :gruposFusionados")
+    , @NamedQuery(name = "Materia.findByGruposNuevos", query = "SELECT m FROM Materia m WHERE m.gruposNuevos = :gruposNuevos")})
 public class Materia implements Serializable {
-
-    @Size(max = 4)
-    @Column(name = "semestre")
-    private String semestre;
-    @Column(name = "creditos")
-    private Integer creditos;
-    @Column(name = "intensidad_horaria")
-    private Integer intensidadHoraria;
-
-    @Size(min = 1, max = 30)
-    @Column(name = "codigo_materia")
-    private String codigoMateria;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,11 +50,21 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_materia")
     private Integer idMateria;
+    @Size(max = 4)
+    @Column(name = "semestre")
+    private String semestre;
+    @Size(max = 30)
+    @Column(name = "codigo_materia")
+    private String codigoMateria;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 70)
     @Column(name = "nombre_materia")
     private String nombreMateria;
+    @Column(name = "creditos")
+    private Integer creditos;
+    @Column(name = "intensidad_horaria")
+    private Integer intensidadHoraria;
     @Column(name = "numero_estudiantes")
     private Integer numeroEstudiantes;
     @Column(name = "grupos_solicitados")
@@ -97,12 +101,44 @@ public class Materia implements Serializable {
         this.idMateria = idMateria;
     }
 
+    public String getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+
+    public String getCodigoMateria() {
+        return codigoMateria;
+    }
+
+    public void setCodigoMateria(String codigoMateria) {
+        this.codigoMateria = codigoMateria;
+    }
+
     public String getNombreMateria() {
         return nombreMateria;
     }
 
     public void setNombreMateria(String nombreMateria) {
         this.nombreMateria = nombreMateria;
+    }
+
+    public Integer getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(Integer creditos) {
+        this.creditos = creditos;
+    }
+
+    public Integer getIntensidadHoraria() {
+        return intensidadHoraria;
+    }
+
+    public void setIntensidadHoraria(Integer intensidadHoraria) {
+        this.intensidadHoraria = intensidadHoraria;
     }
 
     public Integer getNumeroEstudiantes() {
@@ -183,39 +219,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.unicauca.coodinacionpis.entidades.Materia[ idCurso=" + idMateria + " ]";
+        return "com.unicauca.coordinacionpis.entidades.Materia[ idMateria=" + idMateria + " ]";
     }
-
-    public String getCodigoMateria() {
-        return codigoMateria;
-    }
-
-    public void setCodigoMateria(String codigoMateria) {
-        this.codigoMateria = codigoMateria;
-    }
-
-    public String getSemestre() {
-        return semestre;
-    }
-
-    public void setSemestre(String semestre) {
-        this.semestre = semestre;
-    }
-
-    public Integer getCreditos() {
-        return creditos;
-    }
-
-    public void setCreditos(Integer creditos) {
-        this.creditos = creditos;
-    }
-
-    public Integer getIntensidadHoraria() {
-        return intensidadHoraria;
-    }
-
-    public void setIntensidadHoraria(Integer intensidadHoraria) {
-        this.intensidadHoraria = intensidadHoraria;
-    }
-
+    
 }

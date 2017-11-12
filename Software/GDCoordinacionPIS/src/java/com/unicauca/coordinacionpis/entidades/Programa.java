@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Daniela
+ * @author David
  */
 @Entity
 @Table(name = "programa")
@@ -39,16 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Programa.findByNombrePrograma", query = "SELECT p FROM Programa p WHERE p.nombrePrograma = :nombrePrograma")})
 public class Programa implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaEstudiante")
-    private List<Estudiante> estudianteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaAnteproyecto")
-    private List<Anteproyecto> anteproyectoList;
-    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
-    @ManyToOne(optional = false)
-    private Facultad idfacultad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaProfesor")
-    private List<Profesor> profesorList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,12 +46,17 @@ public class Programa implements Serializable {
     @Size(max = 200)
     @Column(name = "nombrePrograma")
     private String nombrePrograma;
-    @JoinTable(name = "usuario_programa", joinColumns = {
-        @JoinColumn(name = "idPrograma", referencedColumnName = "idPrograma")}, inverseJoinColumns = {
-        @JoinColumn(name = "idUsuario", referencedColumnName = "USUID")})
-    @ManyToMany
-    private List<Usuario> usuarioList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaEstudiante")
+    private List<Estudiante> estudianteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaAnteproyecto")
+    private List<Anteproyecto> anteproyectoList;
+    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
+    @ManyToOne(optional = false)
+    private Facultad idfacultad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaProfesor")
+    private List<Profesor> profesorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programa")
+    private List<UsuarioPrograma> usuarioProgramaList;
 
     public Programa() {
     }
@@ -86,41 +79,6 @@ public class Programa implements Serializable {
 
     public void setNombrePrograma(String nombrePrograma) {
         this.nombrePrograma = nombrePrograma;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPrograma != null ? idPrograma.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Programa)) {
-            return false;
-        }
-        Programa other = (Programa) object;
-        if ((this.idPrograma == null && other.idPrograma != null) || (this.idPrograma != null && !this.idPrograma.equals(other.idPrograma))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.unicauca.coordinacionpis.entidades.Programa[ idPrograma=" + idPrograma + " ]";
     }
 
     @XmlTransient
@@ -156,6 +114,40 @@ public class Programa implements Serializable {
 
     public void setProfesorList(List<Profesor> profesorList) {
         this.profesorList = profesorList;
+    }
+
+    @XmlTransient
+    public List<UsuarioPrograma> getUsuarioProgramaList() {
+        return usuarioProgramaList;
+    }
+
+    public void setUsuarioProgramaList(List<UsuarioPrograma> usuarioProgramaList) {
+        this.usuarioProgramaList = usuarioProgramaList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPrograma != null ? idPrograma.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Programa)) {
+            return false;
+        }
+        Programa other = (Programa) object;
+        if ((this.idPrograma == null && other.idPrograma != null) || (this.idPrograma != null && !this.idPrograma.equals(other.idPrograma))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.unicauca.coordinacionpis.entidades.Programa[ idPrograma=" + idPrograma + " ]";
     }
     
 }
