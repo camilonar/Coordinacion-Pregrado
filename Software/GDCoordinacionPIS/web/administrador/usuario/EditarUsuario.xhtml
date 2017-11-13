@@ -322,7 +322,7 @@
                     </p:row>
                     <p:row rendered="#{usuarioController.esRolActual()}">
                         <p:column>
-                            <p:commandButton value="Desactivar rol de #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}" action="#{usuarioController.deshabilitarRol()}"/>
+                            <p:commandButton value="Desactivar rol de #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}" action="#{usuarioController.deshabilitarRol()}" />
                         </p:column>                        
                     </p:row>
                 </p:panelGrid>
