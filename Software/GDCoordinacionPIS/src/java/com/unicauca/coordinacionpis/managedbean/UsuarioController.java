@@ -268,7 +268,7 @@ public class UsuarioController implements Serializable {
         usuario.setCarid(cargo);
         ejbUsuario.create(usuario);
 
-        if (rolActual == 1) {
+        if (rolActual == 1 && tipo != TIPO_USUARIO.ADMIN) {
             deshabilitarRolAnterior();
             if (this.tipo == TIPO_USUARIO.COORDINADOR) {
                 List<UsuarioPrograma> programas = new ArrayList<>();
@@ -333,12 +333,19 @@ public class UsuarioController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         requestContext.update("msg");
         requestContext.update("UsuarioEditForm");
+        System.out.println("vuelve a checkear");
     }
 
     public void deshabilitarRol() {
-        deshabilitarRolAnterior();        
-        deptTmp=null;
-        progTmp=null;
+        if ("1".equals(grupo.getGruid())) {
+            Usuario usuCoor = ejbUsuario.buscarUsuarioPorNombreDeUsuario(usuario.getUsunombreusuario());
+            usuCoor.setUsuestado(false);
+            usuario.setUsuestado(false);
+            ejbUsuario.edit(usuCoor);
+        }
+        deshabilitarRolAnterior();
+        deptTmp = null;
+        progTmp = null;
         if (!this.usuario.getUsuarioDepartamentoList().isEmpty()) {
             deptTmp = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento().getNombre();
         }
@@ -357,6 +364,7 @@ public class UsuarioController implements Serializable {
                 usuCoor.setUsuestado(false);
                 for (UsuarioPrograma up : usuCoor.getUsuarioProgramaList()) {
                     usuarioProgramaFacade.remove(up);
+                    usuario.getUsuarioProgramaList().remove(up);
                 }
                 ejbUsuario.edit(usuCoor);
             }
@@ -368,6 +376,7 @@ public class UsuarioController implements Serializable {
                 usuJefe.setUsuestado(false);
                 for (UsuarioDepartamento ud : usuJefe.getUsuarioDepartamentoList()) {
                     usuarioDepartamentoFacade.remove(ud);
+                    usuario.getUsuarioDepartamentoList().remove(ud);
                 }
                 ejbUsuario.edit(usuJefe);
             }
@@ -376,6 +385,13 @@ public class UsuarioController implements Serializable {
     }
 
     public boolean esRolActual() {
+        if ("1".equals(grupo.getGruid())) {
+            if (usuario.getUsuestado()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         if ("2".equals(grupo.getGruid())) {
             if (progTmp != null) {
                 return true;
@@ -466,11 +482,9 @@ public class UsuarioController implements Serializable {
         }
         if (rolActual == 1) {
             this.usuario.setUsuestado(true);
+            deshabilitarRolAnterior();
         } else {
             this.usuario.setUsuestado(false);
-        }
-        if (rolActual == 1) {
-            deshabilitarRolAnterior();
         }
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
