@@ -233,8 +233,8 @@
                         </p:button>                
 
                         <p:commandButton  id="submit-btn"
-                                          value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
-                                          action="#{registroFormatoBController.aceptarFormatoB()}" 
+                                          value="Registrar"   update= ""
+                                          action="#{registroFormatoBController.aceptarFormatoB(anteproyectoController.anteproyectoSelected)}" 
                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 
                     </p:column>

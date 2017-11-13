@@ -1,7 +1,8 @@
 
 package com.unicauca.coordinacionpis.managedbean;
 
-import com.itextpdf.text.Document;
+import com.openkm.sdk4j.bean.Document;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -31,7 +32,10 @@ import com.openkm.sdk4j.exception.VirusDetectedException;
 import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.Docente;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
+import com.unicauca.coordinacionpis.entidades.Anteproyecto;
+import com.unicauca.coordinacionpis.entidades.Formatoa;
 import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
+import com.unicauca.coordinacionpis.sessionbean.FormatoaFacade;
 import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -51,6 +55,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -65,6 +70,8 @@ import org.primefaces.model.UploadedFile;
 @ViewScoped
 public class RegistroFormatoAController extends RegistroDocumentoTemplate implements Serializable
 {
+    @EJB
+    private FormatoaFacade ejbFormatoA;
     
     private MetadatosAntepoyecto metadatosAnteproyectos;
     private boolean exitoSubirArchivo;
@@ -239,10 +246,15 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         return file;
     }
     
-    public void aceptarFormatoA() throws PathNotFoundException 
+    public void aceptarFormatoA(Anteproyecto anteproyecto ) throws PathNotFoundException 
     {
         System.out.println("Aceptado formato A");
-        this.subirDocumento(archivoFormatoA);
+       Document documentoCreado =  this.subirDocumento(archivoFormatoA);
+        Formatoa formatoa = new Formatoa();
+        formatoa.setAnteproyectoFormatoA(anteproyecto);
+        formatoa.setClaveFormatoA(documentoCreado.getUuid());
+        this.ejbFormatoA.create(formatoa);
+        
     }
     
     public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) 
@@ -422,38 +434,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
         
-    public void agregarMetadatos()
-    {
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer;
-        String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
-        try
-        {
-            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "aguaabril2016.pdf"));
-            // Agregar metadatos al PDF
-            document.addAuthor("Memorynotfound");
-            document.addCreationDate();
-            document.addCreator("Memorynotfound.com");
-            document.addTitle("Add meta data to PDF");
-            document.addSubject("how to add meta data to pdf using itext");
-            document.addKeywords(metadatosAnteproyectos.getTitulo() + "," + metadatosAnteproyectos.getProfesor());
-            document.addLanguage(Locale.ENGLISH.getLanguage());
-            document.addHeader("type", "tutorial, example");
-            // Agergar xmp metadatos
-            writer.createXmpMetadata();
-            document.open();
-            document.add(new Paragraph("Add meta-data to PDF using iText"));
-            document.close();
-        } 
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (DocumentException ex)
-        {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
     
     public void actualizarInfoFormatoA()
     {
@@ -584,8 +565,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
                 }
             }
             okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoA", fElements);
-            agregarMetadatos();
-            exitoSubirArchivo = false;
+             exitoSubirArchivo = false;
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update("formSeleccionarArchivoFormatoA");
             requestContext.update("formMetadatosFormatoA");

@@ -88,7 +88,6 @@ public abstract class RegistroDocumentoTemplate {
                     if (okm.hasNode(ruta)) {
                         QueryParams parametros = new QueryParams();
                         parametros.setPath(ruta);
-                       
 
                         ResultSet result = okm.findPaginated(parametros, first, pageSize);
                         List<QueryResult> lista = result.getResults();
@@ -96,12 +95,12 @@ public abstract class RegistroDocumentoTemplate {
                         for (int i = 0; i < lista.size(); i++) {
                             Document docum = lista.get(i).getDocument();
                             HashMap<String, FormElement> metadata = new HashMap();
-                            
+
                             List<FormElement> propertyGroupProperties = okm.getPropertyGroupProperties(lista.get(i).getDocument().getPath(), getOKGPropierties());
                             for (FormElement propertyGroupProperty : propertyGroupProperties) {
                                 metadata.put(propertyGroupProperty.getName(), propertyGroupProperty);
                             }
-                            DocumentoMetadatos documento = new DocumentoMetadatos(docum,metadata);
+                            DocumentoMetadatos documento = new DocumentoMetadatos(docum, metadata);
                             listadoDocs.add(documento);
                         }
                     }
@@ -136,8 +135,9 @@ public abstract class RegistroDocumentoTemplate {
      */
     public abstract void addMetadata(String archivOferta);
 
-    public boolean subirDocumento(UploadedFile archivOferta) {
+    public Document subirDocumento(UploadedFile archivOferta) {
         boolean existeDocumento = false;
+        Document docum = null;
         try {
             this.crearRutaDocumento(okm);
             String consecutivo = "";
@@ -162,10 +162,10 @@ public abstract class RegistroDocumentoTemplate {
                 }
             }
             if (existeDocumento) {
-                okm.createDocumentSimple(this.getPathDocumento() + nombreArchTmp + consecutivo + ".pdf", archivOferta.getInputstream());
+                docum = okm.createDocumentSimple(this.getPathDocumento() + nombreArchTmp + consecutivo + ".pdf", archivOferta.getInputstream());
                 this.addMetadata(nombreArchTmp + consecutivo + ".pdf");
             } else {
-                okm.createDocumentSimple(this.getPathDocumento() + archivOferta.getFileName(), archivOferta.getInputstream());
+                docum = okm.createDocumentSimple(this.getPathDocumento() + archivOferta.getFileName(), archivOferta.getInputstream());
                 this.addMetadata(archivOferta.getFileName());
             }
 
@@ -173,7 +173,7 @@ public abstract class RegistroDocumentoTemplate {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return existeDocumento;
+        return docum;
 
     }
 

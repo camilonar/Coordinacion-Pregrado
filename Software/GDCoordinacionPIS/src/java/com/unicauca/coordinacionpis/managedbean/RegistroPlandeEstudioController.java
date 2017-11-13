@@ -241,10 +241,11 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      * los planes de estudio(planEstudio).
      */
     public void aceptarRegistroPlanEstudio() {
-        boolean subirDocumento = this.subirDocumento(archivoPlan);
+        Document subirDocumento = this.subirDocumento(archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
-        if (subirDocumento) {
+       //TODO: ARREGLAR EL MENSAJE:  MODFIQUE EL CODIGO DE SUBIR DOCUMENTO 
+        if (subirDocumento==null) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' esta repetido, se agregara un consecutivo al nuevo documento");
         } else {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");

@@ -5,13 +5,14 @@
  */
 package com.unicauca.coordinacionpis.managedbean;
 
-import com.itextpdf.text.Document;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.openkm.sdk4j.OKMWebservices;
 import com.openkm.sdk4j.OKMWebservicesFactory;
+import com.openkm.sdk4j.bean.Document;
 import com.openkm.sdk4j.bean.Folder;
 import com.openkm.sdk4j.bean.QueryResult;
 import com.openkm.sdk4j.bean.form.FormElement;
@@ -35,7 +36,11 @@ import com.openkm.sdk4j.exception.VirusDetectedException;
 import com.openkm.sdk4j.exception.WebserviceException;
 import com.unicauca.coordinacionpis.classMetadatos.Docente;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
+import com.unicauca.coordinacionpis.entidades.Anteproyecto;
+import com.unicauca.coordinacionpis.entidades.Formatoc;
 import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
+import com.unicauca.coordinacionpis.sessionbean.FormatoaFacade;
+import com.unicauca.coordinacionpis.sessionbean.FormatocFacade;
 import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -54,6 +59,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -71,6 +77,10 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class FormatoCController extends RegistroDocumentoTemplate implements Serializable{
+    
+     @EJB
+    private FormatocFacade ejbFormatoC;
+    
     private MetadatosAntepoyecto metadatosAnteproyectos;
     private boolean exitoSubirArchivo;
     private String nombreArchivo;
@@ -356,42 +366,19 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
         requestContext.update("formArchivoSelecionadoFormatoC");
     }
     
-    public void aceptarFormatoC() {
-        this.subirDocumento( archivoFormatoC);
+    public void aceptarFormatoC(Anteproyecto ant ) {
+       
+
+       
+         Document documentoCreado =  this.subirDocumento( archivoFormatoC);
+        Formatoc formatoc = new Formatoc();
+        formatoc.setAnteproyectoFormatoC(ant);
+        formatoc.setClaveFormatoC(documentoCreado.getUuid());
+        this.ejbFormatoC.create(formatoc);
+                 System.out.println("Aceptado formatoC");
     }
     
-    public void agregarMetadatos() {
-        // create document and writer
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer;
-        String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
-        try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "aguaabril2016.pdf"));
-            // add meta-data to pdf
-            document.addAuthor("Memorynotfound");
-            document.addCreationDate();
-            document.addCreator("Memorynotfound.com");
-            document.addTitle("Add meta data to PDF");
-            document.addSubject("how to add meta data to pdf using itext");
-            document.addKeywords(metadatosAnteproyectos.getTitulo() + "," + metadatosAnteproyectos.getProfesor());
-            document.addLanguage(Locale.ENGLISH.getLanguage());
-            document.addHeader("type", "tutorial, example");
-
-            // add xmp meta data
-            writer.createXmpMetadata();
-
-            document.open();
-            document.add(new Paragraph("Add meta-data to PDF using iText"));
-            document.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-    
-    public void actualizarInfoFormatoC() {
+        public void actualizarInfoFormatoC() {
 
         try {
             okm.addGroup(documento.getPath(), "okg:FormatoC");
@@ -497,7 +484,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
                     }
                 }
                 okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoC", fElements);
-                agregarMetadatos();
+               
                 exitoSubirArchivo = false;
                 RequestContext requestContext = RequestContext.getCurrentInstance();
                 requestContext.update("formSeleccionarArchivoFormatoC");
