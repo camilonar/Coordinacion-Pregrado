@@ -38,19 +38,19 @@
                                  value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">     
                     </p:calendar>
                 </p:panelGrid>
-                
-                
-                   <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" columns="4"  >            
 
-                        <h:outputText value="Codigo Director: " /> 
-                        <h:outputText   id="codDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.idProfesor}">
-                        </h:outputText>
-                        <h:outputText value="Nombre Director:  " /> 
-                        <h:outputText   id="nomDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.nombreProfesor}"  >    
-                        </h:outputText>
-                       
-                    </p:panelGrid>
-                
+
+                <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" columns="4"  >            
+
+                    <h:outputText value="Codigo Director: " /> 
+                    <h:outputText   id="codDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.idProfesor}">
+                    </h:outputText>
+                    <h:outputText value="Nombre Director:  " /> 
+                    <h:outputText   id="nomDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.nombreProfesor}"  >    
+                    </h:outputText>
+
+                </p:panelGrid>
+
 
                 <p:separator/>
                 <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
@@ -109,7 +109,7 @@
                                 <p:commandButton id="createButton"
                                                  value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
                             </h:form>
-                            
+
 
 
 
@@ -127,22 +127,23 @@
                                     </f:facet>
                                     <h:outputText value="#{documento.claveFormatoA}"/>
                                 </p:column>    
-                                  <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Acciones"/>
-                                </f:facet>
-                                <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                                 action="#{visualizarDocumentoBean.visualizarDocumentoUID(documento.claveFormatoB)}" 
-                                                 icon="ui-icon-search" title="Ver"/>
-                            </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Acciones"/>
+                                    </f:facet>
+                                    <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                     action="#{visualizarDocumentoBean.visualizarDocumentoUID(documento.claveFormatoB)}" 
+                                                     icon="ui-icon-search" title="Ver"/>
+                                </p:column>
                             </p:dataTable>
-                          
 
-                            
+
+
                             <h:form  >
                                 <p:commandButton id="createButton"
-                                                 value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                                                 value="Agregar Formato B" onclick="PF('dlgRegistroFormatoB').show()"/>
                             </h:form>
+                            
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Formato C">
@@ -170,11 +171,19 @@
                                 </p:column>
 
                             </p:dataTable>
+                            
+                             <h:form  >
+                                <p:commandButton id="createButton"
+                                                 value="Agregar Formato C" onclick="PF('dlgRegistroFormatoC').show()"/>
+                            </h:form>
+                            
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>
-               
-                 <ui:include src="FormatoA/registrarFormatoA.xhtml"/> 
+
+                <ui:include src="FormatoA/registrarFormatoA.xhtml"/> 
+                <ui:include src="FormatoB/registrarFormatoB.xhtml"/> 
+                <ui:include src="FormatoC/registrarFormatoC.xhtml"/> 
                 
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion">
