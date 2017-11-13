@@ -130,26 +130,6 @@ public class MateriaController implements Serializable {
         this.materia = materia;
     }
     
-    public void eliminarMateria(){
-        ejbFacade.remove(materia);
-        items = ejbFacade.findAll();
-        RequestContext requestContext= RequestContext.getCurrentInstance();
-        requestContext.update("MateriaListForm:datalist");
-        requestContext.execute("PF('Confirmacion').hide()");
-        departamento = new Departamento();
-        materia = new Materia();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La materia se eliminó con éxito");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-      
-         requestContext.update("msg");//Actualiza la etiqueta growl para que el mensaje pueda ser mostrado
-        
-        requestContext.update("MateriaListForm");
-       
-        
-        
-       
-    }
-    
     protected void setEmbeddableKeys() {
     }
 

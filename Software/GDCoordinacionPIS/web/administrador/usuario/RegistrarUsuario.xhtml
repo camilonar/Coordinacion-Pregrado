@@ -9,7 +9,16 @@
 
 
 
-    <ui:composition>            
+    <ui:composition>  
+        <p:dialog id="HabilitaRolDlg" widgetVar="HabilitarRolDialog" modal="true" resizable="false" 
+                  position="center center" header="Habilitar Rol" closable="false" width="900" height="120">
+            <p:messages  escape="false" style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+            <center>
+                <p:commandButton value="Cancelar" onclick="PF('HabilitarRolDialog').hide()" action="#{usuarioController.cancelarRolActual()}" update=":UsuarioCreateForm:habilitarRol,:UsuarioEditForm:habilitarRol"/>
+                <p:commandButton value="Aceptar" onclick="PF('HabilitarRolDialog').hide()"/>
+            </center>
+
+        </p:dialog>
         <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" 
                   appendTo="@(body)" header="Registrar usuario" closable="false">
             <h:outputStylesheet name="css/appearUploadFile.css" />
@@ -24,30 +33,30 @@
                 <center>    
                     <br/>
                     <c:if test="#{usuarioController.fotoDefecto}">
-                    <p:graphicImage 
-                                    style="height:100px; width:100px;" transient="true"
-                                    value="#{usuarioController.imagenDefecto}"
-                                     cache="false"/>
+                        <p:graphicImage 
+                            style="height:100px; width:100px;" transient="true"
+                            value="#{usuarioController.imagenDefecto}"
+                            cache="false"/>
                     </c:if>
                     <c:if test="#{!usuarioController.fotoDefecto}">
                         <p:graphicImage id="img"
                                         style="height:100px; width:100px;" transient="true"
-                                         value="#{usuarioController.miImagen}"
-                                         cache="false"/>
-                       
+                                        value="#{usuarioController.miImagen}"
+                                        cache="false"/>
+
                     </c:if>
                     <p:fileUpload  id="imgupload" mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
-                                    sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
+                                   sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
                                    required="true"
                                    update="@form" multiple="false" label="Subir imagen">
-                        
+
                     </p:fileUpload> 
                     <c:if test="#{!usuarioController.fotoDefecto}">
                         <p:commandButton 
-                                         value="Imagen por defecto" 
-                                         actionListener="#{usuarioController.establecerFotoPorDefecto()}"
-                                         ajax="true" update ="formfoto"
-                                     >
+                            value="Imagen por defecto" 
+                            actionListener="#{usuarioController.establecerFotoPorDefecto()}"
+                            ajax="true" update ="formfoto"
+                            >
                         </p:commandButton>
                     </c:if>
                 </center>
@@ -205,8 +214,8 @@
                             <p:outputLabel style="font-weight:bold;" value="Departamento: " />
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
-                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
-                                              filter="true" style="width: 155px;" >
+                            <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
+                                             filter="true" style="width: 155px;" >
                                 <p:ajax event="change" update="departamentoId"/> 
                                 <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                var="dpto" 
@@ -288,10 +297,25 @@
 
                         </p:column>
                     </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="¿Habilitar como el actual #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}?" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneRadio id="habilitarRol" value="#{usuarioController.rolActual}" >
+                                <f:selectItem itemLabel="No" itemValue="0" />
+                                <f:selectItem itemLabel="Si" itemValue="1" />
+                                <f:ajax execute="@this" listener="#{usuarioController.habilitarRol()}"/>
+                            </p:selectOneRadio>                            
+                        </p:column>
+                    </p:row>
+
                 </p:panelGrid>
                 <p:separator/>
                 <center>
-                    
+
 
                     <!--p:commandButton value="Cancelar" 
                                      actionListener="#{usuarioController.cancelarRegistroUsuario()}"
@@ -305,21 +329,21 @@
                                      style="margin: 20px;"/-->
                     <p:button value="Cancelar"
                               onclick ="PF('UsuarioCreateDialog').hide();
-                                         $('#UsuarioCreateForm').trigger('reset');
-                                     $('#formfoto').trigger('reset');"
-                                     
-                                        style="margin: 20px;"
-                             
-                               >
+                                      $('#UsuarioCreateForm').trigger('reset');
+                                      $('#formfoto').trigger('reset');"
+
+                              style="margin: 20px;"
+
+                              >
                     </p:button>
-                    
+
                     <p:commandButton action="#{usuarioController.registrarUsuario()}"
                                      id="submit-btn"
                                      value="Registrar" update=":UsuarioListForm:datalist, panel2"/>
                 </center>
 
             </h:form>
-            
+
         </p:dialog>
     </ui:composition>
 

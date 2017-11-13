@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-        
+
         <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"
                   appendTo="@(body)" header="Editar usuario" closable="false">
             <h:outputStylesheet name="css/appearUploadFile.css" />
@@ -18,23 +18,23 @@
             <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
             <br/>
             <h:form id="formEditarfoto" enctype="multipart/form-data">
-                
+
                 <center>
                     <p:outputLabel style="font-weight:bold;" value="Foto de perfil" />                   
                 </center>
                 <center >    
                     <br/>
                     <c:if test="#{usuarioController.fotoDefecto}">
-                    <p:graphicImage
-                                    style="height:100px; width:100px;" transient="true"
-                                    value="#{usuarioController.imagenDefecto}"
-                                     cache="false"/>
+                        <p:graphicImage
+                            style="height:100px; width:100px;" transient="true"
+                            value="#{usuarioController.imagenDefecto}"
+                            cache="false"/>
                     </c:if>
                     <c:if test="#{!usuarioController.fotoDefecto}">
                         <p:graphicImage id="img"
                                         style="height:100px; width:100px;" transient="true"
-                                         value="#{usuarioController.miImagen}"
-                                         cache="false"/>
+                                        value="#{usuarioController.miImagen}"
+                                        cache="false"/>
                     </c:if>
                     <p:fileUpload  mode="advanced" auto="true" fileUploadListener="#{usuarioController.convertirImagenABytes}"
                                    allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="10000000" invalidFileMessage="El archivo no está en el formato válido"
@@ -43,10 +43,10 @@
                     </p:fileUpload> 
                     <c:if test="#{!usuarioController.fotoDefecto}">
                         <p:commandButton 
-                                         value="Imagen por defecto" 
-                                         actionListener="#{usuarioController.establecerFotoPorDefecto()}"
-                                         ajax="true" update="formEditarfoto"
-                                     >
+                            value="Imagen por defecto" 
+                            actionListener="#{usuarioController.establecerFotoPorDefecto()}"
+                            ajax="true" update="formEditarfoto"
+                            >
                         </p:commandButton>
                     </c:if>
                 </center>
@@ -63,7 +63,7 @@
                             <p:inputText id="usunombres" value="#{usuarioController.selected.usunombres}"
                                          title="#{bundleAdmin.CreateUsuarioTitle_usunombres}" required="true" 
                                          requiredMessage="Campo obligatorio">
-                               <f:validator validatorId="ValidarCampoNombre"/>
+                                <f:validator validatorId="ValidarCampoNombre"/>
                                 <p:ajax event="keyup" update="msgCaracteresNombre"/>
                             </p:inputText>
 
@@ -186,7 +186,7 @@
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column>
+                        <p:column>                           
                             <p:outputLabel style="font-weight:bold;" value="Tipo de usuario:" />
                         </p:column>
                         <p:column>
@@ -203,8 +203,8 @@
                             <p:outputLabel style="font-weight:bold;" value="Departamento: " />
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
-                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
-                                              filter="true" style="width: 155px;">
+                            <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
+                                             filter="true" style="width: 155px;">
                                 <p:ajax event="change" update="departamentoId"/> 
                                 <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                var="dpto"
@@ -278,7 +278,7 @@
 
                         <p:column rendered="#{usuarioController.campoContrasena}">
                             <p:commandButton id="contrasena-btn"
-                                value="Modificar contraseña" action="#{usuarioController.mostrarModificarContrasena()}"/>
+                                             value="Modificar contraseña" action="#{usuarioController.mostrarModificarContrasena()}"/>
                         </p:column>
                         <p:column rendered="#{!usuarioController.campoContrasena}">
                             <p:commandButton id="aceptar-contrasena-btn"
@@ -306,6 +306,25 @@
                                        id="msgCaracteresContrasena"/>
                         </p:column>
                     </p:row>
+
+                    <p:row rendered="#{!usuarioController.esRolActual()}">
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="¿Habilitar como el actual #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}?" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneRadio id="habilitarRol" value="#{usuarioController.rolActual}" >
+                                <f:selectItem itemLabel="No" itemValue="0" />
+                                <f:selectItem itemLabel="Si" itemValue="1" />
+                                <f:ajax execute="@this" listener="#{usuarioController.habilitarRol()}"/>
+                            </p:selectOneRadio>                            
+                        </p:column>
+                    </p:row>
+                    <p:row rendered="#{usuarioController.esRolActual()}">
+                        <p:column>
+                            <p:commandButton value="Desactivar rol de #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}" action="#{usuarioController.deshabilitarRol()}"/>
+                        </p:column>                        
+                    </p:row>
                 </p:panelGrid>
                 <p:separator/>
                 <center>
@@ -315,7 +334,7 @@
                                      immediate="true"
                                      style="margin: 20px;"/>
                     <p:commandButton id="submit-btn"
-                                    action="#{usuarioController.editarUsuario()}" value="Actualizar" 
+                                     action="#{usuarioController.editarUsuario()}" value="Actualizar" 
                                      update="panel,:UsuarioListForm:datalist"/>
                 </center>     
 
