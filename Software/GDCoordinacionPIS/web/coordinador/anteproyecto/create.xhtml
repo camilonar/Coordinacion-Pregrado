@@ -125,7 +125,7 @@
                         
                     </p:panelGrid>
                     <center>
-                        <p:commandButton value="Registrar"  update= ":formAnteproyecto" action="#{anteproyectoController.registrarAnteproyecto()}">
+                        <p:commandButton  value="Registrar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
                         </p:commandButton>
                     </center>
                 </h:form>
