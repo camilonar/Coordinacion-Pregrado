@@ -9,17 +9,15 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,17 +56,12 @@ public class Anteproyecto implements Serializable {
     @Column(name = "fechaAnteproyecto")
     @Temporal(TemporalType.DATE)
     private Date fechaAnteproyecto;
-    @JoinTable(name = "codirector", joinColumns = {
-        @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
-        @JoinColumn(name = "profesor", referencedColumnName = "idProfesor")})
-    @ManyToMany
-    private Collection<Profesor> profesorCollection;
-    @JoinColumn(name = "directorAnteproyecto", referencedColumnName = "idProfesor")
-    @ManyToOne(optional = false)
-    private Profesor directorAnteproyecto;
-    @JoinColumn(name = "programaAnteproyecto", referencedColumnName = "idPrograma")
-    @ManyToOne(optional = false)
-    private Programa programaAnteproyecto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoA")
+    private Collection<Formatoa> formatoaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoC")
+    private Collection<Formatoc> formatocCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoB")
+    private Collection<Formatob> formatobCollection;
 
     public Anteproyecto() {
     }
@@ -108,28 +101,30 @@ public class Anteproyecto implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Profesor> getProfesorCollection() {
-        return profesorCollection;
+    public Collection<Formatoa> getFormatoaCollection() {
+        return formatoaCollection;
     }
 
-    public void setProfesorCollection(Collection<Profesor> profesorCollection) {
-        this.profesorCollection = profesorCollection;
+    public void setFormatoaCollection(Collection<Formatoa> formatoaCollection) {
+        this.formatoaCollection = formatoaCollection;
     }
 
-    public Profesor getDirectorAnteproyecto() {
-        return directorAnteproyecto;
+    @XmlTransient
+    public Collection<Formatoc> getFormatocCollection() {
+        return formatocCollection;
     }
 
-    public void setDirectorAnteproyecto(Profesor directorAnteproyecto) {
-        this.directorAnteproyecto = directorAnteproyecto;
+    public void setFormatocCollection(Collection<Formatoc> formatocCollection) {
+        this.formatocCollection = formatocCollection;
     }
 
-    public Programa getProgramaAnteproyecto() {
-        return programaAnteproyecto;
+    @XmlTransient
+    public Collection<Formatob> getFormatobCollection() {
+        return formatobCollection;
     }
 
-    public void setProgramaAnteproyecto(Programa programaAnteproyecto) {
-        this.programaAnteproyecto = programaAnteproyecto;
+    public void setFormatobCollection(Collection<Formatob> formatobCollection) {
+        this.formatobCollection = formatobCollection;
     }
 
     @Override
