@@ -35,7 +35,7 @@ public class VisualizarDocumentoBean {
     String pass = "admin";
     OKMWebservices okm = OKMWebservicesFactory.newInstance(url, user, pass);
    
-        public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) {
+    public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) {
 
         try {
             this.documento = documento;
@@ -51,7 +51,26 @@ public class VisualizarDocumentoBean {
         }
 
     }
-        
+    
+    
+    
+    
+           public void visualizarDocumentoUID(String UUID ) {
+
+        try {
+            String path = okm.getNodePath(UUID);
+            InputStream in = okm.getContent(path);
+            streamedContent = new DefaultStreamedContent(in, "application/pdf");
+            //-------
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update(":visualizacion");
+            requestContext.execute("PF('visualizarPDF').show()");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     public StreamedContent getStreamedContent() {
         return streamedContent;
     }

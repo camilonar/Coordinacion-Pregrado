@@ -63,22 +63,16 @@
                     </p:column>
                 </p:dataTable>
 
-
-
-
-
                 <p:tabView>
                     <p:tab title="Formato A">
+
+                        <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}"></h:outputText>
                         <h:panelGrid columns="2" cellpadding="10">
 
-                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatoaList}" var="documento">
+                            <p:dataTable  paginator="true"
+                                          rows="10" value="#{anteproyectoController.anteproyectoSelected.formatoaList}" var="documento" rowKey="#{documento.claveFormatoA}">
 
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Fecha"/>
-                                    </f:facet>
-                                    <h:outputText value="UNA FECHA _---"/>
-                                </p:column>
+
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Clave"/>
@@ -86,7 +80,24 @@
                                     <h:outputText value="#{documento.claveFormatoA}"/>
                                 </p:column>
 
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Acciones"/>
+                                    </f:facet>
+                                    <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                     action="#{visualizarDocumentoBean.visualizarDocumentoUID(documento.claveFormatoA)}" 
+                                                     icon="ui-icon-search" title="Ver"/>
+                                </p:column>
+
+
                             </p:dataTable>
+
+                            <h:form id="form" >
+                                <p:commandButton id="createButton"
+                                                 value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
+                            </h:form>
+
+
 
 
                         </h:panelGrid>
@@ -94,28 +105,29 @@
                     <p:tab title="Formato B">
                         <h:panelGrid columns="2" cellpadding="10">
 
-                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatobList}"  var="documento" > 
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Fecha"/>
-                                    </f:facet>
-                                    <h:outputText value="UNA FECHA _---"/>
-                                </p:column>
+                            <p:dataTable value="#{anteproyectoController.anteproyectoSelected.formatobList}"  var="documento" > 
+
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Clave"/>
                                     </f:facet>
                                     <h:outputText value="#{documento.claveFormatoA}"/>
                                 </p:column>    
-
-
                             </p:dataTable>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                 action="#{visualizarDocumentoBean.visualizarDocumentoUID(documento.claveFormatoB)}" 
+                                                 icon="ui-icon-search" title="Ver"/>
+                            </p:column>
 
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Formato C">
                         <h:panelGrid columns="2" cellpadding="10">
-                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatocList}"  var="documento">
+                            <p:dataTable value="#{anteproyectoController.anteproyectoSelected.formatocList}"  var="documento">
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Fecha"/>
@@ -127,13 +139,38 @@
                                         <h:outputText value="Clave"/>
                                     </f:facet>
                                     <h:outputText value="#{documento.claveFormatoA}"/>
-                                </p:column>    
-                                
+                                </p:column>  
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Acciones"/>
+                                    </f:facet>
+                                    <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                     action="#{visualizarDocumentoBean.visualizarDocumentoUID(documento.claveFormatoC)}" 
+                                                     icon="ui-icon-search" title="Ver"/>
+                                </p:column>
+
                             </p:dataTable>
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>
+               
+                 <ui:include src="FormatoA/registrarFormatoA.xhtml"/> 
+                
+                <p:dialog widgetVar="visualizarPDF" modal="true">
+                    <h:form id="visualizacion">
+                        <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />
+                    </h:form>
+                </p:dialog>
 
+                <script type="text/javascript">
+                    function start() {
+                        PF('cargando').show();
+                    }
+
+                    function stop() {
+                        PF('cargando').hide();
+                    }
+                </script>
 
             </h:body>
 

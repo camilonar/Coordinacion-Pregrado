@@ -83,7 +83,15 @@ public class AnteproyectoController implements Serializable {
         }
     };
 
-    
+    public void cargarAnteproyecto(){
+       //verificar si puede cargar estoo 
+       
+        
+        Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
+        if(ant!=null){
+            this.anteproyectoSelected = ant;
+        }
+    }
     
     
     public AnteproyectoController() {
