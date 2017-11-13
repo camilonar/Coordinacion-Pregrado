@@ -161,6 +161,7 @@ public class AnteproyectoController implements Serializable {
     }
 
     public void autocompletarEstudiante() {
+        System.out.println("Solo llama cuando muy triste está :'(");
         Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
         if (completo != null) {
             this.estudianteSelected = completo;
@@ -169,11 +170,18 @@ public class AnteproyectoController implements Serializable {
 
     }
     public void autocompletarDirector() {
+        
+        
+        System.out.println("a:" + directorSelected.getIdProfesor() +","+directorSelected.getNombreProfesor());
+        
         Profesor completo = this.ejbProfesor.find(directorSelected.getIdProfesor());
         if (completo != null) {
+           
             this.directorSelected = completo;
+            System.out.println("si hizo el cambio");
         }
-
+        
+        System.out.println("d:" + directorSelected.getIdProfesor() +","+directorSelected.getNombreProfesor());
     }
 
     public void registrarAnteproyecto() {
@@ -202,9 +210,43 @@ public class AnteproyectoController implements Serializable {
         anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
         anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.create(anteproyectoSelected);
-
         System.out.println("E completo");
     }
+    
+    
+    public void editarAnteproyecto() {
+
+        Programa prgramaUsuario = getPrgramaUsuario();
+
+        for (Estudiante estudiante : estudiantes) {
+
+            if (this.ejbEstudiante.find(estudiante.getIdEstudiante()) == null) {
+                estudiante.setProgramaEstudiante(prgramaUsuario);
+                this.ejbEstudiante.create(estudiante);
+            }
+
+        }
+
+        Profesor director = this.ejbProfesor.find(directorSelected.getIdProfesor());
+        if (director == null) {
+            // registrar profesor nuevo
+            this.directorSelected.setProgramaProfesor(prgramaUsuario);
+            this.ejbProfesor.create(this.directorSelected);
+            director = this.directorSelected;
+
+        }
+
+        anteproyectoSelected.setDirectorAnteproyecto(director);
+        anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
+        anteproyectoSelected.setEstudianteList(estudiantes);
+        this.ejbAnteproyecto.edit(anteproyectoSelected);
+        System.out.println("E completo");
+    }
+    
+    
+    
+    
+    
     
     
     public void cargarDatosEdicion()

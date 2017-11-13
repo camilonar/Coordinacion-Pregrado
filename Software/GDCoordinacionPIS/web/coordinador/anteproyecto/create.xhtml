@@ -25,7 +25,7 @@
                         <h:outputText value="Codigo  Estudiante " /> 
                         <p:inputText value="#{anteproyectoController.estudianteSelected.idEstudiante}">
                             <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
-                             <f:validator validatorId="ValidarCampoNumerico"/>
+                            <f:validator validatorId="ValidarCampoNumerico"/>
                         </p:inputText>                           
                         <h:outputText value="Nombre  Estudiante " /> 
                         <p:inputText id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
@@ -69,7 +69,7 @@
                             <p:ajax update="msgTitulo" event="change"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>
-                        <h:outputText value="Fecha  " />                       
+                        <h:outputText value="Fecha" />                       
                         <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                     value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">
                             <p:ajax update="msgFecha" event="change"/>
@@ -102,15 +102,15 @@
                         <p:inputText  required="true" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.idProfesor}">
                             <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                             <p:ajax update="msgCodDir" event="change"  />
-                          
+
                         </p:inputText>
                         <h:outputText value="Nombre Director:  " /> 
                         <p:inputText  required="true" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
                             <p:ajax update="msgNomDir" event="change"  />
                             <f:validator validatorId="ValidarCampoNombre"/>
                         </p:inputText>
-                       
-                       
+
+
 
                         <p:column></p:column>
                         <p:column>
@@ -120,9 +120,9 @@
                         <p:column>
                             <p:message for="nomDir" id="msgNomDir" style="width: 80%"/>
                         </p:column>
-                       
-                        
-                        
+
+
+
                     </p:panelGrid>
                     <center>
                         <p:commandButton  value="Registrar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
