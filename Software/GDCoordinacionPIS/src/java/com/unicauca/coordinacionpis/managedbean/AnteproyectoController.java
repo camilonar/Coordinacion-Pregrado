@@ -7,6 +7,7 @@ package com.unicauca.coordinacionpis.managedbean;
 
 import com.unicauca.coordinacionpis.entidades.Anteproyecto;
 import com.unicauca.coordinacionpis.entidades.Estudiante;
+import com.unicauca.coordinacionpis.entidades.Formatoa;
 import com.unicauca.coordinacionpis.entidades.Profesor;
 import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
@@ -21,6 +22,9 @@ import com.unicauca.coordinacionpis.managedbean.util.PagingInfo;
 import com.unicauca.coordinacionpis.sessionbean.AbstractFacade;
 import com.unicauca.coordinacionpis.sessionbean.AnteproyectoFacade;
 import com.unicauca.coordinacionpis.sessionbean.EstudianteFacade;
+import com.unicauca.coordinacionpis.sessionbean.FormatoaFacade;
+import com.unicauca.coordinacionpis.sessionbean.FormatobFacade;
+import com.unicauca.coordinacionpis.sessionbean.FormatocFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProfesorFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProgramaFacade;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
@@ -71,6 +75,13 @@ public class AnteproyectoController implements Serializable {
     private ProfesorFacade ejbProfesor;
     @EJB
     private ProgramaFacade ejbPrograma;
+    @EJB
+    private FormatoaFacade ejbFormatoa;
+    @EJB
+    private FormatobFacade ejbFormatob;
+    @EJB
+    private FormatocFacade ejbFormatoc;
+
 
     //modificar para filtrar por cualquier campo 
     private DataModel dataModelAnteproyectos = new LazyDataModel<Anteproyecto>() {
@@ -82,6 +93,17 @@ public class AnteproyectoController implements Serializable {
         }
     };
 
+    public void cargarAnteproyecto(){
+       
+        // TODO: verificar que el coordinador pueda ver editar etc este anteproyecto,,,
+        Anteproyecto ant = ejbAnteproyecto.find(anteproyectoSelected.getIdAnteproyecto());
+        if(ant!=null){
+         this.anteproyectoSelected = ant;
+            System.out.println("Anteproyecto cargado"+this.anteproyectoSelected.getDirectorAnteproyecto().getNombreProfesor());
+        }   
+        
+    }
+    
     public AnteproyectoController() {
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
@@ -202,5 +224,9 @@ public class AnteproyectoController implements Serializable {
         return usuarioPrograma.getPrograma();
 
     }
+    
+    
+    
+    
 
 }
