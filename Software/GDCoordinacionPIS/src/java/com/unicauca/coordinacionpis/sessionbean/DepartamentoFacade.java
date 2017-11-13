@@ -30,8 +30,7 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
     public DepartamentoFacade() {
         super(Departamento.class);
     }
-     
-    
+
     public boolean buscarUsuarioPorNombreDeDepartamentoBool(String nombreDep) {
 
         Query query = getEntityManager().createNamedQuery("Departamento.findByNombre");
@@ -43,6 +42,17 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
             return false;
         }
     }
-    
-    
+
+    //Retorna  el nombre de el jefe asignado a ese depto, null si no hay ninguno
+    public String findByDepartamentoJefe(Integer idDepartamento) {
+        Query query = getEntityManager().createNamedQuery("Departamento.findByIdDepartamento");
+        query.setParameter("idDepartamento", idDepartamento);
+        Departamento departamento = (Departamento) query.getSingleResult();
+        if(!departamento.getUsuarioDepartamentoList().isEmpty()){
+            return departamento.getUsuarioDepartamentoList().get(0).getUsuario().getUsunombreusuario();
+        }else{
+            return null;
+        }
+    }
+
 }

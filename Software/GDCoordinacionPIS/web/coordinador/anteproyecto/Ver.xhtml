@@ -6,15 +6,17 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <f:metadata>  
+        <f:viewParam name="id"   value="#{anteproyectoController.anteproyectoSelected.idAnteproyecto}"/>
+        <f:event type="preRenderView" listener="#{anteproyectoController.cargarAnteproyecto()}" ></f:event>
+    </f:metadata> 
 
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
 
 
 
         <ui:define name="body">
-            <f:metadata>  
-                <f:viewParam name="id" value="#{anteproyectoController.anteproyectoSelected.idAnteproyecto}"/>
-            </f:metadata>  
+
 
             <h:head>
                 <title>Gestión de Anteproyectos</title>
@@ -26,25 +28,108 @@
                 <center><p:outputLabel value="Ver Anteproyecto #{anteproyectoController.anteproyectoSelected.idAnteproyecto} " style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
 
+                <p:panelGrid styleClass="panelgrid" style="width: 100%" columns="4"  >            
+
+                    <h:outputText value="Titulo Anteproyecto " /> 
+                    <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" />
+
+                    <h:outputText value="Fecha  " />                       
+                    <p:calendar  size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                 value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">     
+                    </p:calendar>
+                </p:panelGrid>
+
+                <p:separator/>
+                <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
+                <p:separator/>
+
+                <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.anteproyectoSelected.estudianteList}" var="estudiante" emptyMessage="No hay Estudiantes seleccionados"
+                             paginator="true"
+                             rowKey="#{estudiante.idEstudiante}"
+                             rows="10"
+
+                             >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Identificación"/>
+                        </f:facet>
+                        <h:outputText value="#{estudiante.idEstudiante}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{estudiante.nombreEstudiante}"/>
+                    </p:column>
+                </p:dataTable>
+
+
+
+
 
                 <p:tabView>
                     <p:tab title="Formato A">
                         <h:panelGrid columns="2" cellpadding="10">
-                           
-                            <h:outputText
-                                value="ListaFormatos A" />
+
+                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatoaList}" var="documento">
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputText value="UNA FECHA _---"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Clave"/>
+                                    </f:facet>
+                                    <h:outputText value="#{documento.claveFormatoA}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Formato B">
                         <h:panelGrid columns="2" cellpadding="10">
-                           <h:outputText
-                                value="ListaFormatos B" />
+
+                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatobList}"  var="documento" > 
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputText value="UNA FECHA _---"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Clave"/>
+                                    </f:facet>
+                                    <h:outputText value="#{documento.claveFormatoA}"/>
+                                </p:column>    
+
+
+                            </p:dataTable>
+
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Formato C">
                         <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText
-                                value="ListaFormatos C" />
+                            <p:dataTable value="#{anteproyecto.anteproyectoSelected.formatocList}"  var="documento">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputText value="UNA FECHA _---"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Clave"/>
+                                    </f:facet>
+                                    <h:outputText value="#{documento.claveFormatoA}"/>
+                                </p:column>    
+                                
+                            </p:dataTable>
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>
