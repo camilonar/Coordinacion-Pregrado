@@ -53,26 +53,31 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                           <p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Profesor"/>
                             </f:facet>
                             <h:outputText value="#{item.directorAnteproyecto.nombreProfesor}"/>
                         </p:column>
-                        
-                         <p:column>
+
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Acciones"/>
                             </f:facet>
-                             <p:button value="ver" outcome="Ver.xhtml" >
-                                 <f:param name="id" value="#{item.idAnteproyecto}"/>
-                             </p:button>
+                            <p:button value="ver" outcome="Ver.xhtml" >
+                                <f:param name="id" value="#{item.idAnteproyecto}"/>
+                            </p:button>
+
+                            <p:commandButton id="createButton"
+                                             value="Editar" action="/coordinador/anteproyecto/EditarAnteproyecto.xhtml?faces-redirect=true">
+                            </p:commandButton>
+
                         </p:column>
                     </p:dataTable>
                 </h:form>
 
 
-                
+
             </h:body>
 
         </ui:define>

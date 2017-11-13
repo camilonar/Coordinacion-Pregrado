@@ -88,6 +88,7 @@ public abstract class RegistroDocumentoTemplate {
                     if (okm.hasNode(ruta)) {
                         QueryParams parametros = new QueryParams();
                         parametros.setPath(ruta);
+                       
 
                         ResultSet result = okm.findPaginated(parametros, first, pageSize);
                         List<QueryResult> lista = result.getResults();

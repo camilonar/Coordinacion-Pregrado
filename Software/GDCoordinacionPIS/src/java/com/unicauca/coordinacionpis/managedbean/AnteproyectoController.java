@@ -7,7 +7,6 @@ package com.unicauca.coordinacionpis.managedbean;
 
 import com.unicauca.coordinacionpis.entidades.Anteproyecto;
 import com.unicauca.coordinacionpis.entidades.Estudiante;
-import com.unicauca.coordinacionpis.entidades.Formatoa;
 import com.unicauca.coordinacionpis.entidades.Profesor;
 import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
@@ -22,9 +21,6 @@ import com.unicauca.coordinacionpis.managedbean.util.PagingInfo;
 import com.unicauca.coordinacionpis.sessionbean.AbstractFacade;
 import com.unicauca.coordinacionpis.sessionbean.AnteproyectoFacade;
 import com.unicauca.coordinacionpis.sessionbean.EstudianteFacade;
-import com.unicauca.coordinacionpis.sessionbean.FormatoaFacade;
-import com.unicauca.coordinacionpis.sessionbean.FormatobFacade;
-import com.unicauca.coordinacionpis.sessionbean.FormatocFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProfesorFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProgramaFacade;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
@@ -49,6 +45,7 @@ import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -75,13 +72,6 @@ public class AnteproyectoController implements Serializable {
     private ProfesorFacade ejbProfesor;
     @EJB
     private ProgramaFacade ejbPrograma;
-    @EJB
-    private FormatoaFacade ejbFormatoa;
-    @EJB
-    private FormatobFacade ejbFormatob;
-    @EJB
-    private FormatocFacade ejbFormatoc;
-
 
     //modificar para filtrar por cualquier campo 
     private DataModel dataModelAnteproyectos = new LazyDataModel<Anteproyecto>() {
@@ -94,15 +84,15 @@ public class AnteproyectoController implements Serializable {
     };
 
     public void cargarAnteproyecto(){
+       //verificar si puede cargar estoo 
        
-        // TODO: verificar que el coordinador pueda ver editar etc este anteproyecto,,,
-        Anteproyecto ant = ejbAnteproyecto.find(anteproyectoSelected.getIdAnteproyecto());
-        if(ant!=null){
-         this.anteproyectoSelected = ant;
-            System.out.println("Anteproyecto cargado"+this.anteproyectoSelected.getDirectorAnteproyecto().getNombreProfesor());
-        }   
         
+        Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
+        if(ant!=null){
+            this.anteproyectoSelected = ant;
+        }
     }
+    
     
     public AnteproyectoController() {
         estudianteSelected = new Estudiante();
@@ -215,6 +205,16 @@ public class AnteproyectoController implements Serializable {
 
         System.out.println("E completo");
     }
+    
+    
+    public void cargarDatosEdicion()
+    {
+        System.out.println("Se llamó :v");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("formMetadatosEditAnteproyecto");
+        requestContext.execute("PF('dlgEditarAnteproyecto').show()");
+        System.out.println("mande a ejecutar");
+    }
 
     public Programa getPrgramaUsuario() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -224,9 +224,5 @@ public class AnteproyectoController implements Serializable {
         return usuarioPrograma.getPrograma();
 
     }
-    
-    
-    
-    
 
 }
