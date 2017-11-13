@@ -126,13 +126,13 @@ and open the template in the editor.
                                 <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" columns="4"  >            
 
                                     <h:outputText value="Codigo Director: " /> 
-                                    <p:inputText  required="true" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.idProfesor}">
+                                    <p:inputText  required="true" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.idProfesor}">
                                         <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                         <p:ajax update="msgCodDir" event="change"  />
 
                                     </p:inputText>
                                     <h:outputText value="Nombre Director:  " /> 
-                                    <p:inputText  required="true" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
+                                    <p:inputText  required="true" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.anteproyectoSelected.directorAnteproyecto.nombreProfesor}"  >
                                         <p:ajax update="msgNomDir" event="change"  />
                                         <f:validator validatorId="ValidarCampoNombre"/>
                                     </p:inputText>
@@ -152,9 +152,7 @@ and open the template in the editor.
 
                                 </p:panelGrid>
                                 <center>
-                                    <p:commandButton  value="Cancelar" action="/coordinador/anteproyecto/anteproyecto.xhtml?faces-redirect=true" actionListener="#{addNavegacionController.addAnteproyectoGestion()}" >
-                                    </p:commandButton>
-                                    <p:commandButton  value="Editar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
+                                    <p:commandButton  value="Editar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.editarAnteproyecto()}">
                                     </p:commandButton>
                                 </center>
                             </h:form>
