@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      <script type="text/javascript" src="cambiarPestanna.js"></script>
+    
+    
+    <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
+        <ui:define name="body">
+            <h:head>
+                <title>Ver Anteproyecto</title>
+            </h:head>
+            <style>
+                .contenedor{
+                    
+                    margin: auto;
+                    background: white;
+                    color: black;
+                    padding: 20px 15px 50px 50px;
+                   
+                }
+
+                .contenedor .titulo{
+                    font-size: 3.5ex;
+                    font-weight: bold;
+                    margin-left: 10px;
+                    margin-bottom: 10px;
+                }
+
+                #pestanas {
+                    float: top;
+                    font-size: 3ex;
+                    font-weight: bold;
+                }
+
+                #pestanas ul{
+                    margin-left: -40px;    
+                }
+
+                #pestanas li{
+                    list-style-type: none;
+                    float: left;
+                    text-align: center;
+                    margin: 0px 2px -2px -0px;
+                    background: white;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                    border: 2px solid black;
+                    border-bottom: dimgray;
+                    padding: 0px 20px 0px 20px;
+                }
+
+                #pestanas a:link{
+                    text-decoration: none;
+                    color: black;
+                }
+
+                #contenidopestanas{
+                    clear: both;  
+                    background: white;
+                    padding: 20px 0px 20px 20px;
+                    border-radius: 5px;
+                    border-top-left-radius: 0px;
+                    border: 2px solid black;
+                    width: 1025px;
+                }
+            </style>
+            
+            <script>
+                    // Dadas la division que contiene todas las pestañas y la de la pestaña que se 
+                    // quiere mostrar, la funcion oculta todas las pestañas a excepcion de esa.
+                    function cambiarPestanna(pestannas,pestanna) {
+
+                        // Obtiene los elementos con los identificadores pasados.
+                        pestanna = document.getElementById(pestanna.id);
+                        listaPestannas = document.getElementById(pestannas.id);
+
+                        // Obtiene las divisiones que tienen el contenido de las pestañas.
+                        cpestanna = document.getElementById('c'+pestanna.id);
+                        listacPestannas = document.getElementById('contenido'+pestannas.id);
+
+                        i=0;
+                        // Recorre la lista ocultando todas las pestañas y restaurando el fondo 
+                        // y el padding de las pestañas.
+                        while (typeof listacPestannas.getElementsByTagName('div')[i] != 'undefined'){
+                            $(document).ready(function(){
+                                $(listacPestannas.getElementsByTagName('div')[i]).css('display','none');
+                                $(listaPestannas.getElementsByTagName('li')[i]).css('background','');
+                                $(listaPestannas.getElementsByTagName('li')[i]).css('padding-bottom','');
+                            });
+                            i += 1;
+                        }
+
+                        $(document).ready(function(){
+                            // Muestra el contenido de la pestaña pasada como parametro a la funcion,
+                            // cambia el color de la pestaña y aumenta el padding para que tape el  
+                            // borde superior del contenido que esta juesto debajo y se vea de este 
+                            // modo que esta seleccionada.
+                            $(cpestanna).css('display','');
+                            $(pestanna).css('background','dimgray');
+                            $(pestanna).css('padding-bottom','2px'); 
+                        });
+
+                    }
+            </script>
+            <h:body onload="javascript:cambiarPestanna(pestanas,pestana1);">
+                <p:separator/>
+                <center><p:outputLabel value="Anteproyectos - Ver Anteproyecto" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <p:separator/>
+
+                <h:form id="formMetadatosVerAnteproyecto">
+                    <p:panelGrid styleClass="panelgrid" id="panelMetadatos"  style="width: 100%;">
+                        
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:outputLabel value="Título del anteproyecto:" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="codigo" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="Director:" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="codigo" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:outputLabel value="Estudiante 1:" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="codigo" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="Estudiante 2:" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:outputLabel value="codigo" style="font-weight: bold;color: #000000 "/>                                
+                            </p:column>
+                        </p:row>                        
+                    </p:panelGrid>                    
+                </h:form>
+
+                <div class="contenedor">
+                    <div id="pestanas">
+                        <ul id="lista">
+                            <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Formato A</a></li>
+                            <li id="pestana2"><a href='javascript:cambiarPestanna(pestanas,pestana2);'>Formato B</a></li>
+                            <li id="pestana3"><a href='javascript:cambiarPestanna(pestanas,pestana3);'>Formato C</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div id="contenidopestanas">
+                        <div id="cpestana1">
+                            Contenido de la pestaña 1
+                        </div>
+                        <div id="cpestana2">
+                            Contenido de la pestaña 2
+                        </div>
+                        <div id="cpestana3">
+                            <p:dataTable value="#{formatoCController.dataModelDocumentos}" 
+                                 id="datalist" paginator="true" lazy="true"
+                                 rowKey="#{item.id}"
+                                 rows="10" emptyMessage="Sin documentos"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 var="formatoC">
+                    
+                        
+                                <p:column>
+                                   <f:facet name="header">
+                                       <p:outputLabel value="Titulo"/>
+                                   </f:facet>
+                                   <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.TituloAnteproyecto')}"/>
+                               </p:column>
+
+                               <p:column>
+                                   <f:facet name="header">
+                                       <p:outputLabel value="Docente"/>
+                                   </f:facet>
+                                   <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.docente')}"/>
+                               </p:column>
+
+                                 <p:column>
+                                   <f:facet name="header">
+                                       <p:outputLabel value="Primer Estudiante"/>
+                                   </f:facet>
+                                   <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.PrimerEstudiante')} "/>
+                               </p:column>
+
+                               <p:column>
+                                   <f:facet name="header">
+                                       <p:outputLabel value="Segundo Estudiante"/>
+                                   </f:facet>
+                                   <p:outputLabel value="#{formatoC.getPropiertieValue('okp:FormatoC.SegundoEstudiante')} "/>
+                               </p:column>
+
+
+
+                               <p:column  >
+                                   <f:facet name="header">
+                                       Fecha de creación
+                                   </f:facet>
+                                   <p:outputLabel value="#{formatoCController.fecha(formatoC.getDocument().getCreated())}"/>
+                               </p:column>
+                               <p:column style="text-align: center; width: 290px">
+                                   <f:facet name="header">
+                                       Acciones
+                                   </f:facet>
+                                   <p:commandButton value="Ver" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                    action="#{visualizarDocumentoBean.visualizarDocumento(formatoC.getDocument())}" 
+                                                    icon="ui-icon-search" title="Ver"/>
+                                   <p:commandButton id="editButton"
+                                                    value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                    action="#{formatoCController.cargarDatosEdicion(formatoC.getDocument())}" 
+                                                    icon="ui-icon-pencil" title="Editar"/>
+                                   <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
+                                       <p:fileDownload value="#{formatoCController.descargarDocumento(formatoC.getDocument())}" />
+                                   </p:commandButton>
+                                   <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
+                                                    action="#{formatoCController.confirmarEliminacion(formatoC.getDocument())}" 
+                                                    icon="ui-icon-trash" title="Eliminar"/>
+
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+            </h:body>
+            
+        </ui:define>
+    </ui:composition>
+</html>
+
