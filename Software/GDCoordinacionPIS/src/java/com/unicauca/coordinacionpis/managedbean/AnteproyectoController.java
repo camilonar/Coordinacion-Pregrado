@@ -45,6 +45,7 @@ import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -82,6 +83,9 @@ public class AnteproyectoController implements Serializable {
         }
     };
 
+    
+    
+    
     public AnteproyectoController() {
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
@@ -192,6 +196,16 @@ public class AnteproyectoController implements Serializable {
         this.ejbAnteproyecto.create(anteproyectoSelected);
 
         System.out.println("E completo");
+    }
+    
+    
+    public void cargarDatosEdicion()
+    {
+        System.out.println("Se llamó :v");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("formMetadatosEditAnteproyecto");
+        requestContext.execute("PF('dlgEditarAnteproyecto').show()");
+        System.out.println("mande a ejecutar");
     }
 
     public Programa getPrgramaUsuario() {
