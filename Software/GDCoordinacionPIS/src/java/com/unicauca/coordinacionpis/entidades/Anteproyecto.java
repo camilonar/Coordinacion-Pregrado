@@ -6,8 +6,8 @@
 package com.unicauca.coordinacionpis.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -56,12 +60,28 @@ public class Anteproyecto implements Serializable {
     @Column(name = "fechaAnteproyecto")
     @Temporal(TemporalType.DATE)
     private Date fechaAnteproyecto;
+    @JoinTable(name = "codirector", joinColumns = {
+        @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
+        @JoinColumn(name = "profesor", referencedColumnName = "idProfesor")})
+    @ManyToMany
+    private List<Profesor> profesorList;
+    @JoinTable(name = "estudiante_anteproyecto", joinColumns = {
+        @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
+        @JoinColumn(name = "estudiante", referencedColumnName = "idEstudiante")})
+    @ManyToMany
+    private List<Estudiante> estudianteList;
+    @JoinColumn(name = "directorAnteproyecto", referencedColumnName = "idProfesor")
+    @ManyToOne(optional = false)
+    private Profesor directorAnteproyecto;
+    @JoinColumn(name = "programaAnteproyecto", referencedColumnName = "idPrograma")
+    @ManyToOne(optional = false)
+    private Programa programaAnteproyecto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoA")
-    private Collection<Formatoa> formatoaCollection;
+    private List<Formatoa> formatoaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoC")
-    private Collection<Formatoc> formatocCollection;
+    private List<Formatoc> formatocList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoB")
-    private Collection<Formatob> formatobCollection;
+    private List<Formatob> formatobList;
 
     public Anteproyecto() {
     }
@@ -101,30 +121,64 @@ public class Anteproyecto implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Formatoa> getFormatoaCollection() {
-        return formatoaCollection;
+    public List<Profesor> getProfesorList() {
+        return profesorList;
     }
 
-    public void setFormatoaCollection(Collection<Formatoa> formatoaCollection) {
-        this.formatoaCollection = formatoaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Formatoc> getFormatocCollection() {
-        return formatocCollection;
-    }
-
-    public void setFormatocCollection(Collection<Formatoc> formatocCollection) {
-        this.formatocCollection = formatocCollection;
+    public void setProfesorList(List<Profesor> profesorList) {
+        this.profesorList = profesorList;
     }
 
     @XmlTransient
-    public Collection<Formatob> getFormatobCollection() {
-        return formatobCollection;
+    public List<Estudiante> getEstudianteList() {
+        return estudianteList;
     }
 
-    public void setFormatobCollection(Collection<Formatob> formatobCollection) {
-        this.formatobCollection = formatobCollection;
+    public void setEstudianteList(List<Estudiante> estudianteList) {
+        this.estudianteList = estudianteList;
+    }
+
+    public Profesor getDirectorAnteproyecto() {
+        return directorAnteproyecto;
+    }
+
+    public void setDirectorAnteproyecto(Profesor directorAnteproyecto) {
+        this.directorAnteproyecto = directorAnteproyecto;
+    }
+
+    public Programa getProgramaAnteproyecto() {
+        return programaAnteproyecto;
+    }
+
+    public void setProgramaAnteproyecto(Programa programaAnteproyecto) {
+        this.programaAnteproyecto = programaAnteproyecto;
+    }
+
+    @XmlTransient
+    public List<Formatoa> getFormatoaList() {
+        return formatoaList;
+    }
+
+    public void setFormatoaList(List<Formatoa> formatoaList) {
+        this.formatoaList = formatoaList;
+    }
+
+    @XmlTransient
+    public List<Formatoc> getFormatocList() {
+        return formatocList;
+    }
+
+    public void setFormatocList(List<Formatoc> formatocList) {
+        this.formatocList = formatocList;
+    }
+
+    @XmlTransient
+    public List<Formatob> getFormatobList() {
+        return formatobList;
+    }
+
+    public void setFormatobList(List<Formatob> formatobList) {
+        this.formatobList = formatobList;
     }
 
     @Override
