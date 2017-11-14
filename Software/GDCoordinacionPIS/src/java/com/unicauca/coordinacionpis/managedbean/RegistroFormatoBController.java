@@ -250,6 +250,7 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         formatob.setAnteproyectoFormatoB(anteproyecto);
         formatob.setClaveFormatoB(documentoCreado.getUuid());
         this.ejbFormatoB.create(formatob);
+        this.ejbFormatoB.limpiarCache();
     }
 
     public void actualizarInfoFormatoB() {

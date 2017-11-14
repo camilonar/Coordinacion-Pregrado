@@ -355,6 +355,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
         requestContext.update("formArchivoSelecionadoFormatoC");
     }
     
+    
     public void cancelarFormatoC() {
         exitoSubirArchivo = false;
         nombreArchivo = "";
@@ -375,6 +376,7 @@ public class FormatoCController extends RegistroDocumentoTemplate implements Ser
         formatoc.setAnteproyectoFormatoC(ant);
         formatoc.setClaveFormatoC(documentoCreado.getUuid());
         this.ejbFormatoC.create(formatoc);
+        this.ejbFormatoC.limpiarCache();
                  System.out.println("Aceptado formatoC");
     }
     

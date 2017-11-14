@@ -254,6 +254,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         formatoa.setAnteproyectoFormatoA(anteproyecto);
         formatoa.setClaveFormatoA(documentoCreado.getUuid());
         this.ejbFormatoA.create(formatoa);
+        this.ejbFormatoA.limpiarCache();
         
     }
     
