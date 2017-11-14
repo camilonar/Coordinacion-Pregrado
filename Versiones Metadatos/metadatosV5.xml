@@ -27,6 +27,7 @@
     <input label="Docente" type="text" name="okp:FormatoC.docente"/>
     <input label="Titulo anteproyecto" type="text" name="okp:FormatoC.TituloAnteproyecto" />
     <input label="Fecha" type="text" name="okp:FormatoC.Fecha" />
+    <input label="Viabilidad" type="text" name="okp:FormatoC.Viabilidad" />
     <input label="Primer estudiante" type="text" name="okp:FormatoC.PrimerEstudiante" />     	
     <input label="Segundo estudiante" type="text" name="okp:FormatoC.SegundoEstudiante" />
  </property-group>

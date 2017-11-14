@@ -10,9 +10,9 @@
               widgetVar="dlgRegistroFormatoC" modal="true" resizable="false" width="900"  position="300,50"  
               closable="true" header="Registro Formato C"> 
 
-        <p:ajax event="close" listener="#{formatoCController.cancelarFormatoC()}"/>
+        <p:ajax event="close" listener="#{registroFormatoCController.cancelarFormatoC()}"/>
         <h:form id="formSeleccionarArchivoFormatoC">
-            <p:outputLabel rendered="#{!formatoCController.exitoSubirArchivo}" 
+            <p:outputLabel rendered="#{!registroFormatoCController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del Formato C" 
                            style="font-weight: bold; color: #000000"/>
             <br/>
@@ -20,10 +20,10 @@
             <h:outputStylesheet library="css" name="uploadFile.css"/>
 
             <p:fileUpload id="file-upload"
-                          rendered="#{!formatoCController.exitoSubirArchivo}" mode="advanced" 
+                          rendered="#{!registroFormatoCController.exitoSubirArchivo}" mode="advanced" 
                           label="Seleccionar archivo" fileLimit="1" fileLimitMessage="Sólo es posible seleccionar un archivo" invalidFileMessage="Solo se permiten archivos PDF" 
                           dragDropSupport="true"  uploadLabel="Subir archivo" cancelLabel="Cancelar"  
-                          allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{formatoCController.seleccionarArchivo}"/>
+                          allowTypes="/(\.|\/)(pdf)$/"  update="messages" fileUploadListener="#{registroFormatoCController.seleccionarArchivo}"/>
 
             <script>
                 $(document).on("click", ".ui-fileupload input[type=file]", function (event) {
@@ -37,7 +37,7 @@
 
         <h:form id="formArchivoSelecionadoFormatoC">
             <p:panelGrid styleClass="panelgrid" 
-                         rendered="#{formatoCController.exitoSubirArchivo}" columns="3" style="width: 100%">
+                         rendered="#{registroFormatoCController.exitoSubirArchivo}" columns="3" style="width: 100%">
                 <p:row>
                     <p:column>
                         <p:outputLabel style="font-weight: bold; color: #000000; " value="Nombre del archivo seleccionado: "/>
@@ -45,11 +45,11 @@
                     </p:column>   
 
                     <p:column >
-                        <p:outputLabel style="font-weight: bold; color: blue; text-align: center; margin-left: 6px;" value="#{formatoCController.nombreArchivo}  "/>
+                        <p:outputLabel style="font-weight: bold; color: blue; text-align: center; margin-left: 6px;" value="#{registroFormatoCController.nombreArchivo}  "/>
 
                     </p:column>
                     <p:column >
-                        <p:commandButton  style="float: right; width: 20%;" value="Cambiar archivo" action="#{formatoCController.cambiarArchivo()}"  />
+                        <p:commandButton  style="float: right; width: 20%;" value="Cambiar archivo" action="#{registroFormatoCController.cambiarArchivo()}"  />
                     </p:column>
                 </p:row>
             </p:panelGrid>
@@ -58,7 +58,7 @@
 
 
         <h:form id="formMetadatosFormatoC" >
-            <p:panelGrid styleClass="panelgrid" id="PanelMetadatos" rendered="#{formatoCController.exitoSubirArchivo}"  style="width: 100%;">
+            <p:panelGrid styleClass="panelgrid" id="PanelMetadatos" rendered="#{registroFormatoCController.exitoSubirArchivo}"  style="width: 100%;">
 
                 <p:row>
 
@@ -90,7 +90,7 @@
 
                     <p:column colspan="1">
                         <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
-                                     value="#{formatoCController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
                             <p:ajax update="msgTitulo" event="change"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>    
@@ -105,8 +105,8 @@
                     </p:column>
 
                     <p:column colspan="1">
-                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{formatoCController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
-                                    value="#{formatoCController.metadatosAnteproyectos.fecha}" showOn="button" />
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoCController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                    value="#{registroFormatoCController.metadatosAnteproyectos.fecha}" showOn="button" />
                     </p:column>
                 </p:row>
 
@@ -128,9 +128,9 @@
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column colspan="1">
-                        <p:selectOneMenu id="docente" style="width: 93%; "  required="true" requiredMessage="Campo obligatorio"  filter="true" value="#{formatoCController.metadatosAnteproyectos.profesor}">
+                        <p:selectOneMenu id="docente" style="width: 93%; "  required="true" requiredMessage="Campo obligatorio"  filter="true" value="#{registroFormatoCController.metadatosAnteproyectos.profesor}">
                             <f:selectItem itemLabel="-- Seleccione un docente -- "/>
-                            <f:selectItems  value="#{formatoCController.listaDocentes}" var="profesor" 
+                            <f:selectItems  value="#{registroFormatoCController.listaDocentes}" var="profesor" 
                                             itemLabel="#{profesor.nombres} #{profesor.apellidos}" itemValue="#{profesor.nombres} #{profesor.apellidos}" />
                         </p:selectOneMenu>
                     </p:column>
@@ -141,7 +141,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:selectOneRadio required="true" requiredMessage="Campo requerido" id="viabilidad" style="width: 50%;" 
-                                          value="#{formatoCController.metadatosAnteproyectos.viabilidad}" >
+                                          value="#{registroFormatoCController.metadatosAnteproyectos.viabilidad}" >
                             <f:selectItem itemLabel="Si" itemValue="Si"/>
                             <f:selectItem itemLabel="No" itemValue="No"/>
                         </p:selectOneRadio>
@@ -168,7 +168,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante1" size="25" placeholder="Nombre(s) y apellido(s)" required="true" requiredMessage="Campo obligatorio"
-                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
                             <p:ajax update="msgNombre1" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -181,7 +181,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
-                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
                             <p:ajax update="msgNombre2" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -214,7 +214,7 @@
 
                         <p:commandButton  id="submit-btn"
                                           value="Registrar"   update= ""
-                                          action="#{formatoCController.aceptarFormatoC(anteproyectoController.anteproyectoSelected)}" 
+                                          action="#{registroFormatoCController.aceptarFormatoC(anteproyectoController.anteproyectoSelected)}" 
                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 
                     </p:column>

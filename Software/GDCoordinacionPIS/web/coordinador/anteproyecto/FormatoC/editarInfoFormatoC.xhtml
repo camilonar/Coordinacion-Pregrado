@@ -10,7 +10,7 @@
               widgetVar="dlgEditarFormatoC" modal="true" resizable="false" width="900"  position="300,50"  
               closable="true" header="Editar formato C"> 
 
-        <p:ajax event="close" listener="#{formatoCController.cancelarFormatoC()}"/>
+        <p:ajax event="close" listener="#{registroFormatoCController.cancelarFormatoC()}"/>
         
         
      
@@ -48,7 +48,7 @@
 
                     <p:column colspan="1">
                         <p:inputText size="25"  id="titulo" required="true" requiredMessage="Campo obligatorio" 
-                                     value="#{formatoCController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.titulo}"  validatorMessage="Formato de título erróneo">
                             <p:ajax update="msgTitulo" event="change"/>
                             <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                         </p:inputText>    
@@ -63,7 +63,11 @@
                     </p:column>
 
                     <p:column colspan="1">
-                        <p:outputLabel value="Esto es de Iver xD" style="font-weight: bold; color: #000000"/>
+                        
+                        <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"  maxdate="#{registroFormatoAController.todayDate}" navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                    value="#{registroFormatoCController.metadatosAnteproyectos.date3}" showOn="button">
+                        </p:calendar>
+                        
                     </p:column>
                          
                 </p:row>
@@ -86,9 +90,9 @@
                         <p:outputLabel value="*" style="color: #ff5252"/>
                     </p:column>
                     <p:column colspan="1">
-                        <p:selectOneMenu id="docente" style="width: 93%; "  required="true" requiredMessage="Campo obligatorio"  filter="true" value="#{formatoCController.metadatosAnteproyectos.profesor}">
+                        <p:selectOneMenu id="docente" style="width: 93%; "  required="true" requiredMessage="Campo obligatorio"  filter="true" value="#{registroFormatoCController.metadatosAnteproyectos.profesor}">
                             <f:selectItem itemLabel="-- Seleccione un docente -- "/>
-                            <f:selectItems  value="#{formatoCController.listaDocentes}" var="profesor" 
+                            <f:selectItems  value="#{registroFormatoCController.listaDocentes}" var="profesor" 
                                            itemLabel="#{profesor.nombres} #{profesor.apellidos}" itemValue="#{profesor.nombres} #{profesor.apellidos}" />
                         </p:selectOneMenu>
                     </p:column>
@@ -99,7 +103,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:selectOneRadio required="true" requiredMessage="Campo requerido" id="viabilidad" style="width: 50%;" 
-                                          value="#{formatoCController.metadatosAnteproyectos.viabilidad}"  >
+                                          value="#{registroFormatoCController.metadatosAnteproyectos.viabilidad}"  >
                             <f:selectItem itemLabel="Si" itemValue="Si"/>
                             <f:selectItem itemLabel="No" itemValue="No"/>
                         </p:selectOneRadio>
@@ -127,7 +131,7 @@
                     </p:column>
                     <p:column colspan="1">
                        <p:inputText id="nomEstudiante1" size="25"  required="true" requiredMessage="Campo obligatorio" placeholder="Nombre(s) y apellido(s)" 
-                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.nombreEstudiante1}" validatorMessage="Formato de nombre erróneo" >
                             <p:ajax update="msgNombre1" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -140,7 +144,7 @@
                     </p:column>
                     <p:column colspan="1">
                         <p:inputText id="nomEstudiante2" size="25" placeholder="Nombre(s) y apellido(s)" required="false"
-                                     value="#{formatoCController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
+                                     value="#{registroFormatoCController.metadatosAnteproyectos.nombreEstudiante2}" validatorMessage="Formato de nombre erróneo">
                             <p:ajax update="msgNombre2" event="change"/>
                             <f:validator validatorId="ValidarNombreOpcional"/>
                         </p:inputText>
@@ -171,7 +175,7 @@
                         
                        <p:commandButton id="submit-btn"
                                          value="Actualizar" update=":formListaFormatoC:datalist,panelMetadatos"
-                                         action="#{formatoCController.actualizarInfoFormatoC()}" 
+                                         action="#{registroFormatoCController.actualizarInfoFormatoC()}" 
                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
                   
                     </p:column>

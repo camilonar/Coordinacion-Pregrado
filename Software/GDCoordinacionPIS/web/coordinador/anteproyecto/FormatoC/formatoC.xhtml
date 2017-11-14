@@ -20,29 +20,29 @@
                 <p:separator/>
                 
                 
-                <br rendered="#{!formatoCController.comprobarConexionOpenKM}"/>
-                <br rendered="#{!formatoCController.comprobarConexionOpenKM}"/>
-                <center><h:outputLabel rendered="#{!formatoCController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
-                <center><h:outputLabel rendered="#{!formatoCController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
+                <br rendered="#{!registroFormatoCController.comprobarConexionOpenKM}"/>
+                <br rendered="#{!registroFormatoCController.comprobarConexionOpenKM}"/>
+                <center><h:outputLabel rendered="#{!registroFormatoCController.comprobarConexionOpenKM}" value="Sin conexión con el gestor documental." style="font-size: 17px; font-weight: bold;" /></center>
+                <center><h:outputLabel rendered="#{!registroFormatoCController.comprobarConexionOpenKM}" value="Por favor compruebe que el gestor documental esté disponible." style="font-size: 17px; font-weight: bold;" /></center>
 
                
                 <p:growl id="msgRFC" showDetail="true" life="4000" globalOnly="true"/>
                 
-                <h:form id="form" rendered="#{formatoCController.comprobarConexionOpenKM}">
+                <h:form id="form" rendered="#{registroFormatoCController.comprobarConexionOpenKM}">
                     <p:commandButton id="createButton"
                         value="Agregar Formato C" onclick="PF('dlgRegistroFormatoC').show()"/>
 
                 </h:form>
                 
                 
-                <h:form style="padding-top: 10px;" id="formListaFormatoC" rendered="#{formatoCController.comprobarConexionOpenKM}">    
+                <h:form style="padding-top: 10px;" id="formListaFormatoC" rendered="#{registroFormatoCController.comprobarConexionOpenKM}">    
                     <p:growl id="msgFormatoC" showDetail="true" life="4000"/>
                     <p:outputLabel value="Buscar documento: " style="font-weight: bold; color: #000000"/>
 
-                    <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{formatoCController.datos}">
+                    <p:inputText   style="width: 300px" placeholder="Nombre del documento" value="#{registroFormatoCController.datos}">
                         <p:ajax update="datalist"  event="keyup" />
                     </p:inputText>  
-                    <p:dataTable value="#{formatoCController.dataModelDocumentos}" 
+                    <p:dataTable value="#{registroFormatoCController.dataModelDocumentos}" 
                                  id="datalist" paginator="true" lazy="true"
                                  rowKey="#{item.id}"
                                  rows="10" emptyMessage="Sin documentos"
@@ -84,7 +84,7 @@
                             <f:facet name="header">
                                 Fecha de creación
                             </f:facet>
-                            <p:outputLabel value="#{formatoCController.fecha(formatoC.getDocument().getCreated())}"/>
+                            <p:outputLabel value="#{registroFormatoCController.fecha(formatoC.getDocument().getCreated())}"/>
                         </p:column>
                         <p:column style="text-align: center; width: 290px">
                             <f:facet name="header">
@@ -95,13 +95,13 @@
                                              icon="ui-icon-search" title="Ver"/>
                             <p:commandButton id="editButton"
                                              value="Editar"  onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{formatoCController.cargarDatosEdicion(formatoC.getDocument())}" 
+                                             action="#{registroFormatoCController.cargarDatosEdicion(formatoC.getDocument())}" 
                                              icon="ui-icon-pencil" title="Editar"/>
                             <p:commandButton ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" icon="ui-icon-arrowthickstop-1-s" title="Descargar" >
-                                <p:fileDownload value="#{formatoCController.descargarDocumento(formatoC.getDocument())}" />
+                                <p:fileDownload value="#{registroFormatoCController.descargarDocumento(formatoC.getDocument())}" />
                             </p:commandButton>
                             <p:commandButton value="Eliminar" update=":visualizacion" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{formatoCController.confirmarEliminacion(formatoC.getDocument())}" 
+                                             action="#{registroFormatoCController.confirmarEliminacion(formatoC.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
 
                         </p:column>
@@ -129,7 +129,7 @@
                                           onclick="PF('Confirmacion').hide()"/>
 
                         <p:commandButton  value="Aceptar" style="margin: 0 0 0 0; width:25%;"
-                                          action="#{formatoCController.deleteDocument()}"  />
+                                          action="#{registroFormatoCController.deleteDocument()}"  />
                     </h:form>
                 </p:dialog>
                 <p:dialog widgetVar="visualizarPDF" modal="true">

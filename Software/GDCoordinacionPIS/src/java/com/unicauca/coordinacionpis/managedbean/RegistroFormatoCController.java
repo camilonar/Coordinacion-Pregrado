@@ -45,8 +45,10 @@ import com.unicauca.coordinacionpis.classMetadatos.Docente;
 import com.unicauca.coordinacionpis.classMetadatos.MetadatosAntepoyecto;
 import com.unicauca.coordinacionpis.entidades.Anteproyecto;
 import com.unicauca.coordinacionpis.entidades.Formatob;
+import com.unicauca.coordinacionpis.entidades.Formatoc;
 import com.unicauca.coordinacionpis.managedbean.Document.RegistroDocumentoTemplate;
 import com.unicauca.coordinacionpis.sessionbean.FormatobFacade;
+import com.unicauca.coordinacionpis.sessionbean.FormatocFacade;
 import com.unicauca.coordinacionpis.utilidades.ConexionOpenKM;
 import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
 import java.io.BufferedReader;
@@ -89,181 +91,223 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class RegistroChecklistController extends RegistroDocumentoTemplate implements Serializable 
+public class RegistroFormatoCController extends RegistroDocumentoTemplate implements Serializable 
 {
-
     String programaTemporal = "Sistemas";
     @EJB
-    private FormatobFacade ejbFormatoB;
+    private FormatocFacade ejbFormatoC;
     private MetadatosAntepoyecto metadatosAnteproyectos;
     private boolean exitoSubirArchivo;
     private String nombreArchivo;
     private UploadedFile archivOferta;
     private StreamedContent streamedContent;
     private String datos;
-    private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoB;
+    private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoC;
     private com.openkm.sdk4j.bean.Document documento;
     private SimpleDateFormat formatoFecha;
 
-    public RegistroFormatoBController() {
+    public RegistroFormatoCController() 
+    {
         super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         metadatosAnteproyectos.setViabilidad("Si");
-
     }
 
     @PostConstruct
-    public void init() {
+    public void init() 
+    {
         metadatosAnteproyectos.setViabilidad("Si");
-        try {
+        try
+        {
             InputStream in = okm.getContent(documento.getPath());
             streamedContent = new DefaultStreamedContent(in, "application/pdf");
             Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
             byte[] b = (byte[]) session.get("reportBytes");
-            if (b != null) {
+            if (b != null)
+            {
                 streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
         }
     }
 
-    public String getDatos() {
+    public String getDatos() 
+    {
         return datos;
     }
 
-    public void setDatos(String datos) {
+    public void setDatos(String datos) 
+    {
         this.datos = datos;
     }
 
-    public MetadatosAntepoyecto getMetadatosAnteproyectos() {
+    public MetadatosAntepoyecto getMetadatosAnteproyectos() 
+    {
         return metadatosAnteproyectos;
     }
 
-    public void setMetadatosAnteproyectos(MetadatosAntepoyecto metadatosAnteproyectos) {
+    public void setMetadatosAnteproyectos(MetadatosAntepoyecto metadatosAnteproyectos) 
+    {
         this.metadatosAnteproyectos = metadatosAnteproyectos;
     }
 
-    public boolean isExitoSubirArchivo() {
+    public boolean isExitoSubirArchivo() 
+    {
         return exitoSubirArchivo;
     }
 
-    public void setExitoSubirArchivo(boolean exitoSubirArchivo) {
+    public void setExitoSubirArchivo(boolean exitoSubirArchivo) 
+    {
         this.exitoSubirArchivo = exitoSubirArchivo;
     }
 
-    public String getNombreArchivo() {
+    public String getNombreArchivo()
+    {
         return nombreArchivo;
     }
 
-    public void setNombreArchivo(String nombreArchivo) {
+    public void setNombreArchivo(String nombreArchivo)
+    {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public SimpleDateFormat getFormatoFecha() {
+    public SimpleDateFormat getFormatoFecha()
+    {
         return formatoFecha;
     }
 
-    public void setFormatoFecha(SimpleDateFormat formatoFecha) {
+    public void setFormatoFecha(SimpleDateFormat formatoFecha) 
+    {
         this.formatoFecha = formatoFecha;
     }
 
-    public StreamedContent getStreamedContent() {
+    public StreamedContent getStreamedContent() 
+    {
         return streamedContent;
     }
 
-    public void setStreamedContent(StreamedContent streamedContent) {
+    public void setStreamedContent(StreamedContent streamedContent) 
+    {
         this.streamedContent = streamedContent;
     }
 
-    public List<com.openkm.sdk4j.bean.Document> getListadoFormatoC() {
-        listadoDocsFormatoB.clear();
-        try {
+    public List<com.openkm.sdk4j.bean.Document> getListadoFormatoC() 
+    {
+        listadoDocsFormatoC.clear();
+        try
+        {
             List<QueryResult> lista = okm.findByName(datos);
-            for (int i = 0; i < lista.size(); i++) {
+            for (int i = 0; i < lista.size(); i++) 
+            {
                 String[] pathDividido = lista.get(i).getDocument().getPath().split("/");
                 String path = "/" + pathDividido[1] + "/" + pathDividido[2] + "/" + pathDividido[3];
-                if (path.equalsIgnoreCase("/okm:root/Coordinacion/FormatoC")) {
-                    listadoDocsFormatoB.add(lista.get(i).getDocument());
+                if (path.equalsIgnoreCase("/okm:root/Coordinacion/FormatoC")) 
+                {
+                    listadoDocsFormatoC.add(lista.get(i).getDocument());
                 }
             }
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } 
+        catch (RepositoryException ex)
+        {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return listadoDocsFormatoB;
+        catch (DatabaseException ex)
+        {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (UnknowException ex)
+        {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (WebserviceException ex)
+        {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ParseException ex)
+        {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listadoDocsFormatoC;
     }
 
-    public Date getTodayDate() {
+    public Date getTodayDate()
+    {
         return new Date();
     }
 
-    public void seleccionarArchivo(FileUploadEvent event) {
+    public void seleccionarArchivo(FileUploadEvent event) 
+    {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
-        System.out.println("archivo b:" + archivOferta.getFileName());
+        System.out.println("archivo c:" + archivOferta.getFileName());
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + event.getFile().getFileName() + "' se selccionó con éxito");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("messages");
         exitoSubirArchivo = true;
-        requestContext.update("formSeleccionarArchivoFormatoB");
-        requestContext.update("formMetadatosFormatoB");
-        requestContext.update("formArchivoSelecionadoFormatoB");
+        requestContext.update("formSeleccionarArchivoFormatoC");
+        requestContext.update("formMetadatosFormatoC");
+        requestContext.update("formArchivoSelecionadoFormatoC");
     }
 
-    public void cambiarArchivo() {
+    public void cambiarArchivo() 
+    {
         exitoSubirArchivo = false;
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("dlgRegistroFormatoB");
-        requestContext.update("formSeleccionarArchivoFormatoB");
-        requestContext.update("formMetadatosFormatoB");
-        requestContext.update("formArchivoSelecionadoFormatoB");
+        requestContext.update("dlgRegistroFormatoC");
+        requestContext.update("formSeleccionarArchivoFormatoC");
+        requestContext.update("formMetadatosFormatoC");
+        requestContext.update("formArchivoSelecionadoFormatoC");
     }
 
-    public void cancelarFormatoB() {
+    public void cancelarFormatoC() 
+    {
         exitoSubirArchivo = false;
         nombreArchivo = "";
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("formSeleccionarArchivoFormatoB");
-        requestContext.update("formMetadatosFormatoB");
-        requestContext.execute("PF('dlgRegistroFormatoB').hide()");
-        requestContext.update("formArchivoSelecionadoFormatoB");
+        requestContext.update("formSeleccionarArchivoFormatoC");
+        requestContext.update("formMetadatosFormatoC");
+        requestContext.execute("PF('dlgRegistroFormatoC').hide()");
+        requestContext.update("formArchivoSelecionadoFormatoC");
     }
 
-    public void aceptarFormatoB(Anteproyecto anteproyecto) throws PathNotFoundException {
+    public void aceptarFormatoC(Anteproyecto anteproyecto) throws PathNotFoundException 
+    {
         Document documentoCreado = this.subirDocumento(archivOferta);
-        Formatob formatob = new Formatob();
-        formatob.setAnteproyectoFormatoB(anteproyecto);
-        formatob.setClaveFormatoB(documentoCreado.getUuid());
-        this.ejbFormatoB.create(formatob);
-        this.ejbFormatoB.limpiarCache();
+        Formatoc formatoc = new Formatoc();
+        formatoc.setAnteproyectoFormatoC(anteproyecto);
+        formatoc.setClaveFormatoC(documentoCreado.getUuid());
+        this.ejbFormatoC.create(formatoc);
     }
 
-    public void actualizarInfoFormatoB() {
-        try {
-            okm.addGroup(documento.getPath(), "okg:FormatoB");
-            List<FormElement> fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoB");
-            for (FormElement fElement : fElements) {
-                if (fElement.getName().equals("okp:FormatoB.docente")) {
+    public void actualizarInfoFormatoC() 
+    {
+        try
+        {
+            okm.addGroup(documento.getPath(), "okg:FormatoC");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoC");
+            for (FormElement fElement : fElements) 
+            {
+                if (fElement.getName().equals("okp:FormatoC.docente"))
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getProfesor());
                 }
-                if (fElement.getName().equals("okp:FormatoB.TituloAnteproyecto")) {
+                if (fElement.getName().equals("okp:FormatoC.TituloAnteproyecto"))
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getTitulo());
                 }
-                if (fElement.getName().equals("okp:FormatoB.Fecha")) {
+                if (fElement.getName().equals("okp:FormatoC.Fecha"))
+                {
                     /*Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getFecha());*/
 
@@ -276,74 +320,105 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                     name.setValue(this.metadatosAnteproyectos.getDate3().toString());
                 }
-                if (fElement.getName().equals("okp:FormatoB.Viabilidad")) {
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getViabilidad());
                 }
-                if (fElement.getName().equals("okp:FormatoB.PrimerEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
                 }
-                if (fElement.getName().equals("okp:FormatoB.SegundoEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.SegundoEstudiante"))
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante2());
                 }
-                if (fElement.getName().equals("okp:FormatoB.ActaAprobacion")) {
-                    Input name = (Input) fElement;
-                    name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
-                }
             }
-            okm.setPropertyGroupProperties(documento.getPath(), "okg:FormatoB", fElements);
-        } catch (NoSuchGroupException ex) {
+            okm.setPropertyGroupProperties(documento.getPath(), "okg:FormatoC", fElements);
+        } 
+        catch (NoSuchGroupException ex) 
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LockException ex) {
+        }
+        catch (LockException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
+        }
+        catch (PathNotFoundException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
+        }
+        catch (AccessDeniedException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
+        }
+        catch (RepositoryException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
+        }
+        catch (DatabaseException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExtensionException ex) {
+        }
+        catch (ExtensionException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AutomationException ex) {
+        }
+        catch (AutomationException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
+        }
+        catch (UnknowException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
+        }
+        catch (WebserviceException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        }
+        catch (ParseException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPropertyException ex) {
+        }
+        catch (NoSuchPropertyException ex)
+        {
             Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
         }
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("formMetadatosEditFormatoB");
-        requestContext.execute("PF('dlgEditarFormatoB').hide()");
+        requestContext.update("formMetadatosEditFormatoC");
+        requestContext.execute("PF('dlgEditarFormatoC').hide()");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información se editó con éxito"));
         requestContext.getCurrentInstance().update("msgRFA");
     }
 
-    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) throws java.text.ParseException {
+    public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) throws java.text.ParseException 
+    {
         this.documento = documento;
         List<FormElement> fElements;
-        try {
-            fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoB");
-            for (FormElement fElement : fElements) {
-                if (fElement.getName().equals("okp:FormatoB.docente")) {
+        try
+        {
+            fElements = okm.getPropertyGroupProperties(documento.getPath(), "okg:FormatoC");
+            for (FormElement fElement : fElements) 
+            {
+                if (fElement.getName().equals("okp:FormatoC.docente"))
+                {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setProfesor(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoB.TituloAnteproyecto")) {
+                if (fElement.getName().equals("okp:FormatoC.TituloAnteproyecto")) 
+                {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setTitulo(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoB.Fecha")) {
+                if (fElement.getName().equals("okp:FormatoC.Fecha")) 
+                {
                     /*Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setFecha(name.getValue());*/
 
@@ -366,48 +441,62 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
                     System.out.println("en cargar fecha1 es " + name.getValue());
                     System.out.println("en cargar fecha2 es " + aux1);
                 }
-                if (fElement.getName().equals("okp:FormatoB.Viabilidad")) {
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad")) 
+                {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setViabilidad(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoB.PrimerEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) 
+                {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setNombreEstudiante1(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoB.SegundoEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.SegundoEstudiante")) 
+                {
                     Input name = (Input) fElement;
                     this.metadatosAnteproyectos.setNombreEstudiante2(name.getValue());
                 }
-                if (fElement.getName().equals("okp:FormatoB.ActaAprobacion")) {
-                    Input name = (Input) fElement;
-                    this.metadatosAnteproyectos.setActaAprobacion(name.getValue());
-                }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchGroupException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (IOException ex)
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ParseException ex)
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (NoSuchGroupException ex)
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (PathNotFoundException ex) 
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (RepositoryException ex) 
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (DatabaseException ex)
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (UnknowException ex)
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (WebserviceException ex) 
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
         }
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("formMetadatosEditFormatoB");
-        requestContext.execute("PF('dlgEditarFormatoB').show()");
+        requestContext.update("formMetadatosEditFormatoC");
+        requestContext.execute("PF('dlgEditarFormatoC').show()");
     }
 
-
-
-    public List<Docente> getListaDocentes() {
+    public List<Docente> getListaDocentes()
+    {
         List<Docente> listaDocentes = new ArrayList<>();
 //        DefaultHttpClient httpclient = new DefaultHttpClient();
 //        HttpGet httpget = new HttpGet("http://wmyserver.sytes.net:8080/JefaturaPIS/webresources/docente");
@@ -455,10 +544,12 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
 //            strResultado = e.getMessage();
 //            e.printStackTrace();
 //        }
-        if (listaDocentes.isEmpty()) {
+        if (listaDocentes.isEmpty()) 
+        {
             Docente docente;
             System.out.println("lista vacia");
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++)
+            {
                 docente = new Docente();
                 docente.setNombres("Docente fake" + i);
                 docente.setApellidos("Fake ");
@@ -470,70 +561,91 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
         return listaDocentes;
     }
 
-    private StringBuilder inputStreamToString(InputStream is) {
+    private StringBuilder inputStreamToString(InputStream is) 
+    {
         String line = "";
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        try {
-            while ((line = rd.readLine()) != null) {
+        try
+        {
+            while ((line = rd.readLine()) != null)
+            {
                 stringBuilder.append(line);
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
         return stringBuilder;
     }
 
-    public String nombreDelArchivo(String path) {
+    public String nombreDelArchivo(String path) 
+    {
         String partesPath[] = path.split("/");
         return partesPath[partesPath.length - 1];
     }
 
-    public String fecha(Calendar fecha) {
+    public String fecha(Calendar fecha) 
+    {
         return formatoFecha.format(fecha.getTime());
     }
 
-    public StreamedContent descargarDocumento(com.openkm.sdk4j.bean.Document queryResult) {
+    public StreamedContent descargarDocumento(com.openkm.sdk4j.bean.Document queryResult) 
+    {
         StreamedContent file = null;
         com.openkm.sdk4j.bean.Document doc = queryResult;
-        try {
+        try
+        {
             InputStream is = okm.getContent(doc.getPath());
             file = new DefaultStreamedContent(is, "application/pdf", nombreDelArchivo(doc.getPath()));
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex)
+        {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException | PathNotFoundException | AccessDeniedException | DatabaseException | UnknowException | WebserviceException | IOException ex) {
+        }
+        catch (RepositoryException | PathNotFoundException | AccessDeniedException | DatabaseException | UnknowException | WebserviceException | IOException ex) 
+        {
             Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return file;
     }
 
-    public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) {
-        try {
+    public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) 
+    {
+        try
+        {
             this.documento = documento;
             InputStream in = okm.getContent(documento.getPath());
             streamedContent = new DefaultStreamedContent(in, "application/pdf");
             Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
             byte[] b = (byte[]) session.get("reportBytes");
-            if (b != null) {
+            if (b != null)
+            {
                 streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
             }
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update(":visualizacion");
             requestContext.execute("PF('visualizarPDF').show()");
-        } catch (Exception e) {
+        } 
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
+    public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) 
+    {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
     }
 
-    public void deleteDocument() {
-        try {
+    public void deleteDocument() 
+    {
+        try
+        {
             okm.deleteDocument(documento.getPath());
             okm.purgeTrash();
             RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -542,103 +654,121 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
             FacesContext.getCurrentInstance().addMessage(null, msg);
             requestContext.update("msg");
             requestContext.update("formListaAnteproyectos");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
         }
     }
 
-    public void cancelarEditar() {
-        System.out.println("incas");
+    public void cancelarEditar()
+    {
+        System.out.println("en cancelarEditar formatoC");
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('dlgEditarFormatoB').hide()");
+        requestContext.execute("PF('dlgEditarFormatoC').hide()");
     }
 
-    public void cancelarEdicion() {
-        System.out.println("incas");
+    public void cancelarEdicion() 
+    {
+        System.out.println("en cancelarEdicion formatoC");
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("formSeleccionarArchivoFormatoB");
-        requestContext.update("formMetadatosFormatoB");
-        requestContext.update("formArchivoSelecionadoFormatoB");
-        requestContext.execute("PF('dlgEditarFormatoB').hide()");
-        requestContext.execute("PF('dlgRegistroFormatoB').hide()");
+        requestContext.update("formSeleccionarArchivoFormatoC");
+        requestContext.update("formMetadatosFormatoC");
+        requestContext.update("formArchivoSelecionadoFormatoC");
+        requestContext.execute("PF('dlgEditarFormatoC').hide()");
+        requestContext.execute("PF('dlgRegistroFormatoC').hide()");
     }
 
-    public void cancelarRegistro() {
-        System.out.println("invocado apá");
+    public void cancelarRegistro() 
+    {
+        System.out.println("en cancelarRegistro formatoC");
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.update("formSeleccionarArchivoFormatoB");
-        requestContext.update("formMetadatosFormatoB");
-        requestContext.update("formArchivoSelecionadoFormatoB");
-        requestContext.execute("PF('dlgRegistroFormatoB').hide()");
+        requestContext.update("formSeleccionarArchivoFormatoC");
+        requestContext.update("formMetadatosFormatoC");
+        requestContext.update("formArchivoSelecionadoFormatoC");
+        requestContext.execute("PF('dlgRegistroFormatoC').hide()");
     }
 
-    public boolean getComprobarConexionOpenKM() {
+    public boolean getComprobarConexionOpenKM() 
+    {
         boolean conexion = true;
-        try {
+        try
+        {
             okm.getAppVersion();
-        } catch (RepositoryException | DatabaseException | UnknowException | WebserviceException ex) {
+        }
+        catch (RepositoryException | DatabaseException | UnknowException | WebserviceException ex) 
+        {
             conexion = false;
         }
         return conexion;
     }
 
     @Override
-    public String getPathDocumento() {
-        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoB/";
+    public String getPathDocumento() 
+    {
+        return "/okm:root/Coordinacion/Anteproyectos/" + this.getPrgramaUsuario() + "/FormatoC/";
     }
 
     @Override
-    public void addMetadata(String archivOferta) {
-        try {
+    public void addMetadata(String archivOferta) 
+    {
+        try
+        {
             String path = this.getPathDocumento();
-            okm.addGroup(path + archivOferta, "okg:FormatoB");
-            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:FormatoB");
-            for (FormElement fElement : fElements) {
-                if (fElement.getName().equals("okp:FormatoB.docente")) {
+            okm.addGroup(path + archivOferta, "okg:FormatoC");
+            List<FormElement> fElements = okm.getPropertyGroupProperties(path + archivOferta, "okg:FormatoC");
+            for (FormElement fElement : fElements) 
+            {
+                if (fElement.getName().equals("okp:FormatoC.docente")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getProfesor());
                 }
-                if (fElement.getName().equals("okp:FormatoB.TituloAnteproyecto")) {
+                if (fElement.getName().equals("okp:FormatoC.TituloAnteproyecto")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getTitulo());
                 }
-                if (fElement.getName().equals("okp:FormatoB.Fecha")) {
+                if (fElement.getName().equals("okp:FormatoC.Fecha"))
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getFecha());
                 }
-                if (fElement.getName().equals("okp:FormatoB.Viabilidad")) {
+                if (fElement.getName().equals("okp:FormatoC.Viabilidad"))
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getViabilidad());
                 }
-                if (fElement.getName().equals("okp:FormatoB.PrimerEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.PrimerEstudiante")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante1());
                 }
-                if (fElement.getName().equals("okp:FormatoB.SegundoEstudiante")) {
+                if (fElement.getName().equals("okp:FormatoC.SegundoEstudiante")) 
+                {
                     Input name = (Input) fElement;
                     name.setValue(this.metadatosAnteproyectos.getNombreEstudiante2());
                 }
-                if (fElement.getName().equals("okp:FormatoB.ActaAprobacion")) {
-                    Input name = (Input) fElement;
-                    name.setValue(this.metadatosAnteproyectos.getActaAprobacion());
-                }
             }
-            okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoB", fElements);
+            okm.setPropertyGroupProperties(this.getPathDocumento() + archivOferta, "okg:FormatoC", fElements);
             exitoSubirArchivo = false;
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.update("formSeleccionarArchivoFormatoB");
-            requestContext.update("formMetadatosFormatoB");
-            requestContext.update("formArchivoSelecionadoFormatoB");
-            requestContext.execute("PF('dlgRegistroFormatoB').hide()");
+            requestContext.update("formSeleccionarArchivoFormatoC");
+            requestContext.update("formMetadatosFormatoC");
+            requestContext.update("formArchivoSelecionadoFormatoC");
+            requestContext.execute("PF('dlgRegistroFormatoC').hide()");
             metadatosAnteproyectos = new MetadatosAntepoyecto();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "La información se registró con éxito"));
             requestContext.getCurrentInstance().update("msgRFA");
-        } catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) {
-            Logger.getLogger(RegistroFormatoBController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (NoSuchGroupException | LockException | PathNotFoundException | AccessDeniedException | RepositoryException | DatabaseException | ExtensionException | AutomationException | UnknowException | WebserviceException | IOException | ParseException | NoSuchPropertyException ex) 
+        {
+            Logger.getLogger(RegistroFormatoCController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public String getOKGPropierties() {
-        return "okg:FormatoB";
+    public String getOKGPropierties() 
+    {
+        return "okg:FormatoC";
     }
 }
