@@ -105,7 +105,7 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
     private com.openkm.sdk4j.bean.Document documento;
     private SimpleDateFormat formatoFecha;
 
-    public RegistroFormatoBController() {
+    public RegistroChecklistController() {
         super();
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         metadatosAnteproyectos = new MetadatosAntepoyecto();
