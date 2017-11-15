@@ -79,10 +79,8 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     private UploadedFile archivoFormatoA;
     private StreamedContent streamedContent;
     private String datos;
-
     private com.openkm.sdk4j.bean.Document documento;
     private SimpleDateFormat formatoFecha;
-
 
     public RegistroFormatoAController() 
     {
@@ -249,7 +247,7 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     public void aceptarFormatoA(Anteproyecto anteproyecto ) throws PathNotFoundException 
     {
         System.out.println("Aceptado formato A");
-       Document documentoCreado =  this.subirDocumento(archivoFormatoA);
+        Document documentoCreado =  this.subirDocumento(archivoFormatoA);
         Formatoa formatoa = new Formatoa();
         formatoa.setAnteproyectoFormatoA(anteproyecto);
         formatoa.setClaveFormatoA(documentoCreado.getUuid());

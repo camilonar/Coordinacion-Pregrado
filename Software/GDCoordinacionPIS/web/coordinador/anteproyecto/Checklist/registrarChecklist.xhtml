@@ -211,7 +211,7 @@
 
                         <p:commandButton  id="submit-btn"
                                           value="Registrar"   update= ":formListaAnteproyectos:datalist,PanelMetadatos"
-                                          action="#{registroChecklistController.aceptarChecklist()}" 
+                                          action="#{registroChecklistController.aceptarChecklist(anteproyectoController.anteproyectoSelected)}" 
                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 
                     </p:column>
