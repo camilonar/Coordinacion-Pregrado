@@ -162,7 +162,7 @@ public class AnteproyectoController implements Serializable {
 
     public void autocompletarEstudiante() {
         System.out.println("Solo llama cuando muy triste está :'(");
-        Estudiante completo = this.ejbEstudiante.find(estudianteSelected.getIdEstudiante());
+        Estudiante completo = this.ejbEstudiante.findByCodigo(estudianteSelected.getCodigoEstudiante());
         if (completo != null) {
             this.estudianteSelected = completo;
 

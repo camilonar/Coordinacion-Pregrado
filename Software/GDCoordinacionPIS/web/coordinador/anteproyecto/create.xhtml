@@ -23,9 +23,9 @@
                     <p:separator/>
                     <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="5"  >            
                         <h:outputText value="Codigo  Estudiante " /> 
-                        <p:inputText value="#{anteproyectoController.estudianteSelected.idEstudiante}">
+                        <p:inputText value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
                             <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
-                            <f:validator validatorId="ValidarCampoNumerico"/>
+                            
                         </p:inputText>                           
                         <h:outputText value="Nombre  Estudiante " /> 
                         <p:inputText id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
@@ -44,7 +44,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Identificación"/>
                             </f:facet>
-                            <h:outputText value="#{estudiante.idEstudiante}"/>
+                            <h:outputText value="#{estudiante.codigoEstudiante}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
