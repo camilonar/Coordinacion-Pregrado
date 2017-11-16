@@ -76,7 +76,7 @@
 
                             </p:column>
                             <p:column>
-                                <p:inputText required="true" id="titulo" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
+                                    <p:inputText required="true" style =" width: 80%" id="titulo" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
                                         <p:ajax update="msgTitulo" event="change"/>
                                     <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                                 </p:inputText>
@@ -89,7 +89,7 @@
                             </p:column>
 
                             <p:column>
-                                <p:calendar size="22" required="true"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                <p:calendar size="22" required="true"   readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                             value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">
                                     <p:ajax update="msgFecha" event="change"/>
                                 </p:calendar>
@@ -98,31 +98,19 @@
                         <p:row>
                             <p:column></p:column>
                             <p:column>
-                                <p:message for="titulo" id="msgTitulo" />
+                                <p:message for="titulo" id="msgTitulo"  />
                             </p:column>
                             <p:column></p:column>
                             <p:column>
                                 <p:message for="fecha" id="msgFecha" />
                             </p:column>
-                        </p:row>
-                        
-                    </p:panelGrid>
-
-
-
-                    <p:separator/>
-                    <p:outputLabel value="Información Director: " style="font-weight: bold; color: #000000"/>
-                    <p:separator/>
-
-
-                    <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" >            
-                        <p:row>
+                        </p:row><p:row>
                             <p:column width="50">
                                 <h:outputText value="Código Director: " style="font-weight: bold; text-align:  left"/> 
                                 <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.idProfesor}">
+                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.idProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                     <p:ajax update="msgCodDir" event="change"  />
 
@@ -135,7 +123,7 @@
                                 <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
+                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
                                 <p:ajax update="msgNomDir" event="change"  />
                                 <f:validator validatorId="ValidarCampoNombre"/>
                             </p:inputText>
@@ -151,6 +139,16 @@
                                 <p:message for="nomDir" id="msgNomDir" style="width: 80%"/>
                             </p:column>
                         </p:row>
+                        
+                    </p:panelGrid>
+
+
+
+                    
+
+
+                    <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" >            
+                        
                     </p:panelGrid>
                     <center>
                         <p:commandButton  value="Registrar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
