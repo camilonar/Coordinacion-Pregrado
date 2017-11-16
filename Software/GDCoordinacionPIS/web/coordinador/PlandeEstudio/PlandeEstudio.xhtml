@@ -84,7 +84,7 @@ and open the template in the editor.
                             -->
 
                             <p:commandButton value="Eliminar" update="lstPlanesEstudio" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" 
-                                             action="#{registroPlandeEstudioController.confirmarEliminacion(dato)}" 
+                                             action="#{registroPlandeEstudioController.confirmarEliminacion(dato.getDocument())}" 
                                              icon="ui-icon-trash" title="Eliminar"/>
                         </p:column>
                     </p:dataTable>
