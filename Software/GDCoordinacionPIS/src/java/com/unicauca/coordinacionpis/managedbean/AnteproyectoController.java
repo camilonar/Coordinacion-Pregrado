@@ -246,7 +246,11 @@ public class AnteproyectoController implements Serializable {
     
     
     
-    
+    public void setAnteproyecto(Anteproyecto a)
+    {
+        this.anteproyectoSelected = a;
+        this.estudiantes = a.getEstudianteList();
+    }
     
     
     public void cargarDatosEdicion()
