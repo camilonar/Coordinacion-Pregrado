@@ -61,7 +61,9 @@ public class AnteproyectoController implements Serializable {
     private Estudiante estudianteSelected;
     private Profesor directorSelected;
     private List<Estudiante> estudiantes;
-
+    private List<Anteproyecto> anteproyectos;
+    private String datoBusqueda;
+    
     @EJB
     private UsuarioFacade ejbUsuario;
     @EJB
@@ -73,15 +75,6 @@ public class AnteproyectoController implements Serializable {
     @EJB
     private ProgramaFacade ejbPrograma;
 
-    //modificar para filtrar por cualquier campo 
-    private DataModel dataModelAnteproyectos = new LazyDataModel<Anteproyecto>() {
-        @Override
-        public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-            setRowCount(ejbAnteproyecto.count());
-            int[] range = {first, first + pageSize};
-            return ejbAnteproyecto.findRange(range);
-        }
-    };
 
     public void cargarAnteproyecto(){
        //verificar si puede cargar estoo para un usuario determinado ...s....        
@@ -95,20 +88,22 @@ public class AnteproyectoController implements Serializable {
     
     
     public AnteproyectoController() {
+        datoBusqueda="";
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
         this.anteproyectoSelected = new Anteproyecto();
         this.directorSelected = new Profesor();
     }
 
-    public DataModel getDataModelAnteproyectos() {
-        return dataModelAnteproyectos;
+    public String getDatoBusqueda() {
+        return datoBusqueda;
     }
 
-    public void setDataModelAnteproyectos(DataModel dataModelAnteproyectos) {
-        this.dataModelAnteproyectos = dataModelAnteproyectos;
+    public void setDatoBusqueda(String datoBusqueda) {
+        this.datoBusqueda = datoBusqueda;
     }
 
+    
     public Estudiante getEstudianteSelected() {
         return estudianteSelected;
     }
@@ -141,14 +136,21 @@ public class AnteproyectoController implements Serializable {
         this.directorSelected = directorSelected;
     }
 
+    public List<Anteproyecto> getAnteproyectos() {
+        ejbAnteproyecto.limpiarCache();
+        buscarAnteproyectos();
+        return anteproyectos;
+    }
+
+    public void setAnteproyectos(List<Anteproyecto> anteproyectos) {
+        this.anteproyectos = anteproyectos;
+    }
     
-    
-    
-    
-    
-    
-    
-    
+    public void buscarAnteproyectos(){
+        anteproyectos=ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase());
+    }
+
+
     public void addToListEstudiantes() {
         if (this.estudiantes.size() <= 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
