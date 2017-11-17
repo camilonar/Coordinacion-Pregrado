@@ -150,7 +150,7 @@ public class AnteproyectoController implements Serializable {
     
     
     public void addToListEstudiantes() {
-        if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
+        if (this.estudiantes.size() <= 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
             estudianteSelected = new Estudiante();
         }
@@ -161,7 +161,6 @@ public class AnteproyectoController implements Serializable {
     }
 
     public void autocompletarEstudiante() {
-        System.out.println("Solo llama cuando muy triste está :'(");
         Estudiante completo = this.ejbEstudiante.findByCodigo(estudianteSelected.getCodigoEstudiante());
         if (completo != null) {
             this.estudianteSelected = completo;
@@ -190,7 +189,7 @@ public class AnteproyectoController implements Serializable {
 
         for (Estudiante estudiante : estudiantes) {
 
-            if (this.ejbEstudiante.find(estudiante.getIdEstudiante()) == null) {
+            if (this.ejbEstudiante.findByCodigo(estudiante.getCodigoEstudiante()) == null) {
                 estudiante.setProgramaEstudiante(prgramaUsuario);
                 this.ejbEstudiante.create(estudiante);
             }
