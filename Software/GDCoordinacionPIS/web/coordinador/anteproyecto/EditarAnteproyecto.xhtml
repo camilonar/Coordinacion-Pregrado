@@ -113,7 +113,7 @@
                                 <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.idProfesor}">
+                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                     <p:ajax update="msgCodDir" event="change"  />
 

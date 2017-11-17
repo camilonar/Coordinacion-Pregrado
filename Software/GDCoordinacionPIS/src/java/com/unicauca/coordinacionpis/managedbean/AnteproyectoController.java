@@ -173,7 +173,7 @@ public class AnteproyectoController implements Serializable {
         
         System.out.println("a:" + directorSelected.getIdProfesor() +","+directorSelected.getNombreProfesor());
         
-        Profesor completo = this.ejbProfesor.find(directorSelected.getIdProfesor());
+        Profesor completo = this.ejbProfesor.findByCodigo(directorSelected.getCodigoProfesor());
         if (completo != null) {
            
             this.directorSelected = completo;
@@ -196,7 +196,7 @@ public class AnteproyectoController implements Serializable {
 
         }
 
-        Profesor director = this.ejbProfesor.find(directorSelected.getIdProfesor());
+        Profesor director = this.ejbProfesor.findByCodigo(directorSelected.getCodigoProfesor());
         if (director == null) {
             // registrar profesor nuevo
             this.directorSelected.setProgramaProfesor(prgramaUsuario);
@@ -207,8 +207,10 @@ public class AnteproyectoController implements Serializable {
 
         anteproyectoSelected.setDirectorAnteproyecto(director);
         anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
-        anteproyectoSelected.setEstudianteList(estudiantes);
+        //anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.create(anteproyectoSelected);
+        this.anteproyectoSelected.setEstudianteList(estudiantes);
+        this.ejbAnteproyecto.edit(anteproyectoSelected);
         System.out.println("E completo");
     }
     

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -36,15 +38,21 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Profesor.findByIdProfesor", query = "SELECT p FROM Profesor p WHERE p.idProfesor = :idProfesor")
     , @NamedQuery(name = "Profesor.findByNombreProfesor", query = "SELECT p FROM Profesor p WHERE p.nombreProfesor = :nombreProfesor")
     , @NamedQuery(name = "Profesor.findByUniversidadProfesor", query = "SELECT p FROM Profesor p WHERE p.universidadProfesor = :universidadProfesor")
+    , @NamedQuery(name = "Profesor.findByCodigoProfesor", query = "SELECT p FROM Profesor p WHERE p.codigoProfesor = :codigoProfesor")
     , @NamedQuery(name = "Profesor.findByExternoProfesor", query = "SELECT p FROM Profesor p WHERE p.externoProfesor = :externoProfesor")})
 public class Profesor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idProfesor")
     private Integer idProfesor;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "codigoProfesor")
+    private String codigoProfesor;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -152,6 +160,16 @@ public class Profesor implements Serializable {
         }
         return true;
     }
+
+    public String getCodigoProfesor() {
+        return codigoProfesor;
+    }
+
+    public void setCodigoProfesor(String codigoProfesor) {
+        this.codigoProfesor = codigoProfesor;
+    }
+    
+    
 
     @Override
     public String toString() {
