@@ -43,5 +43,9 @@ public class ProgramaFacade extends AbstractFacade<Programa> {
             return null;
         }        
     }
+    
+    public void limpiarCache(){
+        getEntityManager().getEntityManagerFactory().getCache().evictAll();
+    }
 
 }
