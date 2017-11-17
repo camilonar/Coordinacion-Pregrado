@@ -329,7 +329,7 @@ public class UsuarioController implements Serializable {
 
     public void mensajeRolDeshabiltado() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se deshabilito con exito.");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se deshabilitó con éxito.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         requestContext.update("msg");
         requestContext.update("UsuarioEditForm");
@@ -338,10 +338,10 @@ public class UsuarioController implements Serializable {
 
     public void deshabilitarRol() {
         if ("1".equals(grupo.getGruid())) {
-            Usuario usuCoor = ejbUsuario.buscarUsuarioPorNombreDeUsuario(usuario.getUsunombreusuario());
-            usuCoor.setUsuestado(false);
+            Usuario usu = ejbUsuario.buscarUsuarioPorNombreDeUsuario(usuario.getUsunombreusuario());
+            usu.setUsuestado(false);
             usuario.setUsuestado(false);
-            ejbUsuario.edit(usuCoor);
+            ejbUsuario.edit(usu);
         }
         deshabilitarRolAnterior();
         deptTmp = null;
@@ -480,44 +480,15 @@ public class UsuarioController implements Serializable {
         } else {
             this.usuario.setUsufoto(null);
         }
-        if (rolActual == 1) {
-            this.usuario.setUsuestado(true);
-            deshabilitarRolAnterior();
-        } else {
-            this.usuario.setUsuestado(false);
-        }
+//        if (rolActual == 1) {
+//            this.usuario.setUsuestado(true);
+//            deshabilitarRolAnterior();
+//        } else {
+//            this.usuario.setUsuestado(false);
+//        }
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
         ejbUsuario.edit(usuario);
-
-        for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
-            usuarioProgramaFacade.remove(up);
-        }
-        for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
-            usuarioDepartamentoFacade.remove(ud);
-        }
-        if (this.tipo == TIPO_USUARIO.COORDINADOR) {
-            List<UsuarioPrograma> programas = new ArrayList<>();
-            UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
-            UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
-            up.setNombreUsuario(usuario.getUsunombreusuario());
-            up.setPrograma(programa);
-            up.setUsuario(usuario);
-            programas.add(up);
-            usuario.setUsuarioProgramaList(programas);
-            usuarioProgramaFacade.create(up);
-        } else if (this.tipo == TIPO_USUARIO.JEFE) {
-            List<UsuarioDepartamento> departamentos = new ArrayList<>();
-            UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
-            UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
-            ud.setNombreUsuario(usuario.getUsunombreusuario());
-            ud.setDepartamento(dpto);
-            ud.setUsuario(usuario);
-            departamentos.add(ud);
-            usuario.setUsuarioDepartamentoList(departamentos);
-            usuarioDepartamentoFacade.create(ud);
-        }
-        this.tipo = TIPO_USUARIO.ADMIN;
 
         this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
 
@@ -796,12 +767,18 @@ public class UsuarioController implements Serializable {
     public void habilitarRol() {
         if (rolActual == 1) {
             if (grupo.getGruid().equals("2")) {
+                programaFacade.flush();
+                programaFacade.limpiarCache();
+                programaFacade.flush();
                 String coordinador = programaFacade.findByProgramaCoordinador(programa.getIdPrograma());
+                System.out.println("" + coordinador);
                 if (coordinador != null) {
                     RequestContext context = RequestContext.getCurrentInstance();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación: ", "El usuario " + coordinador + " es el actual coordinador del programa ¿desea cambiar esto?"));
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nota: ", "Al realizar este cambio el usuario " + coordinador + " será deshabilitado y no podrá acceder al sistema; para revertir este cambio    puede dirigirse a la edición del usuario " + coordinador));
                     context.execute("PF('HabilitarRolDialog').show()");
+                } else {
+                    coordinador = null;
                 }
             }
             if (grupo.getGruid().equals("3")) {
@@ -811,9 +788,60 @@ public class UsuarioController implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "El usuario " + jefe + " es el actual jefe del departamento ¿desea cambiar esto?"));
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nota: ", "Al realizar este cambio el usuario " + jefe + " será deshabilitado y no podrá acceder al sistema; para revertir este cambio    puede dirigirse a la edición del usuario " + jefe));
                     context.execute("PF('HabilitarRolDialog').show()");
+                } else {
+                    jefe = null;
                 }
             }
         }
+        if (rolActual == 1) {
+            this.usuario.setUsuestado(true);
+            deshabilitarRolAnterior();
+            for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
+                usuarioProgramaFacade.remove(up);
+            }
+            for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
+                usuarioDepartamentoFacade.remove(ud);
+            }
+            if (this.tipo == TIPO_USUARIO.COORDINADOR) {
+                List<UsuarioPrograma> programas = new ArrayList<>();
+                UsuarioProgramaPK usuarioProgramaPK = new UsuarioProgramaPK(usuario.getUsuid(), programa.getIdPrograma());
+                UsuarioPrograma up = new UsuarioPrograma(usuarioProgramaPK);
+                up.setNombreUsuario(usuario.getUsunombreusuario());
+                up.setPrograma(programa);
+                up.setUsuario(usuario);
+                programas.add(up);
+                usuario.setUsuarioProgramaList(programas);
+                usuarioProgramaFacade.create(up);
+            } else if (this.tipo == TIPO_USUARIO.JEFE) {
+                List<UsuarioDepartamento> departamentos = new ArrayList<>();
+                UsuarioDepartamentoPK usuarioDepartamentoPK = new UsuarioDepartamentoPK(usuario.getUsuid(), dpto.getIdDepartamento());
+                UsuarioDepartamento ud = new UsuarioDepartamento(usuarioDepartamentoPK);
+                ud.setNombreUsuario(usuario.getUsunombreusuario());
+                ud.setDepartamento(dpto);
+                ud.setUsuario(usuario);
+                departamentos.add(ud);
+                usuario.setUsuarioDepartamentoList(departamentos);
+                usuarioDepartamentoFacade.create(ud);
+            }
+            this.tipo = TIPO_USUARIO.ADMIN;
+        } else {
+            this.usuario.setUsuestado(false);
+        }
+        ejbUsuario.edit(usuario);
+        deptTmp = null;
+        progTmp = null;
+        if (!this.usuario.getUsuarioDepartamentoList().isEmpty()) {
+            deptTmp = this.usuario.getUsuarioDepartamentoList().get(0).getDepartamento().getNombre();
+        }
+
+        if (!this.usuario.getUsuarioProgramaList().isEmpty()) {
+            progTmp = this.usuario.getUsuarioProgramaList().get(0).getPrograma().getNombrePrograma();
+        }
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se habilitó con éxito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        requestContext.update("msg");
+        requestContext.update("UsuarioEditForm");
     }
 
     public void cancelarRolActual() {
