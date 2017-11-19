@@ -123,10 +123,10 @@
                                 <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" validatorMessage="El codigo debe ser un numero entero" style=" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
+                                <p:inputText  required="true" validatorMessage="El codigo no es válido" style=" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                     <p:ajax update="msgCodDir" event="change"  />
-                                    <f:validateRegex pattern="[0-9]*" />
+                                    <f:validateRegex pattern="[a-zA-Záéíóú0-9]*" />
                                     
                                 </p:inputText>
                             </p:column>

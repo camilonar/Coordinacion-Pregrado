@@ -16,7 +16,7 @@
 
         <ui:define name="body">
             <h:body>
-                
+
                 <p:separator/>
                 <center><p:outputLabel value="Editar Anteproyecto" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
@@ -24,22 +24,29 @@
                 <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" /> 
                 <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                 <br></br>
-               
-                 
+
+                <p:separator/>
+                <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
+                <p:separator/>
                 <h:form>
-                    <p:separator/>
-                    <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
-                    <p:separator/>
+
                     <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="5"  >            
                         <h:outputText value="Código Estudiante: " style="font-weight: bold;"/> 
-                        <p:inputText value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
+                        
+                        <p:inputText id="codest" validatorMessage="El codigo debe ser un numero entero"  value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
                             <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
-                            
-                        </p:inputText>                           
+                            <f:validateRegex pattern="[0-9]*" />
+                        </p:inputText>  
+                        
+                        <p:message for="codest" id="msgCodEst" />
+                        
                         <h:outputText value="Nombre Estudiante: " style="font-weight: bold;"/> 
                         <p:inputText id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
                             <p:ajax event="change"/>
                         </p:inputText>
+                        
+                        
+                         <p:message for="nomEst" id="msgNomEst" />
                         <p:commandButton value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
                     </p:panelGrid>
 
@@ -79,8 +86,8 @@
 
                             </p:column>
                             <p:column>
-                                    <p:inputText required="true" style =" width: 80%" id="titulo" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
-                                        <p:ajax update="msgTitulo" event="change"/>
+                                <p:inputText required="true" style =" width: 80%" id="titulo" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
+                                    <p:ajax update="msgTitulo" event="change"/>
                                     <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
                                 </p:inputText>
                             </p:column>
@@ -92,7 +99,7 @@
                             </p:column>
 
                             <p:column>
-                                <p:calendar size="22" required="true"   readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                <p:calendar size="22" required="true"  maxdate="#{anteproyectoController.obtenerFechaActual()}"  readonlyInput="true" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                             value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">
                                     <p:ajax update="msgFecha" event="change"/>
                                 </p:calendar>
@@ -113,10 +120,10 @@
                                 <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
+                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" validatorMessage="El codigo no es válido" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                     <p:ajax update="msgCodDir" event="change"  />
-
+                                    <f:validateRegex pattern="[a-zA-Záéíóú0-9]*" />
                                 </p:inputText>
                             </p:column>
                             <p:column>
@@ -127,9 +134,9 @@
                             </p:column>
                             <p:column>
                                 <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
-                                <p:ajax update="msgNomDir" event="change"  />
-                                <f:validator validatorId="ValidarCampoNombre"/>
-                            </p:inputText>
+                                    <p:ajax update="msgNomDir" event="change"  />
+                                    <f:validator validatorId="ValidarCampoNombre"/>
+                                </p:inputText>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -142,20 +149,20 @@
                                 <p:message for="nomDir" id="msgNomDir" style="width: 80%"/>
                             </p:column>
                         </p:row>
-                        
+
                     </p:panelGrid>
 
 
 
-                    
+
 
 
                     <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" >            
-                        
+
                     </p:panelGrid>
                     <center>
                         <p:commandButton  value="Editar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.editarAnteproyecto()}">
-                                    </p:commandButton>
+                        </p:commandButton>
                     </center>
                 </h:form>
 
