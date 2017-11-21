@@ -53,7 +53,7 @@ public class Anteproyecto implements Serializable {
     private Integer idAnteproyecto;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 300)
     @Column(name = "tituloAnteproyecto")
     private String tituloAnteproyecto;
     @Basic(optional = false)
