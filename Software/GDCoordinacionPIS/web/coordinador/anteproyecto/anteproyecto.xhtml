@@ -25,11 +25,20 @@
                 <h:form id="form" >
                     <p:commandButton id="createButton"
                                      value="Registrar Anteproyecto" action="/coordinador/anteproyecto/create.xhtml?faces-redirect=true"/>
+                    <br/>
+                    <br/>
                 </h:form>
 
 
                 <h:form>
-                    <p:dataTable id="datalist" value="#{anteproyectoController.dataModelAnteproyectos}" var="item"
+                    <p:panelGrid columns="2" styleClass="panelgrid" >
+                        <p:outputLabel style="font-weight: bold;" value="Buscar anteproyecto:" />
+                        <p:inputText  placeholder="Digite título de anteproyecto" 
+                                      style="width: 400px;"  value="#{anteproyectoController.datoBusqueda}" >
+                            <p:ajax update="datalist"  event="keyup" />                              
+                        </p:inputText>                          
+                    </p:panelGrid>
+                    <p:dataTable id="datalist" value="#{anteproyectoController.anteproyectos}" var="item"
                                  selectionMode="single" 
                                  paginator="true"
                                  rowKey="#{item.idAnteproyecto}"

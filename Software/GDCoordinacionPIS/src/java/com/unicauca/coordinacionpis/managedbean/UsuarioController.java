@@ -107,6 +107,7 @@ public class UsuarioController implements Serializable {
     private String deptTmp;
 
     public UsuarioController() {
+        datoBusqueda="";
         this.usuario = new Usuario();
         this.cargo = new Cargo();
         this.grupo = new Grupo();
@@ -660,7 +661,8 @@ public class UsuarioController implements Serializable {
     }
 
     public List<Usuario> getItems() {
-        items = getFacade().findAll();
+        ejbUsuario.limpiarCache();
+        buscarUsuario();
         return items;
     }
 

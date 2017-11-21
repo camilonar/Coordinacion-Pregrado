@@ -34,7 +34,7 @@
                         <p:outputLabel style="font-weight: bold;" value="Buscar usuario:" />
                         <p:inputText  placeholder="Digite nombres, apellidos, nombre de usuario o email" 
                                       style="width: 400px;"  value="#{usuarioController.datoBusqueda}" >
-                            <p:ajax event="keyup" update="datalist" listener="#{usuarioController.buscarUsuario()}" />                                
+                             <p:ajax update="datalist"  event="keyup" />                              
                         </p:inputText>                          
                     </p:panelGrid>
                     <p:dataTable id="datalist" value="#{usuarioController.items}" var="item"
