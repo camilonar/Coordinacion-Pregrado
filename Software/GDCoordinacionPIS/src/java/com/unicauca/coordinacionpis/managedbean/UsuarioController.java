@@ -54,59 +54,114 @@ import org.primefaces.model.UploadedFile;
 
 @Named("usuarioController")
 @SessionScoped
-public class UsuarioController implements Serializable {
-
+public class UsuarioController implements Serializable
+{
+    /**
+     * Facade para la conexión a la tabla usuario-departamentos
+     */
     @EJB
     private UsuarioDepartamentoFacade usuarioDepartamentoFacade;
-
+    /**
+     * Facade para la conexión a los usuarios
+     */
     @EJB
     private UsuarioProgramaFacade usuarioProgramaFacade;
-
+    /**
+     * Facade para la conexión a la tabla departamento
+     */
     @EJB
     private DepartamentoFacade departamentoFacade;
-
+    /**
+     * Facade para la conexión a la tabla programa
+     */
     @EJB
     private ProgramaFacade programaFacade;
-
-    public enum TIPO_USUARIO {
+    /**
+     * Enumeración para identificar los diferentes de usuario
+     */
+    public enum TIPO_USUARIO 
+    {
         ADMIN, COORDINADOR, JEFE
     };
-
+    /**
+     * Facade para la conexión a la tabla usuario
+     */
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.UsuarioFacade ejbUsuario;
+    /**
+     * Facade para la conexión a la tabla usuario-grupo
+     */
     @EJB
     private UsuariogrupoFacade ejbUsuarioGrupo;
-
+    /**
+     * Listado de usuarios
+     */
     private List<Usuario> items = null;
+    /**
+     * Cargo del usuario seleccionado actualmente
+     */
     private Cargo cargo;
+    /**
+     * Grupo del usuario seleccionado actualmente
+     */
     private Grupo grupo;
+    /**
+     * Resultados del filtro de la busqueda de usuarios
+     */
     private List<Usuario> filtroBusqueda;
+    /**
+     * 
+     */
     private int rolActual;
-
+    /**
+     * Determina si una foto se ha seleccionado 
+     */
     private boolean campoFoto;
+    /**
+     * Determina si se está mostrando el campo contraseña
+     */
     private boolean campoContrasena;
-
+    /**
+     * Contraseña ingresada
+     */
     private String contrasena;
+    /**
+     * Valor del dato de busqueda
+     */
     private String datoBusqueda;
-
+    /**
+     * Usuario actualmente seleccionado
+     */
     private Usuario usuario;
-    private UploadedFile file;
-
+    /**
+     * Formateador de la fecha
+     */
     private SimpleDateFormat formatoFecha;
 
     private byte[] imagen;
+    /**
+     * Contenido para mostrar la imagen
+     */
     private DefaultStreamedContent miImagen;
+    private UploadedFile file;
     private UploadedFile uploadedFile;
 
     private boolean fotoDefecto;
 
     private TIPO_USUARIO tipo;
+    /**
+     * Departamento del usuario seleccionado
+     */
     private Departamento dpto;
+    /**
+     * Programam del usuario seleccionado
+     */
     private Programa programa;
     private String progTmp;
     private String deptTmp;
 
-    public UsuarioController() {
+    public UsuarioController() 
+    {
         datoBusqueda="";
         this.usuario = new Usuario();
         this.cargo = new Cargo();
@@ -120,8 +175,14 @@ public class UsuarioController implements Serializable {
         fotoDefecto = true;
         tipo = TIPO_USUARIO.ADMIN;
     }
-
-    public Programa getPrograma() {
+    /**
+     * Obtiene el programa del usuario seleccionado,
+     * si no hay unprograma se devuelve por defecto el 
+     * programa de sistemas
+     * @return programa del usuario seleecionado
+     */
+    public Programa getPrograma() 
+    {
         if (programa == null) {
             programa = programaFacade.find(26); //Por defecto sistemas
         }
@@ -222,8 +283,12 @@ public class UsuarioController implements Serializable {
     public void setRolActual(int rolActual) {
         this.rolActual = rolActual;
     }
-
-    public Usuario prepareCreate() {
+    /**
+     * Prepara lo necesario para la creación de un usuario
+     * @return nuevo usuario a crear
+     */
+    public Usuario prepareCreate() 
+    {
         System.out.println("prepareCreate");
         rolActual = 0;
         usuario = new Usuario();
@@ -253,8 +318,12 @@ public class UsuarioController implements Serializable {
     public void setCampoFoto(boolean campoFoto) {
         this.campoFoto = campoFoto;
     }
-
-    public void registrarUsuario() {
+    /**
+     * Realiza el registro de un usuario y presenta un mensaje confirmando
+     * el registro o un erro en caso de que se de
+     */
+    public void registrarUsuario() 
+    {
         this.usuario.setUsucontrasena(Cifrar.sha256(this.usuario.getUsucontrasena()));
         if (rolActual == 1) {
             this.usuario.setUsuestado(true);
@@ -327,8 +396,11 @@ public class UsuarioController implements Serializable {
         requestContext.update("formfoto");
 
     }
-
-    public void mensajeRolDeshabiltado() {
+    /**
+     * Mensaje de que el rol del usuario ha sido deshabilitado
+     */
+    public void mensajeRolDeshabiltado() 
+    {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El usuario se deshabilitó con éxito.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -336,7 +408,9 @@ public class UsuarioController implements Serializable {
         requestContext.update("UsuarioEditForm");
         System.out.println("vuelve a checkear");
     }
-
+    /**
+     * DEshabilita el rol de un usuario
+     */
     public void deshabilitarRol() {
         if ("1".equals(grupo.getGruid())) {
             Usuario usu = ejbUsuario.buscarUsuarioPorNombreDeUsuario(usuario.getUsunombreusuario());
@@ -356,7 +430,9 @@ public class UsuarioController implements Serializable {
         }
         mensajeRolDeshabiltado();
     }
-
+    /**
+     * Deshabilita el rol anterior de un usuario
+     */
     public void deshabilitarRolAnterior() {
         if ("2".equals(grupo.getGruid())) {
             String coordinador = programaFacade.findByProgramaCoordinador(programa.getIdPrograma());
@@ -384,7 +460,11 @@ public class UsuarioController implements Serializable {
         }
 
     }
-
+    /**
+     * Determina si el rol seleccionado en el editar de un usuario 
+     * coincide con el rol que tiene registrado
+     * @return 
+     */
     public boolean esRolActual() {
         if ("1".equals(grupo.getGruid())) {
             if (usuario.getUsuestado()) {
@@ -409,7 +489,9 @@ public class UsuarioController implements Serializable {
         }
         return false;
     }
-
+    /**
+     * Edita el rol de un usuario
+     */
     public void editarUsuarioRol() {
         usuario.setUsuestado(true);
         usuario.setCarid(cargo);
@@ -473,7 +555,9 @@ public class UsuarioController implements Serializable {
         //requestContext.update("UsuarioListForm");
 
     }
-
+    /**
+     * Edita la información de un usuario
+     */
     public void editarUsuario() {
         usuario.setCarid(cargo);
         if (!fotoDefecto) {
@@ -516,7 +600,11 @@ public class UsuarioController implements Serializable {
         requestContext.update("UsuarioListForm");
 
     }
-
+    /**
+     * Selecciona un usuari para su edición,
+     * saca su rol, imagen etc para el desliegue exitoso en pantalla
+     * @param usuario 
+     */
     public void seleccionarUsuarioEditar(Usuario usuario) {
         rolActual = 0;
         this.usuario = usuario;
@@ -560,7 +648,11 @@ public class UsuarioController implements Serializable {
             this.programa = null;
         }
     }
-
+    /**
+     * Selecciona el usuario para ver.
+     * Saca los datos necesarios para su despliegue exitoso en pantalla
+     * @param usuario 
+     */
     public void seleccionarUsuarioVer(Usuario usuario) {
         this.usuario = usuario;
         this.imagen = this.usuario.getUsufoto();
@@ -587,21 +679,27 @@ public class UsuarioController implements Serializable {
             this.programa = null;
         }
     }
-
+    /**
+     * Dispone el despliegue para mostarr la contraseña
+     */
     public void mostrarModificarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoContrasena = false;
         this.contrasena = "";
         requestContext.update("UsuarioEditForm");
     }
-
+    /**
+     * Cancela la edición de la contraseña
+     */
     public void cancelarActualizarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoContrasena = true;
         this.contrasena = "";
         requestContext.update("UsuarioEditForm");
     }
-
+    /**
+     * Actualiza la contraseña
+     */
     public void actualizarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
@@ -612,7 +710,10 @@ public class UsuarioController implements Serializable {
 
         requestContext.update("UsuarioEditForm");
     }
-
+    /**
+     * Obtiene la fecha de nacimiento del usuario
+     * @return 
+     */
     public String getFecha() {
         String fechaNacimiento = "";
         if (usuario.getUsufechanacimiento() != null) {
@@ -625,7 +726,12 @@ public class UsuarioController implements Serializable {
     public void buscarUsuario() {
         this.items = ejbUsuario.buscarUsuarioEjb(this.datoBusqueda.toLowerCase());
     }
-
+    /**
+     * 
+     * convierte el archivo de la imagen a tipo byte
+     * @param file
+     * @return 
+     */
     private byte[] inputStreamToByteArray(UploadedFile file) {
         byte[] imagen = null;
         if (file != null) {
@@ -640,7 +746,7 @@ public class UsuarioController implements Serializable {
 
         return imagen;
     }
-
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleAdmin").getString("UsuarioCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -713,7 +819,10 @@ public class UsuarioController implements Serializable {
     public StreamedContent getImagenDefecto() {
         return Utilidades.getImagenPorDefecto("foto");
     }
-
+    /**
+     * Obtiene el flujo de la imagen para mostrar en la pantalla
+     * @return 
+     */
     public StreamedContent getImagenFlujo() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
@@ -750,7 +859,11 @@ public class UsuarioController implements Serializable {
         requestContext.update("formEditarfoto");
 
     }
-
+    /**
+     * 
+     * @param tipo
+     * @return 
+     */
     public String descripcionTipo(int tipo) {
         switch (tipo) {
             case 0:
@@ -850,7 +963,10 @@ public class UsuarioController implements Serializable {
         System.out.println("volver");
         rolActual = 0;
     }
-
+    /**
+     * REfresca la foto de un usuario
+     * @param event 
+     */
     public void actualizarFoto(FileUploadEvent event) {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         UploadedFile file = event.getFile();
@@ -863,7 +979,9 @@ public class UsuarioController implements Serializable {
         requestContext.update(":UsuarioListForm:datalist");
 
     }
-
+    /**
+     * Cancela la edciión de un usuario
+     */
     public void cancelarEditarUsuario() {
         this.usuario = new Usuario();
         this.fotoDefecto = true;
@@ -875,7 +993,9 @@ public class UsuarioController implements Serializable {
         this.items = ejbUsuario.findAll();
         this.campoContrasena = true;
     }
-
+    /**
+     * Cancela el registro de un usuario
+     */
     public void cancelarRegistroUsuario() {
         this.usuario = new Usuario();
         this.fotoDefecto = true;
@@ -913,7 +1033,10 @@ public class UsuarioController implements Serializable {
     public void imagenPorDefecto() {
         imagen = null;
     }
-
+    /**
+     * Convierte una imagen cargada en un tipo byte
+     * @param event 
+     */
     public void convertirImagenABytes(FileUploadEvent event) {
         try {
 
@@ -956,7 +1079,9 @@ public class UsuarioController implements Serializable {
         }
 
     }
-
+    /**
+     * Limpia el formulario del registro del usuario
+     */
     public void limpiarRegistrarUsuario() {
         this.usuario = new Usuario();
         usuario.setUsugenero('M');
