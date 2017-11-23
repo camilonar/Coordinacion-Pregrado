@@ -8,17 +8,12 @@ import com.unicauca.coordinacionpis.utilidades.Utilidades;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Enumeration;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.el.ELContext;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 import javax.faces.context.Flash;
@@ -28,7 +23,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -36,26 +30,61 @@ import org.primefaces.model.StreamedContent;
 @ManagedBean
 @SessionScoped
 public class SesionController implements Serializable {
-
+    /**
+     * Facade para la conexión a la tabla usuario-grupo
+     */
     @EJB
     private UsuariogrupoFacade ejbUsuarioGrupo;
+    /**
+     * Facade para la conexión a la tabla usuario
+     */
     @EJB
     private UsuarioFacade ejbUsuario;
     
     @PersistenceContext(unitName = "GDCoordinacionPISPU")
     private EntityManager em;
-
+    /**
+     * Nombre del usuario intentando entrar a la app
+     */
     private String nombreDeUsuario;
+    /**
+     * Contraseña provista por un usuario para entrar a la app
+     */
     private String contrasenia;
+    /**
+     * Identificación del usuario que entró a la app
+     */
     private String identificacion;
+    /**
+     * Grupo al cual pertenece el usuario que inició sesión en la app
+     */
     private String grupo;
+    /**
+     * Nombre de la plantilla a utilizar en pantalla según el usuario 
+     * que inició sesión
+     */
     private String plantilla;
 
     //bools
+    /**
+     * Determina si un usuario ha iniciado sesión
+     */
     private boolean haySesion;
+    /**
+     * Determina si hubo un erro en la sesión
+     */
     private boolean errorSesion;
+    /**
+     * Determina si se deben o no mostrar las opciones del coordinador
+     */
     private boolean opcionesCoordinador;
+    /**
+     *Determina si se deben o no mostrar las ppciones del administrado 
+     */
     private boolean opcionesAdministrador;
+    /**
+     * Indica si el usuario que inicia sesión está o no activo
+     */
     private boolean activo;
 
     public SesionController() {
@@ -138,7 +167,12 @@ public class SesionController implements Serializable {
     public void setOpcionesAdministrador(boolean opcionesAdministrador) {
         this.opcionesAdministrador = opcionesAdministrador;
     }
-
+    /**
+     * Entrada a la aplicación, determina si las credenciales son correctas
+     * y redirige el usuario a la pagina que le corresponda según su rol
+     * @throws IOException
+     * @throws ServletException 
+     */
     public void login() throws IOException, ServletException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -166,7 +200,11 @@ public class SesionController implements Serializable {
         }
         
     }
-
+    /**
+     * Cierra la sesión de un usuario
+     * @throws IOException
+     * @throws ServletException 
+     */
     public void logout() throws IOException, ServletException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
@@ -181,7 +219,10 @@ public class SesionController implements Serializable {
         }
 
     }
-
+    /**
+     * Renderiza la información a mostrar del usuario que inició sesión
+     * @return 
+     */
     public String paraMostrar() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
@@ -208,7 +249,11 @@ public class SesionController implements Serializable {
 
         }
     }
-
+    /**
+     * Convierte la imagen del usuario para mostrar en pantalla,
+     * si el usuario no tiene imagen seleccionada se devuelve la foto por defecto
+     * @return foto del usuario si la posee
+     */
     public StreamedContent getImagenFlujo() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
@@ -240,7 +285,12 @@ public class SesionController implements Serializable {
         requestContext.update("panelContent");
         requestContext.update("navegacion");
     }
-
+    /**
+     * Determina si un usuario está o no activo
+     * @param usunombreusuario nombre del usuario que se quiere saber si está
+     * o no activo
+     * @return verdadero si está activo, falso en caso contrario
+     */
     private boolean Activo(String usunombreusuario) 
     {
         Query query = getEntityManager().createNamedQuery("Usuario.findByUsunombreusuario");
