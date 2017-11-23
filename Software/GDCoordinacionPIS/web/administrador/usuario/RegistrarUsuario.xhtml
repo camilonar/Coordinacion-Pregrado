@@ -11,13 +11,14 @@
 
     <ui:composition>  
         <p:dialog id="HabilitaRolDlg" widgetVar="HabilitarRolDialog" modal="true" resizable="false" 
-                  position="center center" header="Habilitar Rol" closable="false" width="900" height="120">
-            <p:messages  escape="false" style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
-            <center>
-                <p:commandButton value="Cancelar" onclick="PF('HabilitarRolDialog').hide()" action="#{usuarioController.cancelarRolActual()}" update=":UsuarioCreateForm:habilitarRol,:UsuarioEditForm:habilitarRol"/>
-                <p:commandButton value="Aceptar" onclick="PF('HabilitarRolDialog').hide()"/>
-            </center>
-
+                  appendTo="@(body)" position="center center" header="Habilitar Rol" closable="false" width="900" height="120">
+            <h:body>
+                <p:messages  escape="false" style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+                <center>
+                    <p:commandButton value="Cancelar" onclick="PF('HabilitarRolDialog').hide()" action="#{usuarioController.cancelarRolActual()}" update=":UsuarioCreateForm:habilitarRol,:UsuarioEditForm:habilitarRol"/>
+                    <p:commandButton value="Aceptar" onclick="PF('HabilitarRolDialog').hide()"/>
+                </center>
+            </h:body> 
         </p:dialog>
         <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" 
                   appendTo="@(body)" header="Registrar usuario" closable="false">
@@ -307,7 +308,7 @@
                             <p:selectOneRadio id="habilitarRol" value="#{usuarioController.rolActual}" >
                                 <f:selectItem itemLabel="No" itemValue="0" />
                                 <f:selectItem itemLabel="Si" itemValue="1" />
-                                <f:ajax execute="@this" listener="#{usuarioController.habilitarRol()}"/>
+                                <f:ajax execute="@this" listener="#{usuarioController.mostrarMensajeRegistrar()}"/>
                             </p:selectOneRadio>                            
                         </p:column>
                     </p:row>

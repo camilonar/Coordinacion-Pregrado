@@ -307,7 +307,7 @@
                         </p:column>
                     </p:row>
 
-                    <p:row rendered="#{!usuarioController.esRolActual()}">
+                    <p:row>
                         <p:column>
                             <p:outputLabel style="font-weight:bold;" value="¿Habilitar como el actual #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}?" />
                             <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
@@ -316,14 +316,9 @@
                             <p:selectOneRadio id="habilitarRol" value="#{usuarioController.rolActual}" >
                                 <f:selectItem itemLabel="No" itemValue="0" />
                                 <f:selectItem itemLabel="Si" itemValue="1" />
-                                <f:ajax execute="@this" listener="#{usuarioController.habilitarRol()}"/>
+                                <f:ajax execute="@this" listener="#{usuarioController.mostrarMensajeEditar()}"/>
                             </p:selectOneRadio>                            
                         </p:column>
-                    </p:row>
-                    <p:row rendered="#{usuarioController.esRolActual()}">
-                        <p:column>
-                            <p:commandButton value="Desactivar rol de #{usuarioController.descripcionTipo(usuarioController.grupo.gruid)}" action="#{usuarioController.deshabilitarRol()}" />
-                        </p:column>                        
                     </p:row>
                 </p:panelGrid>
                 <p:separator/>
