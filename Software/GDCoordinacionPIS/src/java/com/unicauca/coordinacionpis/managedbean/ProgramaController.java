@@ -12,9 +12,15 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class ProgramaController implements Serializable {
-
+    
+    /**
+     * Facade para el acceso a la tabla programa
+     */
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.ProgramaFacade ejbFacade;
+    /**
+     * Listado de programas
+     */
     private List<Programa> items = null;
     
     
