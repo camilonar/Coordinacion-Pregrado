@@ -12,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,10 +24,18 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @ViewScoped
 public class DepartamentoController implements Serializable {
-
+    /**
+     * Conexión a la tabla departamento
+     */
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.DepartamentoFacade ejbFacade;
+    /**
+     * Departamentos registrados
+     */
     private List<Departamento> items = null;
+    /**
+     * Departamento seleccionado
+     */
     private Departamento departamento;
 
     public DepartamentoController() {
@@ -166,7 +172,9 @@ public class DepartamentoController implements Serializable {
         }
 
     }
-
+    /**
+     * Registra un departamento en la base de datos
+     */
     public void registrarDepartamento() {
 
         ejbFacade.create(departamento);
@@ -184,7 +192,9 @@ public class DepartamentoController implements Serializable {
         requestContext.update("DepartamentoListForm");
 
     }
-
+    /**
+     * Cambia los datos de un departamento 
+     */
     public void editarDepartamento() {
 
         ejbFacade.edit(departamento);
@@ -203,23 +213,31 @@ public class DepartamentoController implements Serializable {
         requestContext.update("DepartamentoListForm");
 
     }
-
+    /**
+     * Cancela la edición de un departaento en GUI
+     */
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('DepartamentoEditDialog').hide()");
         departamento = new Departamento();
     }
-
+    /**
+     * Cancela el registro de un departamento en GUI
+     */
     public void cancelarRegistro() {
         departamento = new Departamento();
     }
-
+    /**
+     * Cancela la eliminación de un departamento en GUI
+     */
     public void cancelarEliminacion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('mensajeConfirmarEliminar').hide()");
         departamento = new Departamento();
     }
-
+    /**
+     * Elimina un departamento de la base de datos
+     */
     public void eliminarDepartamento() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if (departamento != null) {
@@ -244,7 +262,10 @@ public class DepartamentoController implements Serializable {
         departamento = new Departamento();
 
     }
-
+    /**
+     * Despliega un mensaje confirmando que el departamento se eliminó
+     * @param departamento 
+     */
     public void mostrarMensajeConfirmarEliminarDepartamento(Departamento departamento) {
         this.departamento = departamento;
         RequestContext requestContext = RequestContext.getCurrentInstance();

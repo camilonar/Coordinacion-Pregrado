@@ -5,47 +5,70 @@ import com.unicauca.coordinacionpis.entidades.Usuario;
 import com.unicauca.coordinacionpis.sessionbean.UsuarioFacade;
 import com.unicauca.coordinacionpis.utilidades.Cifrar;
 import com.unicauca.coordinacionpis.validadores.ValidarEdicionUsuarios;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 
-/**
- * Edwin Marulanda
- */
+
 @ManagedBean
 @ViewScoped
 public class PerfilUsuarioController implements Serializable {
-
+    
+    /**
+     * Facade para la conexión a la tabla usuario
+     */
     @EJB
     private UsuarioFacade usuarioEJB;
+    /**
+     * Usuario seleccionado en la sesión
+     */
     private Usuario usuario;
+    /**
+     * Formateador de la fecha
+     */
     private SimpleDateFormat sdf;
+    /**
+     * Determina si se está o no mostrando la contraseña
+     */
     private boolean mostrarContrasena;
+    /**
+     * Determina si se está o no mostrando el teléfono
+     */
     private boolean mostrarTelefono;
+    /**
+     * Determina si mostrar o no una extensión
+     */
     private boolean mostrarExtension;
+    /**
+     * Determina si mostrar o no el celular
+     */
     private boolean mostrarCelular;
+    /**
+     * contraseña digitada
+     */
     private String contrasena;
+    /**
+     * Confirmación de la contraseña digitada
+     */
     private String confirmarContrasena;
+    /**
+     * TElefono del usuairo
+     */
     private String telefono;
+    /**
+     * Extensión del usuario
+     */
     private String extension;
+    /**
+     * Celular del usuairo
+     */
     private String celular;
 
     public PerfilUsuarioController() {
@@ -140,7 +163,9 @@ public class PerfilUsuarioController implements Serializable {
     public void setCelular(String celular) {
         this.celular = celular;
     }
-
+    /**
+     * Busca un usuario según el usuario que haya iniciado sesión
+     */
     private void buscarUsuario() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
@@ -156,13 +181,17 @@ public class PerfilUsuarioController implements Serializable {
     public void setSdf(SimpleDateFormat sdf) {
         this.sdf = sdf;
     }
-
+    /***
+     * Muestra el modificar contraseña
+     */
     public void mostrarModificarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.mostrarContrasena = false;
         requestContext.update("formularioPerfilDatosPersonales");
     }
-
+    /**
+     * Cancela el modificar contraseña
+     */
     public void cancelarActualizarContrasena() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.mostrarContrasena = true;
@@ -170,7 +199,9 @@ public class PerfilUsuarioController implements Serializable {
         this.confirmarContrasena = "";
         requestContext.update("formularioPerfilDatosPersonales");
     }
-
+    /**
+     * Edita la contraseña del usuario
+     */
     public void cambiarContrasena() {
         ValidarEdicionUsuarios validarEdicionUsuario = new ValidarEdicionUsuarios();
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -186,7 +217,9 @@ public class PerfilUsuarioController implements Serializable {
         requestContext.getCurrentInstance().update("msgConEx");
         requestContext.update("formularioPerfilDatosPersonales");        
     }
-
+    /**
+     * Cancela la actualización del telefon
+     */
     public void cancelarActualizarTelefono() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.mostrarTelefono = true;
@@ -197,7 +230,9 @@ public class PerfilUsuarioController implements Serializable {
     
 
     
-
+    /**
+     * Cancela la actualización de la extensión
+     */
     public void cancelarActualizarExtension() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.mostrarExtension = true;
@@ -209,7 +244,9 @@ public class PerfilUsuarioController implements Serializable {
 
     
 
-    
+    /**
+     * Inicializa las variables por defecto
+     */
 
     private void iniciarVariables() {
         this.mostrarContrasena = true;  

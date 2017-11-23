@@ -13,8 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -27,12 +25,26 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @ViewScoped
 public class MateriaController implements Serializable {
-
+    /**
+     * Conexión con la tabla materia
+     */
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.MateriaFacade ejbFacade;
+    /**
+     * Listado de materias registradas
+     */
     private List<Materia> items = null;
+    /**
+     * Materia seleccionada
+     */
     private Materia materia;
+    /**
+     * Departamento al cual pertenece la materia seleccionada
+     */
     private Departamento departamento;
+    /**
+     * Datos de la busqueda que desea hacer el usuario
+     */
     private String datoBusqueda;
 
     public MateriaController() {
@@ -70,7 +82,9 @@ public class MateriaController implements Serializable {
         ejbFacade.limpiarCache();
         return ejbFacade.buscarMateria(datoBusqueda);
     }
-
+    /**
+     * Registra una materia e la base de datos
+     */
     public void registrarMateria() {
         materia.setIdDepartamento(departamento);
         ejbFacade.create(materia);
@@ -87,7 +101,9 @@ public class MateriaController implements Serializable {
         requestContext.update("MateriaListForm");
         requestContext.update("MateriaCreateForm");
     }
-
+    /**
+     * Cambia los datos de una materia 
+     */
     public void editarMateria() {
         materia.setIdDepartamento(departamento);
         ejbFacade.edit(materia);
@@ -109,7 +125,9 @@ public class MateriaController implements Serializable {
         requestContext.update("MateriaCreateForm");
 
     }
-
+    /**
+     * Cancela la edición de una materia en GUI
+     */
     public void cancelarEdicion() {
         this.departamento = new Departamento();
         this.materia = new Materia();
@@ -117,21 +135,28 @@ public class MateriaController implements Serializable {
         requestContext.execute("PF('MateriaEditDialog').hide()");
 
     }
-
+    /**
+     * Cancela el registro de una materia, en GUI
+     */
     public void cancelarRegistro() {
         this.departamento = new Departamento();
         this.materia = new Materia();
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('MateriaCreateDlg').hide()");
     }
-
+    /**
+     * Mensaje para preguntar si está seguro de eliminar una materia
+     * @param materia 
+     */
     public void confirmarEliminacion(Materia materia) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar la materia " + materia.getNombreMateria() + " ?"));
         context.execute("PF('Confirmacion').show()");
         this.materia = materia;
     }
-
+    /**
+     * Elimina la materia seleccionada
+     */
     public void eliminarMateria() {
         ejbFacade.remove(materia);
         items = ejbFacade.findAll();

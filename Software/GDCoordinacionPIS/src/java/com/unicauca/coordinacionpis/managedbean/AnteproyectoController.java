@@ -11,14 +11,6 @@ import com.unicauca.coordinacionpis.entidades.Profesor;
 import com.unicauca.coordinacionpis.entidades.Programa;
 import com.unicauca.coordinacionpis.entidades.Usuario;
 import com.unicauca.coordinacionpis.entidades.UsuarioPrograma;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import javax.faces.FacesException;
-import javax.annotation.Resource;
-import javax.transaction.UserTransaction;
-import com.unicauca.coordinacionpis.managedbean.util.JsfUtil;
-import com.unicauca.coordinacionpis.managedbean.util.PagingInfo;
-import com.unicauca.coordinacionpis.sessionbean.AbstractFacade;
 import com.unicauca.coordinacionpis.sessionbean.AnteproyectoFacade;
 import com.unicauca.coordinacionpis.sessionbean.EstudianteFacade;
 import com.unicauca.coordinacionpis.sessionbean.ProfesorFacade;
@@ -28,28 +20,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.model.DataModel;
-import javax.faces.model.SelectItem;
-import javax.inject.Named;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 /**
  *
@@ -58,12 +35,29 @@ import org.primefaces.model.SortOrder;
 @ManagedBean
 @ViewScoped
 public class AnteproyectoController implements Serializable {
-
+    /**
+     * Anteproyecto seleccionado en GUI
+     */
     private Anteproyecto anteproyectoSelected;
+    /**
+     * EStudiante que se está ingresando en GUI al anteproyecto
+     */
     private Estudiante estudianteSelected;
+    /*
+     *Director asociado al anteproyecto 
+     */
     private Profesor directorSelected;
+    /**
+     * EStudiantes del anteproyecto
+     */
     private List<Estudiante> estudiantes;
+    /**
+     * Listado de los anteproyectos de la app
+     */
     private List<Anteproyecto> anteproyectos;
+    /**
+     * Valor de la busqueda sobre anteproyecto
+     */
     private String datoBusqueda;
 
     @EJB
@@ -76,7 +70,10 @@ public class AnteproyectoController implements Serializable {
     private ProfesorFacade ejbProfesor;
     @EJB
     private ProgramaFacade ejbPrograma;
-
+    
+    /**
+     * Carga toda la información de un anteproyecto según un identificador
+     */
     public void cargarAnteproyecto() {
         //verificar si puede cargar estoo para un usuario determinado ...s....        
         Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
@@ -153,7 +150,10 @@ public class AnteproyectoController implements Serializable {
     {
         return new Date();
     }
-    
+    /**
+     * Añade un estudiante a la lista de estudiantes 
+     * del anteproyecto seleccionado
+     */
     public void addToListEstudiantes() {
         if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
@@ -176,11 +176,16 @@ public class AnteproyectoController implements Serializable {
 
         }
     }
-
+    /**
+     * Remueve un estudiante del anteporyecto
+     * @param e 
+     */
     public void removeToListEstudiantes(Estudiante e) {
         this.estudiantes.remove(e);
     }
-
+    /**
+     * Busca si el estudiante está registrado y lo autocompleta en la GUI
+     */
     public void autocompletarEstudiante() {
         Estudiante completo = this.ejbEstudiante.findByCodigo(estudianteSelected.getCodigoEstudiante());
         if (completo != null) {
@@ -189,7 +194,9 @@ public class AnteproyectoController implements Serializable {
         }
 
     }
-
+    /**
+     * Busca si el profesor ya está registrado y lo autocompleta en la GUI
+     */
     public void autocompletarDirector() {
 
         System.out.println("a:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
@@ -203,7 +210,9 @@ public class AnteproyectoController implements Serializable {
 
         System.out.println("d:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
     }
-
+    /**
+     * REgistra un anteproyecto
+     */
     public void registrarAnteproyecto() {
 
         Programa prgramaUsuario = getPrgramaUsuario();
@@ -234,7 +243,9 @@ public class AnteproyectoController implements Serializable {
         this.ejbAnteproyecto.edit(anteproyectoSelected);
         System.out.println("E completo");
     }
-
+    /**
+     * Cambia los datos de un anteproyecto
+     */
     public void editarAnteproyecto() {
 
         Programa prgramaUsuario = getPrgramaUsuario();
@@ -268,7 +279,9 @@ public class AnteproyectoController implements Serializable {
         this.anteproyectoSelected = a;
         this.estudiantes = a.getEstudianteList();
     }
-
+    /**
+     * Carga un anteporyecto para edición
+     */
     public void cargarDatosEdicion() {
         System.out.println("Se llamó :v");
         RequestContext requestContext = RequestContext.getCurrentInstance();

@@ -23,7 +23,9 @@ public class ProgramaController implements Serializable {
      */
     private List<Programa> items = null;
     
-    
+    /**
+     * Progrma seleccionado en GUI
+     */
     private Programa programa;
    
 

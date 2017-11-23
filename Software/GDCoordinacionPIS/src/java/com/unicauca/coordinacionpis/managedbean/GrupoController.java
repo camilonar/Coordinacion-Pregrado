@@ -22,10 +22,19 @@ import javax.faces.convert.FacesConverter;
 @Named("grupoController")
 @SessionScoped
 public class GrupoController implements Serializable {
-
+    
+    /**
+     * Conexión la con la tabla grupo
+     */
     @EJB
     private com.unicauca.coordinacionpis.sessionbean.GrupoFacade ejbFacade;
+    /**
+     * Grupos registrados en la base de datos
+     */
     private List<Grupo> items = null;
+    /**
+     * Grupo seleccionado
+     */
     private Grupo selected;
 
     public GrupoController() {
