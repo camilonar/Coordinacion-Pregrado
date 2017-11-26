@@ -77,6 +77,10 @@ public class AnteproyectoController implements Serializable {
      */
     public void cargarAnteproyecto() {
         //verificar si puede cargar estoo para un usuario determinado ...s....        
+        System.out.println("---:"+this.anteproyectoSelected);
+        if(this.anteproyectoSelected.getIdAnteproyecto()==null){
+            return;
+        }
         Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
         if (ant == null) {
 

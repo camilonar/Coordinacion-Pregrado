@@ -24,6 +24,7 @@
 
 
             <h:body>
+                
                 <p:separator/>
                 <center><p:outputLabel value="Ver Anteproyecto #{anteproyectoController.anteproyectoSelected.idAnteproyecto} " style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
@@ -86,7 +87,7 @@
                     </p:column>
                 </p:dataTable>
 
-                <p:tabView>
+                <p:tabView  id="tabviewdocuments" rendered="#{anteproyectoController.anteproyectoSelected.idAnteproyecto ne null}">
                     <p:tab title="Formato A">
 
                         <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}"></h:outputText>
@@ -115,7 +116,7 @@
 
                             </p:dataTable>
 
-                            <h:form id="form" >
+                            <h:form id="form"  >
                                 <p:commandButton id="createButton"
                                                  value="Agregar Formato A" onclick="PF('dlgRegistroFormatoA').show()"/>
                             </h:form>

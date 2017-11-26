@@ -28,7 +28,7 @@
                 <p:separator/>
                 <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
                 <p:separator/>
-                <h:form>
+                <h:form rendered="#{anteproyectoController.anteproyectoSelected.idAnteproyecto ne null}">
 
                     <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="5"  >            
                         <h:outputText value="Código Estudiante: " style="font-weight: bold;"/> 
@@ -89,7 +89,7 @@
                 <p:outputLabel value="Información Anteproyecto: " style="font-weight: bold; color: #000000"/>
                 <p:separator/>
 
-                <h:form id="formAnteproyecto">
+                <h:form id="formAnteproyecto" rendered="#{anteproyectoController.anteproyectoSelected.idAnteproyecto ne null}">
                     <p:panelGrid styleClass="panelgrid" style="width: 100%"  >            
                         <p:row>
                             <p:column>
