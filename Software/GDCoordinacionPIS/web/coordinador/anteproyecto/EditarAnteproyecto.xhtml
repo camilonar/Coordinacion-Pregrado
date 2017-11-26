@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:metadata>  
         <f:viewParam name="id"   value="#{anteproyectoController.anteproyectoSelected.idAnteproyecto}"/>
-        <f:event type="preRenderView" listener="#{anteproyectoController.cargarAnteproyecto()}" ></f:event>
+        <f:viewAction action="#{anteproyectoController.cargarAnteproyecto()}" />
     </f:metadata> 
 
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
@@ -16,7 +16,7 @@
 
         <ui:define name="body">
             <h:body>
-
+<p:growl id="msg" showDetail="true" life="4000"/>
                 <p:separator/>
                 <center><p:outputLabel value="Editar Anteproyecto" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
@@ -68,6 +68,18 @@
                             </f:facet>
                             <h:outputText value="#{estudiante.nombreEstudiante}"/>
                         </p:column>
+                          <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Acciones"/>
+                            </f:facet>
+                            <p:commandButton icon="ui-icon-trash" value="Remover" update="datalistEstudiantes">
+                                <f:ajax event="click"  listener="#{anteproyectoController.removerEstListEstudiantes(estudiante)}"/>
+                            </p:commandButton>
+
+                            
+                        </p:column>
+                        
+                        
                     </p:dataTable>
 
 
