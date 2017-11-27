@@ -26,14 +26,14 @@
             <h:body>
                 
                 <p:separator/>
-                <center><p:outputLabel value="Ver Anteproyecto #{anteproyectoController.anteproyectoSelected.idAnteproyecto} " style="font-size: 15px !important; font-weight: bold;"/></center>
+                <center><p:outputLabel value="Ver Anteproyecto: #{anteproyectoController.anteproyectoSelected.tituloAnteproyecto} " style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
 
                 <p:panelGrid styleClass="panelgrid" style="width: 100%" >            
 
                     <p:row>
                         <p:column>
-                             <h:outputText value="Titulo Anteproyecto: " style="font-weight: bold;"/>
+                             <h:outputText value="Título Anteproyecto: " style="font-weight: bold;"/>
                              <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" />
                         </p:column>
                         <p:column>
@@ -90,7 +90,7 @@
                 <p:tabView  id="tabviewdocuments" rendered="#{anteproyectoController.anteproyectoSelected.idAnteproyecto ne null}">
                     <p:tab title="Formato A">
 
-                        <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}"></h:outputText>
+                       
                         <h:panelGrid columns="2" cellpadding="10">
 
                             <p:dataTable  paginator="true"
@@ -99,9 +99,13 @@
 
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Clave"/>
+                                        <h:outputText value="Fecha"/>
                                     </f:facet>
-                                    <h:outputText value="#{documento.claveFormatoA}"/>
+                                    <h:outputText value="#{documento.anteproyectoFormatoA.fechaAnteproyecto}">
+                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                        
+                                        
                                 </p:column>
 
                                 <p:column>
@@ -130,14 +134,18 @@
                     <p:tab title="Formato B">
                         <h:panelGrid columns="2" cellpadding="10">
 
-                            <p:dataTable value="#{anteproyectoController.anteproyectoSelected.formatobList}"  var="documento" > 
+                            <p:dataTable  paginator="true" value="#{anteproyectoController.anteproyectoSelected.formatobList}"  var="documento" > 
 
-                                <p:column>
+                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Clave"/>
+                                        <h:outputText value="Fecha"/>
                                     </f:facet>
-                                    <h:outputText value="#{documento.claveFormatoB}"/>
-                                </p:column>    
+                                    <h:outputText value="#{documento.anteproyectoFormatoB.fechaAnteproyecto}">
+                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                        
+                                        
+                                </p:column> 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Acciones"/>
@@ -159,19 +167,19 @@
                     </p:tab>
                     <p:tab title="Formato C">
                         <h:panelGrid columns="2" cellpadding="10">
-                            <p:dataTable value="#{anteproyectoController.anteproyectoSelected.formatocList}"  var="documento">
-                                <p:column>
+                            <p:dataTable  paginator="true" value="#{anteproyectoController.anteproyectoSelected.formatocList}"  var="documento">
+                                
+                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Fecha"/>
                                     </f:facet>
-                                    <h:outputText value="UNA FECHA _---"/>
+                                     <h:outputText value="#{documento.anteproyectoFormatoC.fechaAnteproyecto}">
+                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                        
+                                        
                                 </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Clave"/>
-                                    </f:facet>
-                                    <h:outputText value="#{documento.claveFormatoC}"/>
-                                </p:column>  
+                                
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Acciones"/>
