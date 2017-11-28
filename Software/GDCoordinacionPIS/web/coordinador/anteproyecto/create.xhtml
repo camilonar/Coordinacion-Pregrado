@@ -10,10 +10,14 @@
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
 
 
-
+        
+        
+        
         <ui:define name="body">
             <h:body>
-                <p:growl id="msg" showDetail="true"  life="4000"/>
+                <p:growl id="msg" rendered="#{not facesContext.validationFailed}" /> 
+                
+               
                 <p:separator/>
                 <center><p:outputLabel value="Crear Anteproyecto" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
@@ -54,7 +58,7 @@
                         <p:message for="nomEst" id="msgNomEst" />
                         <p:commandButton  value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
 
-                        <p:growl id="msgEstudiantes" showDetail="true"  />  
+                        <p:growl id="msgEstudiantes" showDetail="true" rendered="#{not facesContext.validationFailed}" />  
                     </p:panelGrid>
 
                     <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante" emptyMessage="No hay Estudiantes seleccionados"
