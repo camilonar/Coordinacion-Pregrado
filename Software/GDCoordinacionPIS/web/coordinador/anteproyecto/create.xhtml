@@ -10,169 +10,233 @@
     <ui:composition template="/sesionCoordinador/_coordinadortmp.xhtml">
 
 
-        
-        
-        
+
+
+
         <ui:define name="body">
             <h:body>
                 <p:growl id="msg" rendered="#{not facesContext.validationFailed}" /> 
-                
-               
+
+
                 <p:separator/>
-                <center><p:outputLabel value="Crear Anteproyecto" style="font-size: 15px !important; font-weight: bold;"/></center>
+                <center><p:outputLabel value="Gestión de anteproyectos-Registrar" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
                 <br/>
-                <p:outputLabel style="float: right;" value="&ensp; Campos obligatorios" /> 
-                <p:outputLabel  style="float: right; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
-                <br></br>
+                <center>
+                    <p:outputLabel  
+                        value="Por favor, diligencie los siguientes datos. Recuerde que los campos con ("/>
+                    <p:outputLabel value="*" style="color: #ff5252"/>
+                    <p:outputLabel value=") son obligatorios."/>
+                </center>
+
+                <br/>
 
 
                 <p:separator/>
-                <p:outputLabel value="Estudiantes: " style="font-weight: bold; color: #000000"/>
+                <center>
+                    <p:outputLabel value="Información de estudiantes: " style="font-weight: bold; color: #000000"/>
+                </center>
                 <p:separator/>
+
+                <br/>
 
                 <h:form>
 
 
-                    <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%" columns="4"  >            
-                        <h:outputText value="Código Estudiante: " style="font-weight: bold;"/> 
+                    <p:panelGrid id="formEstudiantes" styleClass="panelgrid"  style="width: 100%"  >            
+                        <p:row>
+                            <p:column>
+                                <center>
+                                    <h:outputText value="Código del estudiante:" style="font-weight: bold;"/> 
+                                </center>
+                            </p:column>
+                            <p:column>
+                                <p:inputText style="width: 100%" id="codest" validatorMessage="El código inicia y termina en un número. Sólo contiene números y '_' ." value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
+                                    <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
+                                    <f:validateRegex pattern="[0-9]+[_]{0,1}[0-9]+" />
+                                </p:inputText>  
+                            </p:column>
+                            <p:column>
+                                <center>
+                                    <h:outputText value="Nombre estudiante:" style="font-weight: bold;"/> 
+                                </center>
+                            </p:column>
+                            <p:column>
+                                <p:inputText  style="width: 100%" maxlength="50" validatorMessage="Nombre no válido." id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
+                                    <f:validator validatorId="ValidarCampoNombre"/>
+                                    <p:ajax event="change"/>
+                                </p:inputText>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton style="float: left ; width: 85%;" value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
+                            </p:column>
+                        </p:row>
 
-                        <p:inputText id="codest" validatorMessage="El código inicia y termina en un número. Sólo contiene números y '_' ." value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
-                            <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
+                        <p:row>
+                            <p:column/>
+                            <p:column>
+                                <p:message for="codest" id="msgCodEst" />
+                            </p:column>
+                            <p:column/>
+                            <p:column>
+                                <p:message for="nomEst" id="msgNomEst" />
+                            </p:column>
+                            <p:column/>
+                        </p:row>
 
-                            <f:validateRegex pattern="[0-9]+[_]{0,1}[0-9]+" />
-                        </p:inputText>  
+                        <p:row>
+                            <p:column/>
+                            <p:column/>
+                            <p:column/>
+                            <p:column>
 
-                        <h:outputText  value="Nombre Estudiante: " style="font-weight: bold;"/> 
 
-                        <p:inputText  maxlength="50" validatorMessage="Nombre no válido." id="nomEst" value="#{anteproyectoController.estudianteSelected.nombreEstudiante}">
-
-                            <f:validator validatorId="ValidarCampoNombre"/>
-                            <p:ajax event="change"/>
-                        </p:inputText>
-
-                        <p:column/>
-                        <p:message for="codest" id="msgCodEst" />
-                        <p:column/>                   
-
-                        <p:message for="nomEst" id="msgNomEst" />
-                        <p:commandButton  value="Agregar Estudiante" update="datalistEstudiantes formEstudiantes" action="#{anteproyectoController.addToListEstudiantes()}"/>
+                            </p:column>
+                        </p:row>
 
                         <p:growl id="msgEstudiantes" showDetail="true" rendered="#{not facesContext.validationFailed}" />  
                     </p:panelGrid>
 
-                    <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante" emptyMessage="No hay Estudiantes seleccionados"
-                                 paginator="true"
-                                 rowKey="#{estudiante.idEstudiante}"
-                                 rows="10"
-
-                                 >
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Código Estudiante"/>
-                            </f:facet>
-                            <h:outputText value="#{estudiante.codigoEstudiante}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{estudiante.nombreEstudiante}"/>
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Acciones"/>
-                            </f:facet>
-                            <p:commandButton icon="ui-icon-trash" value="Remover" update="datalistEstudiantes">
-                                <f:ajax event="click"  listener="#{anteproyectoController.removerEstListEstudiantes(estudiante)}"/>
-                            </p:commandButton>
 
 
-                        </p:column>
 
-                    </p:dataTable>
+                    <center>
+                        <p:dataTable id="datalistEstudiantes" value="#{anteproyectoController.estudiantes}" var="estudiante" emptyMessage="No hay Estudiantes seleccionados"
+                                     paginator="true"
+                                     rowKey="#{estudiante.idEstudiante}"
+                                     rows="10"
+
+                                     style="width: 96%">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Código Estudiante"/>
+                                </f:facet>
+                                <h:outputText value="#{estudiante.codigoEstudiante}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{estudiante.nombreEstudiante}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton icon="ui-icon-trash" value="Remover" update="datalistEstudiantes">
+                                    <f:ajax event="click"  listener="#{anteproyectoController.removerEstListEstudiantes(estudiante)}"/>
+                                </p:commandButton>
+
+
+                            </p:column>
+
+                        </p:dataTable>
+                    </center>
+
 
 
                 </h:form>
 
+                <br/>
+
+
+
+
+                <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" >            
+
+                </p:panelGrid>
+
+
+
                 <p:separator/>
-                <p:outputLabel value="Información Anteproyecto: " style="font-weight: bold; color: #000000"/>
+                <center>
+                    <p:outputLabel value="Información básica de anteproyecto:" style="font-weight: bold; color: #000000"/>
+                </center>
+
                 <p:separator/>
+
+                <br/>
 
                 <h:form id="formAnteproyecto">
-                    <p:panelGrid styleClass="panelgrid" style="width: 100%"  >            
+                    <p:panelGrid styleClass="panelgrid" style="width: 100%">            
                         <p:row>
                             <p:column>
-                                <h:outputText value="Título Anteproyecto:" style="font-weight: bold;"/> 
-                                <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
-
+                                <center>
+                                    <h:outputText value="Título Anteproyecto:" style="font-weight: bold;"/> 
+                                    <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                                </center>
                             </p:column>
                             <p:column>
-                                <p:inputText required="true"  style =" width: 80%" id="titulo" maxlength="300" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
-                                    <p:ajax update="msgTitulo" event="change"/>
+                                <p:inputText required="true"  style =" width: 100%" id="titulo" maxlength="300" requiredMessage="Campo obligatorio" value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" validatorMessage="Formato de título erróneo">
                                     <f:validateRegex pattern="[a-zA-Záéíóú0-9.\s]*[a-zA-Záéíóú][a-zA-Záéíóú0-9.\s]*" />
-                                </p:inputText>
+                                </p:inputText>        
                             </p:column>
-
-
                             <p:column>
-                                <h:outputText value="Fecha:" style="font-weight: bold;"/>  
-                                <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+                                <center>
+                                    <h:outputText value="Fecha:" style="font-weight: bold;"/>  
+                                    <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " /> 
+                                </center>
+
                             </p:column>
-
                             <p:column>
-                                <p:calendar size="22" required="true"   readonlyInput="true" maxdate="#{anteproyectoController.obtenerFechaActual()}" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
+                                <p:calendar size="26" required="true"   readonlyInput="true" maxdate="#{anteproyectoController.obtenerFechaActual()}" placeholder="dd/mm/aaaa" id="fecha" yearRange="c-80:c"   navigator="true" pattern="dd/MM/yyyy" validatorMessage="Formato de fecha erróneo" requiredMessage="Campo obligatorio"
                                             value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button">
                                     <p:ajax update="msgFecha" event="change"/>
                                 </p:calendar>
                             </p:column>
                         </p:row>
+
                         <p:row>
-                            <p:column></p:column>
+                            <p:column/>
                             <p:column>
                                 <p:message for="titulo" id="msgTitulo"  />
                             </p:column>
-                            <p:column></p:column>
+                            <p:column/>
                             <p:column>
                                 <p:message for="fecha" id="msgFecha" />
                             </p:column>
-                        </p:row><p:row>
-                            <p:column width="50">
-                                <h:outputText value="Usuario SIMCA del director:" style="font-weight: bold; text-align:  left"/> 
-                                <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <center>
+                                    <h:outputText value="Usuario SIMCA del director:" style="font-weight: bold; text-align:  left"/> 
+                                    <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />    
+                                </center>
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" validatorMessage="El codigo no es válido" style=" width: 80%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
+                                <p:inputText  required="true" validatorMessage="El codigo no es válido" style=" width: 100%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
-                                    <p:ajax update="msgCodDir" event="change"  />
+                                    <p:ajax update="msgCodDir" event="change"/>
                                     <f:validateRegex pattern="[a-zA-Záéíóú0-9][a-zA-Záéíóú0-9_]*" />
-
                                 </p:inputText>
                             </p:column>
                             <p:column>
-                                <h:outputText value="Nombre Director:  " style="font-weight: bold;">
-
-                                </h:outputText> 
-                                <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />                      
+                                <center>
+                                    <h:outputText value="Nombre del director:" style="font-weight: bold; text-align:  left"/> 
+                                    <p:outputLabel  style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />    
+                                </center>
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" style =" width: 80%" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
-                                    <p:ajax update="msgNomDir" event="change"  />
+                                <p:inputText  required="true"  style =" width: 61%" requiredMessage="Campo obligatorio" id="nomDir" value="#{anteproyectoController.directorSelected.nombreProfesor}"  >
+                                    <p:ajax update="msgNomDir" event="change"/>
                                     <f:validator validatorId="ValidarCampoNombre"/>
                                 </p:inputText>
                             </p:column>
                         </p:row>
+
                         <p:row>
-                            <p:column></p:column>
+                            <p:column/>
                             <p:column>
-                                <p:message for="codDir" id="msgCodDir" style="width: 80%" />
+                                <p:message for="codDir" id="msgCodDir"/>
                             </p:column>
-                            <p:column></p:column>
+                            <p:column/>
                             <p:column>
-                                <p:message for="nomDir" id="msgNomDir" style="width: 80%"/>
+                                <p:message for="nomDir" id="msgNomDir"/>
                             </p:column>
                         </p:row>
+
 
                     </p:panelGrid>
 
@@ -184,10 +248,14 @@
                     <p:panelGrid id="panelDirector" styleClass="panelgrid" style="width: 100%" >            
 
                     </p:panelGrid>
+                    
+                    <br/>
                     <center>
-                        <p:commandButton  value="Registrar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
+                        <p:commandButton style="width: 200px; height: 25px;" value="Registrar" action="anteproyecto.xhtml?faces-redirect=true" update= ":formAnteproyecto" actionListener="#{anteproyectoController.registrarAnteproyecto()}">
                         </p:commandButton>
                     </center>
+                    
+                    <br/>
                 </h:form>
 
 
