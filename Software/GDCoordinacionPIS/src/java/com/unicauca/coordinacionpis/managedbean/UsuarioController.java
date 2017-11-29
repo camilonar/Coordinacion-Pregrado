@@ -160,6 +160,7 @@ public class UsuarioController implements Serializable {
     private String progTmp;
     private String deptTmp;
     private int rolOriginal;
+    private Departamento deptoNulo;
 
     public UsuarioController() {
         datoBusqueda = "";
@@ -174,6 +175,7 @@ public class UsuarioController implements Serializable {
         this.miImagen = (DefaultStreamedContent) this.getImagenDefecto();
         fotoDefecto = true;
         tipo = TIPO_USUARIO.ADMIN;
+        deptoNulo=new Departamento(-1);
     }
 
     /**
@@ -184,7 +186,7 @@ public class UsuarioController implements Serializable {
      */
     public Programa getPrograma() {
         if (programa == null) {
-            programa = programaFacade.find(26); //Por defecto sistemas
+            programa = new Programa(-1);
         }
         return programa;
     }
@@ -259,10 +261,18 @@ public class UsuarioController implements Serializable {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-
+    
     public String getDatoBusqueda() {
         return datoBusqueda;
     }
+
+    public Departamento getDeptoNulo() {
+        return deptoNulo;
+    }
+
+    public void setDeptoNulo(Departamento deptoNulo) {
+        this.deptoNulo = deptoNulo;
+    }        
 
     public void setDatoBusqueda(String datoBusqueda) {
         this.datoBusqueda = datoBusqueda;
@@ -919,12 +929,13 @@ public class UsuarioController implements Serializable {
     }
 
     public void mostrarMensajeEditar() {
-        if (rolActual == 1 && rolOriginal != rolActual) {
+        if (rolActual == 1) {
             if (grupo.getGruid().equals("2")) {
                 programaFacade.flush();
                 programaFacade.limpiarCache();
+                programa.getIdPrograma();
                 String coordinador = programaFacade.findByProgramaCoordinador(programa.getIdPrograma());
-                if (coordinador != null) {
+                if (coordinador != null && !coordinador.equals(usuario.getUsunombreusuario())) {
                     RequestContext context = RequestContext.getCurrentInstance();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación: ", "El usuario " + coordinador + " es el actual coordinador del programa ¿desea cambiar esto?"));
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nota: ", "Al realizar este cambio el usuario " + coordinador + " será deshabilitado y no podrá acceder al sistema; para revertir este cambio    puede dirigirse a la edición del usuario " + coordinador));
@@ -933,7 +944,7 @@ public class UsuarioController implements Serializable {
             }
             if (grupo.getGruid().equals("3")) {
                 String jefe = departamentoFacade.findByDepartamentoJefe(dpto.getIdDepartamento());
-                if (jefe != null) {
+                if (jefe != null && !jefe.equals(usuario.getUsunombreusuario())) {
                     RequestContext context = RequestContext.getCurrentInstance();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "El usuario " + jefe + " es el actual jefe del departamento ¿desea cambiar esto?"));
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nota: ", "Al realizar este cambio el usuario " + jefe + " será deshabilitado y no podrá acceder al sistema; para revertir este cambio    puede dirigirse a la edición del usuario " + jefe));
@@ -944,7 +955,15 @@ public class UsuarioController implements Serializable {
     }
 
     public void habilitarRol() {
-        if (rolActual == 1 && rolOriginal != rolActual) {
+        if (rolActual == 1) {
+            if (grupo.getGruid().equals("1")) {
+                for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
+                    usuarioProgramaFacade.remove(up);
+                }
+                for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
+                    usuarioDepartamentoFacade.remove(ud);
+                }
+            }
             if (grupo.getGruid().equals("2")) {
                 limpiarJefeCoordinador();
                 List<UsuarioPrograma> programas = new ArrayList<>();
@@ -1009,6 +1028,7 @@ public class UsuarioController implements Serializable {
         file = null;
         requestContext.update(":formEditarfoto:panel");
         requestContext.update(":UsuarioListForm:datalist");
+        
 
     }
 
@@ -1186,6 +1206,7 @@ public class UsuarioController implements Serializable {
     }
 
     public void setTipoUsuarioEditar() {
+        System.out.println("SETEDITAR");
         switch (grupo.getGruid()) {
             case "1":
                 this.tipo = TIPO_USUARIO.ADMIN;
@@ -1220,7 +1241,7 @@ public class UsuarioController implements Serializable {
 
     public Departamento getDpto() {
         if (dpto == null) {
-            dpto = departamentoFacade.find(8);
+            return deptoNulo;
         }
         return dpto;
     }
