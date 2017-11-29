@@ -35,6 +35,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @ViewScoped
 public class AnteproyectoController implements Serializable {
+
     /**
      * Anteproyecto seleccionado en GUI
      */
@@ -70,18 +71,43 @@ public class AnteproyectoController implements Serializable {
     private ProfesorFacade ejbProfesor;
     @EJB
     private ProgramaFacade ejbPrograma;
-    
+
     /**
      * Carga toda la información de un anteproyecto según un identificador
      */
     public void cargarAnteproyecto() {
         //verificar si puede cargar estoo para un usuario determinado ...s....        
-        Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
-        if (ant != null) {
-            this.anteproyectoSelected = ant;
-            this.estudiantes = this.anteproyectoSelected.getEstudianteList();
-            this.directorSelected = this.anteproyectoSelected.getDirectorAnteproyecto();
+        System.out.println("---:" + this.anteproyectoSelected);
+        if (this.anteproyectoSelected.getIdAnteproyecto() == null) {
+            return;
         }
+        Anteproyecto ant = this.ejbAnteproyecto.find(this.anteproyectoSelected.getIdAnteproyecto());
+        if (ant == null) {
+
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se encuentra el Anteproyecto");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            requestContext.update("msg");
+
+            return;
+        }
+
+        if (ant.getProgramaAnteproyecto().getIdPrograma() != this.getPrgramaUsuario().getIdPrograma()) {
+            //TODO: NO PUEDE MODIFICARLO POR QUE EL ANTEPROYECTO NO ES DE SU PROGRAMA, 
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No tiene Acceso a este Antreproyecto");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            requestContext.update("msg");
+            return;
+        }
+
+        this.anteproyectoSelected = ant;
+        this.estudiantes = this.anteproyectoSelected.getEstudianteList();
+        this.directorSelected = this.anteproyectoSelected.getDirectorAnteproyecto();
+        System.out.println("Proyecto cargado con exito");
+
     }
 
     public AnteproyectoController() {
@@ -146,22 +172,23 @@ public class AnteproyectoController implements Serializable {
         anteproyectos = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase());
     }
 
-    public Date obtenerFechaActual()
-    {
+    public Date obtenerFechaActual() {
         return new Date();
     }
+
     /**
-     * Añade un estudiante a la lista de estudiantes 
-     * del anteproyecto seleccionado
+     * Añade un estudiante a la lista de estudiantes del anteproyecto
+     * seleccionado
      */
     public void addToListEstudiantes() {
         if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
             estudianteSelected = new Estudiante();
+            System.out.println("agregado");
         } else {
 
             RequestContext requestContext = RequestContext.getCurrentInstance();
-            if (this.estudiantes.size() >=2) {
+            if (this.estudiantes.size() >= 2) {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Solo es posible agregar 2 estudiantes por anteproyecto.");
                 FacesContext.getCurrentInstance().addMessage(null, message);
                 requestContext.update("msgEstudiantes");
@@ -176,13 +203,20 @@ public class AnteproyectoController implements Serializable {
 
         }
     }
+
     /**
      * Remueve un estudiante del anteporyecto
-     * @param e 
+     *
+     * @param e
      */
-    public void removeToListEstudiantes(Estudiante e) {
-        this.estudiantes.remove(e);
+    public void removerEstListEstudiantes(Estudiante e) {
+
+        if (this.estudiantes.remove(e)) {
+            System.out.println("Estudiante eliminador " + e.getNombreEstudiante());
+        }
+
     }
+
     /**
      * Busca si el estudiante está registrado y lo autocompleta en la GUI
      */
@@ -194,6 +228,7 @@ public class AnteproyectoController implements Serializable {
         }
 
     }
+
     /**
      * Busca si el profesor ya está registrado y lo autocompleta en la GUI
      */
@@ -210,6 +245,7 @@ public class AnteproyectoController implements Serializable {
 
         System.out.println("d:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
     }
+
     /**
      * REgistra un anteproyecto
      */
@@ -242,7 +278,13 @@ public class AnteproyectoController implements Serializable {
         this.anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.edit(anteproyectoSelected);
         System.out.println("E completo");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Anteproyecto creado con exito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        requestContext.update("msg");
     }
+
     /**
      * Cambia los datos de un anteproyecto
      */
@@ -273,12 +315,20 @@ public class AnteproyectoController implements Serializable {
         anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.edit(anteproyectoSelected);
         System.out.println("E completo");
+
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Anteproyecto editado con exito.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        requestContext.update("msg");
+
     }
 
     public void setAnteproyecto(Anteproyecto a) {
         this.anteproyectoSelected = a;
         this.estudiantes = a.getEstudianteList();
     }
+
     /**
      * Carga un anteporyecto para edición
      */

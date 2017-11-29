@@ -229,11 +229,13 @@
                     <p:column colspan="4">
 
 
-                        <p:button value="Cancelar" onclick ="PF('dlgRegistroFormatoA').hide();
-                                 $('#formMetadatosFormatoA').trigger('reset');" style="margin-left: 40%; margin-right: 20px;">
-                        </p:button>  
+                        <p:commandButton value="Cancelar" onclick ="PF('dlgRegistroFormatoA').hide();
+                                 " style="margin-left: 40%; margin-right: 20px;">
+                        </p:commandButton> 
+                         
+                        
                         <p:commandButton  id="submit-btn"
-                                          value="Registrar"   update= ""
+                                          value="Registrar"   
                                           action="#{registroFormatoAController.aceptarFormatoA(anteproyectoController.anteproyectoSelected)}" 
                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 

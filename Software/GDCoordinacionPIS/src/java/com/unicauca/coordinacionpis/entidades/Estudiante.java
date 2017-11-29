@@ -128,7 +128,7 @@ public class Estudiante implements Serializable {
             return false;
         }
         Estudiante other = (Estudiante) object;
-        if ((this.idEstudiante == null && other.idEstudiante != null) || (this.idEstudiante != null && !this.idEstudiante.equals(other.idEstudiante))) {
+        if ((this.codigoEstudiante == null && other.codigoEstudiante != null) || (this.codigoEstudiante != null && !this.codigoEstudiante.equals(other.codigoEstudiante))) {
             return false;
         }
         return true;
