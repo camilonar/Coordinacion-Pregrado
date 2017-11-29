@@ -576,8 +576,6 @@ public class UsuarioController implements Serializable {
         habilitarRol();
         Usuariogrupo usuarioGrupo = new Usuariogrupo();
         UsuariogrupoPK usuarioGrupoPK = new UsuariogrupoPK();
-        String pass  = usuario.getUsucontrasena();
-        usuario.setUsucontrasena(Cifrar.sha256(pass));
         ejbUsuario.edit(usuario);
 
         this.ejbUsuarioGrupo.remove(usuario.getUsuariogrupoList().get(0));
