@@ -216,8 +216,13 @@
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoJefe}" >
                             <p:selectOneMenu id="departamentoId" value="#{usuarioController.dpto}" 
-                                             filter="true" style="width: 155px;" >
-                                <p:ajax event="change" update="departamentoId"/> 
+                                             filter="true" style="width: 210px;" 
+                                             required="true"
+                                             requiredMessage="Campo obligatorio">
+                                <p:ajax event="change" update="msgDepartamento"/>
+                                <p:ajax event="select" update="msgDepartamento"/>
+                                <p:ajax event="change" update="departamentoId" listener="#{usuarioController.mostrarMensajeEditar()}"/> 
+                                <f:selectItem itemLabel="Seleccione un departamento" itemValue="#{usuarioController.deptoNulo}" noSelectionOption="true"/>
                                 <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                                var="dpto" 
                                                itemValue="#{dpto}"
@@ -232,8 +237,13 @@
                         </p:column>
                         <p:column rendered="#{usuarioController.tipo == usuarioController.tipoCoordinador}" >
                             <p:selectOneMenu id="programaId" value="#{usuarioController.programa.idPrograma}" 
-                                             filter="true" style="width: 155px;">
-                                <p:ajax event="change" update="programaId"/> 
+                                             filter="true" style="width: 210px;"
+                                             required="true"
+                                             requiredMessage="Campo obligatorio">
+                                <p:ajax event="change" update="msgPrograma"/>
+                                <p:ajax event="select" update="msgPrograma"/>
+                                <p:ajax event="change" update="programaId" listener="#{usuarioController.mostrarMensajeEditar()}"/> 
+                                <f:selectItem itemLabel="Seleccione un programa" itemValue="-1" noSelectionOption="true"/>
                                 <f:selectItems value="#{programaController.items}"
                                                var="programa"
                                                itemValue="#{programa.idPrograma}"
@@ -251,7 +261,11 @@
                         <p:column style = "width: 100px">
                             <p:message  for="grupoId"/>
                         </p:column>
-
+                        <p:column/>
+                        <p:column>
+                            <p:message for="departamentoId" id="msgDepartamento"/>
+                            <p:message for="programaId" id="msgPrograma"/>
+                        </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
