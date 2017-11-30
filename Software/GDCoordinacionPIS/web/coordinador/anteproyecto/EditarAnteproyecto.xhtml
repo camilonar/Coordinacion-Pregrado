@@ -52,7 +52,7 @@
                                 </center>
                             </p:column>
                             <p:column>
-                                <p:inputText style="width: 100%" id="codest" validatorMessage="El código inicia y termina en un número. Sólo contiene números y '_' ." value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
+                                <p:inputText style="width: 100%" placeholder="ejemplo: 104615999999" id="codest" maxlength="15" validatorMessage="El código inicia y termina en un número. Sólo contiene números y '_' ." value="#{anteproyectoController.estudianteSelected.codigoEstudiante}">
                                     <p:ajax update="nomEst" event="blur" listener="#{anteproyectoController.autocompletarEstudiante()}" />
                                     <f:validateRegex pattern="[0-9]+[_]{0,1}[0-9]+" />
                                 </p:inputText>  
@@ -95,7 +95,7 @@
                             </p:column>
                         </p:row>
 
-                       <p:growl id="msgEstudiantes" showDetail="true"  />  
+                        <p:growl id="msgEstudiantes" showDetail="true"  />  
 
                     </p:panelGrid>
 
@@ -197,7 +197,7 @@
                                 </center>
                             </p:column>
                             <p:column>
-                                <p:inputText  required="true" validatorMessage="El codigo no es válido" style=" width: 100%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
+                                <p:inputText  required="true" placeholder="ejemplo: pmage" validatorMessage="Usuario no válido" style=" width: 100%" requiredMessage="Campo obligatorio" id="codDir" value="#{anteproyectoController.directorSelected.codigoProfesor}">
                                     <p:ajax update="panelDirector" event="blur" listener="#{anteproyectoController.autocompletarDirector()}" />
                                     <p:ajax update="msgCodDir" event="change"/>
                                     <f:validateRegex pattern="[a-zA-Záéíóú0-9][a-zA-Záéíóú0-9_]*" />
