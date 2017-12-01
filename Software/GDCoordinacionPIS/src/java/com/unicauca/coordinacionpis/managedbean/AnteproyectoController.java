@@ -20,13 +20,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 /**
  *
@@ -60,6 +64,18 @@ public class AnteproyectoController implements Serializable {
      * Valor de la busqueda sobre anteproyecto
      */
     private String datoBusqueda;
+    
+     DataModel dataModelAnteproyecto = new LazyDataModel<Anteproyecto>() {
+            @Override
+            public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                
+                List<Anteproyecto> buscarProyecto = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),getPrgramaUsuario(),pageSize,first);
+                System.out.println("===="+buscarProyecto.size());
+                return buscarProyecto;
+                
+            }
+        };
+    
 
     @EJB
     private UsuarioFacade ejbUsuario;
@@ -111,11 +127,16 @@ public class AnteproyectoController implements Serializable {
     }
 
     public AnteproyectoController() {
+      
+       
         datoBusqueda = "";
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
         this.anteproyectoSelected = new Anteproyecto();
         this.directorSelected = new Profesor();
+        
+        
+        
     }
 
     public String getDatoBusqueda() {
@@ -158,7 +179,7 @@ public class AnteproyectoController implements Serializable {
         this.directorSelected = directorSelected;
     }
 
-    public List<Anteproyecto> getAnteproyectos() {
+    public List<Anteproyecto> getAnteproyectos(PageEvent event) {
         ejbAnteproyecto.limpiarCache();
         buscarAnteproyectos();
         return anteproyectos;
@@ -169,7 +190,9 @@ public class AnteproyectoController implements Serializable {
     }
 
     public void buscarAnteproyectos() {
-        anteproyectos = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase());
+        anteproyectos = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),getPrgramaUsuario(),null,null);
+        
+        
     }
 
     public Date obtenerFechaActual() {
@@ -333,7 +356,7 @@ public class AnteproyectoController implements Serializable {
      * Carga un anteporyecto para edición
      */
     public void cargarDatosEdicion() {
-        System.out.println("Se llamó :v");
+        
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("formMetadatosEditAnteproyecto");
         requestContext.execute("PF('dlgEditarAnteproyecto').show()");
@@ -348,5 +371,16 @@ public class AnteproyectoController implements Serializable {
         return usuarioPrograma.getPrograma();
 
     }
+
+    public DataModel getDataModelAnteproyecto() {
+        
+        return dataModelAnteproyecto;
+    }
+
+    public void setDataModelAnteproyecto(DataModel dataModelAnteproyecto) {
+        this.dataModelAnteproyecto = dataModelAnteproyecto;
+    }
+    
+    
 
 }

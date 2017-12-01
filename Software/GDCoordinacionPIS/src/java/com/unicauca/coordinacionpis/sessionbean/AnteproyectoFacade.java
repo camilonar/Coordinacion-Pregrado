@@ -6,6 +6,7 @@
 package com.unicauca.coordinacionpis.sessionbean;
 
 import com.unicauca.coordinacionpis.entidades.Anteproyecto;
+import com.unicauca.coordinacionpis.entidades.Programa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,22 @@ public class AnteproyectoFacade extends AbstractFacade<Anteproyecto> {
         Query query = getEntityManager().createNamedQuery("Anteproyecto.findByBusquedaTitulo");
         query.setParameter("busqueda", "%" + datoBusqueda + "%");
         List<Anteproyecto> resultList = query.getResultList();
+        return resultList;
+    }
+
+    public List<Anteproyecto> buscarProyecto(String datoBusqueda, Programa programa, Integer limit, Integer offset) {
+        Query query = getEntityManager().createNamedQuery("Anteproyecto.findByProgramaAndTitulo");
+        query.setParameter("busqueda", "%" + datoBusqueda + "%");
+        query.setParameter("programa", programa);
+//        query.setParameter("Limit", programa);
+//        query.setParameter("Offset", offset);
+        if (limit != null && offset != null) {
+            query.setMaxResults(limit);
+            query.setFirstResult(offset * limit);
+        }
+        List<Anteproyecto> resultList = query.getResultList();
+
+        System.out.println("===" + resultList.size());
         return resultList;
     }
 

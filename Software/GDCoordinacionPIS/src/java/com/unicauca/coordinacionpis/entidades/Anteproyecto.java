@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Anteproyecto.findByIdAnteproyecto", query = "SELECT a FROM Anteproyecto a WHERE a.idAnteproyecto = :idAnteproyecto")
     , @NamedQuery(name = "Anteproyecto.findByTituloAnteproyecto", query = "SELECT a FROM Anteproyecto a WHERE a.tituloAnteproyecto = :tituloAnteproyecto")
     , @NamedQuery(name = "Anteproyecto.findByFechaAnteproyecto", query = "SELECT a FROM Anteproyecto a WHERE a.fechaAnteproyecto = :fechaAnteproyecto")
-    , @NamedQuery(name = "Anteproyecto.findByBusquedaTitulo", query = "SELECT a FROM Anteproyecto a WHERE a.tituloAnteproyecto LIKE :busqueda")})
+    , @NamedQuery(name = "Anteproyecto.findByBusquedaTitulo", query = "SELECT a FROM Anteproyecto a WHERE a.tituloAnteproyecto LIKE :busqueda")
+    , @NamedQuery(name = "Anteproyecto.findByProgramaAndTitulo", query = "SELECT a FROM Anteproyecto a WHERE a.programaAnteproyecto = :programa AND a.tituloAnteproyecto LIKE :busqueda ORDER BY a.fechaAnteproyecto ")})
 public class Anteproyecto implements Serializable {
 
     private static final long serialVersionUID = 1L;

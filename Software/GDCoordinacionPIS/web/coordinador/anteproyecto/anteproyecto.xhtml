@@ -39,14 +39,15 @@
                             <p:ajax update="datalist"  event="keyup" />                              
                         </p:inputText>                          
                     </p:panelGrid>
-                    <p:dataTable id="datalist" value="#{anteproyectoController.anteproyectos}" var="item"
-                                 selectionMode="single" 
-                                 paginator="true"
+                    
+                   
+                    <p:dataTable value="#{anteproyectoController.anteproyectos}" 
+                                 id="datalist" paginator="true" lazy="true"
                                  rowKey="#{item.idAnteproyecto}"
-                                 rows="10"
-                                 lazy="true"
-                                 rowsPerPageTemplate="7,10,20,30,40"
-                                 >
+                                 rows="10" emptyMessage="Sin documentos"
+                                 rowsPerPageTemplate="2,5,10,20,30,40,50"
+                                 var="item">
+                        <p:ajax event="page" update="datalist" listener="#{anteproyectoController.buscarAnteproyectos}" />
 
                         <p:column>
                             <f:facet name="header">
@@ -68,6 +69,12 @@
                                 <h:outputText value="Profesor"/>
                             </f:facet>
                             <h:outputText value="#{item.directorAnteproyecto.nombreProfesor}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Programa"/>
+                            </f:facet>
+                             <h:outputText value="#{item.programaAnteproyecto.nombrePrograma}"/>
                         </p:column>
 
                         <p:column>
