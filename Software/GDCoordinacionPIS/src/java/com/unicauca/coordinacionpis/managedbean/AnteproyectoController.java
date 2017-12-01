@@ -179,7 +179,7 @@ public class AnteproyectoController implements Serializable {
         this.directorSelected = directorSelected;
     }
 
-    public List<Anteproyecto> getAnteproyectos(PageEvent event) {
+    public List<Anteproyecto> getAnteproyectos() {
         ejbAnteproyecto.limpiarCache();
         buscarAnteproyectos();
         return anteproyectos;
