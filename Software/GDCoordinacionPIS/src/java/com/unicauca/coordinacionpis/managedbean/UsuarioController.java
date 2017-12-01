@@ -175,7 +175,7 @@ public class UsuarioController implements Serializable {
         this.miImagen = (DefaultStreamedContent) this.getImagenDefecto();
         fotoDefecto = true;
         tipo = TIPO_USUARIO.ADMIN;
-        deptoNulo=new Departamento(-1);
+        deptoNulo = new Departamento(-1);
     }
 
     /**
@@ -261,7 +261,7 @@ public class UsuarioController implements Serializable {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    
+
     public String getDatoBusqueda() {
         return datoBusqueda;
     }
@@ -272,7 +272,7 @@ public class UsuarioController implements Serializable {
 
     public void setDeptoNulo(Departamento deptoNulo) {
         this.deptoNulo = deptoNulo;
-    }        
+    }
 
     public void setDatoBusqueda(String datoBusqueda) {
         this.datoBusqueda = datoBusqueda;
@@ -424,6 +424,12 @@ public class UsuarioController implements Serializable {
     public void deshabilitarRol() {
         if ("1".equals(grupo.getGruid())) {
             usuario.setUsuestado(false);
+            for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
+                usuarioProgramaFacade.remove(up);
+            }
+            for (UsuarioDepartamento ud : this.usuario.getUsuarioDepartamentoList()) {
+                usuarioDepartamentoFacade.remove(ud);
+            }
         } else {
             usuario.setUsuestado(false);
             for (UsuarioPrograma up : this.usuario.getUsuarioProgramaList()) {
@@ -1027,7 +1033,6 @@ public class UsuarioController implements Serializable {
         file = null;
         requestContext.update(":formEditarfoto:panel");
         requestContext.update(":UsuarioListForm:datalist");
-        
 
     }
 
