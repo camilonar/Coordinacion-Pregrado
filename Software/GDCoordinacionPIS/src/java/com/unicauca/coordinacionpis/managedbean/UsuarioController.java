@@ -998,7 +998,7 @@ public class UsuarioController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             requestContext.update("msg");
             requestContext.update("UsuarioEditForm");
-        } else if (rolActual == 0 && rolOriginal != rolActual) {
+        } else if (rolActual == 0) {
             deshabilitarRol();
         }
     }
