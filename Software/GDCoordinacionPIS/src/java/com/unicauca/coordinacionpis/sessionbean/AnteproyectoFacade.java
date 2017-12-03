@@ -40,6 +40,9 @@ public class AnteproyectoFacade extends AbstractFacade<Anteproyecto> {
     }
 
     public List<Anteproyecto> buscarProyecto(String datoBusqueda, Programa programa, Integer limit, Integer offset) {
+        
+       
+        
         Query query = getEntityManager().createNamedQuery("Anteproyecto.findByProgramaAndTitulo");
         query.setParameter("busqueda", "%" + datoBusqueda + "%");
         query.setParameter("programa", programa);
@@ -54,6 +57,22 @@ public class AnteproyectoFacade extends AbstractFacade<Anteproyecto> {
         List<Anteproyecto> resultList = query.getResultList();
 
         return resultList;
+    }
+    
+      public int contarbuscarProyecto(String datoBusqueda, Programa programa) {
+          
+        
+        Query query = getEntityManager().createNamedQuery("Anteproyecto.countFindByProgramaAndTitulo");
+        query.setParameter("busqueda", "%" + datoBusqueda + "%");
+        query.setParameter("programa", programa);
+//        query.setParameter("Limit", programa);
+//        query.setParameter("Offset", offset);
+
+     
+       
+       Long resultList = (Long) query.getSingleResult();
+
+        return Math.toIntExact(resultList);
     }
 
 }
