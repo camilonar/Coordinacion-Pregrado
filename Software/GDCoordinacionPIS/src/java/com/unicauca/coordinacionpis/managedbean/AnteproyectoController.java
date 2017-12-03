@@ -26,7 +26,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
+
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
@@ -65,12 +65,13 @@ public class AnteproyectoController implements Serializable {
      */
     private String datoBusqueda;
     
-     DataModel dataModelAnteproyecto = new LazyDataModel<Anteproyecto>() {
+     LazyDataModel<Anteproyecto> dataModelAnteproyecto = new LazyDataModel<Anteproyecto>() {
             @Override
             public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 
                 List<Anteproyecto> buscarProyecto = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),getPrgramaUsuario(),pageSize,first);
-                System.out.println("===="+buscarProyecto.size());
+                setRowCount(ejbAnteproyecto.count());
+               
                 return buscarProyecto;
                 
             }
@@ -372,15 +373,15 @@ public class AnteproyectoController implements Serializable {
 
     }
 
-    public DataModel getDataModelAnteproyecto() {
-        
+    public LazyDataModel<Anteproyecto> getDataModelAnteproyecto() {
         return dataModelAnteproyecto;
     }
 
-    public void setDataModelAnteproyecto(DataModel dataModelAnteproyecto) {
+    public void setDataModelAnteproyecto(LazyDataModel<Anteproyecto> dataModelAnteproyecto) {
         this.dataModelAnteproyecto = dataModelAnteproyecto;
     }
-    
+
+   
     
 
 }

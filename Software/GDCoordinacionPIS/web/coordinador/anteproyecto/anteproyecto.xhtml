@@ -18,7 +18,7 @@
                 <title>Gestión de Anteproyectos</title>
             </h:head>
             <h:body>
-                 <p:growl id="msg" showDetail="true" life="4000"/>
+                <p:growl id="msg" showDetail="true" life="4000"/>
                 <p:separator/>
                 <center><p:outputLabel value="Anteproyectos" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>
@@ -39,15 +39,17 @@
                             <p:ajax update="datalist"  event="keyup" />                              
                         </p:inputText>                          
                     </p:panelGrid>
-                    
-                   
-                    <p:dataTable value="#{anteproyectoController.anteproyectos}" 
+
+
+                    <p:dataTable value="#{anteproyectoController.dataModelAnteproyecto}" 
                                  id="datalist" paginator="true" lazy="true"
-                                 rowKey="#{item.idAnteproyecto}"
-                                 rows="10" emptyMessage="Sin documentos"
+                                 rows="8" 
+                                 
                                  rowsPerPageTemplate="2,5,10,20,30,40,50"
-                                 var="item">
-                       
+                                 var="item"
+                                 >
+
+
 
                         <p:column>
                             <f:facet name="header">
@@ -70,11 +72,11 @@
                             </f:facet>
                             <h:outputText value="#{item.directorAnteproyecto.nombreProfesor}"/>
                         </p:column>
-                         <p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Programa"/>
                             </f:facet>
-                             <h:outputText value="#{item.programaAnteproyecto.nombrePrograma}"/>
+                            <h:outputText value="#{item.programaAnteproyecto.nombrePrograma}"/>
                         </p:column>
 
                         <p:column>

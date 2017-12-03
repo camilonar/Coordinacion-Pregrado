@@ -51,7 +51,6 @@ public class AnteproyectoFacade extends AbstractFacade<Anteproyecto> {
         }
         List<Anteproyecto> resultList = query.getResultList();
 
-        System.out.println("===" + resultList.size());
         return resultList;
     }
 
