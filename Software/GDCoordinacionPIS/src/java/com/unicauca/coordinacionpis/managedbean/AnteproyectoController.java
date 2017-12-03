@@ -70,6 +70,7 @@ public class AnteproyectoController implements Serializable {
             public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 
                 List<Anteproyecto> buscarProyecto = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),getPrgramaUsuario(),pageSize,first);
+                
                 setRowCount(ejbAnteproyecto.count());
                
                 return buscarProyecto;

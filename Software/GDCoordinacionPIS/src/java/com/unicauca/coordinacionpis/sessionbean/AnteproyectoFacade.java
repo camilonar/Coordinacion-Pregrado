@@ -45,10 +45,12 @@ public class AnteproyectoFacade extends AbstractFacade<Anteproyecto> {
         query.setParameter("programa", programa);
 //        query.setParameter("Limit", programa);
 //        query.setParameter("Offset", offset);
+
         if (limit != null && offset != null) {
             query.setMaxResults(limit);
-            query.setFirstResult(offset * limit);
+            query.setFirstResult(offset);
         }
+       
         List<Anteproyecto> resultList = query.getResultList();
 
         return resultList;
