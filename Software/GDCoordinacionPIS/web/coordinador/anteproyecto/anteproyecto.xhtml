@@ -12,7 +12,12 @@
 
 
         <ui:define name="body">
+            <style type="text/css">
+                .datalist-noborder .ui-widget-content {
+                    border: none;
 
+                }
+            </style>
 
             <h:head>
                 <title>Gestión de Anteproyectos</title>
@@ -44,7 +49,7 @@
                     <p:dataTable value="#{anteproyectoController.dataModelAnteproyecto}" 
                                  id="datalist" paginator="true" lazy="true"
                                  rows="10" 
-                                 
+
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  var="item"
                                  >
@@ -55,7 +60,14 @@
                             <f:facet name="header">
                                 <h:outputText value="Título anteproyecto"/>
                             </f:facet>
-                            <h:outputText value="#{item.tituloAnteproyecto}"/>
+
+                            <p:link value="#{item.tituloAnteproyecto}" outcome="Ver.xhtml" >
+
+                                <f:param name="id" value="#{item.idAnteproyecto}"/>
+                            </p:link>
+
+
+
                         </p:column>
 
                         <p:column>
@@ -72,11 +84,18 @@
                             </f:facet>
                             <h:outputText value="#{item.directorAnteproyecto.nombreProfesor}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Programa"/>
+                                <h:outputText value="Estudiantes"/>
                             </f:facet>
-                            <h:outputText value="#{item.programaAnteproyecto.nombrePrograma}"/>
+                            <div class="datalist-noborder">
+                                <p:dataList   value="#{item.estudianteList}" var="estudiante">
+                                    <h:column  >
+                                        #{estudiante.nombreEstudiante}
+                                    </h:column>
+                                </p:dataList>
+                            </div>
                         </p:column>
 
                         <p:column>
