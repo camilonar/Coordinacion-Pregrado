@@ -24,6 +24,10 @@
 
 
             <h:body>
+                <p:separator/>
+                <p:button value="Editar" icon=" ui-icon-pencil" outcome="EditarAnteproyecto.xhtml" >
+                    <f:param name="id" value="#{anteproyectoController.anteproyectoSelected.idAnteproyecto}"/>
+                </p:button>
                 
                 <p:separator/>
                 <center><p:outputLabel value="Ver Anteproyecto: #{anteproyectoController.anteproyectoSelected.tituloAnteproyecto} " style="font-size: 15px !important; font-weight: bold;"/></center>
@@ -33,8 +37,8 @@
 
                     <p:row>
                         <p:column>
-                             <h:outputText value="Título Anteproyecto: " style="font-weight: bold;"/>
-                             <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" />
+                            <h:outputText value="Título Anteproyecto: " style="font-weight: bold;"/>
+                            <h:outputText value="#{anteproyectoController.anteproyectoSelected.tituloAnteproyecto}" />
                         </p:column>
                         <p:column>
                             <h:outputText value="Fecha:  " style="font-weight: bold;"/>                       
@@ -42,7 +46,7 @@
                                          value="#{anteproyectoController.anteproyectoSelected.fechaAnteproyecto}" showOn="button" disabled="true">     
                             </p:calendar>
                         </p:column>
-                        
+
                     </p:row> 
                     <p:row>
                         <p:column>
@@ -56,9 +60,9 @@
                             </h:outputText>
                         </p:column>
                     </p:row>
-                    
 
-                    
+
+
                 </p:panelGrid>
 
 
@@ -90,11 +94,11 @@
                 <p:tabView  id="tabviewdocuments" rendered="#{anteproyectoController.anteproyectoSelected.idAnteproyecto ne null}">
                     <p:tab title="Formato A">
 
-                       
+
                         <h:panelGrid columns="2" cellpadding="10">
 
                             <p:dataTable id="datalistformatoA" paginator="true"
-                                          rows="10" value="#{anteproyectoController.anteproyectoSelected.formatoaList}" var="documento" rowKey="#{documento.claveFormatoA}">
+                                         rows="10" value="#{anteproyectoController.anteproyectoSelected.formatoaList}" var="documento" rowKey="#{documento.claveFormatoA}">
 
 
                                 <p:column>
@@ -102,10 +106,10 @@
                                         <h:outputText value="Fecha"/>
                                     </f:facet>
                                     <h:outputText value="#{documento.anteproyectoFormatoA.fechaAnteproyecto}">
-                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
                                     </h:outputText>
-                                        
-                                        
+
+
                                 </p:column>
 
                                 <p:column>
@@ -136,15 +140,15 @@
 
                             <p:dataTable  paginator="true" value="#{anteproyectoController.anteproyectoSelected.formatobList}"  var="documento" > 
 
-                                 <p:column>
+                                <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Fecha"/>
                                     </f:facet>
                                     <h:outputText value="#{documento.anteproyectoFormatoB.fechaAnteproyecto}">
-                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
                                     </h:outputText>
-                                        
-                                        
+
+
                                 </p:column> 
                                 <p:column>
                                     <f:facet name="header">
@@ -162,24 +166,24 @@
                                 <p:commandButton id="createButton"
                                                  value="Agregar Formato B" onclick="PF('dlgRegistroFormatoB').show()"/>
                             </h:form>
-                            
+
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="Formato C">
                         <h:panelGrid columns="2" cellpadding="10">
                             <p:dataTable  paginator="true" value="#{anteproyectoController.anteproyectoSelected.formatocList}"  var="documento">
-                                
-                                 <p:column>
+
+                                <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Fecha"/>
                                     </f:facet>
-                                     <h:outputText value="#{documento.anteproyectoFormatoC.fechaAnteproyecto}">
-                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    <h:outputText value="#{documento.anteproyectoFormatoC.fechaAnteproyecto}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
                                     </h:outputText>
-                                        
-                                        
+
+
                                 </p:column>
-                                
+
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Acciones"/>
@@ -190,20 +194,22 @@
                                 </p:column>
 
                             </p:dataTable>
-                            
-                             <h:form  >
+
+                            <h:form  >
                                 <p:commandButton id="createButton"
                                                  value="Agregar Formato C" onclick="PF('dlgRegistroFormatoC').show()"/>
                             </h:form>
-                            
+
                         </h:panelGrid>
                     </p:tab>
                 </p:tabView>
 
+
+
                 <ui:include src="FormatoA/registrarFormatoA.xhtml"/> 
                 <ui:include src="FormatoB/registrarFormatoB.xhtml"/> 
                 <ui:include src="FormatoC/registrarFormatoC.xhtml"/> 
-                
+
                 <p:dialog widgetVar="visualizarPDF" modal="true">
                     <h:form id="visualizacion">
                         <p:media value="#{visualizarDocumentoBean.streamedContent}" width="750" height="560" player="pdf" />

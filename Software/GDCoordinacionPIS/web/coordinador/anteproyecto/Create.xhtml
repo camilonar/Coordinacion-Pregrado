@@ -15,9 +15,9 @@
 
         <ui:define name="body">
             <h:body>
-                <p:growl id="msg" rendered="#{not facesContext.validationFailed}" /> 
+                
 
-
+                <p:growl id="msg" rendered="#{not facesContext.validationFailed}" showDetail="true" life="4000"/>
                 <p:separator/>
                 <center><p:outputLabel value="Gestión de anteproyectos-Registrar" style="font-size: 15px !important; font-weight: bold;"/></center>
                 <p:separator/>

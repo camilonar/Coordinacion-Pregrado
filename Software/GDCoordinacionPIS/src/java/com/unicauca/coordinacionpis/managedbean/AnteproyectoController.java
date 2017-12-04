@@ -65,24 +65,20 @@ public class AnteproyectoController implements Serializable {
      * Valor de la busqueda sobre anteproyecto
      */
     private String datoBusqueda;
-    
-     LazyDataModel<Anteproyecto> dataModelAnteproyecto = new LazyDataModel<Anteproyecto>() {
-            @Override
-            public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                
-                
-                Programa programa = getPrgramaUsuario() ;
-                setRowCount( ejbAnteproyecto.contarbuscarProyecto(datoBusqueda.toLowerCase(),programa) );
-                
-                List<Anteproyecto> buscarProyecto = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),programa,pageSize,first);
-                
-                
-               
-                return buscarProyecto;
-                
-            }
-        };
-    
+
+    LazyDataModel<Anteproyecto> dataModelAnteproyecto = new LazyDataModel<Anteproyecto>() {
+        @Override
+        public List<Anteproyecto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
+            Programa programa = getPrgramaUsuario();
+            setRowCount(ejbAnteproyecto.contarbuscarProyecto(datoBusqueda.toLowerCase(), programa));
+
+            List<Anteproyecto> buscarProyecto = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(), programa, pageSize, first);
+
+            return buscarProyecto;
+
+        }
+    };
 
     @EJB
     private UsuarioFacade ejbUsuario;
@@ -100,7 +96,7 @@ public class AnteproyectoController implements Serializable {
      */
     public void cargarAnteproyecto() {
         //verificar si puede cargar estoo para un usuario determinado ...s....        
-        System.out.println("---:" + this.anteproyectoSelected);
+        //System.out.println("---:" + this.anteproyectoSelected);
         if (this.anteproyectoSelected.getIdAnteproyecto() == null) {
             return;
         }
@@ -115,7 +111,7 @@ public class AnteproyectoController implements Serializable {
 
             return;
         }
-     
+
         if (!Objects.equals(ant.getProgramaAnteproyecto().getIdPrograma(), this.getPrgramaUsuario().getIdPrograma())) {
             //TODO: NO PUEDE MODIFICARLO POR QUE EL ANTEPROYECTO NO ES DE SU PROGRAMA, 
             RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -129,21 +125,17 @@ public class AnteproyectoController implements Serializable {
         this.anteproyectoSelected = ant;
         this.estudiantes = this.anteproyectoSelected.getEstudianteList();
         this.directorSelected = this.anteproyectoSelected.getDirectorAnteproyecto();
-        System.out.println("Proyecto cargado con exito");
 
     }
 
     public AnteproyectoController() {
-      
-       
+
         datoBusqueda = "";
         estudianteSelected = new Estudiante();
         this.estudiantes = new ArrayList<>();
         this.anteproyectoSelected = new Anteproyecto();
         this.directorSelected = new Profesor();
-        
-        
-        
+
     }
 
     public String getDatoBusqueda() {
@@ -197,9 +189,8 @@ public class AnteproyectoController implements Serializable {
     }
 
     public void buscarAnteproyectos() {
-        anteproyectos = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(),getPrgramaUsuario(),null,null);
-        
-        
+        anteproyectos = ejbAnteproyecto.buscarProyecto(datoBusqueda.toLowerCase(), getPrgramaUsuario(), null, null);
+
     }
 
     public Date obtenerFechaActual() {
@@ -214,18 +205,22 @@ public class AnteproyectoController implements Serializable {
         if (this.estudiantes.size() < 2 && !this.estudiantes.contains(estudianteSelected)) {
             this.estudiantes.add(estudianteSelected);
             estudianteSelected = new Estudiante();
-            System.out.println("agregado");
+            // System.out.println("agregado");
         } else {
-
+           
             RequestContext requestContext = RequestContext.getCurrentInstance();
             if (this.estudiantes.size() >= 2) {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Solo es posible agregar 2 estudiantes por anteproyecto.");
-                FacesContext.getCurrentInstance().addMessage(null, message);
-                requestContext.update("msgEstudiantes");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Solo es posible agregar 2 estudiantes por anteproyecto.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                requestContext.update("msg");
+
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El estudiante ya está agregado a este anteproyecto.");
-                FacesContext.getCurrentInstance().addMessage(null, message);
-                requestContext.update("msgEstudiantes");
+
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El estudiante ya está agregado a este anteproyecto.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                requestContext.update("msg");
 
             }
 
@@ -242,7 +237,7 @@ public class AnteproyectoController implements Serializable {
     public void removerEstListEstudiantes(Estudiante e) {
 
         if (this.estudiantes.remove(e)) {
-            System.out.println("Estudiante eliminador " + e.getNombreEstudiante());
+            //System.out.println("Estudiante eliminador " + e.getNombreEstudiante());
         }
 
     }
@@ -264,16 +259,15 @@ public class AnteproyectoController implements Serializable {
      */
     public void autocompletarDirector() {
 
-        System.out.println("a:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
-
+        //System.out.println("a:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
         Profesor completo = this.ejbProfesor.findByCodigo(directorSelected.getCodigoProfesor());
         if (completo != null) {
 
             this.directorSelected = completo;
-            System.out.println("si hizo el cambio");
+            //System.out.println("si hizo el cambio");
         }
 
-        System.out.println("d:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
+        //  System.out.println("d:" + directorSelected.getIdProfesor() + "," + directorSelected.getNombreProfesor());
     }
 
     /**
@@ -307,7 +301,7 @@ public class AnteproyectoController implements Serializable {
         this.ejbAnteproyecto.create(anteproyectoSelected);
         this.anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.edit(anteproyectoSelected);
-        System.out.println("E completo");
+        //  System.out.println("E completo");
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Anteproyecto creado con exito.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -324,7 +318,6 @@ public class AnteproyectoController implements Serializable {
 
         for (Estudiante estudiante : estudiantes) {
 
-           
             if (this.ejbEstudiante.findByCodigo(estudiante.getCodigoEstudiante()) == null) {
                 estudiante.setProgramaEstudiante(prgramaUsuario);
                 this.ejbEstudiante.create(estudiante);
@@ -345,7 +338,7 @@ public class AnteproyectoController implements Serializable {
         anteproyectoSelected.setProgramaAnteproyecto(prgramaUsuario);
         anteproyectoSelected.setEstudianteList(estudiantes);
         this.ejbAnteproyecto.edit(anteproyectoSelected);
-        System.out.println("E completo");
+        //System.out.println("E completo");
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Anteproyecto editado con exito.");
@@ -364,11 +357,11 @@ public class AnteproyectoController implements Serializable {
      * Carga un anteporyecto para edición
      */
     public void cargarDatosEdicion() {
-        
+
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("formMetadatosEditAnteproyecto");
         requestContext.execute("PF('dlgEditarAnteproyecto').show()");
-        System.out.println("mande a ejecutar");
+        // System.out.println("mande a ejecutar");
     }
 
     public Programa getPrgramaUsuario() {
@@ -387,8 +380,5 @@ public class AnteproyectoController implements Serializable {
     public void setDataModelAnteproyecto(LazyDataModel<Anteproyecto> dataModelAnteproyecto) {
         this.dataModelAnteproyecto = dataModelAnteproyecto;
     }
-
-   
-    
 
 }
