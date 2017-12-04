@@ -9,9 +9,9 @@
     <p:dialog id="AnteproyectoCreateDlgA"
               widgetVar="dlgRegistroFormatoA" modal="true" resizable="false" width="900"  position="300,50"  
               closable="true" header="Registro Formato A"> 
-
+    <p:ajax event="close" update="tabviewdocuments" />
         
-        <p:ajax event="close" listener="#{registroFormatoAController.cancelarFormatoA()}"/>
+        
         <h:form id="formSeleccionarArchivoFormatoA">
             <p:outputLabel rendered="#{!registroFormatoAController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del Formato A" 
@@ -237,7 +237,7 @@
                         <p:commandButton  id="submit-btn"
                                           value="Registrar"   
                                           action="#{registroFormatoAController.aceptarFormatoA(anteproyectoController.anteproyectoSelected)}" 
-                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                                         onstart="PF('cargando').show()" onsuccess="PF('cargando').hide()" />
 
                     </p:column>
                 </p:row>

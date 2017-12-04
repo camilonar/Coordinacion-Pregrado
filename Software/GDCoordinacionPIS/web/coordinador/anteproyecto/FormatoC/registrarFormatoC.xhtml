@@ -10,7 +10,7 @@
               widgetVar="dlgRegistroFormatoC" modal="true" resizable="false" width="900"  position="300,50"  
               closable="true" header="Registro Formato C"> 
 
-        <p:ajax event="close" listener="#{registroFormatoCController.cancelarFormatoC()}"/>
+       <p:ajax event="close" update="tabviewdocuments" />
         <h:form id="formSeleccionarArchivoFormatoC">
             <p:outputLabel rendered="#{!registroFormatoCController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del Formato C" 
@@ -213,9 +213,9 @@
                         </p:button>                        
 
                         <p:commandButton  id="submit-btn"
-                                          value="Registrar"   update= ""
+                                          value="Registrar"  
                                           action="#{registroFormatoCController.aceptarFormatoC(anteproyectoController.anteproyectoSelected)}" 
-                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 
                     </p:column>
                 </p:row>

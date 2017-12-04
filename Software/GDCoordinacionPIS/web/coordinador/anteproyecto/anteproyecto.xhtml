@@ -90,7 +90,7 @@
                                 <h:outputText value="Estudiantes"/>
                             </f:facet>
                             <div class="datalist-noborder">
-                                <p:dataList   value="#{item.estudianteList}" var="estudiante">
+                                <p:dataList   emptyMessage="No hay estudiantes" value="#{item.estudianteList}" var="estudiante">
                                     <h:column  >
                                         #{estudiante.nombreEstudiante}
                                     </h:column>

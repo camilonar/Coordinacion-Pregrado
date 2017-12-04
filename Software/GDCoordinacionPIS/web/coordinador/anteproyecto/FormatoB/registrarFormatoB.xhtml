@@ -10,7 +10,7 @@
               widgetVar="dlgRegistroFormatoB" modal="true" resizable="false" width="900"  position="300,50"  
               closable="true" header="Registro Formato B"> 
 
-        <p:ajax event="close" listener="#{registroFormatoBController.cancelarFormatoB()}"/>
+        <p:ajax event="close" update="tabviewdocuments" />
         <h:form id="formSeleccionarArchivoFormatoB">
             <p:outputLabel rendered="#{!registroFormatoBController.exitoSubirArchivo}" 
                            value="Seleccione el archivo pdf del Formato B" 
@@ -233,9 +233,9 @@
                         </p:button>                
 
                         <p:commandButton  id="submit-btn"
-                                          value="Registrar"   update= ""
+                                          value="Registrar"  
                                           action="#{registroFormatoBController.aceptarFormatoB(anteproyectoController.anteproyectoSelected)}" 
-                                          onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
+                                           onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()" />
 
                     </p:column>
                 </p:row>

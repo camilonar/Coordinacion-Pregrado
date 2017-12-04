@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -114,8 +115,8 @@ public class AnteproyectoController implements Serializable {
 
             return;
         }
-
-        if (ant.getProgramaAnteproyecto().getIdPrograma() != this.getPrgramaUsuario().getIdPrograma()) {
+     
+        if (!Objects.equals(ant.getProgramaAnteproyecto().getIdPrograma(), this.getPrgramaUsuario().getIdPrograma())) {
             //TODO: NO PUEDE MODIFICARLO POR QUE EL ANTEPROYECTO NO ES DE SU PROGRAMA, 
             RequestContext requestContext = RequestContext.getCurrentInstance();
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No tiene Acceso a este Antreproyecto");
@@ -323,7 +324,8 @@ public class AnteproyectoController implements Serializable {
 
         for (Estudiante estudiante : estudiantes) {
 
-            if (this.ejbEstudiante.find(estudiante.getIdEstudiante()) == null) {
+           
+            if (this.ejbEstudiante.findByCodigo(estudiante.getCodigoEstudiante()) == null) {
                 estudiante.setProgramaEstudiante(prgramaUsuario);
                 this.ejbEstudiante.create(estudiante);
             }
