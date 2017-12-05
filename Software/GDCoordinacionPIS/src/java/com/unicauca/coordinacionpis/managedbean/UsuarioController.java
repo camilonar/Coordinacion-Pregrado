@@ -54,6 +54,9 @@ import org.primefaces.model.UploadedFile;
 
 @Named("usuarioController")
 @SessionScoped
+/**
+ * Controlador de las vistas: registrar, editar, listar y ver usuario 
+ */
 public class UsuarioController implements Serializable {
 
     /**
@@ -177,123 +180,12 @@ public class UsuarioController implements Serializable {
         tipo = TIPO_USUARIO.ADMIN;
         deptoNulo = new Departamento(-1);
     }
-
-    /**
-     * Obtiene el programa del usuario seleccionado, si no hay unprograma se
-     * devuelve por defecto el programa de sistemas
-     *
-     * @return programa del usuario seleecionado
-     */
-    public Programa getPrograma() {
-        if (programa == null) {
-            programa = new Programa(-1);
-        }
-        return programa;
-    }
-
-    public void setPrograma(Programa programa) {
-        this.programa = programa;
-    }
-
     @PostConstruct
     public void init() {
 
     }
-
-    public boolean isFotoDefecto() {
-        return fotoDefecto;
-    }
-
-    public Usuario getSelected() {
-        return usuario;
-    }
-
-    public void setSelected(Usuario selected) {
-        this.usuario = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
-
     protected void initializeEmbeddableKey() {
     }
-
-    private UsuarioFacade getFacade() {
-        return ejbUsuario;
-    }
-
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
-
-    public Grupo getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
-
-    public boolean isCampoContrasena() {
-        return campoContrasena;
-    }
-
-    public void setCampoContrasena(boolean campoContrasena) {
-        this.campoContrasena = campoContrasena;
-    }
-
-    public List<Usuario> getFiltroBusqueda() {
-        return filtroBusqueda;
-    }
-
-    public void setFiltroBusqueda(List<Usuario> filtroBusqueda) {
-        this.filtroBusqueda = filtroBusqueda;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public String getDatoBusqueda() {
-        return datoBusqueda;
-    }
-
-    public Departamento getDeptoNulo() {
-        return deptoNulo;
-    }
-
-    public void setDeptoNulo(Departamento deptoNulo) {
-        this.deptoNulo = deptoNulo;
-    }
-
-    public void setDatoBusqueda(String datoBusqueda) {
-        this.datoBusqueda = datoBusqueda;
-    }
-
-    public SimpleDateFormat getFormatoFecha() {
-        return formatoFecha;
-    }
-
-    public void setFormatoFecha(SimpleDateFormat formatoFecha) {
-        this.formatoFecha = formatoFecha;
-    }
-
-    public int getRolActual() {
-        return rolActual;
-    }
-
-    public void setRolActual(int rolActual) {
-        this.rolActual = rolActual;
-    }
-
     /**
      * Prepara lo necesario para la creación de un usuario
      *
@@ -320,14 +212,6 @@ public class UsuarioController implements Serializable {
         this.programa = null;
         initializeEmbeddableKey();
         return usuario;
-    }
-
-    public boolean isCampoFoto() {
-        return campoFoto;
-    }
-
-    public void setCampoFoto(boolean campoFoto) {
-        this.campoFoto = campoFoto;
     }
 
     /**
@@ -731,20 +615,6 @@ public class UsuarioController implements Serializable {
         requestContext.update("UsuarioEditForm");
     }
 
-    /**
-     * Obtiene la fecha de nacimiento del usuario
-     *
-     * @return
-     */
-    public String getFecha() {
-        String fechaNacimiento = "";
-        if (usuario.getUsufechanacimiento() != null) {
-            fechaNacimiento = formatoFecha.format(usuario.getUsufechanacimiento());
-        }
-
-        return fechaNacimiento;
-    }
-
     public void buscarUsuario() {
         this.items = ejbUsuario.buscarUsuarioEjb(this.datoBusqueda.toLowerCase());
     }
@@ -790,11 +660,6 @@ public class UsuarioController implements Serializable {
         }
     }
 
-    public List<Usuario> getItems() {
-        ejbUsuario.limpiarCache();
-        buscarUsuario();
-        return items;
-    }
 
     public void cargarFoto(FileUploadEvent event) {
         file = event.getFile();
@@ -828,43 +693,9 @@ public class UsuarioController implements Serializable {
         }
     }
 
-    public Usuario getUsuario(java.lang.Long id) {
-        return getFacade().find(id);
-    }
+    
 
-    public List<Usuario> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
-    }
-
-    public List<Usuario> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
-    }
-
-    public StreamedContent getImagenDefecto() {
-        return Utilidades.getImagenPorDefecto("foto");
-    }
-
-    /**
-     * Obtiene el flujo de la imagen para mostrar en la pantalla
-     *
-     * @return
-     */
-    public StreamedContent getImagenFlujo() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            {
-                return new DefaultStreamedContent();
-            }
-        } else {
-            String id = context.getExternalContext().getRequestParameterMap().get("id");
-            Usuario usu = ejbUsuario.buscarPorIdUsuario(Long.valueOf(id)).get(0);
-            if (usu.getUsufoto() == null) {
-                return Utilidades.getImagenPorDefecto("foto");
-            } else {
-                return new DefaultStreamedContent(new ByteArrayInputStream(usu.getUsufoto()));
-            }
-        }
-    }
+    
 
     public StreamedContent getImagenFlujoEditar() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -1127,18 +958,7 @@ public class UsuarioController implements Serializable {
         }
     }
 
-    public StreamedContent getImagen(Usuario usuario) {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        String id = context.getExternalContext().getRequestParameterMap().get("idUsu");
-        if (usuario.getUsufoto() == null) {
-            return Utilidades.getImagenPorDefecto("foto");
-        } else {
-            return new DefaultStreamedContent(new ByteArrayInputStream(usuario.getUsufoto()));
-        }
-
-    }
+    
 
     /**
      * Limpia el formulario del registro del usuario
@@ -1158,17 +978,7 @@ public class UsuarioController implements Serializable {
         this.tipo = TIPO_USUARIO.ADMIN;
     }
 
-    public Date getFechaHoy() {
-        Date min = new Date();
-        min.setYear(min.getYear() - 18);
-        min.setMonth(11);
-        min.setDate(31);
-        return min;
-    }
-
-    public TIPO_USUARIO getTipo() {
-        return tipo;
-    }
+    
 
     public void desactivarRol(long id) {
         Usuario usuario = ejbUsuario.buscarPorIdUsuario(id).get(0);
@@ -1179,6 +989,204 @@ public class UsuarioController implements Serializable {
     public void establecerFotoPorDefecto() {
         System.out.println("establecer foto por defecto");
         this.fotoDefecto = true;
+    }
+
+    /**
+     * Métodos get y set
+     */
+        /**
+     * Obtiene el programa del usuario seleccionado, si no hay unprograma se
+     * devuelve por defecto el programa de sistemas
+     *
+     * @return programa del usuario seleecionado
+     */
+    public Programa getPrograma() {
+        if (programa == null) {
+            programa = new Programa(-1);
+        }
+        return programa;
+    }
+
+    public void setPrograma(Programa programa) {
+        this.programa = programa;
+    }
+    public boolean isFotoDefecto() {
+        return fotoDefecto;
+    }
+
+    public Usuario getSelected() {
+        return usuario;
+    }
+
+    public void setSelected(Usuario selected) {
+        this.usuario = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+    private UsuarioFacade getFacade() {
+        return ejbUsuario;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+
+    public boolean isCampoContrasena() {
+        return campoContrasena;
+    }
+
+    public void setCampoContrasena(boolean campoContrasena) {
+        this.campoContrasena = campoContrasena;
+    }
+
+    public List<Usuario> getFiltroBusqueda() {
+        return filtroBusqueda;
+    }
+
+    public void setFiltroBusqueda(List<Usuario> filtroBusqueda) {
+        this.filtroBusqueda = filtroBusqueda;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getDatoBusqueda() {
+        return datoBusqueda;
+    }
+
+    public Departamento getDeptoNulo() {
+        return deptoNulo;
+    }
+
+    public void setDeptoNulo(Departamento deptoNulo) {
+        this.deptoNulo = deptoNulo;
+    }
+
+    public void setDatoBusqueda(String datoBusqueda) {
+        this.datoBusqueda = datoBusqueda;
+    }
+
+    public SimpleDateFormat getFormatoFecha() {
+        return formatoFecha;
+    }
+
+    public void setFormatoFecha(SimpleDateFormat formatoFecha) {
+        this.formatoFecha = formatoFecha;
+    }
+
+    public int getRolActual() {
+        return rolActual;
+    }
+
+    public void setRolActual(int rolActual) {
+        this.rolActual = rolActual;
+    }
+
+    public boolean isCampoFoto() {
+        return campoFoto;
+    }
+
+    public void setCampoFoto(boolean campoFoto) {
+        this.campoFoto = campoFoto;
+    }
+    /**
+     * Obtiene la fecha de nacimiento del usuario
+     *
+     * @return
+     */
+    public String getFecha() {
+        String fechaNacimiento = "";
+        if (usuario.getUsufechanacimiento() != null) {
+            fechaNacimiento = formatoFecha.format(usuario.getUsufechanacimiento());
+        }
+
+        return fechaNacimiento;
+    }
+
+    public List<Usuario> getItems() {
+        ejbUsuario.limpiarCache();
+        buscarUsuario();
+        return items;
+    }
+    public Usuario getUsuario(java.lang.Long id) {
+        return getFacade().find(id);
+    }
+
+    public List<Usuario> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
+    }
+
+    public List<Usuario> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
+    }
+
+    public StreamedContent getImagenDefecto() {
+        return Utilidades.getImagenPorDefecto("foto");
+    }
+
+    /**
+     * Obtiene el flujo de la imagen para mostrar en la pantalla
+     *
+     * @return
+     */
+    public StreamedContent getImagenFlujo() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            {
+                return new DefaultStreamedContent();
+            }
+        } else {
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            Usuario usu = ejbUsuario.buscarPorIdUsuario(Long.valueOf(id)).get(0);
+            if (usu.getUsufoto() == null) {
+                return Utilidades.getImagenPorDefecto("foto");
+            } else {
+                return new DefaultStreamedContent(new ByteArrayInputStream(usu.getUsufoto()));
+            }
+        }
+    }
+
+    public StreamedContent getImagen(Usuario usuario) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        String id = context.getExternalContext().getRequestParameterMap().get("idUsu");
+        if (usuario.getUsufoto() == null) {
+            return Utilidades.getImagenPorDefecto("foto");
+        } else {
+            return new DefaultStreamedContent(new ByteArrayInputStream(usuario.getUsufoto()));
+        }
+
+    }
+
+    public Date getFechaHoy() {
+        Date min = new Date();
+        min.setYear(min.getYear() - 18);
+        min.setMonth(11);
+        min.setDate(31);
+        return min;
+    }
+
+    public TIPO_USUARIO getTipo() {
+        return tipo;
     }
 
     public TIPO_USUARIO getTipoAdmin() {
