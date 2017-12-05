@@ -19,6 +19,11 @@ import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador de las vistas: perfilUsuario.
+ * También se encarga de la gestión del cambio de contraseña del usuario de la
+ * sesión
+ */
 public class PerfilUsuarioController implements Serializable {
     
     /**

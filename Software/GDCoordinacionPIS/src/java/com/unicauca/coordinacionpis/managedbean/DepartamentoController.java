@@ -4,7 +4,6 @@ import com.unicauca.coordinacionpis.entidades.Departamento;
 import com.unicauca.coordinacionpis.managedbean.util.JsfUtil;
 import com.unicauca.coordinacionpis.managedbean.util.JsfUtil.PersistAction;
 import com.unicauca.coordinacionpis.sessionbean.DepartamentoFacade;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +22,13 @@ import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador que permite desplegar el listado de departamentos registrados
+ * en la aplicación.
+ * Controlador de las vistas: agregar, editar, listar y ver departamento.
+ * También se encarga de la gestión de un departamento: creación, edición y 
+ * consulta de estos
+ */
 public class DepartamentoController implements Serializable {
     /**
      * Conexión a la tabla departamento
@@ -42,22 +48,9 @@ public class DepartamentoController implements Serializable {
         departamento = new Departamento();
     }
 
-    public Departamento getSelected() {
-        return departamento;
-    }
-
-    public void setSelected(Departamento selected) {
-        this.departamento = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
+    
 
     protected void initializeEmbeddableKey() {
-    }
-
-    private DepartamentoFacade getFacade() {
-        return ejbFacade;
     }
 
     public Departamento prepareCreate() {
@@ -83,13 +76,6 @@ public class DepartamentoController implements Serializable {
             departamento = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
-    }
-
-    public List<Departamento> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -118,18 +104,6 @@ public class DepartamentoController implements Serializable {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }
-    }
-
-    public Departamento getDepartamento(java.lang.Integer id) {
-        return getFacade().find(id);
-    }
-
-    public List<Departamento> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
-    }
-
-    public List<Departamento> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
     }
 
     @FacesConverter(forClass = Departamento.class)
@@ -273,5 +247,40 @@ public class DepartamentoController implements Serializable {
         requestContext.execute("PF('mensajeConfirmarEliminar').show()");
 
     }
+    
+    /**
+     * Métodos de get y set
+     */
+        public Departamento getSelected() {
+        return departamento;
+    }
 
+    public void setSelected(Departamento selected) {
+        this.departamento = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+
+
+    private DepartamentoFacade getFacade() {
+        return ejbFacade;
+    }
+    public List<Departamento> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
+        }
+        return items;
+    }
+    public Departamento getDepartamento(java.lang.Integer id) {
+        return getFacade().find(id);
+    }
+
+    public List<Departamento> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
+    }
+
+    public List<Departamento> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
+    }
 }

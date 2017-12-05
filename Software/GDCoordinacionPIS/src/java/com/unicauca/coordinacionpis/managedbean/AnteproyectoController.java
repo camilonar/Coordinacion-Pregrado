@@ -39,6 +39,11 @@ import org.primefaces.model.SortOrder;
  */
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador de las vistas: anteproyecto, EditarAnteproyecto, Ver, create y verAnteproyecto.
+ * También es el encargado de la gestión de un usuario: crear, editar, cambiar
+ * rol, desactivar. 
+ */
 public class AnteproyectoController implements Serializable {
 
     /**
@@ -136,56 +141,6 @@ public class AnteproyectoController implements Serializable {
         this.anteproyectoSelected = new Anteproyecto();
         this.directorSelected = new Profesor();
 
-    }
-
-    public String getDatoBusqueda() {
-        return datoBusqueda;
-    }
-
-    public void setDatoBusqueda(String datoBusqueda) {
-        this.datoBusqueda = datoBusqueda;
-    }
-
-    public Estudiante getEstudianteSelected() {
-        return estudianteSelected;
-    }
-
-    public void setEstudianteSelected(Estudiante estudianteSelected) {
-        this.estudianteSelected = estudianteSelected;
-    }
-
-    public List<Estudiante> getEstudiantes() {
-        return estudiantes;
-    }
-
-    public void setEstudiantes(List<Estudiante> estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-
-    public Anteproyecto getAnteproyectoSelected() {
-        return anteproyectoSelected;
-    }
-
-    public void setAnteproyectoSelected(Anteproyecto anteproyectoSelected) {
-        this.anteproyectoSelected = anteproyectoSelected;
-    }
-
-    public Profesor getDirectorSelected() {
-        return directorSelected;
-    }
-
-    public void setDirectorSelected(Profesor directorSelected) {
-        this.directorSelected = directorSelected;
-    }
-
-    public List<Anteproyecto> getAnteproyectos() {
-        ejbAnteproyecto.limpiarCache();
-        buscarAnteproyectos();
-        return anteproyectos;
-    }
-
-    public void setAnteproyectos(List<Anteproyecto> anteproyectos) {
-        this.anteproyectos = anteproyectos;
     }
 
     public void buscarAnteproyectos() {
@@ -348,10 +303,7 @@ public class AnteproyectoController implements Serializable {
 
     }
 
-    public void setAnteproyecto(Anteproyecto a) {
-        this.anteproyectoSelected = a;
-        this.estudiantes = a.getEstudianteList();
-    }
+    
 
     /**
      * Carga un anteporyecto para edición
@@ -380,5 +332,57 @@ public class AnteproyectoController implements Serializable {
     public void setDataModelAnteproyecto(LazyDataModel<Anteproyecto> dataModelAnteproyecto) {
         this.dataModelAnteproyecto = dataModelAnteproyecto;
     }
+    
+    public String getDatoBusqueda() {
+        return datoBusqueda;
+    }
 
+    public void setDatoBusqueda(String datoBusqueda) {
+        this.datoBusqueda = datoBusqueda;
+    }
+
+    public Estudiante getEstudianteSelected() {
+        return estudianteSelected;
+    }
+    public void setEstudianteSelected(Estudiante estudianteSelected) {
+        this.estudianteSelected = estudianteSelected;
+    }
+
+    public List<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(List<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+
+    public Anteproyecto getAnteproyectoSelected() {
+        return anteproyectoSelected;
+    }
+
+    public void setAnteproyectoSelected(Anteproyecto anteproyectoSelected) {
+        this.anteproyectoSelected = anteproyectoSelected;
+    }
+
+    public Profesor getDirectorSelected() {
+        return directorSelected;
+    }
+
+    public void setDirectorSelected(Profesor directorSelected) {
+        this.directorSelected = directorSelected;
+    }
+
+    public List<Anteproyecto> getAnteproyectos() {
+        ejbAnteproyecto.limpiarCache();
+        buscarAnteproyectos();
+        return anteproyectos;
+    }
+
+    public void setAnteproyectos(List<Anteproyecto> anteproyectos) {
+        this.anteproyectos = anteproyectos;
+    }
+    public void setAnteproyecto(Anteproyecto a) {
+        this.anteproyectoSelected = a;
+        this.estudiantes = a.getEstudianteList();
+    }
 }

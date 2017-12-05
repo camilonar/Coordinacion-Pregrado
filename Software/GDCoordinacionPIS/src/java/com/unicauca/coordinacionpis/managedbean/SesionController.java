@@ -29,6 +29,12 @@ import org.primefaces.model.StreamedContent;
 
 @ManagedBean
 @SessionScoped
+/**
+ * Controlador de la vista: sinSesion/index.
+ * Encargada de gestionar el inicio de sesión de un usuario, es decir,
+ * determina si las credenciales de acceso son correctas y si el usuario
+ * tiene permiso para acceder a la aplicación. 
+ */
 public class SesionController implements Serializable {
     /**
      * Facade para la conexión a la tabla usuario-grupo
@@ -92,81 +98,7 @@ public class SesionController implements Serializable {
         opcionesCoordinador = true;
     }
 
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
-    public String getPlantilla() {
-        return plantilla;
-    }
-
-    public void setPlantilla(String plantilla) {
-        this.plantilla = plantilla;
-    }
-
-    public String getNombreDeUsuario() {
-        return nombreDeUsuario;
-    }
-
-    public void setNombreDeUsuario(String nombreDeUsuario) {
-        this.nombreDeUsuario = nombreDeUsuario;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    public boolean isHaySesion() {
-        return haySesion;
-    }
-
-    public void setHaySesion(boolean haySesion) {
-        this.haySesion = haySesion;
-    }
-
-    public boolean isErrorSesion() {
-        return errorSesion;
-    }
-
-    public void setErrorSesion(boolean errorSesion) {
-        this.errorSesion = errorSesion;
-    }
-
-    public String getIdentificacion() {
-        return identificacion;
-    }
-
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
-    }
-
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
-    }
-
-    public boolean isOpcionesCoordinador() {
-        return opcionesCoordinador;
-    }
-
-    public void setOpcionesCoordinador(boolean opcionesCoordinador) {
-        this.opcionesCoordinador = opcionesCoordinador;
-    }
-
-    public boolean isOpcionesAdministrador() {
-        return opcionesAdministrador;
-    }
-
-    public void setOpcionesAdministrador(boolean opcionesAdministrador) {
-        this.opcionesAdministrador = opcionesAdministrador;
-    }
     /**
      * Entrada a la aplicación, determina si las credenciales son correctas
      * y redirige el usuario a la pagina que le corresponda según su rol
@@ -350,5 +282,82 @@ public class SesionController implements Serializable {
         }
         
     }
+    /**
+     * Métodos de Get y Set
+     */
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+    
+    public String getPlantilla() {
+        return plantilla;
+    }
 
+    public void setPlantilla(String plantilla) {
+        this.plantilla = plantilla;
+    }
+
+    public String getNombreDeUsuario() {
+        return nombreDeUsuario;
+    }
+
+    public void setNombreDeUsuario(String nombreDeUsuario) {
+        this.nombreDeUsuario = nombreDeUsuario;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public boolean isHaySesion() {
+        return haySesion;
+    }
+
+    public void setHaySesion(boolean haySesion) {
+        this.haySesion = haySesion;
+    }
+
+    public boolean isErrorSesion() {
+        return errorSesion;
+    }
+
+    public void setErrorSesion(boolean errorSesion) {
+        this.errorSesion = errorSesion;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public boolean isOpcionesCoordinador() {
+        return opcionesCoordinador;
+    }
+
+    public void setOpcionesCoordinador(boolean opcionesCoordinador) {
+        this.opcionesCoordinador = opcionesCoordinador;
+    }
+
+    public boolean isOpcionesAdministrador() {
+        return opcionesAdministrador;
+    }
+
+    public void setOpcionesAdministrador(boolean opcionesAdministrador) {
+        this.opcionesAdministrador = opcionesAdministrador;
+    }
 }

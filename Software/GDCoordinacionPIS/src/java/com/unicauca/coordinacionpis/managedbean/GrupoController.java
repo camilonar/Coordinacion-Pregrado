@@ -21,6 +21,10 @@ import javax.faces.convert.FacesConverter;
 
 @Named("grupoController")
 @SessionScoped
+/**
+ * Controlador para listar los grupos registrados en la aplicación. Entiendase 
+ * por grupo, como el tipo de usuarios: adminstrador, coordinador, jefe. 
+ */
 public class GrupoController implements Serializable {
     
     /**
@@ -40,23 +44,11 @@ public class GrupoController implements Serializable {
     public GrupoController() {
     }
 
-    public Grupo getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Grupo selected) {
-        this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
+    
 
     protected void initializeEmbeddableKey() {
     }
 
-    private GrupoFacade getFacade() {
-        return ejbFacade;
-    }
 
     public Grupo prepareCreate() {
         selected = new Grupo();
@@ -83,12 +75,7 @@ public class GrupoController implements Serializable {
         }
     }
 
-    public List<Grupo> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
-    }
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -117,7 +104,29 @@ public class GrupoController implements Serializable {
             }
         }
     }
+    /**
+     * Métodos Get y Set
+     */
+    public Grupo getSelected() {
+        return selected;
+    }
 
+    public void setSelected(Grupo selected) {
+        this.selected = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+
+    private GrupoFacade getFacade() {
+        return ejbFacade;
+    }
+    public List<Grupo> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
+        }
+        return items;
+    }
     public Grupo getGrupo(java.lang.String id) {
         return getFacade().find(id);
     }

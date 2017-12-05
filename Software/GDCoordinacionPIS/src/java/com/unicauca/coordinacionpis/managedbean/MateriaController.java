@@ -24,6 +24,12 @@ import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador para las vistas: CrearMateria, EditarMateria, ListarMaterias y
+ * VerMateria.
+ * También es el encargado de la gestión de las materias: creación, edición y 
+ * consulta.
+ */
 public class MateriaController implements Serializable {
     /**
      * Conexión con la tabla materia

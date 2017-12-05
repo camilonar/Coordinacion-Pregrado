@@ -11,6 +11,11 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador que provee el listado de los programas registrados en la
+ * aplicación.
+ * Utilizado en la vista: editar y registrar usuario, 
+ */
 public class ProgramaController implements Serializable {
     
     /**
@@ -32,6 +37,10 @@ public class ProgramaController implements Serializable {
     public ProgramaController() {
         programa = new Programa();
     }
+    /**
+     * Métodos Get y Set
+     *  
+     */
 
     public Programa getSelected() {
         return programa;
@@ -51,8 +60,6 @@ public class ProgramaController implements Serializable {
         return ejbFacade;
     }
 
-
-    
     public List<Programa> getItems() {
         items = ejbFacade.findAll();
         return items;

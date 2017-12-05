@@ -26,7 +26,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,7 +54,9 @@ import org.primefaces.model.UploadedFile;
 @Named("usuarioController")
 @SessionScoped
 /**
- * Controlador de las vistas: registrar, editar, listar y ver usuario 
+ * Controlador de las vistas: registrar, editar, listar y ver usuario.
+ * También es el encargado de la gestión de un usuario: crear, editar, cambiar
+ * rol, desactivar. 
  */
 public class UsuarioController implements Serializable {
 

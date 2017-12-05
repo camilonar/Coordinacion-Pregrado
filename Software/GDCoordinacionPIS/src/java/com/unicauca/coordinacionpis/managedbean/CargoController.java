@@ -21,6 +21,10 @@ import javax.faces.convert.FacesConverter;
 
 @ManagedBean
 @ViewScoped
+/**
+ * Controlador de las vistas cargo/: create, edita, list, view.
+ * También es el encargado de la gestión de un cargo: crear, editar y consultar
+ */
 public class CargoController implements Serializable {
 
     @EJB
@@ -31,23 +35,12 @@ public class CargoController implements Serializable {
     public CargoController() {
     }
 
-    public Cargo getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Cargo selected) {
-        this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
+    
 
     protected void initializeEmbeddableKey() {
     }
 
-    private CargoFacade getFacade() {
-        return ejbFacade;
-    }
+    
 
     public Cargo prepareCreate() {
         selected = new Cargo();
@@ -74,12 +67,7 @@ public class CargoController implements Serializable {
         }
     }
 
-    public List<Cargo> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
-    }
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -109,6 +97,25 @@ public class CargoController implements Serializable {
         }
     }
 
+    /**
+     * Métodos Get y Set
+     */
+    public Cargo getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Cargo selected) {
+        this.selected = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+    public List<Cargo> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
+        }
+        return items;
+    }
     public Cargo getCargo(java.lang.Long id) {
         return getFacade().find(id);
     }
@@ -119,7 +126,11 @@ public class CargoController implements Serializable {
 
     public List<Cargo> getItemsAvailableSelectOne() {
         return getFacade().findAll();
-    }
+    }   
+
+    private CargoFacade getFacade() {
+        return ejbFacade;
+    }    
 
     @FacesConverter(forClass = Cargo.class)
     public static class CargoControllerConverter implements Converter {
