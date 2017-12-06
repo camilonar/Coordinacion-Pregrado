@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un Anteproyecto en la base de datos
  * @author David
  */
 @Entity
@@ -48,42 +48,75 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Anteproyecto implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Clave identificadora del anteproyecto
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idAnteproyecto")
     private Integer idAnteproyecto;
+    /**
+     * Título del anteproyecto
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 300)
     @Column(name = "tituloAnteproyecto")
     private String tituloAnteproyecto;
+    /**
+     * Fecha de creación del anteproyecto
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechaAnteproyecto")
     @Temporal(TemporalType.DATE)
     private Date fechaAnteproyecto;
+    /**
+     * Codirectores del anteproyecto
+     */
     @JoinTable(name = "codirector", joinColumns = {
         @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
         @JoinColumn(name = "profesor", referencedColumnName = "idProfesor")})
     @ManyToMany
     private List<Profesor> profesorList;
+    /**
+     * Estudiantes del anteproyecto
+     */
     @JoinTable(name = "estudiante_anteproyecto", joinColumns = {
         @JoinColumn(name = "anteproyecto", referencedColumnName = "idAnteproyecto")}, inverseJoinColumns = {
         @JoinColumn(name = "estudiante", referencedColumnName = "idEstudiante")})
     @ManyToMany
     private List<Estudiante> estudianteList;
+    /**
+     * Director del anteproyecto
+     */
     @JoinColumn(name = "directorAnteproyecto", referencedColumnName = "idProfesor")
     @ManyToOne(optional = false)
     private Profesor directorAnteproyecto;
+    /**
+     * Programa de los estudiantes del anteproyecto
+     */
     @JoinColumn(name = "programaAnteproyecto", referencedColumnName = "idPrograma")
     @ManyToOne(optional = false)
     private Programa programaAnteproyecto;
+    /**
+     * Formatos A asociados al anteproyecto
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoA")
     private List<Formatoa> formatoaList;
+    /**
+     * Formatos C asociados al anteproyecto
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoC")
     private List<Formatoc> formatocList;
+    /**
+     * Formatos B asociados al anteproyecto
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anteproyectoFormatoB")
     private List<Formatob> formatobList;
 

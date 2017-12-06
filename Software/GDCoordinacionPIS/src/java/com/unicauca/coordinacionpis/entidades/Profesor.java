@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un Profesor de la Universidad
  * @author David
  */
 @Entity
@@ -42,31 +42,58 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Profesor.findByExternoProfesor", query = "SELECT p FROM Profesor p WHERE p.externoProfesor = :externoProfesor")})
 public class Profesor implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del profesor en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idProfesor")
     private Integer idProfesor;
+    /**
+     * Identificador SIMCA del profesor (e.g. pmage)
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "codigoProfesor")
     private String codigoProfesor;
+    /**
+     * Nombre del profesor
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "nombreProfesor")
     private String nombreProfesor;
+    /**
+     * Universidad del profesor (en caso de que sea un profesor externo)
+     */
     @Size(max = 50)
     @Column(name = "universidadProfesor")
     private String universidadProfesor;
+    /**
+     * Indica si el profesor es de otra Universidad
+     */
     @Column(name = "externoProfesor")
     private Boolean externoProfesor;
+    /**
+     * Lista de anteproyectos que codirige el profesor
+     */
     @ManyToMany(mappedBy = "profesorList")
     private List<Anteproyecto> anteproyectoList;
+    /**
+     * Lista de anteproyectos que dirige el profesor
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "directorAnteproyecto")
     private List<Anteproyecto> anteproyectoList1;
+    /**
+     * Programa asociado al profesor
+     */
     @JoinColumn(name = "programaProfesor", referencedColumnName = "idPrograma")
     @ManyToOne(optional = false)
     private Programa programaProfesor;

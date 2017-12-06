@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa el rol que puede tener un usuario
  * @author David
  */
 @Entity
@@ -34,16 +34,28 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Grupo.findByGrudescripcion", query = "SELECT g FROM Grupo g WHERE g.grudescripcion = :grudescripcion")})
 public class Grupo implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Nombre del rol (e.g. coordinador)
+     */
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "GRUID")
     private String gruid;
+    /**
+     * Descripción del rol
+     */
     @Size(max = 255)
     @Column(name = "GRUDESCRIPCION")
     private String grudescripcion;
+    /**
+     * Lista de usuarios que tienen este rol
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupo")
     private List<Usuariogrupo> usuariogrupoList;
 

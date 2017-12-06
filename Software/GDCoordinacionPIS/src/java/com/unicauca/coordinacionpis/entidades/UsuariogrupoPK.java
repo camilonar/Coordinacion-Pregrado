@@ -13,17 +13,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
+ * Llave primaria de Usuariogrupo
  * @author David
  */
 @Embeddable
 public class UsuariogrupoPK implements Serializable {
 
+    /**
+     * Rol asociado
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "GRUID")
     private String gruid;
+    /**
+     * Identificador del usuario asociado
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "USUID")

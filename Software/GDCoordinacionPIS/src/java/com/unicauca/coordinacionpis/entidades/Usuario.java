@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un usuario del sistem
  * @author David
  */
 @Entity
@@ -50,58 +50,103 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByBusquedaUsuarios", query = "SELECT u FROM Usuario u WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(u.usunombres,' '), u.usuapellidos),' ') ,u.usuemail), ' '),u.usunombreusuario)) LIKE :busqueda")
 })
 public class Usuario implements Serializable {
-
+    
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador numérico del usuario en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "USUID")
     private Long usuid;
+    /**
+     * Fecha de nacimiento del usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "USUFECHANACIMIENTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date usufechanacimiento;
+    /**
+     * Nombres del usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
     @Column(name = "USUNOMBRES")
     private String usunombres;
+    /**
+     * Apellidos del usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
     @Column(name = "USUAPELLIDOS")
     private String usuapellidos;
+    /**
+     * Género del usuario (M o F)
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "USUGENERO")
     private Character usugenero;
+    /**
+     * Nombre de usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
     @Column(name = "USUNOMBREUSUARIO")
     private String usunombreusuario;
+    /**
+     * Contraseña del usuario cifrada con SHA-256
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "USUCONTRASENA")
     private String usucontrasena;
+    /**
+     * Correo institucional del usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
     @Column(name = "USUEMAIL")
     private String usuemail;
+    /**
+     * Foto del usuario
+     */
     @Lob
     @Column(name = "USUFOTO")
     private byte[] usufoto;
+    /**
+     * Estado del usuario (true -> activo, false -> inactivo)
+     */
     @Column(name = "USUESTADO")
     private Boolean usuestado;
+    /**
+     * Lista de departamentos de los que es jefe
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<UsuarioDepartamento> usuarioDepartamentoList;
+    /**
+     * Roles del usuario en el sistema
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Usuariogrupo> usuariogrupoList;
+    /**
+     * Lista de programas de los que es coordinador
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<UsuarioPrograma> usuarioProgramaList;
+    /**
+     * Cargo del usuario en la Universidad
+     */
     @JoinColumn(name = "CARID", referencedColumnName = "CARID")
     @ManyToOne
     private Cargo carid;

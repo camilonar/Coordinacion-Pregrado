@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa el Cargo de un usuario (e.g. Administrativo o Docente)
  * @author David
  */
 @Entity
@@ -35,17 +35,29 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cargo.findByCarnombre", query = "SELECT c FROM Cargo c WHERE c.carnombre = :carnombre")})
 public class Cargo implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Clave identificadora del cargo
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "CARID")
     private Long carid;
+    /**
+     * Nombre del cargo
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
     @Column(name = "CARNOMBRE")
     private String carnombre;
+    /**
+     * Lista de usuarios que tienen este cargo
+     */
     @OneToMany(mappedBy = "carid")
     private List<Usuario> usuarioList;
 

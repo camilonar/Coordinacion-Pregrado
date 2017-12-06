@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que representa a un Formato C guardado en el gestor documental
  * @author David
  */
 @Entity
@@ -33,15 +33,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Formatoc.findByClaveFormatoC", query = "SELECT f FROM Formatoc f WHERE f.claveFormatoC = :claveFormatoC")})
 public class Formatoc implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del formato C en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idFormatoC")
     private Integer idFormatoC;
+    /**
+     * Clave generada por el gestor documental para el documento asociado
+     */
     @Size(max = 45)
     @Column(name = "claveFormatoC")
     private String claveFormatoC;
+    /**
+     * Anteproyecto asociado al formato C
+     */
     @JoinColumn(name = "anteproyectoFormatoC", referencedColumnName = "idAnteproyecto")
     @ManyToOne(optional = false)
     private Anteproyecto anteproyectoFormatoC;

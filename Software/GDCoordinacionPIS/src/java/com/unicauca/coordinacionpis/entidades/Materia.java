@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que representa a una materia dictada en la Universidad
  * @author David
  */
 @Entity
@@ -45,39 +45,81 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Materia.findByGruposNuevos", query = "SELECT m FROM Materia m WHERE m.gruposNuevos = :gruposNuevos")})
 public class Materia implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador de la materia en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_materia")
     private Integer idMateria;
+    /**
+     * Semestre asociado a la materia en el programa
+     */
     @Size(max = 4)
     @Column(name = "semestre")
     private String semestre;
+    /**
+     * Código de la materia asignado por la universidad
+     */
     @Size(max = 30)
     @Column(name = "codigo_materia")
     private String codigoMateria;
+    /**
+     * Nombre de la materia
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 70)
     @Column(name = "nombre_materia")
     private String nombreMateria;
+    /**
+     * Créditos de la materia
+     */
     @Column(name = "creditos")
     private Integer creditos;
+    /**
+     * Intensidad horaria (número de horas presenciales) de la materia
+     */
     @Column(name = "intensidad_horaria")
     private Integer intensidadHoraria;
+    /**
+     * Número de estudiantes solicitados
+     */
     @Column(name = "numero_estudiantes")
     private Integer numeroEstudiantes;
+    /**
+     * Número de grupos solicitados
+     */
     @Column(name = "grupos_solicitados")
     private Integer gruposSolicitados;
+    /**
+     * Número de grupos cancelados
+     */
     @Column(name = "grupos_cancelados")
     private Integer gruposCancelados;
+    /**
+     * Número de grupos ofertados
+     */
     @Column(name = "grupos_ofertados")
     private Integer gruposOfertados;
+    /**
+     * Número de grupos fusionados
+     */
     @Column(name = "grupos_fusionados")
     private Integer gruposFusionados;
+    /**
+     * Número de grupos nuevos
+     */
     @Column(name = "grupos_nuevos")
     private Integer gruposNuevos;
+    /**
+     * Departamento que dicta la materia
+     */
     @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento")
     @ManyToOne(optional = false)
     private Departamento idDepartamento;

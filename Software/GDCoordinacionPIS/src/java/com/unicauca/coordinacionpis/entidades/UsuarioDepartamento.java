@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que relaciona al Usuario con el departamento que dirige
  * @author David
  */
 @Entity
@@ -31,15 +31,30 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "UsuarioDepartamento.findByNombreUsuario", query = "SELECT u FROM UsuarioDepartamento u WHERE u.nombreUsuario = :nombreUsuario")})
 public class UsuarioDepartamento implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Llave primaria de la entidad
+     */
     @EmbeddedId
     protected UsuarioDepartamentoPK usuarioDepartamentoPK;
+    /**
+     * Nombre de usuario del usuario asociado
+     */
     @Size(max = 75)
     @Column(name = "nombreUsuario")
     private String nombreUsuario;
+    /**
+     * Departamento asociado
+     */
     @JoinColumn(name = "idDepartamento", referencedColumnName = "id_departamento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Departamento departamento;
+    /**
+     * Usuario asociado
+     */
     @JoinColumn(name = "idUsuario", referencedColumnName = "USUID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;

@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que relaciona el rol con el usuario
  * @author David
  */
 @Entity
@@ -33,17 +33,32 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuariogrupo.findByUsunombreusuario", query = "SELECT u FROM Usuariogrupo u WHERE u.usunombreusuario = :usunombreusuario")})
 public class Usuariogrupo implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Llave primaria
+     */
     @EmbeddedId
     protected UsuariogrupoPK usuariogrupoPK;
+    /**
+     * Nombre de usuario asociado
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 75)
     @Column(name = "USUNOMBREUSUARIO")
     private String usunombreusuario;
+    /**
+     * Rol asociado
+     */
     @JoinColumn(name = "GRUID", referencedColumnName = "GRUID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Grupo grupo;
+    /**
+     * Usuario asociado
+     */
     @JoinColumn(name = "USUID", referencedColumnName = "USUID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;

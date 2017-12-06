@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que relaciona al Usuario con el programa
  * @author David
  */
 @Entity
@@ -31,15 +31,30 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "UsuarioPrograma.findByNombreUsuario", query = "SELECT u FROM UsuarioPrograma u WHERE u.nombreUsuario = :nombreUsuario")})
 public class UsuarioPrograma implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Llave primaria
+     */
     @EmbeddedId
     protected UsuarioProgramaPK usuarioProgramaPK;
+    /**
+     * Nombre de usuario asociado
+     */
     @Size(max = 75)
     @Column(name = "nombreUsuario")
     private String nombreUsuario;
+    /**
+     * Programa asociado
+     */
     @JoinColumn(name = "idPrograma", referencedColumnName = "idPrograma", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Programa programa;
+    /**
+     * Usuario asociado
+     */
     @JoinColumn(name = "idUsuario", referencedColumnName = "USUID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;

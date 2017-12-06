@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un Estudiante de la Universidad
  * @author David
  */
 @Entity
@@ -38,24 +38,42 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Estudiante.findByNombreEstudiante", query = "SELECT e FROM Estudiante e WHERE e.nombreEstudiante = :nombreEstudiante")})
 public class Estudiante implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del estudiante
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idEstudiante")
     private Integer idEstudiante;
+    /**
+     * Código del estudiante
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "codigoEstudiante")
     private String codigoEstudiante;
+    /**
+     * Nombre del estudiante
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "nombreEstudiante")
     private String nombreEstudiante;
+    /**
+     * Lista de anteproyectos en los que participa el estudiante
+     */
     @ManyToMany(mappedBy = "estudianteList")
     private List<Anteproyecto> anteproyectoList;
+    /**
+     * Programa que cursa el estudiante
+     */
     @JoinColumn(name = "programaEstudiante", referencedColumnName = "idPrograma")
     @ManyToOne(optional = false)
     private Programa programaEstudiante;

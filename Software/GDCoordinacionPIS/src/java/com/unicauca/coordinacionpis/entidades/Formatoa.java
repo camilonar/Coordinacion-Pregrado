@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que representa a un Formato A guardado en el gestor documental
  * @author David
  */
 @Entity
@@ -34,17 +34,29 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Formatoa.findByClaveFormatoA", query = "SELECT f FROM Formatoa f WHERE f.claveFormatoA = :claveFormatoA")})
 public class Formatoa implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del formato A en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idFormatoA")
     private Integer idFormatoA;
+    /**
+     * Clave generada por el gestor documental para el documento asociado
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "claveFormatoA")
     private String claveFormatoA;
+    /**
+     * Anteproyecto asociado al formato A
+     */
     @JoinColumn(name = "anteproyectoFormatoA", referencedColumnName = "idAnteproyecto")
     @ManyToOne(optional = false)
     private Anteproyecto anteproyectoFormatoA;

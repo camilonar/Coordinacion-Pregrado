@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un departamento de la Universidad
  * @author David
  */
 @Entity
@@ -36,19 +36,34 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Departamento.findByNombre", query = "SELECT d FROM Departamento d WHERE d.nombre = :nombre")})
 public class Departamento implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Clave identificadora del departamento
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_departamento")
     private Integer idDepartamento;
+    /**
+     * Nombre del departamento
+     */
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
+    /**
+     * Lista de usuarios que son jefes activos o inactivos del departamento
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento")
     private List<UsuarioDepartamento> usuarioDepartamentoList;
+    /**
+     * Lista de materias que ofrece el departamento
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
     private List<Materia> materiaList;
 

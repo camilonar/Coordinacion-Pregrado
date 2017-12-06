@@ -12,16 +12,22 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * Llave primaria de UsuarioDepartamento
  * @author David
  */
 @Embeddable
 public class UsuarioDepartamentoPK implements Serializable {
 
+    /**
+     * Identificador del usuario
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "idUsuario")
     private long idUsuario;
+    /**
+     * Identificador del departamento
+     */
     @Basic(optional = false)
     @NotNull
     @Column(name = "idDepartamento")

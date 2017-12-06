@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a una Facultad de la Universidad
  * @author David
  */
 @Entity
@@ -35,15 +35,27 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Facultad.findByFacultadNombre", query = "SELECT f FROM Facultad f WHERE f.facultadNombre = :facultadNombre")})
 public class Facultad implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador de la facultad
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idfacultad")
     private Integer idfacultad;
+    /**
+     * Nombre de la facultad
+     */
     @Size(max = 200)
     @Column(name = "facultadNombre")
     private String facultadNombre;
+    /**
+     * Lista de programas que ofrece la facultad
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfacultad")
     private List<Programa> programaList;
 

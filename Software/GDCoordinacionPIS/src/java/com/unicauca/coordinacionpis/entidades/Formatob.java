@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Entidad que representa a un Formato B guardado en el gestor documental
  * @author David
  */
 @Entity
@@ -33,15 +33,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Formatob.findByClaveFormatoB", query = "SELECT f FROM Formatob f WHERE f.claveFormatoB = :claveFormatoB")})
 public class Formatob implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del formato B en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idFormatoB")
     private Integer idFormatoB;
+    /**
+     * Clave generada por el gestor documental para el documento asociado
+     */
     @Size(max = 45)
     @Column(name = "claveFormatoB")
     private String claveFormatoB;
+    /**
+     * Anteproyecto asociado al formato B
+     */
     @JoinColumn(name = "anteproyectoFormatoB", referencedColumnName = "idAnteproyecto")
     @ManyToOne(optional = false)
     private Anteproyecto anteproyectoFormatoB;

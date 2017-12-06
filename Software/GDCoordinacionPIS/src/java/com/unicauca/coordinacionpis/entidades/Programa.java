@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Entidad que representa a un programa de la Universidad
  * @author David
  */
 @Entity
@@ -37,24 +37,48 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Programa.findByNombrePrograma", query = "SELECT p FROM Programa p WHERE p.nombrePrograma = :nombrePrograma")})
 public class Programa implements Serializable {
 
+    /**
+     * Versión de la base de datos
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Identificador del programa en la base de datos
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idPrograma")
     private Integer idPrograma;
+    /**
+     * Nombre del programa
+     */
     @Size(max = 200)
     @Column(name = "nombrePrograma")
     private String nombrePrograma;
+    /**
+     * Lista de estudiantes del programa
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaEstudiante")
     private List<Estudiante> estudianteList;
+    /**
+     * Lista de anteproyectos asociados al programa
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaAnteproyecto")
     private List<Anteproyecto> anteproyectoList;
+    /**
+     * Facultad en la que se dicta el programa
+     */
     @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
     @ManyToOne(optional = false)
     private Facultad idfacultad;
+    /**
+     * Lista de profesores del programa
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programaProfesor")
     private List<Profesor> profesorList;
+    /**
+     * Lista de coordinadores activos e inactivos del programa
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programa")
     private List<UsuarioPrograma> usuarioProgramaList;
 
