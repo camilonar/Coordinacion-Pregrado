@@ -65,23 +65,55 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
+/**
+ * Controlador de las vistas: registrar, editar, listar y ver FormatoA.
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class RegistroFormatoAController extends RegistroDocumentoTemplate implements Serializable
 {
+    /**
+     * Facade para la conexión a la tabla FormatoA
+     */
     @EJB
     private FormatoaFacade ejbFormatoA;
-    
+    /**
+     *Variable que encapsula los metadatos que va a tener el documento 
+     */
     private MetadatosAntepoyecto metadatosAnteproyectos;
+    /**
+     * Variable para controlar si el archvio se cargo correctamente
+     */
     private boolean exitoSubirArchivo;
+    /**
+     * Posee el nombre del archivo que se va a guardar 
+     */
     private String nombreArchivo;
+    /**
+     * documnto que se va a guardar en el gestor 
+     */
     private UploadedFile archivoFormatoA;
+    /**
+     * flujo para extraer informacion de openKM
+     */
     private StreamedContent streamedContent;
+    /**
+     * 
+     */
     private String datos;
+    /**
+     * 
+     */
     private com.openkm.sdk4j.bean.Document documento;
+    /**
+     * Variable para controlar el formato de fecha 
+     */
     private SimpleDateFormat formatoFecha;
 
+    /**
+     * Controlador 
+     */
     public RegistroFormatoAController() 
     {
         super();
@@ -107,7 +139,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         } 
         catch (Exception e) {}
     }
-    
+    /**
+     * Se encarga de cargar el archivo 
+     * @param event  el evento disparado en la vista que contiene el archivo a subir 
+     */
     public void seleccionarArchivo(FileUploadEvent event)
     {
         nombreArchivo = event.getFile().getFileName();
@@ -199,7 +234,13 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     {
         return formatoFecha.format(fecha.getTime());
     }
-    
+    /**
+     * Funcion que permite descargar un determinado documento desde el gestor 
+     * de documentos OpenKM
+     * @param queryResult Documento que se desea  descargar desde el gestor 
+     * @return retorna el contenido del documento como un flujo de datos 
+     * si no se encuentra devuelve null
+     */
     public StreamedContent descargarDocumento(com.openkm.sdk4j.bean.Document queryResult) 
     {
         StreamedContent file = null;
@@ -243,7 +284,15 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         }
         return file;
     }
-    
+    /**
+     * Metodo que se encarga de guardar el documento seleccionado 
+     * en el gestor de documentos OpenKM junto con sus metadatos y de guardar la 
+     * clave del documento generada por el gestor en la tabla correspondiente al
+     * formatoA guardado 
+     * @param anteproyecto el anteproyecto donde se desea guardar la  clave del 
+     * documento 
+     * @throws PathNotFoundException 
+     */
     public void aceptarFormatoA(Anteproyecto anteproyecto ) throws PathNotFoundException 
     {
         System.out.println("Aceptado formato A");
@@ -255,7 +304,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         this.ejbFormatoA.limpiarCache();
         
     }
-    
+    /**
+     * No usar 
+     * @param documento 
+     */
     public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) 
     {
         try
@@ -278,7 +330,11 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
             e.printStackTrace();
         }
     }
-   
+   /**
+    * Cargalos datos en la vista para una editarlos posteriormente
+    * @param documento documento que se desea editar 
+    * @throws java.text.ParseException 
+    */
      public void cargarDatosEdicion(com.openkm.sdk4j.bean.Document documento) throws java.text.ParseException  
     {
         this.documento = documento;
@@ -350,6 +406,11 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
 
     }
     
+     /**
+      * Despliega un mensaje en la vista para que se confirme la eliminacion 
+      * del documento seleccionado 
+      * @param documento el documento que se desea eliminar 
+      */
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) 
     {
         RequestContext context = RequestContext.getCurrentInstance();
@@ -357,7 +418,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         context.execute("PF('Confirmacion').show()");
         this.documento = documento;
     }
-
+/**
+ * se encarga de eliminar el documento que se encuentre en la variable 
+ * this.documento 
+ */
     public void deleteDocument() 
     {
         try 
@@ -375,7 +439,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         {
         }
     }
-    
+    /**
+     * comprueba si openKM esta disponible y escuchando 
+     * @return retorna true si esta disponible y false si no lo está 
+     */
     public boolean getComprobarConexionOpenKM() 
     {
         boolean conexion = true;
@@ -390,7 +457,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         }
         return conexion;
     }
-    
+    /**
+     * genera una lista de docentes falsa para pruebas (borrarla )
+     * @return lista falsa de profesores 
+     */
     public List<Docente> getListaDocentes() 
     {
         List<Docente> listaDocentes = new ArrayList<>();
@@ -411,6 +481,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         return listaDocentes;
     }
     
+    /**
+     * actualiza el formulario si se va a realizar un cambio de archivo 
+     * en la vista de registro 
+     */
     public void cambiarArchivo()
     {
         exitoSubirArchivo = false;
@@ -421,6 +495,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.update("formArchivoSelecionadoFormatoA");
     }
     
+    
+    /**
+     * controla la cancelacion del registro de un formato 
+     */
     public void cancelarFormatoA() 
     {
         exitoSubirArchivo = false;
@@ -434,7 +512,10 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
     }
         
 
-    
+    /**
+     * actualiza   los metadatos del documento this.documento
+     * 
+     */
     public void actualizarInfoFormatoA()
     {
         try
@@ -494,15 +575,20 @@ public class RegistroFormatoAController extends RegistroDocumentoTemplate implem
         requestContext.getCurrentInstance().update("msgRFC");
     }
     
+    /**
+     * controla la cancelacion al editar un documento 
+     */
     public void cancelarEditar()
     {    
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");                
     }
-     
+     /**
+     * controla la cancelacion al editar un documento 
+     */
     public void cancelarEdicion()
     {
-        System.out.println("Si esta entrando a cancelarEdicion!!!");
+       
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarFormatoA').hide()");
         requestContext.execute("PF('dlgRegistroFormatoA').hide()");

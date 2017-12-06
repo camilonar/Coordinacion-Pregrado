@@ -94,11 +94,8 @@ import org.primefaces.model.UploadedFile;
 @ViewScoped
 public class RegistroChecklistController extends RegistroDocumentoTemplate implements Serializable {
 
-    //TEMPORALLLL
-    String programaTemporal = "Sistemas";
-    ///
-    @EJB
-    private FormatoaFacade ejbFormatoA;
+ 
+ 
 
     private MetadatosAntepoyecto metadatosAnteproyectos;
     private boolean exitoSubirArchivo;
@@ -604,6 +601,11 @@ public class RegistroChecklistController extends RegistroDocumentoTemplate imple
         requestContext.execute("PF('dlgRegistroChecklist').hide()");
     }
 
+    
+    /**
+     * comprueba si openKM esta disponible y escuchando 
+     * @return retorna true si esta disponible y false si no lo está 
+     */
     public boolean getComprobarConexionOpenKM() {
         boolean conexion = true;
         try {

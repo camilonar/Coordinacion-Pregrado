@@ -84,28 +84,48 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
+ * Controlador de las vistas: registrar, editar, listar y ver FormatoB.
  *
- * @author ROED26
  */
 @ManagedBean
 @ViewScoped
 public class RegistroFormatoBController extends RegistroDocumentoTemplate implements Serializable {
 
-    //TEMPORALLLL
-    String programaTemporal = "Sistemas";
-    ///
-
+    /**
+     * Facade para la conexión a la tabla FormatoB
+     */
+    /**
+     * Facade para la conexión a la tabla FormatoB
+     */
     @EJB
     private FormatobFacade ejbFormatoB;
-
+    /**
+     * Variable que encapsula los metadatos que va a tener el documento
+     */
     private MetadatosAntepoyecto metadatosAnteproyectos;
+    /**
+     * Variable para controlar si el archvio se cargo correctamente
+     */
     private boolean exitoSubirArchivo;
+    /**
+     * Posee el nombre del archivo que se va a guardar
+     */
     private String nombreArchivo;
+    /**
+     * documnto que se va a guardar en el gestor
+     */
     private UploadedFile archivOferta;
+    /**
+     * flujo para extraer informacion de openKM
+     */
     private StreamedContent streamedContent;
+
     private String datos;
     private List<com.openkm.sdk4j.bean.Document> listadoDocsFormatoB;
     private com.openkm.sdk4j.bean.Document documento;
+    /**
+     * Variable para controlar el formato de fecha
+     */
     private SimpleDateFormat formatoFecha;
 
     public RegistroFormatoBController() {
@@ -210,6 +230,12 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         return new Date();
     }
 
+    /**
+     * Se encarga de cargar el archivo
+     *
+     * @param event el evento disparado en la vista que contiene el archivo a
+     * subir
+     */
     public void seleccionarArchivo(FileUploadEvent event) {
         nombreArchivo = event.getFile().getFileName();
         archivOferta = event.getFile();
@@ -408,8 +434,6 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         requestContext.execute("PF('dlgEditarFormatoB').show()");
     }
 
-
-
     public List<Docente> getListaDocentes() {
         List<Docente> listaDocentes = new ArrayList<>();
 //        DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -496,6 +520,14 @@ public class RegistroFormatoBController extends RegistroDocumentoTemplate implem
         return formatoFecha.format(fecha.getTime());
     }
 
+    /**
+     * Funcion que permite descargar un determinado documento desde el gestor de
+     * documentos OpenKM
+     *
+     * @param queryResult Documento que se desea descargar desde el gestor
+     * @return retorna el contenido del documento como un flujo de datos si no
+     * se encuentra devuelve null
+     */
     public StreamedContent descargarDocumento(com.openkm.sdk4j.bean.Document queryResult) {
         StreamedContent file = null;
         com.openkm.sdk4j.bean.Document doc = queryResult;
