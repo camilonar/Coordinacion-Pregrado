@@ -9,7 +9,10 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
-
+/**
+ * Controlador que maneja las rutas
+ * @author Julian Esteban Solarte Rivera - Universidad del Cauca
+ */
 @Named("cargarFormulariosController")
 @SessionScoped
 public class CargarFormularioController implements Serializable {
@@ -17,15 +20,10 @@ public class CargarFormularioController implements Serializable {
      * Ruta actual del usuario de la app
      */
     private String ruta;
-
-    public String getRuta() {
-        return ruta;
-    }
-
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
-    }
     
+    /**
+     *  Constructor
+     */
     public CargarFormularioController() {
         
     }
@@ -78,5 +76,17 @@ public class CargarFormularioController implements Serializable {
      */
     public void cargarRegistrarUsuarios() {
         this.ruta = "/administrador/usuario/ListarUsuarios.xhtml";
+    }
+    
+        /**
+     * Metodos get y set
+     */
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 }

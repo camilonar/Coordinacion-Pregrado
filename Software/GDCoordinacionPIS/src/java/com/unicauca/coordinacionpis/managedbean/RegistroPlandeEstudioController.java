@@ -78,22 +78,64 @@ import org.primefaces.model.UploadedFile;
 public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate implements Serializable {
 
     /**
-     * Atributos
+     * Variable donde se guarda los metadatos del archivo
      */
     private MetadatosPlanEstudio metadatosPlandeEstudio;
+    /**
+     * Variable donde se guarda el nombre de archivo
+     */
     private String nombreArchivo;
+    /**
+     * Variable donde se guarda el exito de subir el archivo
+     */
     private boolean exitoSubirArchivo;
+    /**
+     * Variable donde se guarda el archivo seleccionado mediante un fileupload
+     */
     private UploadedFile archivoPlan;
+    /**
+     * Variable donde se guarda los datos extras de un archivo
+     */
     private String datos;
+    /**
+     * Variable donde se guarda los documentos de un plan de estudio
+     */
     private List<Document> documentosPlanEstudio;
+    /**
+     * Variable utilizada para escribir
+     */
     private StreamedContent streamedContent;
+    /**
+     * Variable utilizada para convertir el archivo en un documento
+     */
     private com.openkm.sdk4j.bean.Document documento;
+    /**
+     * Variable utilizada para escribir
+     */
     private BufferedOutputStream output;
+    /**
+     * Variable utilizada para leer
+     */
     private BufferedInputStream input;
+    /**
+     * Variable utilizada para darle un formato a la fecha
+     */
     private SimpleDateFormat formatoFecha;
+    /**
+     * Variable donde se guarda el documento anterior
+     */
     private String documentoAnterior;
+    /**
+     * Variable donde se guarda cosas auxiliares
+     */
     private int auxNumeroPlan;
+    /**
+     * Variable donde se guarda cosas auxiliares
+     */
     private String auxAcuerdoPlan;
+    /**
+     * Variable donde se guarda cosas auxiliares
+     */
     private Date auxFechaPlan;
 
     /**
@@ -102,9 +144,7 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      */
     public RegistroPlandeEstudioController() {
         super();
-
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-
         this.metadatosPlandeEstudio = new MetadatosPlanEstudio();
         this.documentosPlanEstudio = new ArrayList<>();
         this.exitoSubirArchivo = false;
@@ -112,42 +152,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         auxNumeroPlan = 1;
         auxAcuerdoPlan = "";
         auxFechaPlan = null;
-    }
-
-    public String getNombreArchivo() {
-        return nombreArchivo;
-    }
-
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
-    }
-
-    public boolean isExitoSubirArchivo() {
-        return exitoSubirArchivo;
-    }
-
-    public void setExitoSubirArchivo(boolean exitoSubirArchivo) {
-        this.exitoSubirArchivo = exitoSubirArchivo;
-    }
-
-    public String getDatos() {
-        return datos;
-    }
-
-    public void setDatos(String datos) {
-        this.datos = datos;
-    }
-
-    public void setDocumentosPlanEstudio(List<Document> documentosPlanEstudio) {
-        this.documentosPlanEstudio = documentosPlanEstudio;
-    }
-
-    public MetadatosPlanEstudio getMetadatosPlandeEstudio() {
-        return metadatosPlandeEstudio;
-    }
-
-    public void setMetadatosPlandeEstudio(MetadatosPlanEstudio metadatosPlandeEstudio) {
-        this.metadatosPlandeEstudio = metadatosPlandeEstudio;
     }
 
     /**
@@ -244,8 +248,8 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         Document subirDocumento = this.subirDocumento(archivoPlan);
         RequestContext rc = RequestContext.getCurrentInstance();
         FacesMessage message = null;
-       //TODO: ARREGLAR EL MENSAJE:  MODFIQUE EL CODIGO DE SUBIR DOCUMENTO 
-        if (subirDocumento==null) {
+        //TODO: ARREGLAR EL MENSAJE:  MODFIQUE EL CODIGO DE SUBIR DOCUMENTO 
+        if (subirDocumento == null) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' esta repetido, se agregara un consecutivo al nuevo documento");
         } else {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo '" + nombreArchivo + "' se registró con exito");
@@ -564,19 +568,6 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
      *
      * @param doc plan de estudio
      */
-//    public void deleteDocument() {
-//        try {
-//            okm.deleteDocument(this.documento.getPath());
-//            okm.purgeTrash();
-//            RequestContext requestContext = RequestContext.getCurrentInstance();
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "El archivo se  eliminó con éxito"));
-//            
-//            listaDocs();
-//            requestContext.update("lstPlanesEstudio");
-//        } catch (Exception e) {
-//
-//        }
-//    }
     public void cancelarEdicion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('dlgEditarPlanEstudio').hide()");
@@ -597,11 +588,21 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         }
     }
 
+    /**
+     * Retorna la ruta en donde sera guardado el documento
+     *
+     * @return
+     */
     @Override
     public String getPathDocumento() {
         return "/okm:root/Coordinacion/Plan de Estudios/" + this.getPrgramaUsuario() + "/";
     }
 
+    /**
+     * Registra los metadatos a el archivo pasado como parametro
+     *
+     * @param archivOferta
+     */
     @Override
     public void addMetadata(String archivOferta) {
         try {
@@ -629,9 +630,50 @@ public class RegistroPlandeEstudioController extends RegistroDocumentoTemplate i
         }
     }
 
+    /**
+     * Getters and setters
+     *
+     * @return
+     */
     @Override
     public String getOKGPropierties() {
         return "okg:PlanEstudio";
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public boolean isExitoSubirArchivo() {
+        return exitoSubirArchivo;
+    }
+
+    public void setExitoSubirArchivo(boolean exitoSubirArchivo) {
+        this.exitoSubirArchivo = exitoSubirArchivo;
+    }
+
+    public String getDatos() {
+        return datos;
+    }
+
+    public void setDatos(String datos) {
+        this.datos = datos;
+    }
+
+    public void setDocumentosPlanEstudio(List<Document> documentosPlanEstudio) {
+        this.documentosPlanEstudio = documentosPlanEstudio;
+    }
+
+    public MetadatosPlanEstudio getMetadatosPlandeEstudio() {
+        return metadatosPlandeEstudio;
+    }
+
+    public void setMetadatosPlandeEstudio(MetadatosPlanEstudio metadatosPlandeEstudio) {
+        this.metadatosPlandeEstudio = metadatosPlandeEstudio;
     }
 
 }

@@ -71,7 +71,9 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import java.util.Properties;
 import java.util.ResourceBundle;
+
 /**
+ * Controlador utilizado para registrar una oferta academica
  *
  * @author ROED26
  */
@@ -100,7 +102,10 @@ public class RegistroOfertaAcademicaController implements Serializable {
     private com.openkm.sdk4j.bean.Document documento;
     private InputStream stream;
     private boolean registroInicialOferta;
-    
+
+    /**
+     * Constructores
+     */
     public RegistroOfertaAcademicaController() {
         this.formatoFecha = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         this.formatoFechaDocumento = new SimpleDateFormat("dd-MM-yyyy");
@@ -131,147 +136,10 @@ public class RegistroOfertaAcademicaController implements Serializable {
         }
     }
 
-    public boolean isRegistroInicialOferta() {
-        return registroInicialOferta;
-    }
-
-    public void setRegistroInicialOferta(boolean registroInicialOferta) {
-        this.registroInicialOferta = registroInicialOferta;
-    }
-
-    public boolean isExitoSubirArchivo() {
-        return exitoSubirArchivo;
-    }
-
-    public void setExitoSubirArchivo(boolean exitoSubirArchivo) {
-        this.exitoSubirArchivo = exitoSubirArchivo;
-    }
-
-    public String getNombreArchivo() {
-        return nombreArchivo;
-    }
-
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
-    }
-
-    public SimpleDateFormat getFormatoFecha() {
-        return formatoFecha;
-    }
-
-    public void setFormatoFecha(SimpleDateFormat formatoFecha) {
-        this.formatoFecha = formatoFecha;
-    }
-
-    public String getDatos() {
-        return datos;
-    }
-
-    public void setDatos(String datos) {
-        this.datos = datos;
-    }
-
-    public String getAnioOfertaAcademica() {
-        return anioOfertaAcademica;
-    }
-
-    public void setAnioOfertaAcademica(String anioOfertaAcademica) {
-        this.anioOfertaAcademica = anioOfertaAcademica;
-    }
-
-    public StreamedContent getStreamedContent() {
-        if (FacesContext.getCurrentInstance().getRenderResponse()) {
-            return new DefaultStreamedContent();
-        } else {
-            return streamedContent;
-        }
-    }
-
-    public void setStreamedContent(StreamedContent streamedContent) {
-        this.streamedContent = streamedContent;
-    }
-
-    public List<Departamento> getListaDepartamentos() {
-        listaDepartamentos = ejbDepartamento.findAll();
-        return listaDepartamentos;
-    }
-
-    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
-        this.listaDepartamentos = listaDepartamentos;
-    }
-
-    public String getPeriodoOfertaAcademica() {
-        return periodoOfertaAcademica;
-    }
-
-    public void setPeriodoOfertaAcademica(String periodoOfertaAcademica) {
-        this.periodoOfertaAcademica = periodoOfertaAcademica;
-    }
-
-    public com.openkm.sdk4j.bean.Document getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(com.openkm.sdk4j.bean.Document documento) {
-        this.documento = documento;
-    }
-
-    public List<com.openkm.sdk4j.bean.Document> getListadoOfertasAcademicas() {
-        listadoDocsOfertasAcademicas.clear();
-        try {
-            List<QueryResult> lista = okm.findByName(datos);
-            for (int i = 0; i < lista.size(); i++) {
-                String[] pathDividido = lista.get(i).getDocument().getPath().split("/");
-                String path = "/" + pathDividido[1] + "/" + pathDividido[2] + "/" + pathDividido[3];
-                if (path.equalsIgnoreCase("/okm:root/Coordinacion/Oferta academica")) {
-                    listadoDocsOfertasAcademicas.add(lista.get(i).getDocument());
-                }
-            }
-            /*listadoDocsOfertasAcademicas
-                    = okm.getDocumentChildren("/okm:root/Oferta academica");*/
-
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listadoDocsOfertasAcademicas;
-    }
-
-    public List<QueryResult> getListaDocs() {
-        try {
-            documentosOfertasAcademicas = okm.findByName(datos);
-
-            /* if(datos.equalsIgnoreCase("")){
-                documentosOfertasAcademicas = okm.;
-            }else{
-            documentosOfertasAcademicas = okm.findByName(datos);
-            }*/
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error de conexión"));
-        }
-
-        return documentosOfertasAcademicas;
-    }
-
+    /**
+     * Metodo utilizado cuando se cambia un archivo desde la vista, se actualiza
+     * el archivo actualizado
+     */
     public void cambiarArchivo() {
         exitoSubirArchivo = true;
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -280,6 +148,10 @@ public class RegistroOfertaAcademicaController implements Serializable {
         requestContext.update("formArchivoSelecionado");
     }
 
+    /**
+     * Metodo que limpia el archivo seleccionado debido a que se cancelo el
+     * registro
+     */
     public void cancelarRegistroDeOferta() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.update("formMetadatosOfertaAcademica");
@@ -287,6 +159,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
         requestContext.execute("PF('dlgRegistroOfertaAcedemica').hide()");
     }
 
+    /**
+     * Metodo que evalua un registro de oferta, utiliza openk km y verifica que
+     * todos los datos esten correctos el metodo comprueba que realmente exista
+     * las dependencia en las carpetas
+     */
     public void aceptarRegistroDeOferta() {
 
         Document okmDocument = new Document();
@@ -320,7 +197,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             if (registroInicialOferta) {
                 generarPDFPre();
-                String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+                String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
                 File initialFile = new File(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
 
@@ -357,7 +234,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
             } else {
                 generarPDFPos();
-                String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+                String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
                 File initialFile = new File(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf");
                 InputStream targetStream = new FileInputStream(initialFile);
                 if (!existeFolder) {
@@ -543,6 +420,12 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
     }
 
+    /**
+     * Metodo que analiza si es un registro inicial para ver si se crea una
+     * carpeta o no
+     *
+     * @param e
+     */
     public void registroInicial(ValueChangeEvent e) {
         if (e.getNewValue().equals("Si")) {
             registroInicialOferta = true;
@@ -551,6 +434,12 @@ public class RegistroOfertaAcademicaController implements Serializable {
         }
     }
 
+    /**
+     * Metodo que retorna si existe un documento o no
+     *
+     * @param path ruta del documento a ver
+     * @return true si existe el documento, false de lo contrario
+     */
     public boolean comprobarDocumento(String path) {
         boolean existeDocumento = false;
         try {
@@ -573,53 +462,37 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return existeDocumento;
     }
 
-    /*
-    public void agregarMetadatos() {
-        // create document and writer
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer;
-        try {
-            writer = PdfWriter.getInstance(document, new FileOutputStream("D:\\aguaabril2016.pdf"));
-            // add meta-data to pdf
-            document.addAuthor("Memorynotfound");
-            document.addCreationDate();
-            document.addCreator("Memorynotfound.com");
-            document.addTitle("Add meta data to PDF");
-            document.addSubject("how to add meta data to pdf using itext");
-            document.addKeywords(metadatosOfertaAcademica.getPeriodoAcademico() + ","
-                    + "," + metadatosOfertaAcademica.getNumCursosCongelados());
-            document.addLanguage(Locale.ENGLISH.getLanguage());
-            document.addHeader("type", "tutorial, example");
-
-            // add xmp meta data
-            writer.createXmpMetadata();
-
-            document.open();
-            document.add(new Paragraph("Add meta-data to PDF using iText"));
-            document.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    /**
+     * Metodo que retorna el nombre de archivo
+     *
+     * @return nombre del archivo
      */
     public String nombreDelArchivo(String path) {
         String partesPath[] = path.split("/");
         return partesPath[partesPath.length - 1];
     }
 
+    /**
+     * Metodo que retorna la fecha
+     *
+     * @param path
+     * @return
+     */
     public String fecha(Calendar fecha) {
         return formatoFecha.format(fecha.getTime());
     }
 
+    /**
+     * Metodo que genera un pdf
+     *
+     * @return Documento a retornar
+     */
     private Document generarPDFPre() {
 
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
         try {
-            String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+            String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
             writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pre.pdf"));
             // add meta-data to pdf
             document.addAuthor(usuarioDeLaSesion().getUsunombres() + " " + usuarioDeLaSesion().getUsuapellidos());
@@ -665,11 +538,16 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return document;
     }
 
+    /**
+     * Metodo que genera un documento
+     *
+     * @return documento generado
+     */
     private Document generarPDFPos() {
 
         Document document = new Document(PageSize.A4);
         PdfWriter writer;
-        String ruta=ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
+        String ruta = ResourceBundle.getBundle("/BundleOpenKm").getString("Ruta");
         try {
             writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + anioOfertaAcademica + "-" + periodoOfertaAcademica + "-pos.pdf"));
             // add meta-data to pdf
@@ -716,6 +594,12 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return document;
     }
 
+    /**
+     * Metodo que crea una tabla para un nuevo departamento
+     *
+     * @param path departamento a crear
+     * @return la tabla a crear
+     */
     public PdfPTable crearTablaCursoPorDepartamentoPosmatricula(Departamento departamento) {
         List<Materia> listadoCursos = departamento.getMateriaList();
         // a table with three columns
@@ -782,6 +666,12 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return table;
     }
 
+    /**
+     * Metodo que crea una nueva tabla para prematricula
+     *
+     * @param path departamento a crear
+     * @return la tabla creada
+     */
     public PdfPTable crearTablaCursoPorDepartamentoPrematricula(Departamento departamento) {
         List<Materia> listadoCursos = departamento.getMateriaList();
         // a table with three columns
@@ -803,7 +693,7 @@ public class RegistroOfertaAcademicaController implements Serializable {
         cell = new PdfPCell(new Phrase("Sem"));
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
-        
+
         cell = new PdfPCell(new Phrase("Código materia"));
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
@@ -835,32 +725,12 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return table;
     }
 
-    /*public StreamedContent descargarDocumento(QueryResult queryResult) {
-        StreamedContent file = null;
-        com.openkm.sdk4j.bean.Document doc = queryResult.getDocument();
-        try {
-            InputStream is = okm.getContent(doc.getPath());
-            file = new DefaultStreamedContent(is,"application/pdf",nombreDelArchivo(doc.getPath()));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RepositoryException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PathNotFoundException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AccessDeniedException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DatabaseException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknowException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WebserviceException ex) {
-            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return file;
-    }*/
+    /**
+     * Metodo para descargar un documento
+     *
+     * @param path documento a descargar
+     * @return documento para leer
+     */
     public StreamedContent descargarDocumento(com.openkm.sdk4j.bean.Document queryResult) {
         StreamedContent file = null;
         com.openkm.sdk4j.bean.Document doc = queryResult;
@@ -888,6 +758,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return file;
     }
 
+    /**
+     * Metodo para ver un documneto
+     *
+     * @param documento documento a visualizar
+     */
     public void visualizarDocumento(com.openkm.sdk4j.bean.Document documento) {
 
         try {
@@ -910,29 +785,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
     }
 
-    public StreamedContent getVerPdf() {
-
-        try {
-
-            /*InputStream in = okm.getContent(this.documento.getPath());
-
-            //streamedContent = new DefaultStreamedContent(in, "application/pdf");
-            streamedContent = new DefaultStreamedContent(in, "application/pdf", nombreDelArchivo(documento.getPath()));*/
-            InputStream in = okm.getContent(documento.getPath());
-            streamedContent = new DefaultStreamedContent(in, "application/pdf");
-            //-------
-            Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            byte[] b = (byte[]) session.get("reportBytes");
-            if (b != null) {
-                streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return streamedContent;
-    }
-
+    /**
+     * Asigna una fecha al sistema
+     *
+     * @return
+     */
     private Date asignarFecha() {
         GregorianCalendar c = new GregorianCalendar();
         Date fechaActual = c.getTime();
@@ -940,6 +797,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
     }
 
+    /**
+     * Asigna un periodo al sistema
+     *
+     * @return el periodo
+     */
     private String asignarPeriodo() {
         GregorianCalendar c = new GregorianCalendar();
         String anio = "" + c.get(Calendar.YEAR);
@@ -987,6 +849,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return periodo;
     }
 
+    /**
+     * Asigna un año a la oferta a crear
+     *
+     * @return el año asignado
+     */
     private String asignarAnioOferta() {
         GregorianCalendar c = new GregorianCalendar();
         String anio = "" + c.get(Calendar.YEAR);
@@ -994,37 +861,9 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return anio;
     }
 
-    public boolean getComprobarConexionOpenKM() {
-        boolean conexion = true;
-        try {
-            okm.getAppVersion();
-
-        } catch (RepositoryException ex) {
-            conexion = false;
-        } catch (DatabaseException ex) {
-            conexion = false;
-        } catch (UnknowException ex) {
-            conexion = false;
-        } catch (WebserviceException ex) {
-            conexion = false;
-        }
-        return conexion;
-    }
-
-    public List<String> getAniosDisponibles() {
-
-        GregorianCalendar c = new GregorianCalendar();
-        String anio = "" + c.get(Calendar.YEAR);
-        int numeroDeAnios = Integer.parseInt(anio) - 1999;
-        List<String> anios = new ArrayList();
-
-        for (int i = 0; i < numeroDeAnios; i++) {
-            int an = Integer.parseInt(anio) - (i);
-            anios.add("" + an);
-        }
-        return anios;
-    }
-
+    /**
+     * Valida si es posible el cambio de un periodo
+     */
     public void validarCambioPeriodo() {
         boolean existeFolderCoordinacion = false;
         boolean existeFolder = false;
@@ -1071,6 +910,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
 
     }
 
+    /**
+     * identifica el usuario actual de la sesion
+     *
+     * @return el usuario de la sesion
+     */
     private Usuario usuarioDeLaSesion() {
         Usuario usuario = new Usuario();
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -1081,6 +925,11 @@ public class RegistroOfertaAcademicaController implements Serializable {
         return usuario;
     }
 
+    /**
+     * Muestra el dialog para confirmar una eliminacion
+     *
+     * @param documento el documento a eliminar
+     */
     public void confirmarEliminacion(com.openkm.sdk4j.bean.Document documento) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Confirmación", "¿Está seguro que desea eliminar el documento?"));
@@ -1088,6 +937,9 @@ public class RegistroOfertaAcademicaController implements Serializable {
         this.documento = documento;
     }
 
+    /**
+     * Elimina el documento despues de la confirmaion
+     */
     public void deleteDocument() {
         try {
             okm.deleteDocument(documento.getPath());
@@ -1105,5 +957,188 @@ public class RegistroOfertaAcademicaController implements Serializable {
         } catch (Exception e) {
 
         }
+    }
+
+    /**
+     * Getters and setters
+     */
+    public boolean getComprobarConexionOpenKM() {
+        boolean conexion = true;
+        try {
+            okm.getAppVersion();
+
+        } catch (RepositoryException ex) {
+            conexion = false;
+        } catch (DatabaseException ex) {
+            conexion = false;
+        } catch (UnknowException ex) {
+            conexion = false;
+        } catch (WebserviceException ex) {
+            conexion = false;
+        }
+        return conexion;
+    }
+
+    public List<String> getAniosDisponibles() {
+
+        GregorianCalendar c = new GregorianCalendar();
+        String anio = "" + c.get(Calendar.YEAR);
+        int numeroDeAnios = Integer.parseInt(anio) - 1999;
+        List<String> anios = new ArrayList();
+
+        for (int i = 0; i < numeroDeAnios; i++) {
+            int an = Integer.parseInt(anio) - (i);
+            anios.add("" + an);
+        }
+        return anios;
+    }
+
+    public boolean isRegistroInicialOferta() {
+        return registroInicialOferta;
+    }
+
+    public void setRegistroInicialOferta(boolean registroInicialOferta) {
+        this.registroInicialOferta = registroInicialOferta;
+    }
+
+    public boolean isExitoSubirArchivo() {
+        return exitoSubirArchivo;
+    }
+
+    public void setExitoSubirArchivo(boolean exitoSubirArchivo) {
+        this.exitoSubirArchivo = exitoSubirArchivo;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public SimpleDateFormat getFormatoFecha() {
+        return formatoFecha;
+    }
+
+    public void setFormatoFecha(SimpleDateFormat formatoFecha) {
+        this.formatoFecha = formatoFecha;
+    }
+
+    public String getDatos() {
+        return datos;
+    }
+
+    public void setDatos(String datos) {
+        this.datos = datos;
+    }
+
+    public StreamedContent getVerPdf() {
+
+        try {
+            InputStream in = okm.getContent(documento.getPath());
+            streamedContent = new DefaultStreamedContent(in, "application/pdf");
+            Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+            byte[] b = (byte[]) session.get("reportBytes");
+            if (b != null) {
+                streamedContent = new DefaultStreamedContent(new ByteArrayInputStream(b), "application/pdf");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return streamedContent;
+    }
+
+    public String getAnioOfertaAcademica() {
+        return anioOfertaAcademica;
+    }
+
+    public void setAnioOfertaAcademica(String anioOfertaAcademica) {
+        this.anioOfertaAcademica = anioOfertaAcademica;
+    }
+
+    public StreamedContent getStreamedContent() {
+        if (FacesContext.getCurrentInstance().getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+            return streamedContent;
+        }
+    }
+
+    public void setStreamedContent(StreamedContent streamedContent) {
+        this.streamedContent = streamedContent;
+    }
+
+    public List<Departamento> getListaDepartamentos() {
+        listaDepartamentos = ejbDepartamento.findAll();
+        return listaDepartamentos;
+    }
+
+    public void setListaDepartamentos(List<Departamento> listaDepartamentos) {
+        this.listaDepartamentos = listaDepartamentos;
+    }
+
+    public String getPeriodoOfertaAcademica() {
+        return periodoOfertaAcademica;
+    }
+
+    public void setPeriodoOfertaAcademica(String periodoOfertaAcademica) {
+        this.periodoOfertaAcademica = periodoOfertaAcademica;
+    }
+
+    public com.openkm.sdk4j.bean.Document getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(com.openkm.sdk4j.bean.Document documento) {
+        this.documento = documento;
+    }
+
+    public List<com.openkm.sdk4j.bean.Document> getListadoOfertasAcademicas() {
+        listadoDocsOfertasAcademicas.clear();
+        try {
+            List<QueryResult> lista = okm.findByName(datos);
+            for (int i = 0; i < lista.size(); i++) {
+                String[] pathDividido = lista.get(i).getDocument().getPath().split("/");
+                String path = "/" + pathDividido[1] + "/" + pathDividido[2] + "/" + pathDividido[3];
+                if (path.equalsIgnoreCase("/okm:root/Coordinacion/Oferta academica")) {
+                    listadoDocsOfertasAcademicas.add(lista.get(i).getDocument());
+                }
+            }
+        } catch (RepositoryException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknowException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WebserviceException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listadoDocsOfertasAcademicas;
+    }
+
+    public List<QueryResult> getListaDocs() {
+        try {
+            documentosOfertasAcademicas = okm.findByName(datos);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RepositoryException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknowException ex) {
+            Logger.getLogger(RegistroOfertaAcademicaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WebserviceException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error de conexión"));
+        }
+
+        return documentosOfertasAcademicas;
     }
 }

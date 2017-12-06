@@ -15,6 +15,8 @@ import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.MenuModel;
 
 /**
+ * Controlador utilizado para manejar la mina de pan, se utiliza para ubicarse
+ * en la pagina actual.
  *
  * @author edwin
  */
@@ -22,15 +24,26 @@ import org.primefaces.model.menu.MenuModel;
 @SessionScoped
 public class AddNavegacionController implements Serializable {
 
+    /**
+     * Menu de navegacion retornado en la vista
+     */
     private MenuModel menuNavegacion;
+    /**
+     * Item que identifica el inicio "Home" a la barra miga de pan
+     */
     DefaultMenuItem index;
+    /**
+     * Item que identifica la pagina numero 1 en la miga de pan
+     */
     DefaultMenuItem miga1;
+    /**
+     * Item que identifica la pagina numero 2 en la miga de pan
+     */
     DefaultMenuItem miga2;
 
-    public MenuModel getMenu() {
-        return menuNavegacion;
-    }
-
+    /**
+     * Inicializa el modelo configurando estilos como tipo de letra y colores
+     */
     public AddNavegacionController() {
         menuNavegacion = new DefaultMenuModel();
         index = new DefaultMenuItem();
@@ -44,6 +57,12 @@ public class AddNavegacionController implements Serializable {
         miga2.setValue("Gestión de departamentos o facultades");
     }
 
+    /**
+     * Metodo que retorna la miga de pan depende a la pagina que se visite
+     *
+     * @param tipo
+     * @return Modelo
+     */
     public MenuModel migaPrincipal(String tipo) {
         if (tipo.equals("1")) {
             this.menuNavegacion = new DefaultMenuModel();
@@ -80,6 +99,10 @@ public class AddNavegacionController implements Serializable {
         return menuNavegacion;
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * gestion de usuarios
+     */
     public void addGestionUsuario() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -91,6 +114,10 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * gestion de permisos
+     */
     public void addGestionUsuariRol() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -102,6 +129,10 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de mi
+     * perfil
+     */
     public void addPerfilUsuario() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -111,6 +142,10 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Gestión de ofertas académicas
+     */
     public void addOfertaAcademicaGestion() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -122,6 +157,10 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(miga2);
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Listado de ofertas académicas
+     */
     public void addOfertaAcademicaLista() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -134,6 +173,10 @@ public class AddNavegacionController implements Serializable {
 
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Gestión de materias
+     */
     public void addOfertaAcademicaRegistroMaterias() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -146,6 +189,10 @@ public class AddNavegacionController implements Serializable {
 
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Gestión de departamentos o facultades
+     */
     public void addOfertaAcademicaRegistroDepFac() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -158,6 +205,10 @@ public class AddNavegacionController implements Serializable {
 
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Gestión planes de estudio
+     */
     public void addPlanesDeEstudioGestion() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -170,6 +221,10 @@ public class AddNavegacionController implements Serializable {
 
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de
+     * Gestión de anteproyectos
+     */
     public void addAnteproyectoGestion() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -182,6 +237,9 @@ public class AddNavegacionController implements Serializable {
 
     }
 
+    /**
+     * Se agrega al modelo la miga de pan correspondiente a la pestaña de inicio
+     */
     public void cambioDeOpciones() {
         this.menuNavegacion = new DefaultMenuModel();
         index.setValue("Index");
@@ -195,4 +253,10 @@ public class AddNavegacionController implements Serializable {
         this.menuNavegacion.addElement(inicio);
     }
 
+    /**
+     * Getters and setters
+     */
+    public MenuModel getMenu() {
+        return menuNavegacion;
+    }
 }
